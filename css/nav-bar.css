@@ -72,7 +72,7 @@
 .nav-bar__submenu-wrapper {
   position: absolute;
   right: 0;
-  top: 2rem;
+  top: 0;
   padding-top: 2.4rem;
   width: 20rem;
   opacity: 0;
