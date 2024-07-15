@@ -1,12 +1,13 @@
 .nav-bar {
   height: 8rem;
-  background-color: var(--white-color);
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   z-index: 50;
   transition: var(--transition);
+  backdrop-filter: blur(1rem);
+  background: rgba(255, 255, 255, 0.9);
 }
 .nav-bar--scroll {
   height: 6rem;
@@ -71,12 +72,15 @@
 .nav-bar__submenu-wrapper {
   position: absolute;
   right: 0;
-  top: 0;
-  padding-top: 2.5rem;
+  top: 2rem;
+  padding-top: 2.4rem;
   width: 20rem;
   opacity: 0;
   visibility: hidden;
   transition: var(--transition);
+}
+.nav-bar__submenu-wrapper--scroll {
+  padding-top: 1.8rem;
 }
 .nav-bar-submenu {
   padding: 2rem;
