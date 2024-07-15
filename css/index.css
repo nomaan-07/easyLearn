@@ -1,0 +1,103 @@
+@import './variables.css';
+@import './fonts.css';
+@import './nav-bar.css';
+
+/* 
+
+-- Reset Styles --
+
+*/
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*,
+*::after,
+*::before {
+  outline: none;
+  box-sizing: inherit;
+}
+
+body {
+  line-height: 1.6;
+  font-size: 1.6rem;
+  font-family: var(--primary-font);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  height: 2000px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+i {
+  user-select: none;
+}
+
+/* 
+
+-- End of Reset Styles --
+
+*/
+
+/* 
+
+-- Components --
+
+*/
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 1.2rem;
+  padding: 0 1rem;
+}
+
+.btn:hover {
+  background-color: #a721ac;
+}
+/* 
+
+-- End of Components --
+
+*/
+
+/* 
+
+-- Helper Classes --
+
+*/
+
+.display-none {
+  display: none;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.shown {
+  opacity: 1;
+  visibility: visible;
+}
+/* 
+
+-- End of Helper Classes --
+
+*/
+
+.container {
+  position: relative;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}

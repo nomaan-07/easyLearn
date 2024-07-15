@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ایزی لرن | صفحه اصلی</title>
+  <link rel="icon" href="images/logo/favicon-32x32.png">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="vendor/FontAewsome/font-awesome.min.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+  <svg>
+    <symbol id="chevron-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+    </symbol>
+    <symbol id="magnifying-glass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+    </symbol>
+    <symbol id="shopping-bag" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+    </symbol>
+
+
+
+  </svg>
+
+  <header>
+
+    <nav class="nav-bar">
+      <div class="container">
+        <div class="nav-bar__wrapper">
+          <!-- Right Items -->
+          <div class="nav-bar__right">
+            <!-- App Logo -->
+            <a href="javascript:void(0)" class="nav-bar__logo-wrapper">
+              <img src="images/logo/logo.png" alt="ایزی لرن" class="nav-bar__logo">
+            </a>
+            <!-- Menu -->
+            <ul class="nav-bar-menu">
+              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">صفحه اصلی</a></li>
+              <li class="nav-bar-menu__item">
+                <a href="javascript:void(0)" class="nav-bar-menu__link">فرانت اند</a>
+                <svg class="nav-bar__menu-icon">
+                  <use href="#chevron-down"></use>
+                </svg>
+                <!-- Show on Hover - Submenu -->
+                <div class="nav-bar__submenu-wrapper">
+                  <div class="nav-bar-submenu">
+                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش HTML</a>
+                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش CSS</a>
+                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش جاوااسکریپت</a>
+                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش Tailwind CSS</a>
+                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش جامع ReactJS</a>
+                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش TypeScript</a>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">امنیت</a>                <svg class="nav-bar__menu-icon">
+                  <use href="#chevron-down"></use>
+                </svg></li>
+              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">پایتون</a>                <svg class="nav-bar__menu-icon">
+                  <use href="#chevron-down"></use>
+                </svg></li>
+              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">مهارت های نرم</a>                <svg class="nav-bar__menu-icon">
+                  <use href="#chevron-down"></use>
+                </svg>
+              </li>
+              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">بلاگ</a>                <svg class="nav-bar__menu-icon">
+                  <use href="#chevron-down"></use>
+                </svg></li>
+            </ul>
+          </div>
+          <!-- Left Items -->
+          <div class="nav-bar__left">
+            <!-- Search Section -->
+            <div class="nav-bar__search-wrapper">
+              <div class="nav-bar__search-btn">
+                <svg class="nav-bar__search-btn-icon">
+                  <use href="#magnifying-glass"></use>
+                </svg>
+              </div>
+              <!-- Show on Click -->
+              <div class="nav-bar__search-box">
+                <svg class="nav-bar__search-box-icon">
+                  <use href="#magnifying-glass"></use>
+                </svg>
+                <input type="text" class="nav-bar__search-input" placeholder="دوره ی مدنظر خود را جتسجو کنید.">
+              </div>
+            </div>
+            <!-- Shopping Cart -->
+            <a href="javascript:void(0)" class="nav-bar__shopping-cart-btn">
+              <svg class="nav-bar__shopping-cart-icon">
+                <use href="#shopping-bag"></use>
+              </svg>
+              <!-- Show on Hover -->
+              <div class="nav-bar__shopping-cart-wrapper display-none">
+                <div class="nav-bar__shopping-cart"></div>
+              </div>
+            </a>
+            <!-- Login Btn -->
+            <a href="javascript:void(0)" class="btn nav-bar__sign-in-btn">ورود | عضویت</a>
+            <!-- Show When Logged in -->
+            <a href="javascript:void(0)" class="btn nav-bar__logged-in-btn user-name display-none"></a>
+          </div>
+
+        </div>
+
+      </div>
+    </nav>
+
+  </header>
+
+  <div class="overlay"></div>
+  <script src="vendor/FontAewsome/font-awesome.min.js"></script>
+  <script type="module" src="js/script.js"></script>
+</body>
+
+</html>
