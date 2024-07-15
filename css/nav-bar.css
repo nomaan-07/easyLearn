@@ -62,8 +62,6 @@
   transform: rotate(180deg);
 }
 
-.nav-bar-menu__link {
-}
 .nav-bar__menu-icon {
   width: 1.6rem;
   height: 1.6rem;
@@ -167,16 +165,12 @@
   height: 2.6rem;
   cursor: pointer;
 }
-.nav-bar__shopping-cart-btn {
-}
+
 .nav-bar__shopping-cart-icon {
   width: 2.6rem;
   height: 2.6rem;
 }
-.nav-bar__shopping-cart-wrapper {
-}
-.nav-bar__shopping-cart {
-}
+
 .nav-bar__sign-in-btn,
 .nav-bar__logged-in-btn {
   width: 12rem;
