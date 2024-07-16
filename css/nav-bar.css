@@ -197,6 +197,10 @@
   background: rgba(255, 255, 255, 0.9);
   padding: 0.6rem 0;
   display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  transition: var(--transition);
 }
 .mobile-nav__wrapper {
   display: flex;
@@ -215,10 +219,16 @@
 }
 
 .mobile-nav__logo-wrapper {
-  width: 8rem;
-  height: 6rem;
+  width: 10rem;
+  height: 7rem;
   display: block;
+  transition: var(--transition);
 }
+.mobile-nav__logo-wrapper--scroll {
+  width: 8rem;
+  height: 5rem;
+}
+
 .mobile-nav__logo {
   width: 100%;
 }
