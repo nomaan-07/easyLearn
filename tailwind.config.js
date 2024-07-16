@@ -1,11 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./public/**/*/*.{html, js'],
+  content: ['./**/*.{html,js}'],
   theme: {
     extend: {
       container: {
         center: true,
         padding: '1rem',
+      },
+      fontFamily: {
+        Vazir: 'Vazir',
+        VazirMedium: 'Vazir Medium',
+        VazirBold: 'Vazir Bold',
+        VazirLight: 'Vazir Light',
+        VazirThin: 'Vazir Thin',
+        VazirBlack: 'Vazir Black',
       },
     },
   },

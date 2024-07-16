@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Vazir';
+    src: url('../fonts/Vazir/Vazir-Regular.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Vazir Medium';
+    src: url('../fonts/Vazir/Vazir-Medium.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Vazir Bold';
+    src: url('../fonts/Vazir/Vazir-Bold.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Vazir Light';
+    src: url('../fonts/Vazir/Vazir-Light.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Vazir Thin';
+    src: url('../fonts/Vazir/Vazir-Thin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Vazir Black';
+    src: url('../fonts/Vazir/Vazir-Black.woff2') format('woff2');
+  }
+}
+@layer components {
+  .btn {
+    @apply bg-fuchsia-600 text-white py-2 px-4 rounded-lg flex items-center justify-center font-VazirMedium;
+  }
+  .mobile-menu-submenu-open {
+    @apply h-auto my-4 py-2;
+  }
+}
+
+@layer utilities {
+  .hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .show {
+    opacity: 1;
+    visibility: visible;
+  }
+}

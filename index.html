@@ -6,14 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ایزی لرن | صفحه اصلی</title>
   <link rel="icon" href="images/logo/favicon-32x32.png">
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/index.css">
-  <link rel="stylesheet" href="styles/responsive.css">
+  <link rel="stylesheet" href="styles/app.css">
 </head>
 
-<body>
+<body class="text-slate-900 bg-slate-100 h-[2000px] font-Vazir">
 
-  <svg class="display-none">
+  <svg class="hidden">
     <symbol id="chevron-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
       stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -32,153 +30,146 @@
       stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
     </symbol>
+    <symbol id="x-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+    </symbol>
+
 
   </svg>
 
-  <header>
+  <header
+    class="header flex items-center justify-between h-20 lg:h-24 fixed top-0 right-0 left-0 bg-white/90 backdrop-blur-lg px-4 lg:px-8 z-30 transition-all">
+    <!-- Mobile Menu Open Btn -->
+    <div class="mobile-menu-open-btn bg-slate-100 p-2 rounded-full lg:hidden">
+      <svg class="size-7">
+        <use href="#bars-3"></use>
+      </svg>
+    </div>
+    <!-- App Logo -->
+    <div class="header__logo w-24 lg:w-28 transition-all">
+      <img src="images/logo/logo-2.png" class="w-full lg:hidden" alt="ایزی لرن">
+      <img src="images/logo/logo.png" class="w-full hidden lg:block" alt="ایزی لرن">
+    </div>
+    <!-- Menu -->
+    <ul class="hidden"></ul>
 
-    <!-- Nav Bar-->
-    <nav class="nav-bar">
-      <div class="container">
-        <div class="nav-bar__wrapper">
-          <!-- Right Items -->
-          <div class="nav-bar__right">
-            <!-- App Logo -->
-            <a href="javascript:void(0)" class="nav-bar__logo-wrapper">
-              <img src="images/logo/logo.png" alt="ایزی لرن" class="nav-bar__logo">
-            </a>
-            <!-- Menu -->
-            <ul class="nav-bar-menu">
-              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">صفحه اصلی</a></li>
-              <li class="nav-bar-menu__item">
-                <a href="javascript:void(0)" class="nav-bar-menu__link">فرانت اند</a>
-                <svg class="nav-bar__menu-icon">
-                  <use href="#chevron-down"></use>
-                </svg>
-                <!-- Show on Hover - Submenu -->
-                <div class="nav-bar__submenu-wrapper">
-                  <div class="nav-bar-submenu">
-                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش HTML</a>
-                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش CSS</a>
-                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش جاوااسکریپت</a>
-                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش Tailwind CSS</a>
-                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش جامع ReactJS</a>
-                    <a href="javascript:void(0)" class="nav-bar-submenu__link">آموزش TypeScript</a>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">امنیت</a> <svg
-                  class="nav-bar__menu-icon">
-                  <use href="#chevron-down"></use>
-                </svg></li>
-              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">پایتون</a> <svg
-                  class="nav-bar__menu-icon">
-                  <use href="#chevron-down"></use>
-                </svg></li>
-              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">مهارت های نرم</a>
-                <svg class="nav-bar__menu-icon">
-                  <use href="#chevron-down"></use>
-                </svg>
-              </li>
-              <li class="nav-bar-menu__item"><a href="javascript:void(0)" class="nav-bar-menu__link">بلاگ</a> <svg
-                  class="nav-bar__menu-icon">
-                  <use href="#chevron-down"></use>
-                </svg></li>
-            </ul>
-          </div>
-          <!-- Left Items -->
-          <div class="nav-bar__left">
-            <!-- Search Section -->
-            <div class="nav-bar__search-wrapper">
-              <div class="nav-bar__search-btn">
-                <svg class="nav-bar__search-btn-icon">
-                  <use href="#magnifying-glass"></use>
-                </svg>
-              </div>
-              <!-- Show on Click -->
-              <div class="nav-bar__search-box">
-                <svg class="nav-bar__search-box-icon">
-                  <use href="#magnifying-glass"></use>
-                </svg>
-                <input type="text" class="nav-bar__search-input" placeholder="دوره ی مدنظر خود را جستجو کنید.">
-              </div>
-            </div>
-            <!-- Shopping Cart -->
-            <div class="nav-bar__shopping-cart-btn">
-              <a href="javascript:void(0)" class="nav-bar__shopping-cart-link">
-                <svg class="nav-bar__shopping-cart-icon">
-                  <use href="#shopping-bag"></use>
-                </svg>
-              </a>
-              <!-- Show on Hover -->
-              <div class="nav-bar__shopping-cart-wrapper">
-                <div class="nav-bar__shopping-cart">
-                  <div class="nav-bar__shopping-cart-header">
-                    <span class="nav-bar__shopping-cart-count">1 مورد</span>
-                    <a href="javascript:void(0)" class="nav-bar__shopping-cart-count">مشاهده ی سبد خرید</a>
-                  </div>
-                  <div class="nav-bar__shopping-cart-body">
-                    <div class="nav-bar__product">
-                      <div class="nav-bar__product-detail">
-                        <h4 class="nav-bar__product-name">دوره ی جامع جاوااسکریپت</h4>
-                      </div>
-                      <div class="nav-bar__product-image-wrapper">
-                        <img src="images/courses/JavaScript.jpg" alt="دوره ی جاوااسکریپت"
-                          class="nav-bar__product-image">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nav-bar__shopping-cart-footer">
-                    <div class="nav-bar__shopping-cart-price-wrapper">
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Login Btn -->
-            <a href="javascript:void(0)" class="btn nav-bar__sign-in-btn">ورود | عضویت</a>
-            <!-- Show When Logged in -->
-            <a href="javascript:void(0)" class="btn nav-bar__logged-in-btn user-name display-none"></a>
-          </div>
-
-        </div>
-
-      </div>
-    </nav>
-
-    <!-- Mobile Nav Bar -->
-    <nav class="mobile-nav">
-      <div class="container">
-
-        <div class="mobile-nav__wrapper">
-          <!-- Mobile Menu Open Btn -->
-          <div class="mobile-menu__open-btn">
-            <svg class="mobile-menu__open-icon">
-              <use href="#bars-3"></use>
-            </svg>
-          </div>
-
-          <!-- App Logo -->
-          <a href="javascript:void(0)" class="mobile-nav__logo-wrapper">
-            <img src="images/logo/logo-2.png" alt="ایزی لرن" class="mobile-nav__logo">
-          </a>
-
-          <!-- Mobile Cart Open Btn -->
-          <div class="mobile-cart__open-btn">
-            <svg class="mobile-cart__open-icon">
-              <use href="#shopping-bag"></use>
-            </svg>
-          </div>
-
-        </div>
-      </div>
-    </nav>
-
+    <!-- Mobile Shopping Cart Open Btn -->
+    <div class="mobile-shopping-cart-open-btn bg-slate-100 p-2 rounded-full lg:hidden">
+      <svg class="size-7">
+        <use href="#shopping-bag"></use>
+      </svg>
+    </div>
 
   </header>
+  <!-- Mobile Menu -->
+  <div
+    class="mobile-menu fixed top-0 right-[-280px] bottom-0 w-[280px] bg-white z-50 transition-all lg:hidden overflow-y-auto p-2">
+    <!-- Menu Header -->
+    <div>
+      <div class="flex items-center justify-between pb-2 border-b border-b-slate-100">
+        <!-- App Logo -->
+        <div class="header__logo w-20 transition-all">
+          <img src="images/logo/logo.png" class="w-full lg:hidden" alt="ایزی لرن">
+        </div>
+        <div class="mobile-menu-close-btn bg-slate-100 p-2 rounded-full lg:hidden">
+          <svg class="size-6">
+            <use href="#x-mark"></use>
+          </svg>
+        </div>
+      </div>
+      <!-- Search Box -->
+      <div class="flex items-center justify-between bg-slate-100 mt-2 rounded-lg px-2">
+        <input type="text" class="bg-transparent w-full text-sm py-3 outline-none"
+          placeholder="دوره ی مدنظر خود را جستجو کنید.">
+        <svg class="size-7 shrink-0">
+          <use href="#magnifying-glass"></use>
+        </svg>
+      </div>
+    </div>
+    <!-- Menu -->
+    <ul class="my-4 space-y-4 select-none">
+      <li><a href="javascript:void(0)">صفحه اصلی</a></li>
+      <li>
+        <span class="mobile-menu-item flex items-center justify-between transition-all">
+          فرانت اند
+          <svg class="size-4 transition-all">
+            <use href="#chevron-down"></use>
+          </svg>
+        </span>
+        <!-- Show on Click Submenu-->
+        <div
+          class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-slate-200 rounded-2xl overflow-hidden transition-all">
+          <a href="javascript:void(0)">آموزش HTML</a>
+          <a href="javascript:void(0)">آموزش CSS</a>
+          <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
+          <a href="javascript:void(0)">آموزش Tailwind CSS</a>
+          <a href="javascript:void(0)">آموزش ReactJS</a>
+          <a href="javascript:void(0)">آموزش TypeScript</a>
+        </div>
+      </li>
+      <li>امنیت</li>
+      <li>پایتون</li>
+      <li>مهارت های نرم</li>
+      <li>
+        <span class="mobile-menu-item flex items-center justify-between transition-all">
+          بلاگ
+          <svg class="size-4 transition-all">
+            <use href="#chevron-down"></use>
+          </svg>
+        </span>
+        <!-- Show on Click Submenu-->
+        <div
+          class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-slate-200 rounded-2xl overflow-hidden transition-all">
+          <a href="javascript:void(0)">آموزش HTML</a>
+          <a href="javascript:void(0)">آموزش CSS</a>
+          <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
+          <a href="javascript:void(0)">آموزش Tailwind CSS</a>
+          <a href="javascript:void(0)">آموزش ReactJS</a>
+          <a href="javascript:void(0)">آموزش TypeScript</a>
+        </div>
+      </li>
+    </ul>
+    <!-- Login Btn -->
+    <a href="javascript:void(0)" class="btn mt-4">ورود | ثبت نام</a>
+  </div>
+  <!-- Mobile Shopping Cart -->
+  <div
+    class="mobile-shopping-cart fixed top-0 left-[-280px] bottom-0 w-[280px] bg-white z-50 transition-all lg:hidden overflow-y-auto p-2">
+    <!-- Cart Header -->
+    <div class="flex items-center justify-between pb-2 border-b border-b-slate-100">
+      <div class="mobile-shopping-cart-close-btn bg-slate-100 p-2 rounded-full lg:hidden">
+        <svg class="size-6">
+          <use href="#x-mark"></use>
+        </svg>
+      </div>
+      <span class="text-fuchsia-600 font-VazirBold text-lg select-none">سبد خرید</span>
+    </div>
 
-  <div class="overlay"></div>
+    <!-- Courses -->
+    <div class="my-4 space-y-4 select-none overflow-y-auto max-h-[272px]">
+      <!-- Course -->
+      <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-100">
+        <div>
+          <span class="font-VazirMedium">دوره ی جامع جاوااسکریپت</span>
+          <div class="flex items-center gap-3 mt-3">
+            <span class="text-sm line-through decoration-red-400">۳,۷۵۰,۰۰۰</span>
+            <span class="text-green-600">۳,۴۰۰,۰۰۰</span>
+          </div>
+        </div>
+
+        <img src="images/courses/JavaScript.jpg" class="w-20 h-full" alt="">
+      </div>
+    </div>
+    <div class="flex items-center justify-between font-VazirMedium">
+      قیمت کل:
+      <span class="text-green-600">۳,۴۰۰,۰۰۰</span>
+    </div>
+    <!-- Pay Btn -->
+    <a href="javascript:void(0)" class="btn mt-4">تکمیل سفارش</a>
+  </div>
+
+  <div class="overlay fixed inset-0 bg-slate-400/50 backdrop-blur-sm z-40 hide transition-all"></div>
   <script type="module" src="js/script.js"></script>
 </body>
 
