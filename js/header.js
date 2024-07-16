@@ -9,6 +9,9 @@ const header = document.querySelector('.header');
 const headerLogoWrapper = document.querySelector('.header__logo');
 const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
 const mobileSubmenus = document.querySelectorAll('.mobile-menu-submenu');
+const searchBar = document.querySelector('.search-bar');
+const headerSearchBtn = document.querySelector('.header__search-btn');
+const searchBarInput = document.querySelector('.search-bar__input');
 
 const openMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);
@@ -31,19 +34,21 @@ const closeMenus = () => {
 
 const headerScrollHandler = () => {
   if (window.scrollY > 0) {
-    header.classList.add('lg:h-20');
     header.classList.add('h-16');
     header.classList.remove('lg:h-24');
     header.classList.remove('h-20');
     headerLogoWrapper.classList.add('w-20');
     headerLogoWrapper.classList.remove('w-24');
+    searchBar.classList.add('top-16');
+    searchBar.classList.remove('top-24');
   } else {
-    header.classList.remove('lg:h-20');
     header.classList.remove('h-16');
     header.classList.add('lg:h-24');
     header.classList.add('h-20');
     headerLogoWrapper.classList.remove('w-20');
     headerLogoWrapper.classList.add('w-24');
+    searchBar.classList.remove('top-16');
+    searchBar.classList.add('top-24');
   }
 };
 
@@ -63,6 +68,13 @@ const mobileSubmenuMenuToggle = (menu) => {
   menu.nextElementSibling.classList.toggle('h-0');
 };
 
+const headerSearchBarToggle = () => {
+  searchBar.classList.toggle('right-0');
+  searchBar.classList.toggle('right-[-100vw]');
+  searchBarInput.value = '';
+  searchBarInput.focus();
+};
+
 mobileMenuItems.forEach((menu) => {
   menu.addEventListener('click', () => mobileSubmenuMenuToggle(menu));
 });
@@ -73,3 +85,4 @@ mobileMenuCloseBtn.addEventListener('click', closeMenus);
 mobileCartCloseBtn.addEventListener('click', closeMenus);
 overlay.addEventListener('click', closeMenus);
 window.addEventListener('scroll', headerScrollHandler);
+headerSearchBtn.addEventListener('click', headerSearchBarToggle);
