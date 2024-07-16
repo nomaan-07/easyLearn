@@ -5,6 +5,7 @@ const navBar = document.querySelector('.nav-bar');
 const navBarLogoWrapper = document.querySelector('.nav-bar__logo-wrapper');
 const navBarSubmenuElements = document.querySelectorAll('.nav-bar__submenu-wrapper');
 const mobileNavBarLogoWrapper = document.querySelector('.mobile-nav__logo-wrapper');
+const shoppingCartWrapper = document.querySelector('.nav-bar__shopping-cart-wrapper');
 
 let previousScrollPoint = 0;
 
@@ -22,12 +23,14 @@ const navBarScrollHandler = () => {
     searchBox.classList.add('nav-bar__search-box--scroll');
     navBarSubmenuElements.forEach((submenu) => submenu.classList.add('nav-bar__submenu-wrapper--scroll'));
     mobileNavBarLogoWrapper.classList.add('mobile-nav__logo-wrapper--scroll');
+    shoppingCartWrapper.classList.add('nav-bar__shopping-cart-wrapper--scroll');
   } else {
     navBar.classList.remove('nav-bar--scroll');
     navBarLogoWrapper.classList.remove('nav-bar__logo-wrapper--scroll');
     searchBox.classList.remove('nav-bar__search-box--scroll');
     navBarSubmenuElements.forEach((submenu) => submenu.classList.remove('nav-bar__submenu-wrapper--scroll'));
     mobileNavBarLogoWrapper.classList.remove('mobile-nav__logo-wrapper--scroll');
+    shoppingCartWrapper.classList.remove('nav-bar__shopping-cart-wrapper--scroll');
   }
 };
 
