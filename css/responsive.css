@@ -28,6 +28,9 @@
   .nav-bar {
     display: none;
   }
+  .mobile-nav {
+    display: block;
+  }
 }
 
 @media (max-width: 768px) {

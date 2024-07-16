@@ -28,10 +28,16 @@
       <path stroke-linecap="round" stroke-linejoin="round"
         d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
     </symbol>
+    <symbol id="bars-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </symbol>
+
   </svg>
 
   <header>
 
+    <!-- Nav Bar-->
     <nav class="nav-bar">
       <div class="container">
         <div class="nav-bar__wrapper">
@@ -94,7 +100,7 @@
                 <svg class="nav-bar__search-box-icon">
                   <use href="#magnifying-glass"></use>
                 </svg>
-                <input type="text" class="nav-bar__search-input" placeholder="دوره ی مدنظر خود را جتسجو کنید.">
+                <input type="text" class="nav-bar__search-input" placeholder="دوره ی مدنظر خود را جستجو کنید.">
               </div>
             </div>
             <!-- Shopping Cart -->
@@ -118,7 +124,37 @@
       </div>
     </nav>
 
+    <!-- Mobile Nav Bar -->
+    <nav class="mobile-nav">
+      <div class="container">
+
+        <div class="mobile-nav__wrapper">
+          <!-- Mobile Menu Open Btn -->
+          <div class="mobile-menu__open-btn">
+            <svg class="mobile-menu__open-icon">
+              <use href="#bars-3"></use>
+            </svg>
+          </div>
+
+          <!-- App Logo -->
+          <a href="javascript:void(0)" class="mobile-nav__logo-wrapper">
+            <img src="images/logo/logo-2.png" alt="ایزی لرن" class="mobile-nav__logo">
+          </a>
+
+          <!-- Mobile Cart Open Btn -->
+          <div class="mobile-cart__open-btn">
+            <svg class="mobile-cart__open-icon">
+              <use href="#shopping-bag"></use>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+
+
   </header>
+
   <div class="overlay"></div>
   <script type="module" src="js/script.js"></script>
 </body>

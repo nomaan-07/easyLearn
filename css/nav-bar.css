@@ -185,3 +185,42 @@
   overflow: hidden;
   justify-content: start !important;
 }
+
+/* 
+
+-- Mobile Nav -- 
+
+*/
+
+.mobile-nav {
+  backdrop-filter: blur(1rem);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.6rem 0;
+  display: none;
+}
+.mobile-nav__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mobile-menu__open-btn,
+.mobile-cart__open-btn {
+  width: 3rem;
+  height: 3rem;
+}
+.mobile-menu__open-icon,
+.mobile-cart__open-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.mobile-nav__logo-wrapper {
+  width: 8rem;
+  height: 6rem;
+  display: block;
+}
+.mobile-nav__logo {
+  width: 100%;
+}
+.mobile-cart__open-btn {
+}
