@@ -35,18 +35,14 @@ const headerScrollHandler = () => {
     header.classList.add('h-16');
     header.classList.remove('lg:h-24');
     header.classList.remove('h-20');
-    headerLogoWrapper.classList.add('lg:w-24');
     headerLogoWrapper.classList.add('w-20');
-    headerLogoWrapper.classList.remove('lg:w-28');
     headerLogoWrapper.classList.remove('w-24');
   } else {
     header.classList.remove('lg:h-20');
     header.classList.remove('h-16');
     header.classList.add('lg:h-24');
     header.classList.add('h-20');
-    headerLogoWrapper.classList.remove('lg:w-24');
     headerLogoWrapper.classList.remove('w-20');
-    headerLogoWrapper.classList.add('lg:w-28');
     headerLogoWrapper.classList.add('w-24');
   }
 };
