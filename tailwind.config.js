@@ -2,7 +2,17 @@
 module.exports = {
   content: ['./public/**/*/*.{html, js'],
   theme: {
-    extend: {},
+    extend: {
+      container: {
+        center: true,
+        padding: '1rem',
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
+    },
+  ],
 };
