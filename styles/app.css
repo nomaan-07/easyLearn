@@ -2659,11 +2659,6 @@ video {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-.text-fuchsia-600 {
-  --tw-text-opacity: 1;
-  color: rgb(192 38 211 / var(--tw-text-opacity));
-}
-
 .text-green-600 {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
@@ -3110,10 +3105,6 @@ video {
 }
 
 @media (min-width: 768px) {
-  .md\:theme-hover-bg-color {
-    background-color: var(--theme-hover-bg-color);
-  }
-
   .md\:hover\:theme-hover-bg-color:hover {
     background-color: var(--theme-hover-bg-color);
   }
@@ -3347,10 +3338,6 @@ video {
 
   .md\:h-\[704px\] {
     height: 704px;
-  }
-
-  .md\:cursor-pointer {
-    cursor: pointer;
   }
 
   .md\:font-VazirMedium {
