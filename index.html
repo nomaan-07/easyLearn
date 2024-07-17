@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles/app.css" />
   </head>
 
-  <body class="text-slate-900 bg-slate-100 h-[2000px] font-Vazir">
+  <body class="text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 h-[2000px] font-Vazir">
     <svg class="hidden">
       <symbol id="bars-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -94,10 +94,10 @@
       </symbol>
     </svg>
 
-    <header class="fixed top-0 right-0 left-0 bg-white/90 backdrop-blur-lg">
+    <header class="fixed top-0 right-0 left-0 bg-white/90 dark:bg-slate-800 backdrop-blur-lg">
       <div class="header flex items-center justify-between h-20 lg:h-24 px-4 lg:px-8 z-30 max-w-[1920px] mx-auto transition-all">
         <!-- Mobile Menu Open Btn -->
-        <div class="mobile-menu-open-btn bg-slate-100 p-2 rounded-full lg:hidden">
+        <div class="mobile-menu-open-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
           <svg class="size-7">
             <use href="#bars-3"></use>
           </svg>
@@ -127,7 +127,7 @@
               </div>
               <!-- Show on Hover -- Submenu -->
               <div class="absolute top-0 group-hover:top-5 right-0 pt-6 w-52 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all">
-                <div class="bg-white shadow rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
+                <div class="bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
                   <a href="javascript:void(0)">آموزش HTML</a>
                   <a href="javascript:void(0)">آموزش CSS</a>
                   <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
@@ -146,7 +146,7 @@
               </div>
               <!-- Show on Hover -- Submenu -->
               <div class="absolute top-0 group-hover:top-5 right-0 pt-6 w-52 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all">
-                <div class="bg-white shadow rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
+                <div class="bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
                   <a href="javascript:void(0)">آموزش HTML</a>
                   <a href="javascript:void(0)">آموزش CSS</a>
                   <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
@@ -165,7 +165,7 @@
               </div>
               <!-- Show on Hover -- Submenu -->
               <div class="absolute top-0 group-hover:top-5 right-0 pt-6 w-52 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all">
-                <div class="bg-white shadow rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
+                <div class="bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
                   <a href="javascript:void(0)">آموزش HTML</a>
                   <a href="javascript:void(0)">آموزش CSS</a>
                   <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
@@ -184,7 +184,7 @@
               </div>
               <!-- Show on Hover -- Submenu -->
               <div class="absolute top-0 group-hover:top-5 right-0 pt-6 w-52 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all">
-                <div class="bg-white shadow rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
+                <div class="bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
                   <a href="javascript:void(0)">آموزش HTML</a>
                   <a href="javascript:void(0)">آموزش CSS</a>
                   <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
@@ -203,7 +203,7 @@
               </div>
               <!-- Show on Hover -- Submenu -->
               <div class="absolute top-0 group-hover:top-5 right-0 pt-6 w-52 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all">
-                <div class="bg-white shadow rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
+                <div class="bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 rounded-lg p-5 space-y-4 child:block child:transition-all child-hover:theme-text-color">
                   <a href="javascript:void(0)">آموزش HTML</a>
                   <a href="javascript:void(0)">آموزش CSS</a>
                   <a href="javascript:void(0)">آموزش جاوااسکریپت</a>
@@ -218,12 +218,12 @@
         <!-- Left Items -->
         <div class="hidden lg:flex gap-5 xl:gap-8 2xl:gap-10">
           <!-- Search Icon -->
-          <div class="header__search-btn flex items-center justify-center w-10 h-10 bg-slate-100 rounded-full transition-all hover:theme-text-color cursor-pointer">
+          <div class="header__search-btn flex items-center justify-center w-10 h-10 bg-slate-100 dark:bg-slate-900 rounded-full transition-all hover:theme-text-color cursor-pointer">
             <svg class="size-6">
               <use href="#magnifying-glass"></use>
             </svg>
             <!-- Show on Click -- Search bar -->
-            <div class="fixed search-bar top-24 right-[-100vw] w-screen text-white bg-slate-900 transition-all -z-10 flex items-center gap-4 px-8 py-3">
+            <div class="fixed search-bar top-24 right-[-100vw] w-screen text-white dark:text-slate-900 bg-slate-900 dark:bg-slate-100 transition-all -z-10 flex items-center gap-4 px-8 py-2">
               <svg class="size-7 shrink-0 hover:theme-text-color transition-colors">
                 <use href="#magnifying-glass"></use>
               </svg>
@@ -231,13 +231,13 @@
             </div>
           </div>
           <!-- Shopping Bag Icon -->
-          <div class="flex items-center justify-center w-10 h-10 bg-slate-100 rounded-full transition-all relative group">
+          <div class="flex items-center justify-center w-10 h-10 bg-slate-100 dark:bg-slate-900 rounded-full transition-all relative group">
             <svg class="size-6 cursor-pointer group-hover:theme-text-color transition-colors">
               <use href="#shopping-bag"></use>
             </svg>
             <!-- Show on Hover -- Cart -->
             <div class="absolute top-7 -left-5 group-hover:left-0 pt-5 w-80 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all">
-              <div class="bg-white shadow rounded-lg p-5 space-y-4">
+              <div class="bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 rounded-lg p-5 space-y-4">
                 <!-- Cart Header -->
                 <div class="flex items-center justify-between pb-2 border-b border-b-slate-100 text-xs">
                   <span>۲ مورد</span>
@@ -252,7 +252,7 @@
                       <div class="flex items-center gap-3 mt-3">
                         <span class="text-sm line-through decoration-red-400">۳,۷۵۰,۰۰۰</span>
                         <div class="flex items-center">
-                          <span class="text-green-600">۳,۴۰۰,۰۰۰</span>
+                          <span class="text-green-600 dark:text-green-400">۳,۴۰۰,۰۰۰</span>
                           <svg class="size-6">
                             <use href="#toman"></use>
                           </svg>
@@ -265,7 +265,7 @@
                 <div class="flex items-center justify-between font-VazirMedium">
                   قیمت کل:
                   <div class="flex items-center">
-                    <span class="text-green-600">۳,۴۰۰,۰۰۰</span>
+                    <span class="text-green-600 dark:text-green-400">۳,۴۰۰,۰۰۰</span>
                     <svg class="size-6">
                       <use href="#toman"></use>
                     </svg>
@@ -279,7 +279,7 @@
           <a href="javascript:void(0)" class="btn theme-bg-color lg:hover:theme-hover-bg-color select-none">ورود | ثبت نام</a>
         </div>
         <!-- Mobile Shopping Cart Open Btn -->
-        <div class="mobile-shopping-cart-open-btn bg-slate-100 p-2 rounded-full lg:hidden">
+        <div class="mobile-shopping-cart-open-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
           <svg class="size-7">
             <use href="#shopping-bag"></use>
           </svg>
@@ -287,7 +287,7 @@
       </div>
     </header>
     <!-- Mobile Menu -->
-    <div class="mobile-menu fixed top-0 right-[-280px] bottom-0 w-[280px] bg-white z-50 transition-all lg:hidden overflow-y-auto p-2">
+    <div class="mobile-menu fixed top-0 right-[-280px] bottom-0 w-[280px] bg-white dark:bg-slate-800 z-50 transition-all lg:hidden overflow-y-auto p-2">
       <!-- Menu Header -->
       <div>
         <div class="flex items-center justify-between pb-2 border-b border-b-slate-100">
@@ -297,14 +297,14 @@
               <use href="#logo"></use>
             </svg>
           </div>
-          <div class="mobile-menu-close-btn bg-slate-100 p-2 rounded-full lg:hidden">
+          <div class="mobile-menu-close-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
             <svg class="size-6">
               <use href="#x-mark"></use>
             </svg>
           </div>
         </div>
         <!-- Search Box -->
-        <div class="flex items-center justify-between bg-slate-100 mt-2 rounded-lg px-2">
+        <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-900 mt-2 rounded-lg px-2">
           <input type="text" class="bg-transparent w-full text-sm py-3 outline-none" placeholder="دوره ی مدنظر خود را جستجو کنید." />
           <svg class="size-7 shrink-0">
             <use href="#magnifying-glass"></use>
@@ -356,10 +356,10 @@
       <a href="javascript:void(0)" class="btn theme-bg-color mt-4">ورود | ثبت نام</a>
     </div>
     <!-- Mobile Shopping Cart -->
-    <div class="mobile-shopping-cart fixed top-0 left-[-280px] bottom-0 w-[280px] bg-white z-50 transition-all lg:hidden overflow-y-auto p-2">
+    <div class="mobile-shopping-cart fixed top-0 left-[-280px] bottom-0 w-[280px] bg-white dark:bg-slate-800 z-50 transition-all lg:hidden overflow-y-auto p-2">
       <!-- Cart Header -->
-      <div class="flex items-center justify-between pb-2 border-b border-b-slate-100">
-        <div class="mobile-shopping-cart-close-btn bg-slate-100 p-2 rounded-full lg:hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-b-slate-100 dark:border-b-slate-900">
+        <div class="mobile-shopping-cart-close-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
           <svg class="size-6">
             <use href="#x-mark"></use>
           </svg>
@@ -370,13 +370,13 @@
       <!-- Courses -->
       <div class="my-4 space-y-4 select-none overflow-y-auto max-h-[272px]">
         <!-- Course -->
-        <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-100">
+        <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-100 dark:border-b-slate-900">
           <div>
             <span class="font-VazirMedium">دوره ی جامع جاوااسکریپت</span>
             <div class="flex items-center gap-3 mt-3">
               <span class="text-sm line-through decoration-red-400">۳,۷۵۰,۰۰۰</span>
               <div class="flex items-center">
-                <span class="text-green-600">۳,۴۰۰,۰۰۰</span>
+                <span class="text-green-600 dark:text-green-400">۳,۴۰۰,۰۰۰</span>
                 <svg class="size-6">
                   <use href="#toman"></use>
                 </svg>
@@ -390,7 +390,7 @@
       <div class="flex items-center justify-between font-VazirMedium">
         قیمت کل:
         <div class="flex items-center">
-          <span class="text-green-600">۳,۴۰۰,۰۰۰</span>
+          <span class="text-green-600 dark:text-green-400">۳,۴۰۰,۰۰۰</span>
           <svg class="size-6">
             <use href="#toman"></use>
           </svg>
@@ -403,8 +403,8 @@
     <!-- Change Theme -->
     <div class="flex items-end gap-4 fixed left-2 bottom-5 theme-text-color">
       <!-- Show On Click -- Color Plate-->
-      <div class="color-plate hide flex items-center flex-wrap gap-x-2 gap-y-2 p-1 translate-y-10 bg-white shadow w-48 sm:w-96 h-24 sm:h-12 rounded-lg transition-all child:cursor-pointer child:w-10 child:h-10 child:rounded-full">
-        <div class="change-theme-btn bg-slate-900" data-theme="dark"></div>
+      <div class="color-plate hide flex items-center flex-wrap gap-x-2 gap-y-2 p-1 translate-y-10 bg-white dark:bg-slate-800 shadow dark:shadow-slate-700 w-48 sm:w-96 h-24 sm:h-12 rounded-lg transition-all child:cursor-pointer child:w-10 child:h-10 child:rounded-full">
+        <div class="change-theme-btn change-theme-btn--dark bg-slate-900" data-theme="dark"></div>
         <div class="change-theme-btn bg-fuchsia-600" data-theme="fuchsia"></div>
         <div class="change-theme-btn bg-rose-600" data-theme="rose"></div>
         <div class="change-theme-btn bg-violet-600" data-theme="violet"></div>
@@ -419,7 +419,7 @@
       </svg>
     </div>
     <!-- Overlay -->
-    <div class="overlay fixed inset-0 bg-slate-400/50 backdrop-blur-sm z-40 hide transition-all"></div>
+    <div class="overlay fixed inset-0 bg-slate-400/50 dark:bg-slate-700/50 backdrop-blur-sm z-40 hide transition-all"></div>
     <script type="module" src="js/script.js"></script>
   </body>
 </html>

@@ -29,9 +29,6 @@ const closeMenus = () => {
   overlay.classList.add('hide');
 };
 
-// h-20 lg:h-24
-// w-24 lg:w-28
-
 const headerScrollHandler = () => {
   if (window.scrollY > 0) {
     header.classList.add('h-16');
