@@ -3,6 +3,8 @@ const colorPlate = document.querySelector('.color-plate');
 const changeThemeButtons = document.querySelectorAll('.change-theme-btn');
 const darkThemeBtn = document.querySelector('.change-theme-btn--dark');
 const favIcon = document.querySelector('#favicon');
+const heroLightSVG = document.querySelector('.hero-light-svg');
+const heroDarkSVG = document.querySelector('.hero-dark-svg');
 const toggleColorPlate = () => {
   colorPlate.classList.toggle('hide');
   colorPlate.classList.toggle('show');
@@ -19,10 +21,14 @@ const changeTheme = (event) => {
     darkThemeBtn.dataset.theme = 'light';
     darkThemeBtn.classList.remove('bg-slate-900');
     darkThemeBtn.classList.add('bg-white');
+    heroLightSVG.classList.add('hidden');
+    heroDarkSVG.classList.remove('hidden');
   } else {
     darkThemeBtn.classList.add('bg-slate-900');
     darkThemeBtn.classList.remove('bg-white');
     darkThemeBtn.dataset.theme = 'dark';
+    heroLightSVG.classList.remove('hidden');
+    heroDarkSVG.classList.add('hidden');
   }
 };
 

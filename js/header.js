@@ -12,6 +12,7 @@ const mobileSubmenus = document.querySelectorAll('.mobile-menu-submenu');
 const searchBar = document.querySelector('.search-bar');
 const headerSearchBtn = document.querySelector('.header__search-btn');
 const searchBarInput = document.querySelector('.search-bar__input');
+const main = document.querySelector('.main');
 
 const openMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);

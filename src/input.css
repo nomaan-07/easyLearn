@@ -96,12 +96,12 @@
     --theme-hover-bg-color: #4d7c0f;
   }
   .dark:root {
-    /* fuchsia-400 */
-    --theme-bg-color: #e879f9;
-    /* fuchsia-400 */
-    --theme-text-color: #e879f9;
-    /* fuchsia-300 */
-    --theme-hover-bg-color: #f0abfc;
+    /* yellow-500 */
+    --theme-bg-color: #eab308;
+    /* yellow-500 */
+    --theme-text-color: #eab308;
+    /* yellow-400 */
+    --theme-hover-bg-color: #facc15;
   }
 
   .theme-bg-color {
