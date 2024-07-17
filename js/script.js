@@ -1,2 +1,2 @@
-// import './nav-bar.js';
-import './header.js'
+import './header.js';
+import './change-theme.js';

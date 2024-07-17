@@ -30,7 +30,7 @@
 }
 @layer components {
   .btn {
-    @apply bg-fuchsia-600 text-white py-2 px-4 rounded-lg flex items-center justify-center font-VazirMedium transition-all lg:hover:bg-fuchsia-700;
+    @apply text-white py-2 px-4 rounded-lg flex items-center justify-center font-VazirMedium transition-all;
   }
   .mobile-menu-submenu-open {
     @apply h-auto my-4 py-2;
@@ -45,5 +45,83 @@
   .show {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Theme */
+
+  :root {
+    /* fuchsia-600 */
+    --theme-bg-color: #c026d3;
+    /* fuchsia-600 */
+    --theme-text-color: #c026d3;
+    /* fuchsia-700 */
+    --theme-hover-bg-color: #a21caf;
+  }
+
+  .fuchsia:root {
+    /* fuchsia-600 */
+    --theme-bg-color: #c026d3;
+    /* fuchsia-600 */
+    --theme-text-color: #c026d3;
+    /* fuchsia-700 */
+    --theme-hover-bg-color: #a21caf;
+  }
+  .amber:root {
+    /* amber-600 */
+    --theme-bg-color: #d97706;
+    /* amber-600 */
+    --theme-text-color: #d97706;
+    /* amber-700 */
+    --theme-hover-bg-color: #b45309;
+  }
+  .rose:root {
+    /* rose-600 */
+    --theme-bg-color: #e11d48;
+    /* rose-600 */
+    --theme-text-color: #e11d48;
+    /* rose-700 */
+    --theme-hover-bg-color: #be123c;
+  }
+  .violet:root {
+    /* violet-600 */
+    --theme-bg-color: #7c3aed;
+    /* violet-600 */
+    --theme-text-color: #7c3aed;
+    /* violet-700 */
+    --theme-hover-bg-color: #6d28d9;
+  }
+  .sky:root {
+    /* sky-600 */
+    --theme-bg-color: #0284c7;
+    /* sky-600 */
+    --theme-text-color: #0284c7;
+    /* sky-700 */
+    --theme-hover-bg-color: #0369a1;
+  }
+  .emerald:root {
+    /* emerald-600 */
+    --theme-bg-color: #059669;
+    /* emerald-600 */
+    --theme-text-color: #059669;
+    /* emerald-700 */
+    --theme-hover-bg-color: #047857;
+  }
+  .lime:root {
+    /* lime-600 */
+    --theme-bg-color: #65a30d;
+    /* lime-600 */
+    --theme-text-color: #65a30d;
+    /* lime-700 */
+    --theme-hover-bg-color: #4d7c0f;
+  }
+
+  .theme-bg-color {
+    background-color: var(--theme-bg-color);
+  }
+  .theme-text-color {
+    color: var(--theme-text-color);
+  }
+  .theme-hover-bg-color {
+    background-color: var(--theme-hover-bg-color);
   }
 }
