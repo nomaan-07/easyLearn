@@ -27,25 +27,6 @@
     font-family: 'Vazir Black';
     src: url('../fonts/Vazir/Vazir-Black.woff2') format('woff2');
   }
-}
-@layer components {
-  .btn {
-    @apply text-white py-2 px-4 rounded-lg flex items-center justify-center font-VazirMedium transition-all;
-  }
-  .mobile-menu-submenu-open {
-    @apply h-auto my-4 py-2;
-  }
-}
-
-@layer utilities {
-  .hide {
-    opacity: 0;
-    visibility: hidden;
-  }
-  .show {
-    opacity: 1;
-    visibility: visible;
-  }
 
   /* Theme */
 
@@ -115,11 +96,11 @@
     --theme-hover-bg-color: #4d7c0f;
   }
   .dark:root {
-    /* lime-600 */
+    /* fuchsia-400 */
     --theme-bg-color: #e879f9;
-    /* lime-600 */
+    /* fuchsia-400 */
     --theme-text-color: #e879f9;
-    /* lime-700 */
+    /* fuchsia-300 */
     --theme-hover-bg-color: #f0abfc;
   }
 
@@ -131,5 +112,24 @@
   }
   .theme-hover-bg-color {
     background-color: var(--theme-hover-bg-color);
+  }
+}
+@layer components {
+  .btn {
+    @apply text-white py-2 px-4 rounded-lg flex items-center justify-center font-VazirMedium transition-all;
+  }
+  .mobile-menu-submenu-open {
+    @apply h-auto my-4 py-2;
+  }
+}
+
+@layer utilities {
+  .hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .show {
+    opacity: 1;
+    visibility: visible;
   }
 }
