@@ -1140,6 +1140,10 @@ video {
   height: 20rem;
 }
 
+.h-\[3000px\] {
+  height: 3000px;
+}
+
 .h-\[56px\] {
   height: 56px;
 }
@@ -2518,6 +2522,14 @@ video {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pt-16 {
+  padding-top: 4rem;
+}
+
+.pb-32 {
+  padding-bottom: 8rem;
 }
 
 .text-left {
