@@ -14,7 +14,7 @@ const heroTypewriter = () => {
     .pauseFor(1000)
     .deleteAll()
     .pauseFor(1000)
-    .typeString('آموزش برنامه نویسی به زبان های پایتون')
+    .typeString('آموزش برنامه نویسی به زبان پایتون')
     .pauseFor(500)
     .deleteChars(6)
     .typeString('جاوااسکریپت')
