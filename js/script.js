@@ -1,3 +1,3 @@
-import './header.js';
 import './change-theme.js';
-import './particles.app.js'
+import './header.js';
+import './hero.js';

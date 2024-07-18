@@ -21,14 +21,18 @@ const changeTheme = (event) => {
     darkThemeBtn.dataset.theme = 'light';
     darkThemeBtn.classList.remove('bg-slate-900');
     darkThemeBtn.classList.add('bg-white');
-    heroLightSVG.classList.add('hidden');
-    heroDarkSVG.classList.remove('hidden');
+    if (heroLightSVG && heroDarkSVG) {
+      heroLightSVG.classList.add('hidden');
+      heroDarkSVG.classList.remove('hidden');
+    }
   } else {
     darkThemeBtn.classList.add('bg-slate-900');
     darkThemeBtn.classList.remove('bg-white');
     darkThemeBtn.dataset.theme = 'dark';
-    heroLightSVG.classList.remove('hidden');
-    heroDarkSVG.classList.add('hidden');
+    if (heroLightSVG && heroDarkSVG) {
+      heroLightSVG.classList.remove('hidden');
+      heroDarkSVG.classList.add('hidden');
+    }
   }
 };
 
