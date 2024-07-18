@@ -1071,6 +1071,11 @@ video {
   height: 2.5rem;
 }
 
+.size-12 {
+  width: 3rem;
+  height: 3rem;
+}
+
 .size-4 {
   width: 1rem;
   height: 1rem;
@@ -1114,10 +1119,6 @@ video {
   height: 20rem;
 }
 
-.h-\[2000px\] {
-  height: 2000px;
-}
-
 .h-\[56px\] {
   height: 56px;
 }
@@ -1152,6 +1153,10 @@ video {
 
 .w-52 {
   width: 13rem;
+}
+
+.w-56 {
+  width: 14rem;
 }
 
 .w-64 {
@@ -1745,6 +1750,10 @@ video {
 
 .gap-5 {
   gap: 1.25rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .gap-x-2 {
@@ -2417,6 +2426,10 @@ video {
   padding: 0.5rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .p-5 {
   padding: 1.25rem;
 }
@@ -2571,6 +2584,11 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .text-xs {
@@ -3309,6 +3327,10 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:mt-3 {
+    margin-top: 0.75rem;
+  }
+
   .sm\:mt-7 {
     margin-top: 1.75rem;
   }
@@ -3317,12 +3339,29 @@ video {
     height: 3rem;
   }
 
+  .sm\:h-24 {
+    height: 6rem;
+  }
+
   .sm\:h-\[576px\] {
     height: 576px;
   }
 
+  .sm\:w-64 {
+    width: 16rem;
+  }
+
   .sm\:w-96 {
     width: 24rem;
+  }
+
+  .sm\:gap-10 {
+    gap: 2.5rem;
+  }
+
+  .sm\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 
   .sm\:text-\[46px\] {
@@ -3344,12 +3383,28 @@ video {
     margin-top: 2.25rem;
   }
 
+  .md\:size-16 {
+    width: 4rem;
+    height: 4rem;
+  }
+
   .md\:h-\[704px\] {
     height: 704px;
   }
 
   .md\:font-VazirMedium {
     font-family: Vazir Medium;
+  }
+
+  .md\:hover\:-translate-y-0\.5:hover {
+    --tw-translate-y: -0.125rem;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:hover\:shadow:hover {
+    --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 }
 
@@ -3442,6 +3497,10 @@ video {
     width: 600px;
   }
 
+  .xl\:justify-between {
+    justify-content: space-between;
+  }
+
   .xl\:gap-8 {
     gap: 2rem;
   }
@@ -3472,6 +3531,11 @@ video {
 
   .\32xl\:gap-10 {
     gap: 2.5rem;
+  }
+
+  .\32xl\:py-20 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 
   .\32xl\:text-3xl {
