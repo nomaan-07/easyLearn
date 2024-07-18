@@ -725,6 +725,12 @@ video {
   }
 }
 
+@media (min-width: 1640px) {
+  .container {
+    max-width: 1640px;
+  }
+}
+
 .btn {
   display: flex;
   align-items: center;
@@ -3197,6 +3203,12 @@ video {
       max-width: 1536px;
     }
   }
+
+  @media (min-width: 1640px) {
+    .sm\:container {
+      max-width: 1640px;
+    }
+  }
 }
 
 .hover\:font-bold:hover {
@@ -3548,13 +3560,15 @@ video {
     gap: 2.5rem;
   }
 
-  .\32xl\:py-20 {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
   .\32xl\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1640px) {
+  .\33xl\:py-28 {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
   }
 }
