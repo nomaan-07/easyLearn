@@ -20,7 +20,7 @@ const toggleColorPlate = () => {
 };
 
 function changeTheme(theme) {
-  document.documentElement.className = theme;
+  document.documentElement.className = `scroll-smooth ${theme}`;
 
   localStorage.setItem('theme', theme);
 
