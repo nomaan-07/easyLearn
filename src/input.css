@@ -5,27 +5,27 @@
 @layer base {
   @font-face {
     font-family: 'Vazir';
-    src: url('../fonts/Vazir/Vazir-Regular.woff2') format('woff2');
+    src: url('../fonts/Vazir/Vazir-Regular-FD.woff2') format('woff2');
   }
   @font-face {
     font-family: 'Vazir Medium';
-    src: url('../fonts/Vazir/Vazir-Medium.woff2') format('woff2');
+    src: url('../fonts/Vazir/Vazir-Medium-FD.woff2') format('woff2');
   }
   @font-face {
     font-family: 'Vazir Bold';
-    src: url('../fonts/Vazir/Vazir-Bold.woff2') format('woff2');
+    src: url('../fonts/Vazir/Vazir-Bold-FD.woff2') format('woff2');
   }
   @font-face {
     font-family: 'Vazir Light';
-    src: url('../fonts/Vazir/Vazir-Light.woff2') format('woff2');
+    src: url('../fonts/Vazir/Vazir-Light-FD.woff2') format('woff2');
   }
   @font-face {
     font-family: 'Vazir Thin';
-    src: url('../fonts/Vazir/Vazir-Thin.woff2') format('woff2');
+    src: url('../fonts/Vazir/Vazir-Thin-FD.woff2') format('woff2');
   }
   @font-face {
     font-family: 'Vazir Black';
-    src: url('../fonts/Vazir/Vazir-Black.woff2') format('woff2');
+    src: url('../fonts/Vazir/Vazir-Black-FD.woff2') format('woff2');
   }
 
   /* Theme */

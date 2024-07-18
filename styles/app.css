@@ -449,37 +449,37 @@ video {
 @font-face {
   font-family: 'Vazir';
 
-  src: url('../fonts/Vazir/Vazir-Regular.woff2') format('woff2');
+  src: url('../fonts/Vazir/Vazir-Regular-FD.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Vazir Medium';
 
-  src: url('../fonts/Vazir/Vazir-Medium.woff2') format('woff2');
+  src: url('../fonts/Vazir/Vazir-Medium-FD.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Vazir Bold';
 
-  src: url('../fonts/Vazir/Vazir-Bold.woff2') format('woff2');
+  src: url('../fonts/Vazir/Vazir-Bold-FD.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Vazir Light';
 
-  src: url('../fonts/Vazir/Vazir-Light.woff2') format('woff2');
+  src: url('../fonts/Vazir/Vazir-Light-FD.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Vazir Thin';
 
-  src: url('../fonts/Vazir/Vazir-Thin.woff2') format('woff2');
+  src: url('../fonts/Vazir/Vazir-Thin-FD.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Vazir Black';
 
-  src: url('../fonts/Vazir/Vazir-Black.woff2') format('woff2');
+  src: url('../fonts/Vazir/Vazir-Black-FD.woff2') format('woff2');
 }
 
 /* Theme */
@@ -3289,16 +3289,12 @@ video {
     margin-top: 1.25rem;
   }
 
-  .xs\:h-\[480px\] {
-    height: 480px;
-  }
-
-  .xs\:h-auto {
-    height: auto;
-  }
-
   .xs\:h-7 {
     height: 1.75rem;
+  }
+
+  .xs\:h-\[480px\] {
+    height: 480px;
   }
 
   .xs\:text-4xl\/\[50px\] {
@@ -3434,12 +3430,12 @@ video {
 }
 
 @media (min-width: 1280px) {
-  .xl\:h-\[580px\] {
-    height: 580px;
-  }
-
   .xl\:h-8 {
     height: 2rem;
+  }
+
+  .xl\:h-\[580px\] {
+    height: 580px;
   }
 
   .xl\:w-\[600px\] {
@@ -3466,10 +3462,6 @@ video {
 }
 
 @media (min-width: 1536px) {
-  .\32xl\:h-auto {
-    height: auto;
-  }
-
   .\32xl\:h-9 {
     height: 2.25rem;
   }
