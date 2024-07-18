@@ -121,6 +121,18 @@
   .mobile-menu-submenu-open {
     @apply h-auto my-4 py-2;
   }
+  .hero-svg-wrapper {
+    animation: fly 10s ease infinite;
+  }
+  @keyframes fly {
+    0%,
+    100% {
+      transform: translateY(-5%);
+    }
+    50% {
+      transform: translateY(5%);
+    }
+  }
 }
 
 @layer utilities {

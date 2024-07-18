@@ -750,6 +750,21 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.hero-svg-wrapper {
+  animation: fly 10s ease infinite;
+}
+
+@keyframes fly {
+  0%,
+    100% {
+    transform: translateY(-5%);
+  }
+
+  50% {
+    transform: translateY(5%);
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
