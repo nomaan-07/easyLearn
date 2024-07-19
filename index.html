@@ -181,6 +181,13 @@
           d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
         />
       </symbol>
+      <symbol id="sparkles" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+        />
+      </symbol>
       <symbol id="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path
           fill-rule="evenodd"
@@ -606,22 +613,24 @@
 
       <!--  Latest Courses-->
       <section class="pt-28 sm:pt-48" id="latest-courses">
-        <div class="container">
+        <div class="container overflow-x-hidden">
           <!-- Section Header -->
           <div class="flex flex-col sm:flex-row items-center sm:items-end sm:justify-between mb-8 sm:mb-20">
-            <div class="sm:flex sm:items-end sm:gap-4 text-2xl md:text-3xl font-VazirBlack">
-              <div>
-                <img class="hidden sm:block size-11 md:size-12 lg:size-14" src="./images/icons/link.png" />
+            <!-- Section Title -->
+            <div class="section-title" data-aos="fade-left">
+              <div class="hidden sm:block size-10 md:size-11 2xl:size-12">
+                <img class="w-full h-full" src="./images/icons/link.png" />
               </div>
+              <svg class="sm:hidden size-6 theme-text-color rotate-180">
+                <use href="#sparkles"></use>
+              </svg>
               <h2>جدیدترین دوره ها</h2>
+              <svg class="sm:hidden size-6 theme-text-color">
+                <use href="#sparkles"></use>
+              </svg>
             </div>
-            <!-- padding: 5px 12px;
-            border-radius: 12px;
-            background: red; -->
-            <a
-              class="flex items-center justify-center sm:justify-start gap-3 py-1.5 px-3 bg-slate-200 dark:bg-slate-700 sm:bg-transparent sm:dark:bg-transparent shadow sm:shadow-none sm:p-0 text-lg md:hover:theme-text-color child:transition-all w-48 mt-8 sm:mt-0 text-green-500 dark:text-green-400 md:text-inherit md:dark:text-inherit rounded-full relative group"
-              href="./courses.html"
-            >
+            <!-- Section Link -->
+            <a class="section-link group" href="./courses.html" data-aos="fade-right">
               <span>مشاهده همه دوره ها</span>
               <svg class="hidden sm:block size-4 md:absolute md:left-5 md:group-hover:left-0 transition-all">
                 <use href="#chevron-double-left"></use>
