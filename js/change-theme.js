@@ -13,9 +13,8 @@ const setThemeFromLocalStorage = () => {
 setThemeFromLocalStorage();
 
 const toggleColorPlate = () => {
-  colorPlate.classList.toggle('hide');
-  colorPlate.classList.toggle('show');
-  colorPlate.classList.toggle('translate-y-10');
+  colorPlate.classList.toggle('hidden');
+  colorPlate.classList.toggle('flex');
   colorPlateBtn.classList.toggle('rotate-45');
 };
 

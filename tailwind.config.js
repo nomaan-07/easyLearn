@@ -27,6 +27,30 @@ module.exports = {
         VazirThin: 'Vazir Thin',
         VazirBlack: 'Vazir Black',
       },
+      animation: {
+        'open-up': 'open-up 0.5s ease',
+        float: 'float 10s ease infinite',
+      },
+      keyframes: {
+        'open-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(40px)',
+          },
+          '100%': {
+            opacity: '100',
+            transform: 'translateY(0)',
+          },
+        },
+        float: {
+          '0%, 100%': {
+            transform: 'translateY(-7%)',
+          },
+          '50%': {
+            transform: 'translateY(7%)',
+          },
+        },
+      },
     },
   },
   plugins: [
