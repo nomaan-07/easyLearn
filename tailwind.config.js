@@ -30,6 +30,7 @@ module.exports = {
       animation: {
         'open-up': 'open-up 0.5s ease',
         float: 'float 10s ease infinite',
+        'float-fast': 'float 5s ease infinite',
       },
       keyframes: {
         'open-up': {
