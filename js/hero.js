@@ -1,5 +1,5 @@
-import { heroParticlesJS } from './particles.app.js';
-import { heroTypewriter } from './typewriter.app.js';
+import { heroParticlesJS } from './particles.initialize.js';
+import { heroTypewriter } from './typewriter.initialize.js';
 
 heroParticlesJS();
 heroTypewriter();

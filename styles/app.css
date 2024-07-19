@@ -1087,6 +1087,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-28 {
+  margin-top: 7rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -1274,6 +1278,10 @@ video {
 
 .h-80 {
   height: 20rem;
+}
+
+.h-96 {
+  height: 24rem;
 }
 
 .h-\[122px\] {
@@ -2531,6 +2539,10 @@ video {
   background-color: rgb(255 255 255 / 0.8);
 }
 
+.bg-section {
+  background-image: url(../images/backgrounds/section-bg.jpg);
+}
+
 .decoration-slice {
   -webkit-box-decoration-break: slice;
           box-decoration-break: slice;
@@ -2549,6 +2561,10 @@ video {
 .box-decoration-clone {
   -webkit-box-decoration-break: clone;
           box-decoration-break: clone;
+}
+
+.bg-cover {
+  background-size: cover;
 }
 
 .bg-fixed {
@@ -2578,6 +2594,10 @@ video {
 .bg-clip-text {
   -webkit-background-clip: text;
           background-clip: text;
+}
+
+.bg-center {
+  background-position: center;
 }
 
 .bg-repeat {
@@ -3601,6 +3621,10 @@ video {
 
   .sm\:mt-3 {
     margin-top: 0.75rem;
+  }
+
+  .sm\:mt-48 {
+    margin-top: 12rem;
   }
 
   .sm\:mt-7 {

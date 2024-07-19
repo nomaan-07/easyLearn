@@ -51,6 +51,9 @@ module.exports = {
           },
         },
       },
+      backgroundImage: {
+        'section': 'url(../images/backgrounds/section-bg.jpg)'
+      }
     },
   },
   plugins: [
