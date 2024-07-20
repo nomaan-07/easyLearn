@@ -112,6 +112,10 @@
   .section-link {
     @apply flex items-center justify-between gap-2 text-lg child:transition-all md:w-48 mt-8 sm:mt-0 text-green-500 dark:text-green-400 md:text-inherit md:dark:text-inherit md:hover:theme-text-color md:dark:hover:theme-text-color rounded-full relative;
   }
+
+  .course-cart {
+    @apply bg-white dark:bg-slate-800 shadow overflow-hidden rounded-2xl relative pb-5;
+  }
 }
 
 @layer utilities {
