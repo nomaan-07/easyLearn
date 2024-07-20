@@ -33,10 +33,10 @@
   :root {
     /* fuchsia-600 */
     --theme-color: #c026d3;
-    /* fuchsia-600 */
-    --theme-text-color: #c026d3;
     /* fuchsia-700 */
     --theme-hover-bg-color: #a21caf;
+    /* fuchsia-600/10 */
+    --theme-color-10: rgba(192, 38, 211, 0.1);
   }
 
   .fuchsia:root {
@@ -44,48 +44,64 @@
     --theme-color: #c026d3;
     /* fuchsia-700 */
     --theme-hover-bg-color: #a21caf;
+    /* fuchsia-600/10 */
+    --theme-color-10: rgba(192, 38, 211, 0.1);
   }
   .amber:root {
     /* amber-600 */
     --theme-color: #d97706;
     /* amber-700 */
     --theme-hover-bg-color: #b45309;
+    /* amber-600/10 */
+    --theme-color-10: rgba(217, 119, 6, 0.1);
   }
   .rose:root {
     /* rose-600 */
     --theme-color: #e11d48;
     /* rose-700 */
     --theme-hover-bg-color: #be123c;
+    /* rose-600/10 */
+    --theme-color-10: rgba(225, 29, 72, 0.1);
   }
   .violet:root {
     /* violet-600 */
     --theme-color: #7c3aed;
     /* violet-700 */
     --theme-hover-bg-color: #6d28d9;
+    /* violet-600/100 */
+    --theme-color-10: rgba(124, 58, 237, 0.1);
   }
   .sky:root {
     /* sky-600 */
     --theme-color: #0284c7;
     /* sky-700 */
     --theme-hover-bg-color: #0369a1;
+    /* sky-600/10 */
+    --theme-color-10: rgba(2, 132, 199, 0.1);
   }
   .emerald:root {
     /* emerald-600 */
     --theme-color: #059669;
     /* emerald-700 */
     --theme-hover-bg-color: #047857;
+    /* emerald-600/10 */
+    --theme-color-10: rgba(5, 150, 105, 0.1);
   }
   .lime:root {
     /* lime-600 */
     --theme-color: #65a30d;
     /* lime-700 */
     --theme-hover-bg-color: #4d7c0f;
+    /* lime-600/10 */
+    --theme-color-10: rgba(101, 163, 13, 0.1);
   }
   .dark:root {
     /* yellow-500 */
     --theme-color: #eab308;
     /* yellow-400 */
     --theme-hover-bg-color: #facc15;
+    /* yellow-500/10 */
+    --theme-color-10: rgba(234, 179, 8, 0.1);
   }
 
   .theme-bg-color {
@@ -96,6 +112,9 @@
   }
   .theme-hover-bg-color {
     background-color: var(--theme-hover-bg-color);
+  }
+  .theme-color-10 {
+    background-color: var(--theme-color-10);
   }
 }
 @layer components {

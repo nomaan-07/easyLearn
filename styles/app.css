@@ -487,10 +487,10 @@ video {
 :root {
   /* fuchsia-600 */
   --theme-color: #c026d3;
-  /* fuchsia-600 */
-  --theme-text-color: #c026d3;
   /* fuchsia-700 */
   --theme-hover-bg-color: #a21caf;
+  /* fuchsia-600/10 */
+  --theme-color-10: rgba(192, 38, 211, 0.1);
 }
 
 .fuchsia:root {
@@ -498,6 +498,8 @@ video {
   --theme-color: #c026d3;
   /* fuchsia-700 */
   --theme-hover-bg-color: #a21caf;
+  /* fuchsia-600/10 */
+  --theme-color-10: rgba(192, 38, 211, 0.1);
 }
 
 .amber:root {
@@ -505,6 +507,8 @@ video {
   --theme-color: #d97706;
   /* amber-700 */
   --theme-hover-bg-color: #b45309;
+  /* amber-600/10 */
+  --theme-color-10: rgba(217, 119, 6, 0.1);
 }
 
 .rose:root {
@@ -512,6 +516,8 @@ video {
   --theme-color: #e11d48;
   /* rose-700 */
   --theme-hover-bg-color: #be123c;
+  /* rose-600/10 */
+  --theme-color-10: rgba(225, 29, 72, 0.1);
 }
 
 .violet:root {
@@ -519,6 +525,8 @@ video {
   --theme-color: #7c3aed;
   /* violet-700 */
   --theme-hover-bg-color: #6d28d9;
+  /* violet-600/100 */
+  --theme-color-10: rgba(124, 58, 237, 0.1);
 }
 
 .sky:root {
@@ -526,6 +534,8 @@ video {
   --theme-color: #0284c7;
   /* sky-700 */
   --theme-hover-bg-color: #0369a1;
+  /* sky-600/10 */
+  --theme-color-10: rgba(2, 132, 199, 0.1);
 }
 
 .emerald:root {
@@ -533,6 +543,8 @@ video {
   --theme-color: #059669;
   /* emerald-700 */
   --theme-hover-bg-color: #047857;
+  /* emerald-600/10 */
+  --theme-color-10: rgba(5, 150, 105, 0.1);
 }
 
 .lime:root {
@@ -540,6 +552,8 @@ video {
   --theme-color: #65a30d;
   /* lime-700 */
   --theme-hover-bg-color: #4d7c0f;
+  /* lime-600/10 */
+  --theme-color-10: rgba(101, 163, 13, 0.1);
 }
 
 .dark:root {
@@ -547,6 +561,8 @@ video {
   --theme-color: #eab308;
   /* yellow-400 */
   --theme-hover-bg-color: #facc15;
+  /* yellow-500/10 */
+  --theme-color-10: rgba(234, 179, 8, 0.1);
 }
 
 .theme-bg-color {
@@ -3627,6 +3643,10 @@ video {
   visibility: visible;
 }
 
+.focus-within\:theme-color-10:focus-within {
+  background-color: var(--theme-color-10);
+}
+
 .hover\:theme-bg-color:hover {
   background-color: var(--theme-color);
 }
@@ -3645,6 +3665,10 @@ video {
 
 .child-hover\:theme-text-color > *:hover {
   color: var(--theme-color);
+}
+
+.dark\:focus-within\:theme-color-10:focus-within:is(.dark *) {
+  background-color: var(--theme-color-10);
 }
 
 .dark\:hover\:theme-bg-color:hover:is(.dark *) {
@@ -4138,8 +4162,8 @@ video {
     height: 704px;
   }
 
-  .md\:w-80 {
-    width: 20rem;
+  .md\:w-96 {
+    width: 24rem;
   }
 
   .md\:w-auto {
