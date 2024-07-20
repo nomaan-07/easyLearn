@@ -3217,6 +3217,18 @@ video {
   color: rgb(234 179 8 / var(--tw-text-opacity));
 }
 
+.text-fuchsia-600\/10 {
+  color: rgb(192 38 211 / 0.1);
+}
+
+.text-fuchsia-600\/50 {
+  color: rgb(192 38 211 / 0.5);
+}
+
+.text-fuchsia-600\/30 {
+  color: rgb(192 38 211 / 0.3);
+}
+
 .underline {
   text-decoration-line: underline;
 }
