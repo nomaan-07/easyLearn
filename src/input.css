@@ -100,7 +100,7 @@
 }
 @layer components {
   .btn {
-    @apply text-white py-2 px-4 rounded-lg flex items-center justify-center font-VazirMedium transition-all;
+    @apply text-white py-2 px-4 rounded-full flex items-center justify-center font-VazirMedium transition-all;
   }
   .mobile-menu-submenu-open {
     @apply h-auto my-4 py-2;
