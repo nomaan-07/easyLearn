@@ -3,7 +3,7 @@ const swiper = new Swiper('.popular-courses-swiper', {
   slidesPerView: 1,
   loop: true,
   autoplay: {
-    delay: 5000,
+    delay: 4000,
     pauseOnMouseEnter: true,
   },
   spaceBetween: 24,
