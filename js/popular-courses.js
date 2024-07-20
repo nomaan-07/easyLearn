@@ -1,5 +1,4 @@
 const swiper = new Swiper('.popular-courses-swiper', {
-  grabCursor: true,
   slidesPerView: 1,
   loop: true,
   autoplay: {
