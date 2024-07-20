@@ -960,6 +960,22 @@ video {
   top: 1.75rem;
 }
 
+.top-\[417px\] {
+  top: 417px;
+}
+
+.top-\[370px\] {
+  top: 370px;
+}
+
+.top-\[378px\] {
+  top: 378px;
+}
+
+.top-\[402px\] {
+  top: 402px;
+}
+
 .isolate {
   isolation: isolate;
 }
@@ -1081,6 +1097,14 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.mt-36 {
+  margin-top: 9rem;
+}
+
+.mt-48 {
+  margin-top: 12rem;
 }
 
 .box-border {
@@ -1412,6 +1436,16 @@ video {
 
 .border-separate {
   border-collapse: separate;
+}
+
+.translate-y-\[387px\] {
+  --tw-translate-y: 387px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-\[417px\] {
+  --tw-translate-y: 417px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .rotate-180 {
@@ -3745,6 +3779,10 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:static {
+    position: static;
+  }
+
   .sm\:absolute {
     position: absolute;
   }
@@ -3808,6 +3846,11 @@ video {
 
   .sm\:w-96 {
     width: 24rem;
+  }
+
+  .sm\:translate-y-0 {
+    --tw-translate-y: 0px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
   .sm\:grid-cols-2 {
