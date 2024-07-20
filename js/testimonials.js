@@ -6,8 +6,6 @@ swiperHandler('.testimonials-swiper', {
   centeredSlides: true,
   slidesPerView: 'auto',
   loop: true,
-  autoPlay: true,
-  autoPlayDuration: 4000,
 
   creativeEffect: {
     next: {
@@ -19,6 +17,7 @@ swiperHandler('.testimonials-swiper', {
       translate: ['110%', 0, -100],
     },
   },
+
   breakpoints: {
     640: {
       slidesPerView: 2,
@@ -44,7 +43,7 @@ swiperHandler('.testimonials-swiper', {
   },
 
   navigation: {
-    nextEl: '.swiper-next-btn',
-    prevEl: '.swiper-prev-btn',
+    nextEl: '.testimonials-swiper-next-btn',
+    prevEl: '.testimonials-swiper-prev-btn',
   },
 });
