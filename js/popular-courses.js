@@ -4,6 +4,7 @@ const swiper = new Swiper('.popular-courses-swiper', {
   loop: true,
   autoplay: {
     delay: 5000,
+    pauseOnMouseEnter: true,
   },
   spaceBetween: 24,
 
