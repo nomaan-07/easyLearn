@@ -817,22 +817,6 @@ video {
   }
 }
 
-.swiper-slide {
-  opacity: 0.2 !important;
-}
-
-.swiper-slide-visible {
-  opacity: 0.3 !important;
-}
-
-.swiper-slide-fully-visible {
-  opacity: 0.8 !important;
-}
-
-.swiper-slide-active {
-  opacity: 1 !important;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2814,10 +2798,6 @@ video {
   padding-bottom: 1.25rem;
 }
 
-.pb-96 {
-  padding-bottom: 24rem;
-}
-
 .pt-16 {
   padding-top: 4rem;
 }
@@ -3104,10 +3084,6 @@ video {
 
 .decoration-wavy {
   text-decoration-style: wavy;
-}
-
-.underline-offset-4 {
-  text-underline-offset: 4px;
 }
 
 .antialiased {
@@ -3414,10 +3390,6 @@ video {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-.delay-75 {
-  transition-delay: 75ms;
 }
 
 .ease-in {
@@ -3773,6 +3745,18 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:absolute {
+    position: absolute;
+  }
+
+  .sm\:left-4 {
+    left: 1rem;
+  }
+
+  .sm\:top-0 {
+    top: 0px;
+  }
+
   .sm\:mx-auto {
     margin-left: auto;
     margin-right: auto;
@@ -3780,6 +3764,10 @@ video {
 
   .sm\:mb-20 {
     margin-bottom: 5rem;
+  }
+
+  .sm\:mt-0 {
+    margin-top: 0px;
   }
 
   .sm\:mt-3 {
@@ -4104,11 +4092,6 @@ video {
     height: 3.5rem;
   }
 
-  .\32xl\:size-1\/4 {
-    width: 25%;
-    height: 25%;
-  }
-
   .\32xl\:size-7 {
     width: 1.75rem;
     height: 1.75rem;
@@ -4124,10 +4107,6 @@ video {
 
   .\32xl\:gap-10 {
     gap: 2.5rem;
-  }
-
-  .\32xl\:gap-6 {
-    gap: 1.5rem;
   }
 
   .\32xl\:text-3xl {

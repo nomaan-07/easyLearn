@@ -112,18 +112,6 @@
   .section-link {
     @apply flex items-center justify-between gap-2 text-lg child:transition-all md:w-48 mt-8 sm:mt-0 text-green-500 dark:text-green-400 md:text-inherit md:dark:text-inherit md:hover:theme-text-color md:dark:hover:theme-text-color rounded-full relative;
   }
-  .swiper-slide {
-    opacity: 0.2 !important;
-  }
-  .swiper-slide-visible {
-    opacity: 0.3 !important;
-  }
-  .swiper-slide-fully-visible {
-    opacity: 0.8 !important;
-  }
-  .swiper-slide-active {
-    opacity: 1 !important;
-  }
 }
 
 @layer utilities {

@@ -1,6 +1,4 @@
-import swiperHandler from './swiper.initialize.js';
-
-swiperHandler('.testimonials-swiper', {
+const swiper = new Swiper('.testimonials-swiper', {
   effect: 'creative',
   grabCursor: true,
   centeredSlides: true,
@@ -11,10 +9,12 @@ swiperHandler('.testimonials-swiper', {
     next: {
       shadow: false,
       translate: ['-110%', 0, -100],
+      opacity: 0.8,
     },
     prev: {
       shadow: false,
       translate: ['110%', 0, -100],
+      opacity: 0.8,
     },
   },
 
