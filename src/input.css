@@ -114,7 +114,7 @@
   }
 
   .course-cart {
-    @apply bg-white dark:bg-slate-800 shadow overflow-hidden rounded-2xl relative pb-5;
+    @apply bg-white dark:bg-slate-800 shadow overflow-hidden rounded-2xl relative pb-4;
   }
 
   .blog-cart-link {
