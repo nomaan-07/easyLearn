@@ -4,3 +4,4 @@ import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
 import './popular-courses.js';
+import './api.js';

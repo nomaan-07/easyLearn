@@ -31,6 +31,7 @@ module.exports = {
         'open-up': 'open-up 0.5s ease',
         float: 'float 10s ease infinite',
         'float-fast': 'float 5s ease infinite',
+        rotate: 'rotate 2s ease infinite',
       },
       keyframes: {
         'open-up': {
@@ -51,10 +52,18 @@ module.exports = {
             transform: 'translateY(7%)',
           },
         },
+        rotate: {
+          '0%, 100%': {
+            transform: 'rotate(20deg)',
+          },
+          '50%': {
+            transform: 'rotate(-20deg)',
+          },
+        },
       },
       backgroundImage: {
-        'section': 'url(../images/backgrounds/section-bg.jpg)'
-      }
+        section: 'url(../images/backgrounds/section-bg.jpg)',
+      },
     },
   },
   plugins: [
