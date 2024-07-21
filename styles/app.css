@@ -3225,6 +3225,11 @@ video {
   color: rgb(51 102 153 / .35);
 }
 
+.text-\[\#3cd37c\] {
+  --tw-text-opacity: 1;
+  color: rgb(60 211 124 / var(--tw-text-opacity));
+}
+
 .text-\[\#cd486b\] {
   --tw-text-opacity: 1;
   color: rgb(205 72 107 / var(--tw-text-opacity));
@@ -3794,6 +3799,11 @@ video {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.hover\:text-\[\#0fa5ea\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(15 165 234 / var(--tw-text-opacity));
 }
 
 .before\:hover\:text-center:hover::before {
