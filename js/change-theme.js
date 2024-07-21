@@ -45,7 +45,7 @@ function changeTheme(theme) {
 }
 
 changeThemeButtons.forEach((btn) => {
-  btn.addEventListener('click', (event) => {
+  btn.addEventListener('click', () => {
     const theme = btn.dataset.theme;
     changeTheme(theme);
     toggleColorPlate();
