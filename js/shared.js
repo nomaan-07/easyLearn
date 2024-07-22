@@ -16,8 +16,13 @@ const generateRandomID = () => {
   return result;
 };
 
-async function getCoursesFromDatabase() {
-  const { data, error } = await database.from('courses').select();
+async function getAllFromDataBase(tableName) {
+  const { data, error } = await database.from(tableName).select();
+  return data || error;
+}
+
+async function getCourseFromDatabase(courseID) {
+  const { data, error } = await database.from('courses').select().eq('id', courseID).single();
   return data || error;
 }
 
@@ -42,4 +47,4 @@ const removeLoader = () => {
   document.querySelector('.loader-wrapper').classList.add('hide');
 };
 
-export { removeLoader, generateRandomID, getCoursesFromDatabase, addCourseToDatabase, updateCourseInDatabase, deleteCourseFromDatabase };
+export { removeLoader, generateRandomID, getAllFromDataBase, addCourseToDatabase, updateCourseInDatabase, deleteCourseFromDatabase };

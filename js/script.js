@@ -3,15 +3,16 @@ import './header.js';
 import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
-import { removeLoader, getCoursesFromDatabase } from './shared.js';
+import { removeLoader, getAllFromDataBase } from './shared.js';
 
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
+const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
 
 window.addCourseToCart = (id) => {
   console.log(id);
 };
 
-const latestCourseTemplate = (id, name, description, src, teacher, students, rate, price, discountPercent, finalPrice) => {
+const courseTemplate = (id, name, description, src, teacher, students, rate, price, discountPercent, finalPrice, courseWrapperClass) => {
   let finalPriceTemplate = null;
   if (discountPercent === 100) {
     finalPriceTemplate = `
@@ -29,7 +30,7 @@ const latestCourseTemplate = (id, name, description, src, teacher, students, rat
   }
   const courseTemplate = `            
                 <!-- Course -->
-            <div class="course-cart group">
+            <div class="${courseWrapperClass} group">
               <!-- Course Banner -->
               <div class="h-40 rounded-b-2xl overflow-hidden">
                 <a class="size-full" href="./course.html">
@@ -90,22 +91,28 @@ const latestCourseTemplate = (id, name, description, src, teacher, students, rat
   return courseTemplate;
 };
 
-const calculateFinalPrice = (price, discount) => {
+const getFinalPrice = (price, discount) => {
   return discount === 100 ? 'رایگان' : (price * (100 - discount)) / 100;
 };
-const addLatestCourseToDOM = (courses) => {
-  latestCoursesWrapperElement.innerHtml = '';
+
+const addCoursesToDOM = (courses, courseWrapper, isSwiper) => {
+  let courseWrapperClass = isSwiper ? 'swiper-slide course-cart' : 'course-cart';
+  courseWrapper.innerHTML = '';
   let finalPrice = null;
   courses.forEach((course) => {
-    finalPrice = calculateFinalPrice(course.price, course.discount);
-    latestCoursesWrapperElement.insertAdjacentHTML('beforeend', latestCourseTemplate(course.id, course.name, course.description, course.src, course.teacher, course.students, course.rate, course.price, course.discount, finalPrice));
+    finalPrice = getFinalPrice(course.price, course.discount);
+    courseWrapper.insertAdjacentHTML('beforeend', courseTemplate(course.id, course.name, course.description, course.src, course.teacher, course.students, course.rate, course.price, course.discount, finalPrice, courseWrapperClass));
   });
 };
 
-getCoursesFromDatabase().then((courses) => {
-  const LastTenCourses = courses.slice(-10);
-  addLatestCourseToDOM(LastTenCourses);
-});
+getAllFromDataBase('courses')
+  .then((courses) => {
+    const LastTenCourses = courses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
+    const twelveMostPopularCourses = courses.sort((a, b) => b.students - a.students).slice(0, 12);
+    addCoursesToDOM(LastTenCourses, latestCoursesWrapperElement, false);
+    addCoursesToDOM(twelveMostPopularCourses, popularCoursesWrapperElement, true);
+  })
+  .catch((error) => console.log(error));
 
 // Popular Courses Swiper
 const swiper = new Swiper('.popular-courses-swiper', {
