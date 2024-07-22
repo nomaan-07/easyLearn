@@ -31,4 +31,10 @@ async function addCourseToDataBase(items) {
 
 // getCourses().then((res) => console.log(res));
 
-export { generateRandomID, getCourses, addCourseToDataBase };
+const removeLoader = () => {
+  document.body.classList.remove('h-0');
+  document.body.classList.remove('overflow-y-hidden');
+  document.querySelector('.loader-wrapper').classList.add('hide');
+};
+
+export { removeLoader, generateRandomID, getCourses, addCourseToDataBase };
