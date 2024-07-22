@@ -3796,14 +3796,14 @@ video {
   font-weight: 700;
 }
 
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .hover\:text-\[\#0fa5ea\]:hover {
   --tw-text-opacity: 1;
   color: rgb(15 165 234 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .before\:hover\:text-center:hover::before {
