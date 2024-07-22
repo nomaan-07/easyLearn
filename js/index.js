@@ -16,21 +16,23 @@ const formattedDate = (date) => {
   const year = newDate.getFullYear();
   return `${year}/${month}/${day}`;
 };
+
 window.addCourseToCart = (id) => {
   console.log(id);
 };
 
-const courseTemplate = (id, name, description, src, teacher, students, rate, price, discountPercent, finalPrice, courseWrapperClass) => {
+// Add courses to DOM
+const courseTemplate = (course) => {
   let finalPriceTemplate = null;
-  if (discountPercent === 100) {
+  if (course.discountPercent === 100) {
     finalPriceTemplate = `
           <div class="text-left">
-              <span class="text-green-600 dark:text-green-400">${finalPrice}</span>
+              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
             </div>`;
   } else {
     finalPriceTemplate = `
           <div class="flex items-end">
-              <span class="text-green-600 dark:text-green-400">${finalPrice}</span>
+              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
               <svg class="size-7 mr-[-3px]">
                 <use href="#toman"></use>
               </svg>
@@ -38,24 +40,24 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
   }
   const courseTemplateHtml = `            
                 <!-- Course -->
-            <div class="${courseWrapperClass} group">
+            <div class="${course.courseWrapperClass} group">
               <!-- Course Banner -->
               <div class="h-40 rounded-b-2xl overflow-hidden">
                 <a class="size-full" href="./course.html">
-                  <img class="size-full object-cover" loading="lazy" src="${src}" alt="${name}" />
+                  <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
                 </a>
                 <!-- Discount Percent -->
-                <div class="absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${discountPercent}%</div>
+                <div class="absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${course.discountPercent}%</div>
               </div>
               <!-- End of Course Banner -->
               <div class="h-[122px] px-4 space-y-2 mt-4">
                 <!-- Course Name -->
-                <a class="block font-VazirBold text-lg max-h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html">${name}</a>
+                <a class="block font-VazirBold text-lg max-h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html">${course.name}</a>
                 <!-- Course Description -->
-                <p class="line-clamp-2 font-VazirLight max-h-12">${description}</p>
+                <p class="line-clamp-2 font-VazirLight max-h-12">${course.description}</p>
               </div>
               <!-- Course Teacher -->
-              <a class="flex justify-center bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 absolute left-0 right-0 bottom-[86px] mx-auto w-48 py-2 rounded-full transition-colors" href="./teacher.html">${teacher}</a>
+              <a class="flex justify-center bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 absolute left-0 right-0 bottom-[86px] mx-auto w-48 py-2 rounded-full transition-colors" href="./teacher.html">${course.teacher}</a>
               <!-- Students && Rating && Price  -->
               <div class="flex items-end justify-between px-4 pt-8 mt-8 border-t border-t-slate-200 dark:border-t-slate-700">
                 <!-- Students && Rating  -->
@@ -65,7 +67,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
                     <svg class="size-5 theme-text-color">
                       <use href="#user-group"></use>
                     </svg>
-                    <span>${students}</span>
+                    <span>${course.students}</span>
                   </div>
                   <!-- End of Students -->
                   <!-- Rating -->
@@ -73,7 +75,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
                     <svg class="size-5 text-yellow-500">
                       <use href="#star"></use>
                     </svg>
-                    <span>${rate}</span>
+                    <span>${course.rate}</span>
                   </div>
                   <!-- End of Rating -->
                 </div>
@@ -81,7 +83,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
                 <!-- Course Price -->
                 <div>
                   <!-- Price -->
-                  <span class="text-sm line-through dark:text-slate-200 decoration-red-400">${price}</span>
+                  <span class="text-sm line-through dark:text-slate-200 decoration-red-400">${course.price}</span>
                   <!-- Final Price -->
                     ${finalPriceTemplate}
                 </div>
@@ -89,7 +91,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
               </div>
               <!-- End of Students && Rating && Price  -->
               <!-- Cart Btn -->
-              <div class="absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer" onclick="addCourseToCart('${id}')">
+              <div class="absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer" onclick="addCourseToCart('${course.id}')">
                 <svg class="size-6">
                   <use href="#shopping-bag"></use>
                 </svg>
@@ -102,14 +104,25 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
 const addCoursesToDOM = (courses, coursesWrapper, isSwiper) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-cart' : 'course-cart';
   coursesWrapper.innerHTML = '';
-  let finalPrice = null;
+  let newCourse = null;
   courses.forEach((course) => {
-    finalPrice = getFinalPrice(course.price, course.discount);
-    coursesWrapper.insertAdjacentHTML('beforeend', courseTemplate(course.id, course.name, course.description, course.src, course.teacher, course.students, course.rate, course.price, course.discount, finalPrice, courseWrapperClass));
+    newCourse = {
+      id: course.id,
+      name: course.name,
+      description: course.description,
+      src: course.src,
+      teacher: course.teacher,
+      students: course.students,
+      rate: course.rate,
+      discountPercent: course.discount,
+      price: course.price.toLocaleString('en-US'),
+      finalPrice: getFinalPrice(course.price, course.discount),
+      courseWrapperClass,
+    };
+    coursesWrapper.insertAdjacentHTML('beforeend', courseTemplate(newCourse));
   });
 };
 
-// Add Courses to DOM
 getAllFromDatabase('courses')
   .then((courses) => {
     const LastTenCourses = courses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
@@ -119,20 +132,21 @@ getAllFromDatabase('courses')
   })
   .catch((error) => console.log(error));
 
-const blogTemplate = (title, date, likes, comments, src, writer, readingTime, category) => {
+// Add blogs to dom
+const blogTemplate = (blog) => {
   const template = `
               <!-- Blog -->
             <div class="p-4 bg-white dark:bg-slate-800 shadow rounded-2xl group relative overflow-hidden">
               <!-- Blog Banner -->
               <a href="./blog.html" class="block w-full h-44 rounded-2xl overflow-hidden relative">
-                <img class="size-full object-cover" src="${src}" alt="${title}" />
+                <img class="size-full object-cover" loading="lazy" src="${blog.src}" alt="${blog.title}" />
                 <svg class="hidden md:block absolute size-full inset-0 theme-bg-color text-white p-3 opacity-80 group-hover:opacity-0 group-hover:translate-y-44 duration-500 rounded-2xl transition-all">
                   <use href="#logo"></use>
                 </svg>
               </a>
               <!-- End of Blag Banner -->
               <!-- Blog Title -->
-              <a class="block font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2 mt-4" href="./blog.html">${title}</a>
+              <a class="block font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2 mt-4" href="./blog.html">${blog.title}</a>
               <!-- End of Blog Title -->
               <!-- Writer and Category -->
               <div class="flex items-center justify-between gap-2 font-VazirBold text-xs border-t border-t-slate-200 dark:border-t-slate-700 mt-4 pt-4">
@@ -141,10 +155,10 @@ const blogTemplate = (title, date, likes, comments, src, writer, readingTime, ca
                   <svg class="size-4 theme-text-color">
                     <use href="#pencil-square"></use>
                   </svg>
-                  <span>${writer}</span>
+                  <span>${blog.writer}</span>
                 </div>
                 <!-- Category -->
-                <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${category}</a>
+                <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${blog.category}</a>
               </div>
               <!-- End of Writer and Category -->
               <!-- Likes & Comments && Time -->
@@ -156,14 +170,14 @@ const blogTemplate = (title, date, likes, comments, src, writer, readingTime, ca
                     <svg class="size-4 text-rose-500">
                       <use href="#heart"></use>
                     </svg>
-                    <span>${likes}</span>
+                    <span>${blog.likes}</span>
                   </div>
                   <!-- Comments -->
                   <div class="flex items-center gap-1">
                     <svg class="size-4 theme-text-color">
                       <use href="#chat-bubble-left-ellipsis"></use>
                     </svg>
-                    <span>${comments}</span>
+                    <span>${blog.comments}</span>
                   </div>
                 </div>
                 <!-- Time -->
@@ -171,7 +185,7 @@ const blogTemplate = (title, date, likes, comments, src, writer, readingTime, ca
                   <svg class="size-4 theme-text-color">
                     <use href="#timer"></use>
                   </svg>
-                  <span>زمان مطالعه: <span>${readingTime}</span> دقیقه</span>
+                  <span>زمان مطالعه: <span>${blog.readingTime}</span> دقیقه</span>
                 </div>
               </div>
               <!-- End of Likes & Comments && Time -->
@@ -180,12 +194,12 @@ const blogTemplate = (title, date, likes, comments, src, writer, readingTime, ca
                 <svg class="size-4 theme-text-color">
                   <use href="#calendar-days"></use>
                 </svg>
-                <span>${date}</span>
+                <span>${blog.date}</span>
               </div>
               <!-- End of Date -->
               <!-- Blog Link-->
               <a class="blog-cart-link group/btn" href="./blog.html">
-                <span>مطالعه مقاله</span>
+                <span class="transition-colors">مطالعه مقاله</span>
                 <svg class="size-4 md:absolute md:left-4 md:group-hover/btn:left-1 transition-all">
                   <use href="#left-arrow"></use>
                 </svg>
@@ -196,18 +210,27 @@ const blogTemplate = (title, date, likes, comments, src, writer, readingTime, ca
 
 const addBlogsToDom = (blogs, blogsWrapper) => {
   blogsWrapper.innerHTML = '';
-  let date = null;
+  let newBlog = null;
   blogs.forEach((blog) => {
-    date = formattedDate(blog.created_at);
-    blogsWrapper.insertAdjacentHTML('beforeend', blogTemplate(blog.title, date, blog.likes, blog.comments, blog.src, blog.writer, blog.reading_time, blog.category));
+    newBlog = {
+      title: blog.title,
+      date: formattedDate(blog.created_at),
+      likes: blog.likes,
+      comments: blog.comments,
+      src: blog.src,
+      writer: blog.writer,
+      readingTime: blog.reading_time,
+      category: blog.category,
+    };
+    blogsWrapper.insertAdjacentHTML('beforeend', blogTemplate(newBlog));
   });
 };
 
-// Add Blogs to DOM
 getAllFromDatabase('blogs').then((blogs) => {
   const lastFourBlog = blogs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
   addBlogsToDom(lastFourBlog, blogsWrapperElement);
 });
+
 // Popular Courses Swiper
 const swiper = new Swiper('.popular-courses-swiper', {
   slidesPerView: 1,
