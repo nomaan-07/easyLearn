@@ -9,14 +9,6 @@ const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrap
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
 const blogsWrapperElement = document.querySelector('.blogs-wrapper');
 
-const formattedDate = (date) => {
-  const newDate = new Date(date);
-  const day = newDate.getDate();
-  const month = newDate.getMonth();
-  const year = newDate.getFullYear();
-  return `${year}/${month}/${day}`;
-};
-
 window.addCourseToCart = (id) => {
   console.log(id);
 };
@@ -115,8 +107,8 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper) => {
       students: course.students,
       rate: course.rate,
       discountPercent: course.discount,
-      price: course.price.toLocaleString('en-US'),
-      finalPrice: getFinalPrice(course.price, course.discount),
+      price: course.price.toLocaleString('fa-IR'),
+      finalPrice: getFinalPrice(course.price, course.discount).toLocaleString('fa-IR'),
       courseWrapperClass,
     };
     coursesWrapper.insertAdjacentHTML('beforeend', courseTemplate(newCourse));
@@ -214,7 +206,7 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
   blogs.forEach((blog) => {
     newBlog = {
       title: blog.title,
-      date: formattedDate(blog.created_at),
+      date: new Date(blog.created_at).toLocaleDateString('fa-IR'),
       likes: blog.likes,
       comments: blog.comments,
       src: blog.src,
