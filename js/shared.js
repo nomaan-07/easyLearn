@@ -1,44 +1,58 @@
 import database from './api.js';
 
-const nowDate = () => {
-  return new Date();
-};
-
 const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-';
   const charactersLength = characters.length;
   const randomStringLength = Math.floor(Math.random() * (78 - 7)) + 6;
-  let result = `${nowDate().getTime() * 23}`;
+  let result = `${new Date().getTime() * 23}`;
   for (let i = 0; i < randomStringLength; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  result += nowDate().getTime() * 24;
+  result += new Date().getTime() * 24;
   return result;
 };
 
-async function getAllFromDataBase(tableName) {
+async function getAllFromDatabase(tableName) {
   const { data, error } = await database.from(tableName).select();
-  return data || error;
+  if (error) {
+    console.error('Error getting data', error);
+    return error;
+  }
+  return data;
 }
 
-async function getCourseFromDatabase(courseID) {
-  const { data, error } = await database.from('courses').select().eq('id', courseID).single();
-  return data || error;
+async function getOneFromDatabase(tableName, ID) {
+  const { data, error } = await database.from(tableName).select().eq('id', ID).single();
+  if (error) {
+    console.error('Error getting data', error);
+    return error;
+  }
+  return data;
 }
 
-async function addCourseToDatabase(items) {
-  const { error } = await database.from('courses').insert(course);
-  return error;
+async function addToDatabase(tableName, items) {
+  const { error } = await database.from(tableName).insert(items);
+  if (error) {
+    console.error('Error adding data', error);
+  }
+  return null;
 }
 
-async function updateCourseInDatabase(items, courseID) {
-  const { error } = await database.from('courses').update(items).eq('id', courseID);
-  return error;
+async function updateInDatabase(tableName, items, ID) {
+  const { error } = await database.from(tableName).update(items).eq('id', ID);
+  if (error) {
+    console.error('Error updating data', error);
+  }
+  return null;
 }
 
-async function deleteCourseFromDatabase(courseID) {
-  const response = await database.from('courses').delete().eq('id', courseID);
-  return response;
+async function deleteFromDatabase(tableName, ID) {
+  const { error } = await database.from(tableName).delete().eq('id', ID);
+  if (error) {
+    console.error('Error deleting data', error);
+    return error;
+  }
+  return null;
 }
 
 const removeLoader = () => {
@@ -47,4 +61,4 @@ const removeLoader = () => {
   document.querySelector('.loader-wrapper').classList.add('hide');
 };
 
-export { removeLoader, generateRandomID, getAllFromDataBase, addCourseToDatabase, updateCourseInDatabase, deleteCourseFromDatabase };
+export { removeLoader, generateRandomID, getAllFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase };
