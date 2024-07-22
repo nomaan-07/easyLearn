@@ -34,6 +34,7 @@ async function addToDatabase(tableName, items) {
   const { error } = await database.from(tableName).insert(items);
   if (error) {
     console.error('Error adding data', error);
+    return error;
   }
   return null;
 }
@@ -42,6 +43,7 @@ async function updateInDatabase(tableName, items, ID) {
   const { error } = await database.from(tableName).update(items).eq('id', ID);
   if (error) {
     console.error('Error updating data', error);
+    return error;
   }
   return null;
 }

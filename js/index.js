@@ -3,7 +3,7 @@ import './header.js';
 import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
-import { removeLoader, getAllFromDataBase } from './shared.js';
+import { removeLoader, getAllFromDatabase } from './shared.js';
 
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
@@ -28,7 +28,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
               </svg>
             </div>`;
   }
-  const courseTemplate = `            
+  const courseTemplateHtml = `            
                 <!-- Course -->
             <div class="${courseWrapperClass} group">
               <!-- Course Banner -->
@@ -88,7 +88,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
               </div>
               <!-- End of Course -->
             </div>`;
-  return courseTemplate;
+  return courseTemplateHtml;
 };
 
 const getFinalPrice = (price, discount) => {
@@ -105,7 +105,7 @@ const addCoursesToDOM = (courses, courseWrapper, isSwiper) => {
   });
 };
 
-getAllFromDataBase('courses')
+getAllFromDatabase('courses')
   .then((courses) => {
     const LastTenCourses = courses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
     const twelveMostPopularCourses = courses.sort((a, b) => b.students - a.students).slice(0, 12);
