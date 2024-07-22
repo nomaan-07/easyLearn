@@ -150,7 +150,7 @@ const blogTemplate = (blog) => {
                   <span>${blog.writer}</span>
                 </div>
                 <!-- Category -->
-                <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${blog.category}</a>
+                <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${blog.subject}</a>
               </div>
               <!-- End of Writer and Category -->
               <!-- Likes & Comments && Time -->
@@ -212,7 +212,7 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
       src: blog.src,
       writer: blog.writer,
       readingTime: blog.reading_time,
-      category: blog.category,
+      subject: blog.subject,
     };
     blogsWrapper.insertAdjacentHTML('beforeend', blogTemplate(newBlog));
   });
