@@ -63,4 +63,8 @@ const removeLoader = () => {
   document.querySelector('.loader-wrapper').classList.add('hide');
 };
 
-export { removeLoader, generateRandomID, getAllFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase };
+const getFinalPrice = (price, discount) => {
+  return discount === 100 ? 'رایگان' : (price * (100 - discount)) / 100;
+};
+
+export { removeLoader, getAllFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, generateRandomID, getFinalPrice };

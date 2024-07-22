@@ -1472,6 +1472,10 @@ video {
   height: 56px;
 }
 
+.h-\[60px\] {
+  height: 60px;
+}
+
 .h-full {
   height: 100%;
 }

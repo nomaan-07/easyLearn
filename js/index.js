@@ -3,11 +3,19 @@ import './header.js';
 import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
-import { removeLoader, getAllFromDatabase } from './shared.js';
+import { removeLoader, getAllFromDatabase, getFinalPrice } from './shared.js';
 
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
+const blogsWrapperElement = document.querySelector('.blogs-wrapper');
 
+const formattedDate = (date) => {
+  const newDate = new Date(date);
+  const day = newDate.getDate();
+  const month = newDate.getMonth();
+  const year = newDate.getFullYear();
+  return `${year}/${month}/${day}`;
+};
 window.addCourseToCart = (id) => {
   console.log(id);
 };
@@ -16,7 +24,7 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
   let finalPriceTemplate = null;
   if (discountPercent === 100) {
     finalPriceTemplate = `
-          <div class="flex items-end">
+          <div class="text-left">
               <span class="text-green-600 dark:text-green-400">${finalPrice}</span>
             </div>`;
   } else {
@@ -91,20 +99,17 @@ const courseTemplate = (id, name, description, src, teacher, students, rate, pri
   return courseTemplateHtml;
 };
 
-const getFinalPrice = (price, discount) => {
-  return discount === 100 ? 'رایگان' : (price * (100 - discount)) / 100;
-};
-
-const addCoursesToDOM = (courses, courseWrapper, isSwiper) => {
+const addCoursesToDOM = (courses, coursesWrapper, isSwiper) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-cart' : 'course-cart';
-  courseWrapper.innerHTML = '';
+  coursesWrapper.innerHTML = '';
   let finalPrice = null;
   courses.forEach((course) => {
     finalPrice = getFinalPrice(course.price, course.discount);
-    courseWrapper.insertAdjacentHTML('beforeend', courseTemplate(course.id, course.name, course.description, course.src, course.teacher, course.students, course.rate, course.price, course.discount, finalPrice, courseWrapperClass));
+    coursesWrapper.insertAdjacentHTML('beforeend', courseTemplate(course.id, course.name, course.description, course.src, course.teacher, course.students, course.rate, course.price, course.discount, finalPrice, courseWrapperClass));
   });
 };
 
+// Add Courses to DOM
 getAllFromDatabase('courses')
   .then((courses) => {
     const LastTenCourses = courses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
@@ -114,6 +119,95 @@ getAllFromDatabase('courses')
   })
   .catch((error) => console.log(error));
 
+const blogTemplate = (title, date, likes, comments, src, writer, readingTime, category) => {
+  const template = `
+              <!-- Blog -->
+            <div class="p-4 bg-white dark:bg-slate-800 shadow rounded-2xl group relative overflow-hidden">
+              <!-- Blog Banner -->
+              <a href="./blog.html" class="block w-full h-44 rounded-2xl overflow-hidden relative">
+                <img class="size-full object-cover" src="${src}" alt="${title}" />
+                <svg class="hidden md:block absolute size-full inset-0 theme-bg-color text-white p-3 opacity-80 group-hover:opacity-0 group-hover:translate-y-44 duration-500 rounded-2xl transition-all">
+                  <use href="#logo"></use>
+                </svg>
+              </a>
+              <!-- End of Blag Banner -->
+              <!-- Blog Title -->
+              <a class="block font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2 mt-4" href="./blog.html">${title}</a>
+              <!-- End of Blog Title -->
+              <!-- Writer and Category -->
+              <div class="flex items-center justify-between gap-2 font-VazirBold text-xs border-t border-t-slate-200 dark:border-t-slate-700 mt-4 pt-4">
+                <!-- Writer -->
+                <div class="flex items-center gap-1">
+                  <svg class="size-4 theme-text-color">
+                    <use href="#pencil-square"></use>
+                  </svg>
+                  <span>${writer}</span>
+                </div>
+                <!-- Category -->
+                <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${category}</a>
+              </div>
+              <!-- End of Writer and Category -->
+              <!-- Likes & Comments && Time -->
+              <div class="flex items-center justify-between gap-2 font-VazirBold text-xs my-4">
+                <!-- Likes and Comments -->
+                <div class="flex items-center gap-2">
+                  <!-- Likes -->
+                  <div class="flex items-center gap-1">
+                    <svg class="size-4 text-rose-500">
+                      <use href="#heart"></use>
+                    </svg>
+                    <span>${likes}</span>
+                  </div>
+                  <!-- Comments -->
+                  <div class="flex items-center gap-1">
+                    <svg class="size-4 theme-text-color">
+                      <use href="#chat-bubble-left-ellipsis"></use>
+                    </svg>
+                    <span>${comments}</span>
+                  </div>
+                </div>
+                <!-- Time -->
+                <div href="./blogs" class="flex items-center gap-1">
+                  <svg class="size-4 theme-text-color">
+                    <use href="#timer"></use>
+                  </svg>
+                  <span>زمان مطالعه: <span>${readingTime}</span> دقیقه</span>
+                </div>
+              </div>
+              <!-- End of Likes & Comments && Time -->
+              <!-- Date -->
+              <div href="./blogs" class="flex items-center gap-1 font-VazirBold text-xs">
+                <svg class="size-4 theme-text-color">
+                  <use href="#calendar-days"></use>
+                </svg>
+                <span>${date}</span>
+              </div>
+              <!-- End of Date -->
+              <!-- Blog Link-->
+              <a class="blog-cart-link group/btn" href="./blog.html">
+                <span>مطالعه مقاله</span>
+                <svg class="size-4 md:absolute md:left-4 md:group-hover/btn:left-1 transition-all">
+                  <use href="#left-arrow"></use>
+                </svg>
+              </a>
+            </div>`;
+  return template;
+};
+
+const addBlogsToDom = (blogs, blogsWrapper) => {
+  blogsWrapper.innerHTML = '';
+  let date = null;
+  blogs.forEach((blog) => {
+    date = formattedDate(blog.created_at);
+    blogsWrapper.insertAdjacentHTML('beforeend', blogTemplate(blog.title, date, blog.likes, blog.comments, blog.src, blog.writer, blog.reading_time, blog.category));
+  });
+};
+
+// Add Blogs to DOM
+getAllFromDatabase('blogs').then((blogs) => {
+  const lastFourBlog = blogs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+  addBlogsToDom(lastFourBlog, blogsWrapperElement);
+});
 // Popular Courses Swiper
 const swiper = new Swiper('.popular-courses-swiper', {
   slidesPerView: 1,
