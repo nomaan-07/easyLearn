@@ -1,4 +1,4 @@
-import dataBase from './api.js';
+import database from './api.js';
 
 const nowDate = () => {
   return new Date();
@@ -16,20 +16,25 @@ const generateRandomID = () => {
   return result;
 };
 
-async function getCourses() {
-  const { data, error } = await dataBase.from('courses').select();
-  return data;
+async function getCoursesFromDatabase() {
+  const { data, error } = await database.from('courses').select();
+  return data || error;
 }
 
-async function addCourseToDataBase(items) {
-  const { error } = await dataBase.from('courses').insert(course);
+async function addCourseToDatabase(items) {
+  const { error } = await database.from('courses').insert(course);
+  return error;
 }
 
-// let course = { id: generateRandomID(), created_at: nowDate(), name: 'test3', description: 'test', src: './fd', teacher: 'نعمان', students: 988, price: 456, discount: 34, category: 'test' };
+async function updateCourseInDatabase(items, courseID) {
+  const { error } = await database.from('courses').update(items).eq('id', courseID);
+  return error;
+}
 
-// addCourseToDataBase(course);
-
-// getCourses().then((res) => console.log(res));
+async function deleteCourseFromDatabase(courseID) {
+  const response = await database.from('courses').delete().eq('id', courseID);
+  return response;
+}
 
 const removeLoader = () => {
   document.body.classList.remove('h-0');
@@ -37,4 +42,4 @@ const removeLoader = () => {
   document.querySelector('.loader-wrapper').classList.add('hide');
 };
 
-export { removeLoader, generateRandomID, getCourses, addCourseToDataBase };
+export { removeLoader, generateRandomID, getCoursesFromDatabase, addCourseToDatabase, updateCourseInDatabase, deleteCourseFromDatabase };
