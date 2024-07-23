@@ -7,46 +7,87 @@ const courseSortButtons = document.querySelectorAll('.course-sort-btn');
 const coursesWrapperElement = document.querySelector('.courses-wrapper');
 const searchCourseInput = document.querySelector('#search-course-input');
 const categoryTitle = document.querySelector('.category-title');
+const titleIcon = document.querySelector('.title-icon');
+const searchResultWrapper = document.querySelector('.no-result-wrapper');
 
-let category = new URLSearchParams(location.search).get('category');
+let categoryParam = new URLSearchParams(location.search).get('category');
+let searchParam = new URLSearchParams(location.search).get('search');
 
 let categoryCourses = [];
 let filteredCourses = [];
 let searchedCourses = [];
 
-switch (category) {
-  case 'front-end':
-    categoryTitle.innerText = 'فرانت اند';
-    document.title = 'ایزی لرن | فرانت اند';
-    break;
-  case 'hack':
-    categoryTitle.innerText = 'امنیت';
-    document.title = 'ایزی لرن | امنیت';
-    break;
-  case 'python':
-    categoryTitle.innerText = 'پایتون';
-    document.title = 'ایزی لرن | پایتون';
-    break;
-  case 'soft-skill':
-    categoryTitle.innerText = 'مهارت های نرم';
-    document.title = 'ایزی لرن | مهارت های نرم';
-    break;
-  default:
-    location.replace('404.html');
+if (categoryParam) {
+  switch (categoryParam) {
+    case 'front-end':
+      categoryTitle.innerText = 'دوره های فرانت اند';
+      document.title = 'ایزی‌لرن | فرانت اند';
+      break;
+    case 'hack':
+      categoryTitle.innerText = 'دوره های امنیت';
+      document.title = 'ایزی‌لرن | امنیت';
+      break;
+    case 'python':
+      categoryTitle.innerText = 'دوره های پایتون';
+      document.title = 'ایزی‌لرن | پایتون';
+      break;
+    case 'soft-skill':
+      categoryTitle.innerText = 'دوره های مهارت های نرم';
+      document.title = 'ایزی‌لرن | مهارت های نرم';
+      break;
+    case 'all-courses':
+      categoryTitle.innerText = 'جدیدترین دوره ها';
+      document.title = 'ایزی‌لرن | جدیدترین دوره ها';
+      break;
+    case 'popular-courses':
+      categoryTitle.innerText = 'دوره های محبوب';
+      document.title = 'ایزی‌لرن | جدیدترین دوره ها';
+      break;
+    default:
+      location.replace('404.html');
+  }
+} else if (searchParam) {
+  categoryTitle.innerText = `جستجو: ${searchParam}`;
+  document.title = `ایزی‌لرن | ${searchParam}`;
+  titleIcon.src = './images/icons/zoom.png';
+  // some codes
+} else {
+  location.replace('404.html');
 }
+
+// overall Search handler
+const overallSearchHandler = (allCourses) => {
+  let regex = new RegExp(searchParam, 'gi');
+  let searchResult = allCourses.filter((course) => {
+    return course.name.match(regex);
+  });
+  searchResult.length > 0 || searchResultWrapper.classList.remove('hidden');
+  return searchResult;
+};
 
 // Add Course to DOM
 getAllFromDatabase('courses')
   .then((allCourses) => {
-    categoryCourses = allCourses.filter((course) => {
-      return course.category.includes(category);
-    });
+    if (categoryParam === 'all-courses') {
+      categoryCourses = allCourses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    } else if (categoryParam === 'popular-courses') {
+      categoryCourses = allCourses.sort((a, b) => b.students - a.students);
+      removeSortButtonsClasses();
+      ActiveSortBtn(courseSortButtons[2]);
+    } else if (searchParam) {
+      categoryCourses = overallSearchHandler(allCourses);
+    } else {
+      categoryCourses = allCourses.filter((course) => {
+        return course.category.includes(categoryParam);
+      });
+    }
     filteredCourses = categoryCourses;
     coursesWrapperElement.innerHTML = '';
     addCoursesToDOM(categoryCourses, coursesWrapperElement);
   })
   .catch((error) => console.error('Error Getting Courses', error));
 
+// Filter and Sort Courses and Add Them To DOM
 const displayCourses = (filterType) => {
   coursesWrapperElement.innerHTML = '';
   if (filterType === 'all') {
@@ -83,6 +124,10 @@ const removeFilterButtonsClasses = () => {
   });
 };
 
+function ActiveSortBtn(btn) {
+  btn.classList.add('theme-color-10');
+  btn.classList.add('theme-text-color');
+}
 const filterCourses = (btn) => {
   const filterType = btn.dataset.filter;
 
@@ -104,8 +149,7 @@ const sortCourses = (btn) => {
   const sortType = btn.dataset.sort;
   removeSortButtonsClasses();
 
-  btn.classList.add('theme-color-10');
-  btn.classList.add('theme-text-color');
+  ActiveSortBtn(btn);
 
   displayCourses(sortType);
 };

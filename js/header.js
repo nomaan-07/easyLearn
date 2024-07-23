@@ -10,9 +10,11 @@ const headerLogoWrapper = document.querySelector('.header__logo');
 const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
 const mobileSubmenus = document.querySelectorAll('.mobile-menu-submenu');
 const searchBar = document.querySelector('.search-bar');
-const headerSearchBtn = document.querySelector('.header__search-btn');
+const headerSearchToggleBtn = document.querySelector('.header__search-btn');
 const searchBarInput = document.querySelector('.search-bar__input');
-const main = document.querySelector('.main');
+const searchBarSearchBtn = document.querySelector('.search-bar__search-btn');
+const mobileSearchInput = document.querySelector('.mobile-search-input');
+const mobileSearchBtn = document.querySelector('.mobile-search-btn');
 
 const openMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);
@@ -77,10 +79,35 @@ mobileMenuItems.forEach((menu) => {
   menu.addEventListener('click', () => mobileSubmenuMenuToggle(menu));
 });
 
+const overallSearchHandler = (value) => {
+  if (value) {
+    location.href = `./course-category.html?search=${value}`;
+  }
+};
+
+searchBarSearchBtn.addEventListener('click', () => {
+  let inputValue = searchBarInput.value.trim();
+  overallSearchHandler(inputValue);
+});
+mobileSearchBtn.addEventListener('click', () => {
+  let inputValue = mobileSearchInput.value.trim();
+  overallSearchHandler(inputValue);
+});
+searchBarInput.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    overallSearchHandler(event.target.value.trim());
+  }
+});
+mobileSearchInput.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    overallSearchHandler(event.target.value.trim());
+  }
+});
+
 mobileMenuOpenBtn.addEventListener('click', () => openMenu(mobileMenu, 'right'));
 mobileCartOpenBtn.addEventListener('click', () => openMenu(mobileCart, 'left'));
 mobileMenuCloseBtn.addEventListener('click', closeMenus);
 mobileCartCloseBtn.addEventListener('click', closeMenus);
 overlay.addEventListener('click', closeMenus);
 window.addEventListener('scroll', headerScrollHandler);
-headerSearchBtn.addEventListener('click', headerSearchBarToggle);
+headerSearchToggleBtn.addEventListener('click', headerSearchBarToggle);

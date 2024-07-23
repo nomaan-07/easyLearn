@@ -430,13 +430,13 @@
             <svg class="size-6">
               <use href="#magnifying-glass"></use>
             </svg>
-            <!-- Show on Click -- Search bar -->
-            <div class="fixed search-bar top-24 right-[-100vw] w-screen text-white dark:text-slate-900 bg-slate-900 dark:bg-slate-100 transition-all -z-10 flex items-center gap-4 px-8 py-2">
-              <svg class="size-7 shrink-0 hover:theme-text-color transition-colors">
-                <use href="#magnifying-glass"></use>
-              </svg>
-              <input type="text" class="search-bar__input w-full bg-transparent outline-0 text-lg" placeholder="دوره ی مدنظر خود را جستجو کنید." />
-            </div>
+          </div>
+          <!-- Show on Click -- Search bar -->
+          <div class="fixed search-bar top-24 right-[-100vw] w-screen text-white dark:text-slate-900 bg-slate-900 dark:bg-slate-100 transition-all -z-10 flex items-center gap-4 px-8 py-2">
+            <svg class="search-bar__search-btn size-7 shrink-0 hover:theme-text-color transition-colors">
+              <use href="#magnifying-glass"></use>
+            </svg>
+            <input type="text" class="search-bar__input w-full bg-transparent outline-0 text-lg" placeholder="دوره ی مدنظر خود را جستجو کنید." />
           </div>
           <!-- Shopping Cart Icon -->
           <div class="flex items-center justify-center w-10 h-10 bg-slate-100 dark:bg-slate-900 rounded-full transition-all relative group">
@@ -511,10 +511,10 @@
             </svg>
           </div>
         </div>
-        <!-- Search Box -->
+        <!-- Mobile Search Box -->
         <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-900 mt-2 rounded-full px-2">
-          <input type="text" class="bg-transparent w-full text-sm py-3 outline-none" placeholder="دوره ی مدنظر خود را جستجو کنید." />
-          <svg class="size-7 shrink-0">
+          <input type="text" class="mobile-search-input bg-transparent w-full text-sm py-3 outline-none" placeholder="دوره ی مدنظر خود را جستجو کنید." />
+          <svg class="mobile-search-btn size-7 shrink-0">
             <use href="#magnifying-glass"></use>
           </svg>
         </div>
@@ -759,7 +759,7 @@
               </svg>
             </div>
             <!-- Section Link -->
-            <a class="section-link group" href="./courses.html" data-aos="fade-right">
+            <a class="section-link group" href="./course-category.html?category=all-courses" data-aos="fade-right">
               <span>مشاهده همه دوره ها</span>
               <svg class="size-6 md:absolute md:left-4 md:group-hover:left-0 transition-all">
                 <use href="#left-arrow"></use>
@@ -1075,8 +1075,8 @@
           </div>
           <div class="space-y-4 vazirb">
             <h5 class="text-lg sm:text-xl font-VazirBold">بخش های سایت</h5>
-            <a class="block text-sm sm:text-base hover:theme-text-color transition-colors" href="./courses.html">دوره های رایگان</a>
-            <a class="block text-sm sm:text-base hover:theme-text-color transition-colors" href="./courses.html">دوره های محبوب</a>
+            <a class="block text-sm sm:text-base hover:theme-text-color transition-colors" href="./course-category.html?category=all-courses">جدیدترین دوره ها</a>
+            <a class="block text-sm sm:text-base hover:theme-text-color transition-colors" href="./course-category.html?category=popular-courses">دوره های محبوب</a>
             <a class="block text-sm sm:text-base hover:theme-text-color transition-colors" href="./blogs.html">بلاگ</a>
           </div>
           <div class="space-y-4">
