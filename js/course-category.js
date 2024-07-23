@@ -89,14 +89,15 @@ getAllFromDatabase('courses')
 
 // Filter and Sort Courses and Add Them To DOM
 const displayCourses = (filterType) => {
+  let courses = searchedCourses.length > 0 ? searchedCourses : categoryCourses;
+
   coursesWrapperElement.innerHTML = '';
   if (filterType === 'all') {
-    filteredCourses = categoryCourses;
-    searchCourseInput.value = '';
+    filteredCourses = courses;
   } else if (filterType === 'free') {
-    filteredCourses = categoryCourses.filter((course) => course.discount === 100);
+    filteredCourses = courses.filter((course) => course.discount === 100);
   } else if (filterType === 'cash') {
-    filteredCourses = categoryCourses.filter((course) => course.discount != 100);
+    filteredCourses = courses.filter((course) => course.discount != 100);
   } else if (filterType === 'cheapest') {
     filteredCourses = [...filteredCourses].sort((a, b) => getFinalPrice(a.price, a.discount) - getFinalPrice(b.price, b.discount));
   } else if (filterType === 'expensive') {
@@ -128,6 +129,13 @@ function ActiveSortBtn(btn) {
   btn.classList.add('theme-bg-color-10');
   btn.classList.add('theme-text-color');
 }
+function ActiveFilterBtn(btn) {
+  btn.classList.add('theme-bg-color-10');
+  btn.classList.add('theme-text-color');
+  btn.children[0].classList.add('theme-bg-color');
+  btn.children[0].classList.remove('bg-slate-200');
+  btn.children[0].classList.remove('dark:bg-slate-500');
+}
 const filterCourses = (btn) => {
   const filterType = btn.dataset.filter;
 
@@ -136,12 +144,7 @@ const filterCourses = (btn) => {
   removeSortButtonsClasses();
   removeFilterButtonsClasses();
 
-  btn.classList.add('theme-bg-color-10');
-  btn.classList.add('theme-text-color');
-  btn.children[0].classList.add('theme-bg-color');
-  btn.children[0].classList.remove('bg-slate-200');
-  btn.children[0].classList.remove('dark:bg-slate-500');
-
+  ActiveFilterBtn(btn);
   displayCourses(filterType);
 };
 
@@ -156,12 +159,20 @@ const sortCourses = (btn) => {
 
 const searchCourse = () => {
   removeSortButtonsClasses();
+  removeFilterButtonsClasses();
+  ActiveFilterBtn(courseFilterButtons[0]);
   let searchCourseInputValue = searchCourseInput.value.trim();
   let regex = new RegExp(searchCourseInputValue, 'gi');
-  searchedCourses = filteredCourses.filter((course) => {
+  searchedCourses = categoryCourses.filter((course) => {
     return course.name.match(regex);
   });
-  searchedCourses = searchCourseInputValue ? searchedCourses : filteredCourses;
+  if (searchCourseInputValue) {
+    filteredCourses = searchedCourses;
+  } else {
+    filteredCourses = categoryCourses;
+    searchedCourses = [];
+  }
+  searchedCourses = searchCourseInputValue ? searchedCourses : categoryCourses;
   addCoursesToDOM(searchedCourses, coursesWrapperElement);
 };
 
@@ -173,4 +184,5 @@ courseSortButtons.forEach((btn) => {
 });
 
 window.addEventListener('load', removeLoader);
+
 searchCourseInput.addEventListener('input', searchCourse);
