@@ -109,14 +109,14 @@ const displayCourses = (filterType) => {
 
 const removeSortButtonsClasses = () => {
   courseSortButtons.forEach((btn) => {
-    btn.classList.remove('theme-color-10');
+    btn.classList.remove('theme-bg-color-10');
     btn.classList.remove('theme-text-color');
   });
 };
 
 const removeFilterButtonsClasses = () => {
   courseFilterButtons.forEach((btn) => {
-    btn.classList.remove('theme-color-10');
+    btn.classList.remove('theme-bg-color-10');
     btn.classList.remove('theme-text-color');
     btn.children[0].classList.remove('theme-bg-color');
     btn.children[0].classList.add('bg-slate-200');
@@ -125,7 +125,7 @@ const removeFilterButtonsClasses = () => {
 };
 
 function ActiveSortBtn(btn) {
-  btn.classList.add('theme-color-10');
+  btn.classList.add('theme-bg-color-10');
   btn.classList.add('theme-text-color');
 }
 const filterCourses = (btn) => {
@@ -136,7 +136,7 @@ const filterCourses = (btn) => {
   removeSortButtonsClasses();
   removeFilterButtonsClasses();
 
-  btn.classList.add('theme-color-10');
+  btn.classList.add('theme-bg-color-10');
   btn.classList.add('theme-text-color');
   btn.children[0].classList.add('theme-bg-color');
   btn.children[0].classList.remove('bg-slate-200');
