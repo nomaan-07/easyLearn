@@ -1,4 +1,4 @@
-import { removeLoader, getAllFromDatabase, addCoursesToDOM, getFinalPrice } from './shared.js';
+import { getAllFromDatabase, addCoursesToDOM, getFinalPrice } from './shared.js';
 import './header.js';
 import './change-theme.js';
 
@@ -172,5 +172,4 @@ courseSortButtons.forEach((btn) => {
   btn.addEventListener('click', () => sortCourses(btn));
 });
 
-window.addEventListener('load', removeLoader);
 searchCourseInput.addEventListener('input', searchCourse);
