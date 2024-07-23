@@ -53,11 +53,11 @@ const headerScrollHandler = () => {
 };
 
 const mobileSubmenuMenuToggle = (menu) => {
-  menu.children[0].classList.toggle('rotate-180');
+  menu.children[1].classList.toggle('rotate-180');
   menu.classList.toggle('theme-text-color');
   mobileSubmenus.forEach((submenu) => {
     if (submenu !== menu.nextElementSibling) {
-      submenu.previousElementSibling.children[0].classList.remove('rotate-180');
+      submenu.previousElementSibling.children[1].classList.remove('rotate-180');
       submenu.previousElementSibling.classList.remove('theme-text-color');
       submenu.classList.remove('mobile-menu-submenu-open');
       submenu.classList.add('h-0');
