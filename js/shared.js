@@ -140,7 +140,7 @@ const courseTemplate = (course) => {
                 <!-- End of Course Price -->
               </div>
               <!-- End of Students && Rating && Price  -->
-              <!-- Cart Btn -->
+              <!-- Cart Btn  -->
               <div class="absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer" onclick="addCourseToCart('${course.id}')">
                 <svg class="size-6">
                   <use href="#shopping-bag"></use>
@@ -152,7 +152,7 @@ const courseTemplate = (course) => {
 };
 
 const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
-  let courseWrapperClass = isSwiper ? 'swiper-slide course-cart' : 'course-cart';
+  let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
   coursesWrapper.innerHTML = '';
   let newCourse = null;
   let finalPrice = null;

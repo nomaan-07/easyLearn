@@ -84,7 +84,7 @@ const blogTemplate = (blog) => {
               </div>
               <!-- End of Date -->
               <!-- Blog Link-->
-              <a class="blog-cart-link group/btn" href="./blog.html">
+              <a class="blog-card-link group/btn" href="./blog.html">
                 <span class="transition-colors">مطالعه مقاله</span>
                 <svg class="size-4 md:absolute md:left-4 md:group-hover/btn:left-1 transition-all">
                   <use href="#left-arrow"></use>

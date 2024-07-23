@@ -132,11 +132,11 @@
     @apply flex items-center justify-between gap-2 text-lg child:transition-all md:w-48 mt-8 sm:mt-0 text-green-500 dark:text-green-400 md:text-inherit md:dark:text-inherit md:hover:theme-text-color md:dark:hover:theme-text-color rounded-full relative;
   }
 
-  .course-cart {
+  .course-card {
     @apply bg-white dark:bg-slate-800 shadow overflow-hidden rounded-2xl relative pb-4;
   }
 
-  .blog-cart-link {
+  .blog-card-link {
     @apply absolute left-0 bottom-0 pl-4 md:pl-9 pr-4 flex items-center justify-center gap-2 text-sm font-VazirBold bg-slate-100 dark:bg-slate-700 theme-text-color md:text-inherit md:hover:theme-text-color md:hover:bg-slate-200 dark:md:hover:bg-slate-600 h-9 w-auto rounded-tr-2xl;
   }
 
