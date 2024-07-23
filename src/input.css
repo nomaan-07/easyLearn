@@ -126,7 +126,7 @@
   }
 
   .section-title {
-    @apply flex justify-center items-center sm:justify-start sm:items-end gap-3 sm:gap-4 text-2xl md:text-3xl font-VazirBlack;
+    @apply flex justify-center items-center sm:justify-start sm:items-end gap-2 sm:gap-4 text-[22px] text-center xs:text-2xl md:text-3xl font-VazirBlack;
   }
   .section-link {
     @apply flex items-center justify-between gap-2 text-lg child:transition-all md:w-48 mt-8 sm:mt-0 text-green-500 dark:text-green-400 md:text-inherit md:dark:text-inherit md:hover:theme-text-color md:dark:hover:theme-text-color rounded-full relative;

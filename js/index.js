@@ -3,123 +3,17 @@ import './header.js';
 import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
-import { removeLoader, getAllFromDatabase, getFinalPrice } from './shared.js';
+import { removeLoader, getAllFromDatabase, addCoursesToDOM } from './shared.js';
 
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
 const blogsWrapperElement = document.querySelector('.blogs-wrapper');
 
-window.addCourseToCart = (id) => {
-  console.log(id);
-};
-
-// Add courses to DOM
-const courseTemplate = (course) => {
-  let finalPriceTemplate = null;
-  if (course.discountPercent === 100) {
-    finalPriceTemplate = `
-          <div class="text-left">
-              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
-            </div>`;
-  } else {
-    finalPriceTemplate = `
-          <div class="flex items-end">
-              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
-              <svg class="size-7 mr-[-3px]">
-                <use href="#toman"></use>
-              </svg>
-            </div>`;
-  }
-  const courseTemplateHtml = `            
-                <!-- Course -->
-            <div class="${course.courseWrapperClass} group">
-              <!-- Course Banner -->
-              <div class="h-40 rounded-b-2xl overflow-hidden">
-                <a class="size-full" href="./course.html">
-                  <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
-                </a>
-                <!-- Discount Percent -->
-                <div class="absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${course.discountPercent}%</div>
-              </div>
-              <!-- End of Course Banner -->
-              <div class="h-[122px] px-4 space-y-2 mt-4">
-                <!-- Course Name -->
-                <a class="block font-VazirBold text-lg max-h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html">${course.name}</a>
-                <!-- Course Description -->
-                <p class="line-clamp-2 font-VazirLight max-h-12">${course.description}</p>
-              </div>
-              <!-- Course Teacher -->
-              <a class="flex justify-center bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 absolute left-0 right-0 bottom-[86px] mx-auto w-48 py-2 rounded-full transition-colors" href="./teacher.html">${course.teacher}</a>
-              <!-- Students && Rating && Price  -->
-              <div class="flex items-end justify-between px-4 pt-8 mt-8 border-t border-t-slate-200 dark:border-t-slate-700">
-                <!-- Students && Rating  -->
-                <div>
-                  <!-- Students -->
-                  <div class="flex gap-1 mb-0.5">
-                    <svg class="size-5 theme-text-color">
-                      <use href="#user-group"></use>
-                    </svg>
-                    <span>${course.students}</span>
-                  </div>
-                  <!-- End of Students -->
-                  <!-- Rating -->
-                  <div class="flex gap-1">
-                    <svg class="size-5 text-yellow-500">
-                      <use href="#star"></use>
-                    </svg>
-                    <span>${course.rate}</span>
-                  </div>
-                  <!-- End of Rating -->
-                </div>
-                <!-- End of Students && Rating  -->
-                <!-- Course Price -->
-                <div>
-                  <!-- Price -->
-                  <span class="text-sm line-through dark:text-slate-200 decoration-red-400">${course.price}</span>
-                  <!-- Final Price -->
-                    ${finalPriceTemplate}
-                </div>
-                <!-- End of Course Price -->
-              </div>
-              <!-- End of Students && Rating && Price  -->
-              <!-- Cart Btn -->
-              <div class="absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer" onclick="addCourseToCart('${course.id}')">
-                <svg class="size-6">
-                  <use href="#shopping-bag"></use>
-                </svg>
-              </div>
-              <!-- End of Course -->
-            </div>`;
-  return courseTemplateHtml;
-};
-
-const addCoursesToDOM = (courses, coursesWrapper, isSwiper) => {
-  let courseWrapperClass = isSwiper ? 'swiper-slide course-cart' : 'course-cart';
-  coursesWrapper.innerHTML = '';
-  let newCourse = null;
-  courses.forEach((course) => {
-    newCourse = {
-      id: course.id,
-      name: course.name,
-      description: course.description,
-      src: course.src,
-      teacher: course.teacher,
-      students: course.students,
-      rate: course.rate,
-      discountPercent: course.discount,
-      price: course.price.toLocaleString('fa-IR'),
-      finalPrice: getFinalPrice(course.price, course.discount).toLocaleString('fa-IR'),
-      courseWrapperClass,
-    };
-    coursesWrapper.insertAdjacentHTML('beforeend', courseTemplate(newCourse));
-  });
-};
-
 getAllFromDatabase('courses')
   .then((courses) => {
     const LastTenCourses = courses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
     const twelveMostPopularCourses = courses.sort((a, b) => b.students - a.students).slice(0, 12);
-    addCoursesToDOM(LastTenCourses, latestCoursesWrapperElement, false);
+    addCoursesToDOM(LastTenCourses, latestCoursesWrapperElement);
     addCoursesToDOM(twelveMostPopularCourses, popularCoursesWrapperElement, true);
   })
   .catch((error) => console.log(error));

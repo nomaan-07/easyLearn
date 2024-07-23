@@ -333,7 +333,7 @@
             </li>
             <li class="relative group">
               <div class="flex items-center gap-2 cursor-pointer transition-all group-hover:theme-text-color">
-                <a href="./course-category.html">فرانت اند</a>
+                <a href="./course-category.html?category=front-end">فرانت اند</a>
                 <svg class="size-4 group-hover:rotate-180 transition-transform">
                   <use href="#chevron-down"></use>
                 </svg>
@@ -352,7 +352,7 @@
             </li>
             <li class="relative group">
               <div class="flex items-center gap-2 cursor-pointer transition-all group-hover:theme-text-color">
-                <a href="./course-category.html">امنیت</a>
+                <a href="./course-category.html?category=hack">امنیت</a>
                 <svg class="size-4 group-hover:rotate-180 transition-transform">
                   <use href="#chevron-down"></use>
                 </svg>
@@ -371,7 +371,7 @@
             </li>
             <li class="relative group">
               <div class="flex items-center gap-2 cursor-pointer transition-all group-hover:theme-text-color">
-                <a href="./course-category.html">پایتون</a>
+                <a href="./course-category.html?category=python">پایتون</a>
                 <svg class="size-4 group-hover:rotate-180 transition-transform">
                   <use href="#chevron-down"></use>
                 </svg>
@@ -390,7 +390,7 @@
             </li>
             <li class="relative group">
               <div class="flex items-center gap-2 cursor-pointer transition-all group-hover:theme-text-color">
-                <a href="./course-category.html">مهارت های نرم</a>
+                <a href="./course-category.html?category=soft-skill">مهارت های نرم</a>
                 <svg class="size-4 group-hover:rotate-180 transition-transform">
                   <use href="#chevron-down"></use>
                 </svg>
@@ -523,12 +523,12 @@
       <ul class="my-4 space-y-4 select-none">
         <li><a href="./index.html">صفحه اصلی</a></li>
         <li>
-          <span class="mobile-menu-item flex items-center justify-between transition-all">
+          <a href="course-category.html?category=front-end" class="mobile-menu-item flex items-center justify-between transition-all">
             فرانت اند
             <svg class="size-4 transition-all">
               <use href="#chevron-down"></use>
             </svg>
-          </span>
+          </a>
           <!-- Show on Click -- Submenu-->
           <div class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-b-slate-200 dark:border-b-slate-700 rounded-2xl overflow-hidden transition-all">
             <a href="./course.html">آموزش HTML</a>
@@ -539,18 +539,66 @@
             <a href="./course.html">آموزش TypeScript</a>
           </div>
         </li>
-        <li>امنیت</li>
-        <li>پایتون</li>
-        <li>مهارت های نرم</li>
         <li>
-          <span class="mobile-menu-item flex items-center justify-between transition-all">
+          <a href="course-category.html?category=hack" class="mobile-menu-item flex items-center justify-between transition-all">
+            امنیت
+            <svg class="size-4 transition-all">
+              <use href="#chevron-down"></use>
+            </svg>
+          </a>
+          <!-- Show on Click -- Submenu-->
+          <div class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-b-slate-200 dark:border-b-slate-700 rounded-2xl overflow-hidden transition-all">
+            <a href="./course.html">آموزش HTML</a>
+            <a href="./course.html">آموزش CSS</a>
+            <a href="./course.html">آموزش جاوا اسکریپت</a>
+            <a href="./course.html">آموزش Tailwind CSS</a>
+            <a href="./course.html">آموزش ReactJS</a>
+            <a href="./course.html">آموزش TypeScript</a>
+          </div>
+        </li>
+        <li>
+          <a href="course-category.html?category=python" class="mobile-menu-item flex items-center justify-between transition-all">
+            پایتون
+            <svg class="size-4 transition-all">
+              <use href="#chevron-down"></use>
+            </svg>
+          </a>
+          <!-- Show on Click -- Submenu-->
+          <div class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-b-slate-200 dark:border-b-slate-700 rounded-2xl overflow-hidden transition-all">
+            <a href="./course.html">آموزش HTML</a>
+            <a href="./course.html">آموزش CSS</a>
+            <a href="./course.html">آموزش جاوا اسکریپت</a>
+            <a href="./course.html">آموزش Tailwind CSS</a>
+            <a href="./course.html">آموزش ReactJS</a>
+            <a href="./course.html">آموزش TypeScript</a>
+          </div>
+        </li>
+        <li>
+          <a href="course-category.html?category=soft-skill" class="mobile-menu-item flex items-center justify-between transition-all">
+            مهارت های نرم
+            <svg class="size-4 transition-all">
+              <use href="#chevron-down"></use>
+            </svg>
+          </a>
+          <!-- Show on Click -- Submenu-->
+          <div class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-b-slate-200 dark:border-b-slate-700 rounded-2xl overflow-hidden transition-all">
+            <a href="./course.html">آموزش HTML</a>
+            <a href="./course.html">آموزش CSS</a>
+            <a href="./course.html">آموزش جاوا اسکریپت</a>
+            <a href="./course.html">آموزش Tailwind CSS</a>
+            <a href="./course.html">آموزش ReactJS</a>
+            <a href="./course.html">آموزش TypeScript</a>
+          </div>
+        </li>
+        <li>
+          <a href="blogs.html" class="mobile-menu-item flex items-center justify-between transition-all">
             بلاگ
             <svg class="size-4 transition-all">
               <use href="#chevron-down"></use>
             </svg>
-          </span>
+          </a>
           <!-- Show on Click -- Submenu-->
-          <div class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden transition-all">
+          <div class="mobile-menu-submenu text-sm flex flex-col h-0 px-4 gap-4 border-r-4 border-b-slate-200 dark:border-b-slate-700 rounded-2xl overflow-hidden transition-all">
             <a href="./course.html">آموزش HTML</a>
             <a href="./course.html">آموزش CSS</a>
             <a href="./course.html">آموزش جاوا اسکریپت</a>
