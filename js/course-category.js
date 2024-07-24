@@ -36,12 +36,12 @@ if (categoryParam) {
       document.title = 'ایزی‌لرن | مهارت های نرم';
       break;
     case 'all-courses':
-      categoryTitle.innerText = 'جدیدترین دوره ها';
-      document.title = 'ایزی‌لرن | جدیدترین دوره ها';
+      categoryTitle.innerText = 'دوره ها';
+      document.title = 'ایزی‌لرن | دوره ها';
       break;
     case 'popular-courses':
       categoryTitle.innerText = 'دوره های محبوب';
-      document.title = 'ایزی‌لرن | جدیدترین دوره ها';
+      document.title = 'ایزی‌لرن | دوره های محبوب';
       break;
     default:
       location.replace('404.html');
