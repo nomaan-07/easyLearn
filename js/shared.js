@@ -175,4 +175,12 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   });
 };
 
-export { removeLoader, getAllFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, generateRandomID, getFinalPrice, addCoursesToDOM };
+const formatDate = (date) => {
+  const dateList = new Date(date).toLocaleDateString('fa-IR').split('/');
+  const year = dateList[0];
+  const month = dateList[1].padStart(2, '۰');
+  const day = dateList[2].padStart(2, '۰');
+  return `${year}/${month}/${day}`;
+};
+
+export { removeLoader, getAllFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, generateRandomID, getFinalPrice, addCoursesToDOM, formatDate };

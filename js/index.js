@@ -3,7 +3,7 @@ import './header.js';
 import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
-import { removeLoader, getAllFromDatabase, addCoursesToDOM } from './shared.js';
+import { removeLoader, getAllFromDatabase, addCoursesToDOM, formatDate } from './shared.js';
 
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
@@ -100,7 +100,7 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
   blogs.forEach((blog) => {
     newBlog = {
       title: blog.title,
-      date: new Date(blog.created_at).toLocaleDateString('fa-IR'),
+      date: formatDate(blog.created_at),
       likes: blog.likes,
       comments: blog.comments,
       src: blog.src,
