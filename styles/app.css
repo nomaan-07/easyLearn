@@ -1681,6 +1681,10 @@ video {
   max-width: 1920px;
 }
 
+.max-w-\[1280px\] {
+  max-width: 1280px;
+}
+
 .flex-shrink {
   flex-shrink: 1;
 }
@@ -1742,6 +1746,11 @@ video {
 
 .rotate-\[270deg\] {
   --tw-rotate: 270deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-\[24deg\] {
+  --tw-rotate: 24deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
