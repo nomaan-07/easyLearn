@@ -4421,6 +4421,11 @@ video {
     line-height: 1.75rem;
   }
 
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
   .sm\:underline {
     text-decoration-line: underline;
   }
