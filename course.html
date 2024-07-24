@@ -66,13 +66,6 @@
           fill="currentColor"
         ></path>
       </symbol>
-      <symbol id="photo" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-        />
-      </symbol>
       <symbol id="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path
           d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
@@ -292,6 +285,10 @@
           d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
         />
       </symbol>
+      <symbol id="video-camera" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+      </symbol>
+
       <symbol id="x-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </symbol>
@@ -690,6 +687,61 @@
           </div>
         </div>
         <!-- End of Breadcrumb -->
+        <!-- Course Header -->
+        <div class="mt-5 sm:mt-8 md:mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Course Info -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl shadow p-5 space-y-3 sm:space-y-4 md:space-y-5">
+            <h1 class="text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">آموزش جنگو به صورت پروژه محور</h1>
+            <p class="sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
+              میتونیم به توضیح کامل مفاهیم پایه و ساختاری، کامل بودن و توجه به جزئیات، بررسی روش های مختلف حل مسئله و انتخاب بهترین روش ممکن، رعایت اصول کدنویسی، توجه به داکیومنت خوانی، بررسی خطاهای احتمالی و پشتیبانی اختصاصی اشاره کرد.
+            </p>
+            <!-- Video and Discount -->
+            <div class="sm:flex justify-between items-center">
+              <div class="font-VazirMedium flex justify-center items-center sm:justify-start gap-1 md:cursor-pointer md:hover:theme-text-color transition-colors">
+                <svg class="size-5 rotate-180 theme-text-color">
+                  <use href="#video-camera"></use>
+                </svg>
+                <span>معرفی دوره</span>
+              </div>
+              <!-- Discount -->
+              <div class="sm:text-lg font-VazirLight text-center theme-bg-color-10 p-2 lg:px-1 xl:px-2 rounded-2xl mt-4 sm:mt-0">
+                <p class="font-VazirBold theme-text-color"><span>50%</span> تخفیف ویژه</p>
+                <div class="flex items-center justify-center m-1">
+                  <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l"><span class="font-VazirBold">2</span> روز</div>
+                  <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l"><span class="font-VazirBold">12</span> ساعت</div>
+                  <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l border-l-slate-200 dark:border-l-slate-700"><span class="font-VazirBold">54</span> دقیقه</div>
+                  <div class=""><span class="font-VazirBold">29</span> ثانیه</div>
+                </div>
+              </div>
+              <!-- End of Discount -->
+            </div>
+            <!-- Purchase and Price -->
+            <!-- Discount and Purchase Btn -->
+            <div class="flex flex-col-reverse sm:flex-row gap-3 justify-between items-center mt-4 md:mt-6">
+              <!-- Purchase Btn -->
+              <div class="btn w-full sm:w-auto theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت نام در دوره</div>
+              <!-- Price -->
+              <div class="flex items-end gap-2">
+                <!-- Primary Price -->
+                <span class="text-sm sm:text-base lg:text-lg line-through dark:text-slate-200 decoration-red-400">۲٬۷۹۳٬۰۰۰</span>
+                <!-- Final Price -->
+                <div class="flex sm:text-lg lg:text-xl items-end font-VazirMedium">
+                  <span class="text-green-600 dark:text-green-400">۱٬۶۷۵٬۸۰۰</span>
+                  <svg class="size-7 sm:size-8 lg:size-9 mr-[-3px]">
+                    <use href="#toman"></use>
+                  </svg>
+                </div>
+              </div>
+              <!-- End of Price -->
+            </div>
+            <!-- End of Price and Purchase Btn -->
+          </div>
+          <!-- End of Course Info -->
+          <!-- Course Data -->
+          <div></div>
+          <!-- End of Course Data -->
+        </div>
+        <!-- End of Course Header -->
       </div>
     </main>
     <!-- End of Main -->
