@@ -673,7 +673,7 @@
     <!-- End of Header -->
 
     <!-- Main -->
-    <main class="overflow-x-hidden mt-8 sm:mt-14 overflow-auto">
+    <main class="mt-8 sm:mt-14">
       <div class="container">
         <!-- Breadcrumb -->
         <div class="breadcrumb">
@@ -703,12 +703,12 @@
         <!-- Course Header -->
         <div class="flex flex-col lg:flex-row mt-5 sm:mt-8 md:mt-10 gap-5">
           <!-- Banner -->
-          <div class="lg:order-2 lg:w-[500px] lg:h-72 xl:w-[600px] xl:h-[350px] 2xl:w-[650px] 3xl:w-[700px] shrink-0 overflow-hidden rounded-2xl">
+          <div class="lg:order-2 lg:w-1/2 lg:h[344px] lg:h-[356px] overflow-hidden rounded-2xl">
             <img class="size-full" src="https://sabzlearn.ir/wp-content/uploads/2024/01/%D9%BE%D8%A7%DB%8C%D8%AA%D9%88%D9%86-13.webp" alt="" />
           </div>
           <!-- End of Banner -->
           <!-- Course Info -->
-          <div class="bg-white p-5 dark:bg-slate-800 rounded-2xl shadow">
+          <div class="bg-white p-5 lg:w-1/2 dark:bg-slate-800 rounded-2xl shadow">
             <!-- Course title -->
             <h1 class="lg:order-1 text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">آموزش جنگو به صورت پروژه محور</h1>
             <!-- Course Caption -->
@@ -829,7 +829,7 @@
               </div>
               <!-- Content -->
               <div class="relative overflow-y-hidden">
-                <div class="course-content max-h-[600px] md:text-lg lg:text-xl mt-5 sm:mt-8 md:mt-10 font-VazirLight space-y-6">
+                <div class="course-content max-h-48 sm:max-h-80 md:max-h-96 xl:max-h-[500px] md:text-lg lg:text-xl mt-5 sm:mt-8 md:mt-10 font-VazirLight space-y-6">
                   <meta charset="utf8" />
                   <h2 id="h_1"><strong>آموزش پایتون</strong>، گل سرسبد دوره های سبزلرن</h2>
                   <p>
@@ -1020,7 +1020,12 @@
                 <div class="course-content-shadow absolute bottom-0 right-0 left-0 h-40 bg-gradient-to-t from-white dark:from-slate-900 from-0% via-white/[35%] dark:via-slate-900/[35%] via-60% to-white/0 dark:to-slate-900/0 to-100%"></div>
               </div>
               <!-- More Btn -->
-              <div class="course-show-all-content btn theme-bg-color mt-6 sm:w-64 mx-auto">مشاهده ی بیشتر</div>
+              <div class="course-show-all-content btn theme-bg-color md:hover:theme-hover-bg-color transition-colors md:cursor-pointer mt-6 xs:w-64 mx-auto gap-2">
+                <span>مشاهده ی بیشتر</span>
+                <svg class="size-6">
+                  <use href="#chevron-down"></use>
+                </svg>
+              </div>
             </div>
             <!-- End of Description -->
           </div>
