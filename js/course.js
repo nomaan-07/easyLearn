@@ -6,6 +6,7 @@ const headlinesTitleElem = document.querySelectorAll('.headline__title');
 
 // toggle headline
 
+let isHeadlineOpen = false;
 const toggleHeadLine = (titleElem) => {
   let totalHeadlineBodyHeight = 0;
 
@@ -24,10 +25,10 @@ const toggleHeadLine = (titleElem) => {
     totalHeadlineBodyHeight += child.offsetHeight;
   }
 
-  if (headlineBody.offsetHeight === totalHeadlineBodyHeight) {
-    headlineBody.style.maxHeight = '0px';
-  } else {
+  if (headlineBody.offsetHeight === 0) {
     headlineBody.style.maxHeight = `${totalHeadlineBodyHeight}px`;
+  } else {
+    headlineBody.style.maxHeight = '0px';
   }
 };
 
