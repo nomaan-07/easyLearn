@@ -77,12 +77,12 @@ const courseTemplate = (course) => {
   if (course.discountPercent === 100) {
     finalPriceTemplate = `
           <div class="text-left">
-              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
+              <span class="sm:text-lg/5 text-green-600 dark:text-green-400">${course.finalPrice}</span>
             </div>`;
   } else {
     finalPriceTemplate = `
           <div class="flex items-end">
-              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
+              <span class="sm:text-lg/5 text-green-600 dark:text-green-400">${course.finalPrice}</span>
               <svg class="size-7 mr-[-3px]">
                 <use href="#toman"></use>
               </svg>
@@ -133,7 +133,7 @@ const courseTemplate = (course) => {
                 <!-- Course Price -->
                 <div>
                   <!-- Price -->
-                  <span class="text-sm line-through dark:text-slate-200 decoration-red-400">${course.price}</span>
+                  <span class="text-sm sm:text-base line-through text-slate-500 dark:text-slate-300 decoration-red-400">${course.price}</span>
                   <!-- Final Price -->
                     ${finalPriceTemplate}
                 </div>
