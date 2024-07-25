@@ -6,7 +6,6 @@ const headlinesTitleElem = document.querySelectorAll('.headline__title');
 
 // toggle headline
 
-let isHeadlineOpen = false;
 const toggleHeadLine = (titleElem) => {
   let totalHeadlineBodyHeight = 0;
 

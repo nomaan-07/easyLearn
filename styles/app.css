@@ -4356,13 +4356,28 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.dark\:from-slate-800:is(.dark *) {
+  --tw-gradient-from: #1e293b var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(30 41 59 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .dark\:via-slate-900\/\[35\%\]:is(.dark *) {
   --tw-gradient-to: rgb(15 23 42 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(15 23 42 / 35%) var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
+.dark\:via-slate-800\/\[35\%\]:is(.dark *) {
+  --tw-gradient-to: rgb(30 41 59 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(30 41 59 / 35%) var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
 .dark\:to-slate-900\/0:is(.dark *) {
   --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position);
+}
+
+.dark\:to-slate-800\/0:is(.dark *) {
+  --tw-gradient-to: rgb(30 41 59 / 0) var(--tw-gradient-to-position);
 }
 
 .dark\:text-\[\#e4ebee\]:is(.dark *) {
