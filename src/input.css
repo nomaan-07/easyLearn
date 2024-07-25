@@ -150,7 +150,7 @@
     border-radius: 50%;
     display: inline-block;
     border-top: 4px solid #c026d3;
-    border-right: 4px solid transparent;
+    border-right: 2px solid transparent;
     box-sizing: border-box;
     animation: rotation 1.5s linear infinite;
   }
@@ -163,7 +163,7 @@
     height: 48px;
     border-radius: 50%;
     border-left: 4px solid #65a30d;
-    border-bottom: 4px solid transparent;
+    border-bottom: 2px solid transparent;
     animation: rotation 0.75s linear infinite reverse;
   }
   @keyframes rotation {
