@@ -136,7 +136,7 @@
   }
 
   .course-card {
-    @apply bg-white dark:bg-slate-800 shadow overflow-hidden rounded-2xl relative pb-4;
+    @apply bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 overflow-hidden rounded-2xl relative pb-4;
   }
 
   .blog-card-link {

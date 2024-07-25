@@ -92,7 +92,7 @@ const courseTemplate = (course) => {
                 <!-- Course -->
             <div class="${course.courseWrapperClass} group">
               <!-- Course Banner -->
-              <div class="h-40 rounded-b-2xl overflow-hidden">
+              <div class="h-40 rounded-b-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
                 <a class="size-full" href="./course.html">
                   <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
                 </a>

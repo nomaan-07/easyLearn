@@ -22,9 +22,9 @@ getAllFromDatabase('courses')
 const blogTemplate = (blog) => {
   const template = `
               <!-- Blog -->
-            <div class="p-4 bg-white dark:bg-slate-800 shadow rounded-2xl group relative overflow-hidden">
+            <div class="p-4 bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl group relative overflow-hidden">
               <!-- Blog Banner -->
-              <a href="./blog.html" class="block w-full h-44 rounded-2xl overflow-hidden relative">
+              <a href="./blog.html" class="block w-full h-44 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden relative">
                 <img class="size-full object-cover" loading="lazy" src="${blog.src}" alt="${blog.title}" />
                 <svg class="hidden md:block absolute size-full inset-0 theme-bg-color text-white p-3 opacity-80 group-hover:opacity-0 group-hover:translate-y-44 duration-500 rounded-2xl transition-all">
                   <use href="#logo"></use>
