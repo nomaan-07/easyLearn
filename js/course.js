@@ -6,6 +6,7 @@ const headlinesTitleElem = document.querySelectorAll('.headline__title');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
 const newCommentTextarea = document.querySelector('#new-comment-textarea');
+const allTextareaElements = document.querySelectorAll('textarea');
 const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 const likeButtons = document.querySelectorAll('.like-btn');
@@ -123,9 +124,8 @@ likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(false, true));
 openResponseButtons.forEach((btn) => btn.addEventListener('click', () => toggleTextarea(btn, true)));
 closeResponseBtn.forEach((btn) => btn.addEventListener('click', () => toggleTextarea(btn)));
-
+allTextareaElements.forEach((el) => el.addEventListener('input', textareaAutoResize));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea());
 newCommentSubmitBtn.addEventListener('click', () => submitComment(newCommentTextarea, newCommentWrapper));
 
-newCommentTextarea.addEventListener('input', textareaAutoResize);
 window.addEventListener('load', removeLoader);
