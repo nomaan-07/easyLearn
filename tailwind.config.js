@@ -69,6 +69,7 @@ module.exports = {
   plugins: [
     function ({ addVariant }) {
       addVariant('child', '& > *');
+      addVariant('child-exc-last', '& > *:not(:last-child)');
       addVariant('child-hover', '& > *:hover');
     },
   ],
