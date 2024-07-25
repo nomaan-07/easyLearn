@@ -2,6 +2,9 @@ import { removeLoader } from './shared.js';
 import './header.js';
 import './change-theme.js';
 
+const contentShadow = document.querySelector('.course-content-shadow ');
+const showAllContentBtn = document.querySelector('.course-show-all-content ');
+const courseContent = document.querySelector('.course-content');
 const headlinesTitleElem = document.querySelectorAll('.headline__title');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
@@ -15,6 +18,18 @@ const closeResponseBtn = document.querySelectorAll('.response-comment-cancel-btn
 const responseCommentWrappers = document.querySelectorAll('.response-comment-wrapper');
 const responseCommentSubmitButtons = document.querySelectorAll('.response-comment-submit-btn');
 
+const toggleContent = () => {
+  const contentToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'xl:max-h-[500px]', 'max-h-full'];
+  contentToggleClasses.forEach((toggleClass) => {
+    courseContent.classList.toggle(toggleClass);
+  });
+
+  showAllContentBtn.children[0].classList.toggle('hidden');
+  showAllContentBtn.children[1].classList.toggle('hidden');
+  showAllContentBtn.children[2].classList.toggle('rotate-180');
+
+  contentShadow.classList.toggle('hidden');
+};
 // toggle headline
 const toggleHeadLine = (titleElem) => {
   let totalHeadlineBodyHeight = 0;
@@ -128,4 +143,5 @@ allTextareaElements.forEach((el) => el.addEventListener('input', textareaAutoRes
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea());
 newCommentSubmitBtn.addEventListener('click', () => submitComment(newCommentTextarea, newCommentWrapper));
 
+showAllContentBtn.addEventListener('click', toggleContent);
 window.addEventListener('load', removeLoader);
