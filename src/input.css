@@ -101,7 +101,7 @@
     /* yellow-400 */
     --theme-hover-bg-color: #facc15;
     /* yellow-500/10 */
-    --theme-color-10: rgba(234, 179, 8, 0.1);
+    --theme-color-10: rgba(234, 179, 8, 0.2);
   }
 
   .theme-bg-color {
@@ -118,6 +118,9 @@
   }
   .theme-text-color-10 {
     color: var(--theme-color-10);
+  }
+  .theme-border-color {
+    border-color: var(--theme-color);
   }
 }
 @layer components {
@@ -190,6 +193,60 @@
     @apply flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x-4 w-full p-4 md:py-6 xl:py-4 2xl:py-6 md:cursor-pointer transition-colors;
   }
   /* End of Headline Title */
+  /* Comment Header */
+  .comment-header,
+  .response-comment-wrapper {
+    position: relative;
+  }
+  .comment-header::after,
+  .comment-header::before,
+  .response-comment-wrapper::before,
+  .replay-comment::before {
+    @apply absolute content-[''] rounded-full;
+  }
+  .comment-header::after,
+  .comment-header::before {
+    @apply theme-bg-color-10 top-1/2;
+  }
+  .comment-header::after {
+    left: -28px;
+    width: 30px;
+    height: 2px;
+  }
+  .comment-header::before {
+    left: -29px;
+    width: 2px;
+    height: 42px;
+  }
+  .comment-header--new::before {
+    height: 31px !important;
+  }
+
+  .response-comment-wrapper::before {
+    background-color: #e2e8f0;
+    left: 50%;
+    width: 2px;
+    height: 36px;
+    top: -36px;
+  }
+  .dark .response-comment-wrapper::before {
+    background-color: #475569;
+  }
+
+  .replay-comment::before {
+    background-color: #e2e8f0;
+    left: 50%;
+    width: 2px;
+    height: 21.5px;
+    top: -21px;
+  }
+  .dark .replay-comment::before {
+    background-color: #334155;
+  }
+  .replay-comment:first-child::before {
+    background-color: #64748b !important;
+  }
+  /* End of Comment Header */
 }
 
 @layer utilities {
