@@ -1,3 +1,4 @@
+const allElements = document.querySelectorAll('*');
 const colorPlateBtn = document.querySelector('.color-plate-btn');
 const colorPlate = document.querySelector('.color-plate');
 const changeThemeButtons = document.querySelectorAll('.change-theme-btn');
@@ -19,6 +20,8 @@ const toggleColorPlate = () => {
 };
 
 function changeTheme(theme) {
+  // Set all elements transition to none
+  allElements.forEach((el) => el.classList.add('transition-none'));
   document.documentElement.className = `scroll-smooth ${theme}`;
 
   localStorage.setItem('theme', theme);
@@ -41,6 +44,11 @@ function changeTheme(theme) {
       heroLightSVG.classList.remove('hidden');
       heroDarkSVG.classList.add('hidden');
     }
+
+    // apply the changes immediately by forcing reflow
+    document.body.offsetHeight;
+    // remove transition none form elements
+    allElements.forEach((el) => el.classList.remove('transition-none'));
   }
 }
 

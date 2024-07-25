@@ -4011,6 +4011,10 @@ video {
   transition-duration: 150ms;
 }
 
+.transition-none {
+  transition-property: none;
+}
+
 .duration-500 {
   transition-duration: 500ms;
 }
