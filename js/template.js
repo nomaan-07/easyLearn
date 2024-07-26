@@ -280,7 +280,7 @@ const courseDataTemplate = (course) => {
 // course.js
 const headlineTemplate = (headline, sessions, number) => {
   if (!sessions) {
-    sessions = '<p class="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
+    sessions = '<p class ="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
   }
   const template = `
               <div class="w-full overflow-hidden rounded-2xl">
@@ -332,4 +332,82 @@ const headlineSessionTemplate = (session, number) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate };
+// course.js
+const commentTemplate = (comment, replies) => {
+  const template = `
+    <div class="comment pt-4" id="comment-${comment.id}">
+      <div class="comment-header sm:text-xl flex items-center gap-2 w-fit font-VazirMedium theme-bg-color-10 py-px pl-4 rounded-full">
+        <div class="size-12 rounded-full overflow-hidden">
+          <img class="w-full h-full object-cover" src="${comment.image_src}" alt="${comment.writer}">
+        </div>
+        <span>${comment.writer}</span>
+      </div>
+      <!-- Comment Content -->
+      <div class="w-full text-white bg-slate-500 rounded-2xl px-4 pt-4 pb-1 resize-none overflow-hidden mt-4 relative z-20">
+        <p>${comment.message}</p>
+        <!-- Comment Info -->
+        <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
+          <span>${comment.date}</span>
+          <div class="flex flex-wrap gap-2 text-slate-900">
+            <!-- Likes -->
+            <div class="like-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg md:cursor-pointer group">
+              <svg class="size-5 text-rose-500 md:group-hover:text-rose-600 transition-colors">
+                <use href="#heart-outline"></use>
+              </svg>
+              <span>${comment.likes}</span>
+            </div>
+            <!-- End of Likes -->
+            <!-- Response Comment Btn -->
+            <div class="open-response-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg theme-text-color md:text-inherit md:cursor-pointer md:hover:theme-text-color transition-colors">
+              <svg class="size-5">
+                <use href="#chat-bubble-left-ellipsis"></use>
+              </svg>
+              <span>پاسخ</span>
+            </div>
+          </div>
+        </div>
+        <!-- End of Comment Info -->
+      </div>
+      <!-- End of Comment Content -->
+      <!-- Reply comments -->
+      <div class="reply-comments px-2">
+      ${replies}
+      </div>
+      <!-- End of Reply comments -->
+      <!-- New Response Comment -->
+      <div class="response-comment-wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden" id="response-wrapper-comment-${comment.id}">
+        <textarea class="response-comment-textarea w-full h-40 border bg-transparent border-slate-200 dark:border-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="response-textarea-comment-${comment.id}" placeholder="پاسخ..."></textarea>
+        <div class="flex items-center justify-end gap-2">
+          <div class="response-comment-cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
+          <div class="response-comment-submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
+        </div>
+      </div>
+      <!-- End of New Response Comment -->
+      <div></div>
+    </div>`;
+  return template;
+};
+
+// course.js
+const commentReplyTemplate = (reply) => {
+  const template = `
+  <div class="replay-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
+      <div class="flex items-start gap-2 font-VazirMedium border-b border-b-slate-300 dark:border-b-slate-600">
+        <div class="size-12 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
+          <img class="w-full h-full object-cover" src="${reply.image_src}" alt="${reply.writer}">
+        </div>
+        <div>
+          <p class="sm:text-lg">${reply.writer}</p>
+          <span>${reply.date}</span>
+        </div>
+      </div>
+      <!-- Reply Comment Content -->
+      <div class="w-full resize-none overflow-hidden mt-4 z-20">
+        <p>${reply.message}</p>
+      </div>
+    </div>`;
+
+  return template;
+};
+
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate };

@@ -1,7 +1,7 @@
-import { removeLoader, getOneFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
+import { removeLoader, getAllFromDatabase, getOneFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
-import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate } from './template.js';
+import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
 
 const breadcrumbCourseCategory = document.querySelector('.breadcrumb__course-category');
 const breadcrumbCourseName = document.querySelector('.breadcrumb__course-name');
@@ -10,6 +10,8 @@ const courseDataWrapper = document.querySelector('#course-data-wrapper');
 const courseDescription = document.querySelector('.course-description');
 const headlinesWrapper = document.querySelector('#headlines-wrapper');
 const descriptionShadow = document.querySelector('.course-description-shadow ');
+const commentsWrapper = document.querySelector('.comments-wrapper');
+
 const showAllDescriptionBtn = document.querySelector('#course-show-all-description-btn');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
@@ -17,9 +19,6 @@ const newCommentTextarea = document.querySelector('#new-comment-textarea');
 const allTextareaElements = document.querySelectorAll('textarea');
 const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
-const likeButtons = document.querySelectorAll('.like-btn');
-const openResponseButtons = document.querySelectorAll('.open-response-btn');
-const closeResponseBtn = document.querySelectorAll('.response-comment-cancel-btn');
 const responseCommentWrappers = document.querySelectorAll('.response-comment-wrapper');
 const responseCommentSubmitButtons = document.querySelectorAll('.response-comment-submit-btn');
 
@@ -46,6 +45,17 @@ const headlineSectionHandler = (headline) => {
     });
   }
   return headlineTemplate(headline, sessionsTemplate, sessions.length);
+};
+
+const commentSectionHandler = (comment) => {
+  let replies = comment.replies;
+  let repliesTemplate = '';
+  if (replies) {
+    replies.forEach((reply) => {
+      repliesTemplate += commentReplyTemplate(reply);
+    });
+  }
+  return commentTemplate(comment, repliesTemplate);
 };
 
 const addCourseDetailToDOM = (courseObject) => {
@@ -83,6 +93,7 @@ const addCourseDetailToDOM = (courseObject) => {
   courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
 
   // Description section
+  courseDescription.innerHTML = '';
   if (course.description) {
     courseDescription.insertAdjacentHTML('beforeend', course.description);
   } else {
@@ -90,6 +101,7 @@ const addCourseDetailToDOM = (courseObject) => {
   }
 
   // Headline section
+  headlinesWrapper.innerHTML = '';
   if (course.headlines) {
     course.headlines.forEach((headline) => {
       headlinesWrapper.insertAdjacentHTML('beforeend', headlineSectionHandler(headline));
@@ -105,6 +117,20 @@ const addCourseDetailToDOM = (courseObject) => {
   }
 
   // comments section
+  getAllFromDatabase('comments').then((comments) => {
+    commentsWrapper.innerHTML = '';
+    let FilteredComments = comments.filter((comment) => {
+      return comment.course_id === course.id;
+    });
+    if (FilteredComments.length) {
+      FilteredComments.forEach((comment) => {
+        commentsWrapper.insertAdjacentHTML('beforeend', commentSectionHandler(comment));
+      });
+      handleReplyAndLikes();
+    } else {
+      commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
+    }
+  });
 };
 
 getOneFromDatabase('courses', 'slug', courseSearchParam)
@@ -220,18 +246,26 @@ const toggleLike = (btn, isLoading = false) => {
   }
 };
 
-likeButtons.forEach((btn) => {
-  toggleLike(btn, true);
-});
+const handleReplyAndLikes = () => {
+  const likeButtons = document.querySelectorAll('.like-btn');
+  const openResponseButtons = document.querySelectorAll('.open-response-btn');
+  const allCommentsTextareaElements = document.querySelectorAll('.response-comment-textarea');
+  const closeResponseButtons = document.querySelectorAll('.response-comment-cancel-btn');
 
-likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)));
+  console.log(allCommentsTextareaElements);
+  likeButtons.forEach((btn) => {
+    toggleLike(btn, true);
+  });
+  likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)));
+  openResponseButtons.forEach((btn) => btn.addEventListener('click', () => toggleTextarea(btn, true)));
+  closeResponseButtons.forEach((btn) => btn.addEventListener('click', () => toggleTextarea(btn)));
+  allCommentsTextareaElements.forEach((el) => el.addEventListener('input', textareaAutoResize));
+};
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(false, true));
-openResponseButtons.forEach((btn) => btn.addEventListener('click', () => toggleTextarea(btn, true)));
-closeResponseBtn.forEach((btn) => btn.addEventListener('click', () => toggleTextarea(btn)));
-allTextareaElements.forEach((el) => el.addEventListener('input', textareaAutoResize));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea());
 newCommentSubmitBtn.addEventListener('click', () => submitComment(newCommentTextarea, newCommentWrapper));
 
+newCommentTextarea.addEventListener('input', textareaAutoResize);
 showAllDescriptionBtn.addEventListener('click', toggleDescription);
 window.addEventListener('load', removeLoader);
