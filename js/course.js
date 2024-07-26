@@ -46,14 +46,14 @@ const addCourseDetailToDOM = (courseObject) => {
     finalPrice: courseObject.discount !== 100 ? getFinalPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان',
     id: courseObject.id,
     name: courseObject.name,
-    description: courseObject.description,
+    caption: courseObject.caption,
     src: courseObject.src,
     teacher: courseObject.teacher,
     students: courseObject.students.toLocaleString('fa-IR'),
     ratePercent: Math.floor((courseObject.rate * 100) / 5),
     discountPercent: courseObject.discount,
     price: courseObject.price.toLocaleString('fa-IR'),
-    content: courseObject.content,
+    description: courseObject.description,
     category: courseObject.category[0],
     slug: courseObject.slug,
     // FIXME: update date
@@ -67,9 +67,9 @@ const addCourseDetailToDOM = (courseObject) => {
   breadCrumbLinksHandler(course.name, course.slug, course.category);
   courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
   courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
-  // FIXME No need for course.content.length
-  if (course.content && course.content.length) {
-    courseDescription.insertAdjacentHTML('beforeend', course.content);
+  // FIXME No need for course.description.length
+  if (course.description && course.description.length) {
+    courseDescription.insertAdjacentHTML('beforeend', course.description);
   } else {
     courseDescription.closest('#course-description-wrapper').classList.add('hidden');
   }

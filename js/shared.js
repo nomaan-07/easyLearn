@@ -83,7 +83,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
     newCourse = {
       id: course.id,
       name: course.name,
-      description: course.description,
+      caption: course.caption,
       src: course.src,
       teacher: course.teacher,
       students: course.students.toLocaleString('fa-IR'),
