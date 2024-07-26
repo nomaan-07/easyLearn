@@ -86,7 +86,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
       description: course.description,
       src: course.src,
       teacher: course.teacher,
-      students: course.students,
+      students: course.students.toLocaleString('fa-IR'),
       rate: course.rate,
       discountPercent: course.discount,
       price: course.price.toLocaleString('fa-IR'),
