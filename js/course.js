@@ -67,8 +67,8 @@ const addCourseDetailToDOM = (courseObject) => {
   breadCrumbLinksHandler(course.name, course.slug, course.category);
   courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
   courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
-  // FIXME No need for course.description.length
-  if (course.description && course.description.length) {
+
+  if (course.description) {
     courseDescription.insertAdjacentHTML('beforeend', course.description);
   } else {
     courseDescription.closest('#course-description-wrapper').classList.add('hidden');
