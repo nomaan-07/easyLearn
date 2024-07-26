@@ -3,6 +3,9 @@ import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate } from './template.js';
 
+const breadcrumbCourseCategory = document.querySelector('.breadcrumb__course-category');
+const breadcrumbCourseName = document.querySelector('.breadcrumb__course-name');
+
 const courseInfoWrapper = document.querySelector('#course-info');
 const courseDataWrapper = document.querySelector('#course-data-wrapper');
 const courseDescription = document.querySelector('.course-description');
@@ -27,6 +30,28 @@ if (!courseSearchParam) {
   location.replace('404.html');
 }
 
+const breadCrumbLinksHandler = (name, slug, category) => {
+  let categoryName = null;
+  switch (category) {
+    case 'python':
+      categoryName = 'پایتون';
+      break;
+    case 'hack':
+      categoryName = 'امنیت';
+      break;
+    case 'front-end':
+      categoryName = 'فرانت اند';
+      break;
+    case 'soft-skill':
+      categoryName = 'مهارت های نرم';
+      break;
+  }
+  breadcrumbCourseCategory.innerText = categoryName;
+  breadcrumbCourseCategory.href = `./course-category.html?category=${category}`;
+  breadcrumbCourseName.innerText = name;
+  breadcrumbCourseName.href = `./course.html?course=${slug}`;
+};
+
 const addCourseDetailToDOM = (courseObject) => {
   courseInfoWrapper.innerHTML = '';
   courseDataWrapper.innerHTML = '';
@@ -43,6 +68,7 @@ const addCourseDetailToDOM = (courseObject) => {
     discountPercent: courseObject.discount,
     price: courseObject.price.toLocaleString('fa-IR'),
     content: courseObject.content,
+    category: courseObject.category[0],
     // FIXME: update date
     date: formatDate(courseObject.created_at),
     // FIXME
@@ -51,10 +77,11 @@ const addCourseDetailToDOM = (courseObject) => {
     situation: null,
   };
   document.title = `${course.name} | ایزی‌لرن`;
-
+  breadCrumbLinksHandler(course.name, course.slug, course.category);
   courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
   courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
-  if (course.content.length) {
+  // FIXME No need for course.content.length
+  if (course.content && course.content.length) {
     courseDescription.insertAdjacentHTML('beforeend', course.content);
   } else {
     courseDescription.closest('#course-description-wrapper').classList.add('hidden');
