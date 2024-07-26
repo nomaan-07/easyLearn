@@ -48,7 +48,7 @@ if (categoryParam) {
   }
 } else if (searchParam) {
   categoryTitle.innerText = `جستجو: ${searchParam}`;
-  document.title = `ایزی‌لرن | ${searchParam}`;
+  document.title = `جستجو برای: ${searchParam}`;
   titleIcon.src = './images/icons/zoom.png';
   // some codes
 } else {
@@ -59,7 +59,7 @@ if (categoryParam) {
 const overallSearchHandler = (allCourses) => {
   let regex = new RegExp(searchParam, 'gi');
   let searchResult = allCourses.filter((course) => {
-    return course.name.match(regex);
+    return course.name.match(regex) || course.description.match(regex);
   });
   searchResult.length > 0 || searchResultWrapper.classList.remove('hidden');
   return searchResult;
