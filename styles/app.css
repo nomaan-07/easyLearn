@@ -1645,6 +1645,11 @@ video {
   height: 2rem;
 }
 
+.size-9 {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
 .size-full {
   width: 100%;
   height: 100%;
@@ -4753,6 +4758,11 @@ video {
   .sm\:size-8 {
     width: 2rem;
     height: 2rem;
+  }
+
+  .sm\:size-11 {
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   .sm\:h-12 {
