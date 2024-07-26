@@ -272,7 +272,7 @@ const courseDataTemplate = (course) => {
               <use href="#champion"></use>
             </svg>
             <span class="font-VazirLight mt-2 mb-1.5">رضایت</span>
-            <span class="font-VazirBold">${course.ratePercent}</span>
+            <span class="font-VazirBold">${course.ratePercent}%</span>
           </div>`;
   return template;
 };
