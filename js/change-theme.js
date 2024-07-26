@@ -1,10 +1,4 @@
-const colorPlateBtn = document.querySelector('.color-plate-btn');
-const colorPlate = document.querySelector('.color-plate');
-const changeThemeButtons = document.querySelectorAll('.change-theme-btn');
-const darkThemeBtn = document.querySelector('.change-theme-btn--dark');
-const favIcon = document.querySelector('#favicon');
-const heroLightSVG = document.querySelector('.hero-light-svg');
-const heroDarkSVG = document.querySelector('.hero-dark-svg');
+import { colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './domElements.js';
 
 const setThemeFromLocalStorage = () => {
   const localStorageTheme = localStorage.getItem('theme');

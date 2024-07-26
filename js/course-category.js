@@ -1,14 +1,7 @@
 import { removeLoader, getAllFromDatabase, addCoursesToDOM, getFinalPrice, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
-
-const courseFilterButtons = document.querySelectorAll('.course-filter-btn');
-const courseSortButtons = document.querySelectorAll('.course-sort-btn');
-const coursesWrapperElement = document.querySelector('.courses-wrapper');
-const searchCourseInput = document.querySelector('#search-course-input');
-const categoryTitle = document.querySelector('.category-title');
-const titleIcon = document.querySelector('.title-icon');
-const searchResultWrapper = document.querySelector('.no-result-wrapper');
+import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './domElements.js';
 
 let categoryParam = new URLSearchParams(location.search).get('category');
 let searchParam = new URLSearchParams(location.search).get('search');

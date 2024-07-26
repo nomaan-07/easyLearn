@@ -5,10 +5,7 @@ import './hero.js';
 import './testimonials.js';
 import { removeLoader, getAllFromDatabase, addCoursesToDOM, formatDate } from './shared.js';
 import { blogCardTemplate } from './template.js';
-
-const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
-const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
-const blogsWrapperElement = document.querySelector('.blogs-wrapper');
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './domElements.js';
 
 getAllFromDatabase('courses')
   .then((courses) => {

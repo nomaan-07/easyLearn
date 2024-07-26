@@ -2,25 +2,24 @@ import { removeLoader, getAllFromDatabase, getOneFromDatabase, getFinalPrice, fo
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
-
-const breadcrumbCourseCategory = document.querySelector('.breadcrumb__course-category');
-const breadcrumbCourseName = document.querySelector('.breadcrumb__course-name');
-const courseInfoWrapper = document.querySelector('#course-info');
-const courseDataWrapper = document.querySelector('#course-data-wrapper');
-const courseDescription = document.querySelector('.course-description');
-const headlinesWrapper = document.querySelector('#headlines-wrapper');
-const descriptionShadow = document.querySelector('.course-description-shadow ');
-const commentsWrapper = document.querySelector('.comments-wrapper');
-
-const showAllDescriptionBtn = document.querySelector('#course-show-all-description-btn');
-const addNewCommentBtn = document.querySelector('.new-comment-btn');
-const newCommentWrapper = document.querySelector('.new-comment-wrapper');
-const newCommentTextarea = document.querySelector('#new-comment-textarea');
-const allTextareaElements = document.querySelectorAll('textarea');
-const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
-const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
-const responseCommentWrappers = document.querySelectorAll('.response-comment-wrapper');
-const responseCommentSubmitButtons = document.querySelectorAll('.response-comment-submit-btn');
+import {
+  breadcrumbCourseCategory,
+  breadcrumbCourseName,
+  courseInfoWrapper,
+  courseDataWrapper,
+  courseDescription,
+  headlinesWrapper,
+  descriptionShadow,
+  commentsWrapper,
+  showAllDescriptionBtn,
+  addNewCommentBtn,
+  newCommentWrapper,
+  newCommentTextarea,
+  newCommentSubmitBtn,
+  newCommentCloseBtn,
+  responseCommentWrappers,
+  responseCommentSubmitButtons,
+} from './domElements.js';
 
 let courseSearchParam = new URLSearchParams(location.search).get('course');
 

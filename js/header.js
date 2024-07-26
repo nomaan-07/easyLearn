@@ -1,20 +1,22 @@
-const mobileMenuOpenBtn = document.querySelector('.mobile-menu-open-btn');
-const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close-btn');
-const mobileMenu = document.querySelector('.mobile-menu');
-const overlay = document.querySelector('.overlay');
-const mobileCartOpenBtn = document.querySelector('.mobile-shopping-cart-open-btn');
-const mobileCartCloseBtn = document.querySelector('.mobile-shopping-cart-close-btn');
-const mobileCart = document.querySelector('.mobile-shopping-cart');
-const header = document.querySelector('.header');
-const headerLogoWrapper = document.querySelector('.header__logo');
-const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
-const mobileSubmenus = document.querySelectorAll('.mobile-menu-submenu');
-const searchBar = document.querySelector('.search-bar');
-const headerSearchToggleBtn = document.querySelector('.header__search-btn');
-const searchBarInput = document.querySelector('.search-bar__input');
-const searchBarSearchBtn = document.querySelector('.search-bar__search-btn');
-const mobileSearchInput = document.querySelector('.mobile-search-input');
-const mobileSearchBtn = document.querySelector('.mobile-search-btn');
+import {
+  mobileMenuOpenBtn,
+  mobileMenuCloseBtn,
+  mobileMenu,
+  overlay,
+  mobileCartOpenBtn,
+  mobileCartCloseBtn,
+  mobileCart,
+  header,
+  headerLogoWrapper,
+  mobileMenuItems,
+  mobileSubmenus,
+  searchBar,
+  headerSearchToggleBtn,
+  searchBarInput,
+  searchBarSearchBtn,
+  mobileSearchInput,
+  mobileSearchBtn,
+} from './domElements.js';
 
 const openMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);
