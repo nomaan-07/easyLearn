@@ -1,4 +1,4 @@
-import { removeLoader, getAllFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
+import { removeLoader, getOneFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate } from './template.js';
@@ -36,6 +36,7 @@ const breadCrumbLinksHandler = (name, slug, category) => {
   breadcrumbCourseName.innerText = name;
   breadcrumbCourseName.href = `./course.html?course=${slug}`;
 };
+
 const headlineSectionHandler = (headline) => {
   let sessions = headline.sessions;
   let sessionsTemplate = '';
@@ -102,15 +103,15 @@ const addCourseDetailToDOM = (courseObject) => {
   } else {
     headlinesWrapper.parentElement.classList.add('hidden');
   }
+
+  // comments section
 };
 
-getAllFromDatabase('courses').then((courses) => {
-  let filterCourse = courses.filter((courseObject) => {
-    return courseObject.slug === courseSearchParam;
-  });
-
-  !filterCourse.length ? location.replace('404.html') : addCourseDetailToDOM(filterCourse[0]);
-});
+getOneFromDatabase('courses', 'slug', courseSearchParam)
+  .then((course) => {
+    addCourseDetailToDOM(course);
+  })
+  .catch(() => location.replace('404.html'));
 
 const toggleDescription = () => {
   const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];
@@ -177,7 +178,7 @@ const toggleTextarea = (btn = false, openTextarea = false) => {
   }
 };
 
-// FIXME: Send Comment ot database
+// FIXME: Send Comment to database
 const submitComment = (textarea, wrapper) => {
   const comment = textarea.value.trim();
   toggleTextarea();

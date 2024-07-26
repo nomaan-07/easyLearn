@@ -22,8 +22,8 @@ async function getAllFromDatabase(tableName) {
   return data;
 }
 
-async function getOneFromDatabase(tableName, ID) {
-  const { data, error } = await database.from(tableName).select().eq('id', ID).single();
+async function getOneFromDatabase(tableName, key, value) {
+  const { data, error } = await database.from(tableName).select().eq(key, value).single();
   if (error) {
     console.error('Error getting data', error);
     return error;
@@ -131,4 +131,4 @@ const categoryPersianEquivalent = (category) => {
   return categoryPersian;
 };
 
-export { removeLoader, getAllFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, generateRandomID, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };
+export { removeLoader, getAllFromDatabase, getOneFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, generateRandomID, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };
