@@ -89,15 +89,19 @@ const addCourseDetailToDOM = (courseObject) => {
   }
 
   // Headline section
-  course.headlines.forEach((headline) => {
-    headlinesWrapper.insertAdjacentHTML('beforeend', headlineSectionHandler(headline));
-  });
-  const headlinesTitleElem = document.querySelectorAll('.headline__title');
-  headlinesTitleElem.forEach((titleElem) =>
-    titleElem.addEventListener('click', () => {
-      toggleHeadLine(titleElem);
-    })
-  );
+  if (course.headlines) {
+    course.headlines.forEach((headline) => {
+      headlinesWrapper.insertAdjacentHTML('beforeend', headlineSectionHandler(headline));
+    });
+    const headlinesTitleElem = document.querySelectorAll('.headline__title');
+    headlinesTitleElem.forEach((titleElem) =>
+      titleElem.addEventListener('click', () => {
+        toggleHeadLine(titleElem);
+      })
+    );
+  } else {
+    headlinesWrapper.parentElement.classList.add('hidden');
+  }
 };
 
 getAllFromDatabase('courses').then((courses) => {
