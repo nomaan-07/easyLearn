@@ -1,4 +1,4 @@
-import { removeLoader, getAllFromDatabase, addCoursesToDOM, getFinalPrice } from './shared.js';
+import { removeLoader, getAllFromDatabase, addCoursesToDOM, getFinalPrice, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 
@@ -17,35 +17,14 @@ let categoryCourses = [];
 let filteredCourses = [];
 let searchedCourses = [];
 
-if (categoryParam) {
-  switch (categoryParam) {
-    case 'front-end':
-      categoryTitle.innerText = 'دوره های فرانت اند';
-      document.title = 'ایزی‌لرن | فرانت اند';
-      break;
-    case 'hack':
-      categoryTitle.innerText = 'دوره های امنیت';
-      document.title = 'ایزی‌لرن | امنیت';
-      break;
-    case 'python':
-      categoryTitle.innerText = 'دوره های پایتون';
-      document.title = 'ایزی‌لرن | پایتون';
-      break;
-    case 'soft-skill':
-      categoryTitle.innerText = 'دوره های مهارت های نرم';
-      document.title = 'ایزی‌لرن | مهارت های نرم';
-      break;
-    case 'all-courses':
-      categoryTitle.innerText = 'دوره ها';
-      document.title = 'ایزی‌لرن | دوره ها';
-      break;
-    case 'popular-courses':
-      categoryTitle.innerText = 'دوره های محبوب';
-      document.title = 'ایزی‌لرن | دوره های محبوب';
-      break;
-    default:
-      location.replace('404.html');
+if (categoryParam && categoryPersianEquivalent(categoryParam)) {
+  const categoryPersian = categoryPersianEquivalent(categoryParam);
+  if (categoryPersian === 'دوره ها' || categoryPersian === 'دوره های محبوب') {
+    categoryTitle.innerText = `${categoryPersian}`;
+  } else {
+    categoryTitle.innerText = `دوره های ${categoryPersian}`;
   }
+  document.title = `ایزی‌لرن | ${categoryPersian}`;
 } else if (searchParam) {
   categoryTitle.innerText = `جستجو: ${searchParam}`;
   document.title = `جستجو برای: ${searchParam}`;

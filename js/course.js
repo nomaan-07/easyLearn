@@ -1,4 +1,4 @@
-import { removeLoader, getAllFromDatabase, getFinalPrice, formatDate } from './shared.js';
+import { removeLoader, getAllFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate } from './template.js';
@@ -31,21 +31,7 @@ if (!courseSearchParam) {
 }
 
 const breadCrumbLinksHandler = (name, slug, category) => {
-  let categoryName = null;
-  switch (category) {
-    case 'python':
-      categoryName = 'پایتون';
-      break;
-    case 'hack':
-      categoryName = 'امنیت';
-      break;
-    case 'front-end':
-      categoryName = 'فرانت اند';
-      break;
-    case 'soft-skill':
-      categoryName = 'مهارت های نرم';
-      break;
-  }
+  const categoryName = categoryPersianEquivalent(category);
   breadcrumbCourseCategory.innerText = categoryName;
   breadcrumbCourseCategory.href = `./course-category.html?category=${category}`;
   breadcrumbCourseName.innerText = name;
@@ -69,6 +55,7 @@ const addCourseDetailToDOM = (courseObject) => {
     price: courseObject.price.toLocaleString('fa-IR'),
     content: courseObject.content,
     category: courseObject.category[0],
+    slug: courseObject.slug,
     // FIXME: update date
     date: formatDate(courseObject.created_at),
     // FIXME
