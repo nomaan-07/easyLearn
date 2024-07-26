@@ -59,7 +59,7 @@ if (categoryParam) {
 const overallSearchHandler = (allCourses) => {
   let regex = new RegExp(searchParam, 'gi');
   let searchResult = allCourses.filter((course) => {
-    return course.name.match(regex) || course.description.match(regex);
+    return course.name.match(regex);
   });
   searchResult.length > 0 || searchResultWrapper.classList.remove('hidden');
   return searchResult;

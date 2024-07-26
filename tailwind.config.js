@@ -32,6 +32,7 @@ module.exports = {
         float: 'float 10s ease infinite',
         'float-fast': 'float 5s ease infinite',
         rotate: 'rotate 2s ease infinite',
+        'to-left': 'to-left 1s ease infinite',
       },
       keyframes: {
         'open-up': {
@@ -58,6 +59,14 @@ module.exports = {
           },
           '50%': {
             transform: 'rotate(-20deg)',
+          },
+        },
+        'to-left': {
+          '0%, 100%': {
+            transform: 'translateX(0)',
+          },
+          '85%': {
+            transform: 'translateX(-10%)',
           },
         },
       },
