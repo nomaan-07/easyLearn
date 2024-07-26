@@ -19,7 +19,7 @@ const responseCommentWrappers = document.querySelectorAll('.response-comment-wra
 const responseCommentSubmitButtons = document.querySelectorAll('.response-comment-submit-btn');
 
 const toggleDescription = () => {
-  const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'xl:max-h-[500px]', 'max-h-full'];
+  const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];
   descriptionToggleClasses.forEach((toggleClass) => {
     courseDescription.classList.toggle(toggleClass);
   });
