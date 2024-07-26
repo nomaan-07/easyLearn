@@ -1,10 +1,13 @@
-import { removeLoader } from './shared.js';
+import { removeLoader, getAllFromDatabase, getFinalPrice, formatDate } from './shared.js';
 import './header.js';
 import './change-theme.js';
+import { courseInfoTemplate, courseDataTemplate } from './template.js';
 
+const courseInfoWrapper = document.querySelector('#course-info');
+const courseDataWrapper = document.querySelector('#course-data-wrapper');
+const courseDescription = document.querySelector('.course-description');
 const descriptionShadow = document.querySelector('.course-description-shadow ');
 const showAllDescriptionBtn = document.querySelector('#course-show-all-description-btn');
-const courseDescription = document.querySelector('.course-description');
 const headlinesTitleElem = document.querySelectorAll('.headline__title');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
@@ -17,6 +20,54 @@ const openResponseButtons = document.querySelectorAll('.open-response-btn');
 const closeResponseBtn = document.querySelectorAll('.response-comment-cancel-btn');
 const responseCommentWrappers = document.querySelectorAll('.response-comment-wrapper');
 const responseCommentSubmitButtons = document.querySelectorAll('.response-comment-submit-btn');
+
+let courseSearchParam = new URLSearchParams(location.search).get('course');
+
+if (!courseSearchParam) {
+  location.replace('404.html');
+}
+
+const addCourseDetailToDOM = (courseObject) => {
+  courseInfoWrapper.innerHTML = '';
+  courseDataWrapper.innerHTML = '';
+  courseDescription.innerHTML = '';
+  let course = {
+    finalPrice: courseObject.discount !== 100 ? getFinalPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان',
+    id: courseObject.id,
+    name: courseObject.name,
+    description: courseObject.description,
+    src: courseObject.src,
+    teacher: courseObject.teacher,
+    students: courseObject.students.toLocaleString('fa-IR'),
+    ratePercent: Math.floor((courseObject.rate * 100) / 5),
+    discountPercent: courseObject.discount,
+    price: courseObject.price.toLocaleString('fa-IR'),
+    content: courseObject.content,
+    // FIXME: update date
+    date: formatDate(courseObject.created_at),
+    // FIXME
+    sessionsCount: null,
+    videosLength: null,
+    situation: null,
+  };
+  document.title = `${course.name} | ایزی‌لرن`;
+
+  courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
+  courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
+  if (course.content.length) {
+    courseDescription.insertAdjacentHTML('beforeend', course.content);
+  } else {
+    courseDescription.closest('#course-description-wrapper').classList.add('hidden');
+  }
+};
+
+getAllFromDatabase('courses').then((courses) => {
+  let filterCourse = courses.filter((courseObject) => {
+    return courseObject.slug === courseSearchParam;
+  });
+
+  !filterCourse.length ? location.replace('404.html') : addCourseDetailToDOM(filterCourse[0]);
+});
 
 const toggleDescription = () => {
   const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];

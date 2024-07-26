@@ -1,3 +1,4 @@
+// shared.js - index.js
 const courseCardTemplate = (course) => {
   let finalPriceTemplate = null;
   if (course.discountPercent === 100) {
@@ -77,6 +78,7 @@ const courseCardTemplate = (course) => {
   return courseTemplateHtml;
 };
 
+// index.js
 const blogCardTemplate = (blog) => {
   const template = `
               <!-- Blog -->
@@ -152,4 +154,126 @@ const blogCardTemplate = (blog) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate };
+// course.js
+const courseInfoTemplate = (course) => {
+  let finalPriceTemplate = null;
+  if (course.discountPercent === 100) {
+    finalPriceTemplate = ` <span class="font-VazirMedium text-green-600 dark:text-green-400">${course.finalPrice}</span>`;
+  } else {
+    finalPriceTemplate = `
+            <div class="flex items-end font-VazirMedium">
+              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
+              <svg class="size-7 sm:size-8 lg:size-9 mr-[-3px]">
+                <use href="#toman"></use>
+              </svg>
+            </div>`;
+  }
+
+  const template = `
+    <!-- Banner -->
+    <div class="lg:order-2 lg:w-1/2 lg:h[344px] lg:h-[356px] overflow-hidden rounded-2xl">
+      <img class="size-full" src="${course.src}" alt="${course.name}" />
+    </div>
+    <!-- End of Banner -->
+    <!-- Course Info -->
+    <div class="bg-white p-5 lg:w-1/2 dark:bg-slate-800 rounded-2xl shadow">
+      <!-- Course name -->
+      <h1 class="lg:order-1 text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
+      <!-- Course Caption -->
+      <p class="sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
+      ${course.description}
+      </p>
+      <div class="2xl:flex justify-between mt-3 sm:mt-4 md:mt-5 2xl:mt-9">
+        <!-- Teacher and Discount -->
+        <div class="sm:flex justify-between items-center 2xl:flex-col 2xl:items-start 2xl:gap-4">
+          <!-- Teacher -->
+          <a href="./teacher.html" class="font-VazirMedium md:hover:theme-text-color transition-colors flex justify-center items-center sm:justify-start gap-1 bg-slate-100 dark:bg-slate-700 sm:bg-transparent dark:sm:bg-transparent mx-auto sm:mx-0 w-48 sm:w-auto py-2 sm:py-0 rounded-full">
+            <svg class="size-5 hidden sm:block">
+              <use href="#user"></use>
+            </svg>
+            <span>${course.teacher}</span>
+          </a>
+          <!-- End of Teacher -->
+          <!-- Discount -->
+          <div class="sm:text-lg font-VazirLight text-center theme-bg-color-10 p-2 lg:px-1 xl:px-2 rounded-2xl mt-4 sm:mt-0">
+            <p class="font-VazirBold theme-text-color"><span>${course.discountPercent}%</span> تخفیف ویژه</p>
+            <div class="flex items-center justify-center m-1">
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l"><span class="font-VazirBold">2</span> روز</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l"><span class="font-VazirBold">12</span> ساعت</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l border-l-slate-200 dark:border-l-slate-700"><span class="font-VazirBold">54</span> دقیقه</div>
+              <div><span class="font-VazirBold">29</span> ثانیه</div>
+            </div>
+          </div>
+          <!-- End of Discount -->
+        </div>
+        <!-- End of Teacher and Discount -->
+        <!-- Purchase and Price -->
+        <div class="flex flex-col-reverse sm:flex-row gap-3 justify-between items-center mt-4 md:mt-6 2xl:flex-col-reverse 2xl:items-start 2xl:gap-4">
+          <!-- Purchase Btn -->
+          <div class="btn w-full sm:w-auto 2xl:w-full theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت نام در دوره</div>
+          <!-- Price -->
+          <div class="flex items-end gap-2 text-lg sm:text-xl lg:text-2xl">
+            <!-- Primary Price -->
+            <span class="line-through dark:text-slate-300 text-slate-500 decoration-red-400">${course.price}</span>
+            <!-- Final Price -->
+              ${finalPriceTemplate}
+            <!-- End of Final Price -->
+          </div>
+          <!-- End of Price -->
+        </div>
+        <!-- End of Price and Purchase -->
+      </div>
+    </div>
+    <!-- End of Course Info-->`;
+
+  return template;
+};
+
+// course.js
+const courseDataTemplate = (course) => {
+  const template = `
+          <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+            <svg class="size-8 sm:size-10 theme-text-color">
+              <use href="#timer"></use>
+            </svg>
+            <span class="font-VazirLight mt-2 mb-1.5">مدت دوره</span>
+            <span class="font-VazirBold">${course.videosLength}</span>
+          </div>
+          <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+            <svg class="size-8 sm:size-10 theme-text-color">
+              <use href="#clipboard-document-check"></use>
+            </svg>
+            <span class="font-VazirLight mt-2 mb-1.5">وضعیت دوره</span>
+            <span class="font-VazirBold">${course.situation}</span>
+          </div>
+          <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+            <svg class="size-8 sm:size-10 theme-text-color">
+              <use href="#calendar-days"></use>
+            </svg>
+            <span class="font-VazirLight mt-2 mb-1.5">آخرین آپدیت </span>
+            <span class="font-VazirBold">${course.date}</span>
+          </div>
+          <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+            <svg class="size-8 sm:size-10 theme-text-color">
+              <use href="#queue-list"></use>
+            </svg>
+            <span class="font-VazirLight mt-2 mb-1.5">تعداد جلسات</span>
+            <span class="font-VazirBold">${course.sessionsCount}</span>
+          </div>
+          <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+            <svg class="size-8 sm:size-10 theme-text-color">
+              <use href="#user-group"></use>
+            </svg>
+            <span class="font-VazirLight mt-2 mb-1.5">دانشجو</span>
+            <span class="font-VazirBold">${course.students}</span>
+          </div>
+          <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+            <svg class="size-8 sm:size-10 theme-text-color">
+              <use href="#champion"></use>
+            </svg>
+            <span class="font-VazirLight mt-2 mb-1.5">رضایت</span>
+            <span class="font-VazirBold">${course.ratePercent}</span>
+          </div>`;
+  return template;
+};
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate };
