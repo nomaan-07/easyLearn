@@ -1,17 +1,16 @@
 import { removeLoader, getAllFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
-import { courseInfoTemplate, courseDataTemplate } from './template.js';
+import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate } from './template.js';
 
 const breadcrumbCourseCategory = document.querySelector('.breadcrumb__course-category');
 const breadcrumbCourseName = document.querySelector('.breadcrumb__course-name');
-
 const courseInfoWrapper = document.querySelector('#course-info');
 const courseDataWrapper = document.querySelector('#course-data-wrapper');
 const courseDescription = document.querySelector('.course-description');
+const headlinesWrapper = document.querySelector('#headlines-wrapper');
 const descriptionShadow = document.querySelector('.course-description-shadow ');
 const showAllDescriptionBtn = document.querySelector('#course-show-all-description-btn');
-const headlinesTitleElem = document.querySelectorAll('.headline__title');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
 const newCommentTextarea = document.querySelector('#new-comment-textarea');
@@ -37,10 +36,18 @@ const breadCrumbLinksHandler = (name, slug, category) => {
   breadcrumbCourseName.innerText = name;
   breadcrumbCourseName.href = `./course.html?course=${slug}`;
 };
+const headlineSectionHandler = (headline) => {
+  let sessions = headline.sessions;
+  let sessionsTemplate = '';
+  if (sessions.length) {
+    sessions.forEach((session, index) => {
+      sessionsTemplate += headlineSessionTemplate(session, index + 1);
+    });
+  }
+  return headlineTemplate(headline, sessionsTemplate, sessions.length);
+};
 
 const addCourseDetailToDOM = (courseObject) => {
-  courseInfoWrapper.innerHTML = '';
-  courseDataWrapper.innerHTML = '';
   courseDescription.innerHTML = '';
   let course = {
     finalPrice: courseObject.discount !== 100 ? getFinalPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان',
@@ -56,7 +63,8 @@ const addCourseDetailToDOM = (courseObject) => {
     description: courseObject.description,
     category: courseObject.category[0],
     slug: courseObject.slug,
-    // FIXME: update date
+    headlines: courseObject.headlines,
+    // FIXME: updated_at instead of created_at
     date: formatDate(courseObject.created_at),
     // FIXME
     sessionsCount: null,
@@ -64,15 +72,32 @@ const addCourseDetailToDOM = (courseObject) => {
     situation: null,
   };
   document.title = `${course.name} | ایزی‌لرن`;
+  // breadcrumb
   breadCrumbLinksHandler(course.name, course.slug, course.category);
+  // Info and banner section
+  courseInfoWrapper.innerHTML = '';
   courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
+  // Data section
+  courseDataWrapper.innerHTML = '';
   courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
 
+  // Description section
   if (course.description) {
     courseDescription.insertAdjacentHTML('beforeend', course.description);
   } else {
     courseDescription.closest('#course-description-wrapper').classList.add('hidden');
   }
+
+  // Headline section
+  course.headlines.forEach((headline) => {
+    headlinesWrapper.insertAdjacentHTML('beforeend', headlineSectionHandler(headline));
+  });
+  const headlinesTitleElem = document.querySelectorAll('.headline__title');
+  headlinesTitleElem.forEach((titleElem) =>
+    titleElem.addEventListener('click', () => {
+      toggleHeadLine(titleElem);
+    })
+  );
 };
 
 getAllFromDatabase('courses').then((courses) => {
@@ -95,6 +120,7 @@ const toggleDescription = () => {
 
   descriptionShadow.classList.toggle('hidden');
 };
+
 // toggle headline
 const toggleHeadLine = (titleElem) => {
   let totalHeadlineBodyHeight = 0;
@@ -188,12 +214,6 @@ const toggleLike = (btn, isLoading = false) => {
     }
   }
 };
-
-headlinesTitleElem.forEach((titleElem) =>
-  titleElem.addEventListener('click', () => {
-    toggleHeadLine(titleElem);
-  })
-);
 
 likeButtons.forEach((btn) => {
   toggleLike(btn, true);

@@ -276,4 +276,60 @@ const courseDataTemplate = (course) => {
           </div>`;
   return template;
 };
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate };
+
+// course.js
+const headlineTemplate = (headline, sessions, number) => {
+  if (!sessions) {
+    sessions = '<p class="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
+  }
+  const template = `
+              <div class="w-full overflow-hidden rounded-2xl">
+                  <!-- Headline header -->
+                  <div class="headline__title bg-slate-100 dark:bg-slate-700 md:hover:theme-text-color">
+                    <span class="font-VazirBold text-lg line-clamp-2">${headline.title}</span>
+                    <div class="flex items-center justify-end gap-2">
+                      <span>${number} جلسه</span>
+                      <svg class="size-5 transition-transform">
+                        <use href="#chevron-left"></use>
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- End of Headline header -->
+                  <!-- Headline Body -->
+                  <div class="max-h-0 bg-slate-100 dark:bg-slate-700 child-exc-last:border-b child-exc-last:border-b-slate-300 dark:child-exc-last:border-b-slate-600 transition-all">
+                    ${sessions}
+                  </div>
+                  <!-- End of Headline Body -->
+                </div>`;
+  return template;
+};
+
+// course.js
+const headlineSessionTemplate = (session, number) => {
+  let sessionTag = 'a';
+  let sessionHref = `href="lesson.html?lesson=${session.id}"`;
+  let sessionIcon = 'eye';
+  if (session.isLocked) {
+    sessionTag = 'div';
+    sessionHref = '';
+    sessionIcon = 'lock-closed';
+  }
+  const template = `
+          <!-- Session -->
+        <${sessionTag} ${sessionHref}class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x- w-full p-4 md:hover:theme-text-color group">
+          <div class="flex items-center gap-2">
+            <span class="text-center shrink-0 w-8 h-8 pt-1.5 bg-white dark:bg-slate-800 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors">${number}</span>
+            <span class="text-lg transition-colors line-clamp-2">${session.name}</span>
+          </div>
+          <div class="flex items-center justify-end gap-2 transition-colors">
+            <span>${session.length}</span>
+            <svg class="size-5">
+              <use href="#${sessionIcon}"></use>
+            </svg>
+          </div>
+        </${sessionTag}>
+        <!-- End of Session -->`;
+  return template;
+};
+
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate };
