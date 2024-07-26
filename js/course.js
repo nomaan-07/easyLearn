@@ -3,7 +3,7 @@ import './header.js';
 import './change-theme.js';
 
 const contentShadow = document.querySelector('.course-content-shadow ');
-const showAllContentBtn = document.querySelector('.course-show-all-content ');
+const showAllContentBtn = document.querySelector('#course-show-all-content-btn');
 const courseContent = document.querySelector('.course-content');
 const headlinesTitleElem = document.querySelectorAll('.headline__title');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
