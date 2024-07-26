@@ -91,6 +91,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
       discountPercent: course.discount,
       price: course.price.toLocaleString('fa-IR'),
       finalPrice: finalPrice,
+      slug: course.slug,
       courseWrapperClass,
     };
     coursesWrapper.insertAdjacentHTML('beforeend', courseCardTemplate(newCourse));

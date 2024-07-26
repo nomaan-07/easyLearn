@@ -20,7 +20,7 @@ const courseCardTemplate = (course) => {
             <div class="${course.courseWrapperClass} group">
               <!-- Course Banner -->
               <div class="h-40 rounded-b-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
-                <a class="size-full" href="./course.html">
+                <a class="size-full" href="./course.html?course=${course.slug}">
                   <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
                 </a>
                 <!-- Discount Percent -->
@@ -29,7 +29,7 @@ const courseCardTemplate = (course) => {
               <!-- End of Course Banner -->
               <div class="h-[122px] px-4 space-y-2 mt-4">
                 <!-- Course Name -->
-                <a class="block font-VazirBold text-lg max-h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html">${course.name}</a>
+                <a class="block font-VazirBold text-lg max-h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html?course=${course.slug}">${course.name}</a>
                 <!-- Course Description -->
                 <p class="line-clamp-2 font-VazirLight max-h-12">${course.description}</p>
               </div>
