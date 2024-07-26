@@ -1,4 +1,5 @@
 import database from './api.js';
+import { courseCardTemplate } from './template.js';
 
 const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-';
@@ -72,85 +73,6 @@ window.addCourseToCart = (id) => {
 };
 
 // Add courses to DOM
-const courseTemplate = (course) => {
-  let finalPriceTemplate = null;
-  if (course.discountPercent === 100) {
-    finalPriceTemplate = `
-          <div class="text-left">
-              <span class="sm:text-lg/5 text-green-600 dark:text-green-400">${course.finalPrice}</span>
-            </div>`;
-  } else {
-    finalPriceTemplate = `
-          <div class="flex items-end">
-              <span class="sm:text-lg/5 text-green-600 dark:text-green-400">${course.finalPrice}</span>
-              <svg class="size-7 mr-[-3px]">
-                <use href="#toman"></use>
-              </svg>
-            </div>`;
-  }
-  const courseTemplateHtml = `            
-                <!-- Course -->
-            <div class="${course.courseWrapperClass} group">
-              <!-- Course Banner -->
-              <div class="h-40 rounded-b-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
-                <a class="size-full" href="./course.html">
-                  <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
-                </a>
-                <!-- Discount Percent -->
-                <div class="absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${course.discountPercent}%</div>
-              </div>
-              <!-- End of Course Banner -->
-              <div class="h-[122px] px-4 space-y-2 mt-4">
-                <!-- Course Name -->
-                <a class="block font-VazirBold text-lg max-h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html">${course.name}</a>
-                <!-- Course Description -->
-                <p class="line-clamp-2 font-VazirLight max-h-12">${course.description}</p>
-              </div>
-              <!-- Course Teacher -->
-              <a class="flex justify-center bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 absolute left-0 right-0 bottom-[86px] mx-auto w-48 py-2 rounded-full transition-colors" href="./teacher.html">${course.teacher}</a>
-              <!-- Students && Rating && Price  -->
-              <div class="flex items-end justify-between px-4 pt-8 mt-8 border-t border-t-slate-200 dark:border-t-slate-700">
-                <!-- Students && Rating  -->
-                <div>
-                  <!-- Students -->
-                  <div class="flex gap-1 mb-0.5">
-                    <svg class="size-5 theme-text-color">
-                      <use href="#user-group"></use>
-                    </svg>
-                    <span>${course.students}</span>
-                  </div>
-                  <!-- End of Students -->
-                  <!-- Rating -->
-                  <div class="flex gap-1">
-                    <svg class="size-5 text-yellow-500">
-                      <use href="#star"></use>
-                    </svg>
-                    <span>${course.rate}</span>
-                  </div>
-                  <!-- End of Rating -->
-                </div>
-                <!-- End of Students && Rating  -->
-                <!-- Course Price -->
-                <div>
-                  <!-- Price -->
-                  <span class="text-sm sm:text-base line-through text-slate-500 dark:text-slate-300 decoration-red-400">${course.price}</span>
-                  <!-- Final Price -->
-                    ${finalPriceTemplate}
-                </div>
-                <!-- End of Course Price -->
-              </div>
-              <!-- End of Students && Rating && Price  -->
-              <!-- Cart Btn  -->
-              <div class="absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer" onclick="addCourseToCart('${course.id}')">
-                <svg class="size-6">
-                  <use href="#shopping-bag"></use>
-                </svg>
-              </div>
-              <!-- End of Course -->
-            </div>`;
-  return courseTemplateHtml;
-};
-
 const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
   coursesWrapper.innerHTML = '';
@@ -171,7 +93,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
       finalPrice: finalPrice,
       courseWrapperClass,
     };
-    coursesWrapper.insertAdjacentHTML('beforeend', courseTemplate(newCourse));
+    coursesWrapper.insertAdjacentHTML('beforeend', courseCardTemplate(newCourse));
   });
 };
 
