@@ -1,5 +1,5 @@
-import { courseCardTemplate } from './template.js';
-import { applyDiscountToPrice } from './utils.js';
+import { courseCardTemplate, blogCardTemplate, headlineTemplate, CourseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
+import { applyDiscountToPrice, formatDate, categoryInPersian } from './utils.js';
 
 window.addCourseToCart = (id) => {
   console.log(id);
@@ -31,4 +31,56 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   });
 };
 
-export { addCoursesToDOM };
+//index.html
+const addBlogsToDom = (blogs, blogsWrapper) => {
+  blogsWrapper.innerHTML = '';
+  let newBlog = null;
+  blogs.forEach((blog) => {
+    newBlog = {
+      title: blog.title,
+      date: formatDate(blog.created_at),
+      likes: blog.likes,
+      comments: blog.comments,
+      src: blog.src,
+      writer: blog.writer,
+      readingTime: blog.reading_time,
+      subject: blog.subject,
+    };
+    blogsWrapper.insertAdjacentHTML('beforeend', blogCardTemplate(newBlog));
+  });
+};
+
+// course.js
+const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, page) => {
+  const categoryName = categoryInPersian(category);
+  categoryElement.innerText = categoryName;
+  categoryElement.href = `./${page}-category.html?category=${category}`;
+  nameElement.innerText = name;
+  nameElement.href = `./${page}.html?course=${slug}`;
+};
+
+// course.js
+const CourseHeadlineSectionHandler = (headline) => {
+  let sessions = headline.sessions;
+  let sessionsTemplate = '';
+  if (sessions.length) {
+    sessions.forEach((session, index) => {
+      sessionsTemplate += CourseHeadlineSessionTemplate(session, index + 1);
+    });
+  }
+  return headlineTemplate(headline, sessionsTemplate, sessions.length);
+};
+
+// course.js
+const CourseCommentSectionHandler = (comment) => {
+  let replies = comment.replies;
+  let repliesTemplate = '';
+  if (replies) {
+    replies.forEach((reply) => {
+      repliesTemplate += commentReplyTemplate(reply);
+    });
+  }
+  return commentTemplate(comment, repliesTemplate);
+};
+
+export { addCoursesToDOM, addBlogsToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler };

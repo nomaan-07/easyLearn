@@ -277,7 +277,7 @@ const courseDataTemplate = (course) => {
   return template;
 };
 
-// course.js
+// dom-handlers.js
 const headlineTemplate = (headline, sessions, number) => {
   if (!sessions) {
     sessions = '<p class ="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
@@ -304,8 +304,8 @@ const headlineTemplate = (headline, sessions, number) => {
   return template;
 };
 
-// course.js
-const headlineSessionTemplate = (session, number) => {
+// dom-handlers.js
+const CourseHeadlineSessionTemplate = (session, number) => {
   let sessionTag = 'a';
   let sessionHref = `href="lesson.html?lesson=${session.id}"`;
   let sessionIcon = 'eye';
@@ -332,7 +332,7 @@ const headlineSessionTemplate = (session, number) => {
   return template;
 };
 
-// course.js
+// dom-handlers.js
 const commentTemplate = (comment, replies) => {
   const template = `
     <div class="comment pt-4" id="comment-${comment.id}">
@@ -388,7 +388,7 @@ const commentTemplate = (comment, replies) => {
   return template;
 };
 
-// course.js
+// dom-handlers.js
 const commentReplyTemplate = (reply) => {
   const template = `
   <div class="replay-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
@@ -410,4 +410,4 @@ const commentReplyTemplate = (reply) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate };
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, CourseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate };

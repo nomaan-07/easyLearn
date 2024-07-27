@@ -18,7 +18,7 @@ const removeLoader = () => {
   document.querySelector('.loader-wrapper').classList.add('hide');
 };
 
-// course.js
+// course-category.js - course.js
 const getQueryParameters = (paramName) => {
   const params = new URLSearchParams(window.location.search);
   return params.get(paramName);

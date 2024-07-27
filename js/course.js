@@ -1,10 +1,8 @@
 import { getAllFromDatabase, getOneFromDatabase } from './api.js';
 import './header.js';
 import './change-theme.js';
-import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
+import { courseInfoTemplate, courseDataTemplate } from './template.js';
 import {
-  breadcrumbCourseCategory,
-  breadcrumbCourseName,
   courseInfoWrapper,
   courseDataWrapper,
   courseDescription,
@@ -17,48 +15,19 @@ import {
   newCommentTextarea,
   newCommentSubmitBtn,
   newCommentCloseBtn,
-  responseCommentWrappers,
-  responseCommentSubmitButtons,
+  breadcrumbCourseCategory,
+  breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice, formatDate, categoryInPersian } from './utils.js';
+import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice, formatDate } from './utils.js';
 import { toggleLike } from './ui-handlers.js';
+import { breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler } from './dom-handlers.js';
 
 let courseSearchParam = getQueryParameters('course');
 
 if (!courseSearchParam) {
-  location.replace('404.html');
+  // location.replace('404.html');
 }
-
-const breadCrumbLinksHandler = (name, slug, category) => {
-  const categoryName = categoryInPersian(category);
-  breadcrumbCourseCategory.innerText = categoryName;
-  breadcrumbCourseCategory.href = `./course-category.html?category=${category}`;
-  breadcrumbCourseName.innerText = name;
-  breadcrumbCourseName.href = `./course.html?course=${slug}`;
-};
-
-const headlineSectionHandler = (headline) => {
-  let sessions = headline.sessions;
-  let sessionsTemplate = '';
-  if (sessions.length) {
-    sessions.forEach((session, index) => {
-      sessionsTemplate += headlineSessionTemplate(session, index + 1);
-    });
-  }
-  return headlineTemplate(headline, sessionsTemplate, sessions.length);
-};
-
-const commentSectionHandler = (comment) => {
-  let replies = comment.replies;
-  let repliesTemplate = '';
-  if (replies) {
-    replies.forEach((reply) => {
-      repliesTemplate += commentReplyTemplate(reply);
-    });
-  }
-  return commentTemplate(comment, repliesTemplate);
-};
 
 const addCourseDetailToDOM = (courseObject) => {
   courseDescription.innerHTML = '';
@@ -85,7 +54,7 @@ const addCourseDetailToDOM = (courseObject) => {
   };
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
-  breadCrumbLinksHandler(course.name, course.slug, course.category);
+  breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, 'course');
   // Info and banner section
   courseInfoWrapper.innerHTML = '';
   courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
@@ -105,7 +74,7 @@ const addCourseDetailToDOM = (courseObject) => {
   headlinesWrapper.innerHTML = '';
   if (course.headlines) {
     course.headlines.forEach((headline) => {
-      headlinesWrapper.insertAdjacentHTML('beforeend', headlineSectionHandler(headline));
+      headlinesWrapper.insertAdjacentHTML('beforeend', CourseHeadlineSectionHandler(headline));
     });
     const headlinesTitleElem = document.querySelectorAll('.headline__title');
     headlinesTitleElem.forEach((titleElem) =>
@@ -125,7 +94,7 @@ const addCourseDetailToDOM = (courseObject) => {
     });
     if (FilteredComments.length) {
       FilteredComments.forEach((comment) => {
-        commentsWrapper.insertAdjacentHTML('beforeend', commentSectionHandler(comment));
+        commentsWrapper.insertAdjacentHTML('beforeend', CourseCommentSectionHandler(comment));
       });
       handleReplyAndLikes();
     } else {
@@ -134,11 +103,10 @@ const addCourseDetailToDOM = (courseObject) => {
   });
 };
 
-getOneFromDatabase('courses', 'slug', courseSearchParam)
-  .then((course) => {
-    addCourseDetailToDOM(course);
-  })
-  .catch(() => location.replace('404.html'));
+getOneFromDatabase('courses', 'slug', courseSearchParam).then((course) => {
+  addCourseDetailToDOM(course);
+});
+// .catch(() => location.replace('404.html'));
 
 const toggleDescription = () => {
   const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];

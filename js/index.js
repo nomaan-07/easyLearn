@@ -4,7 +4,7 @@ import './aos.initialize.js';
 import { heroParticlesJS } from './particles-initialize.js';
 import { heroTypewriter } from './typewriter-initialize.js';
 import { getAllFromDatabase } from './api.js';
-import { addCoursesToDOM } from './dom-handlers.js';
+import { addCoursesToDOM, addBlogsToDom } from './dom-handlers.js';
 import { blogCardTemplate } from './template.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './dom-elements.js';
 import { removeLoader, formatDate } from './utils.js';
@@ -21,25 +21,6 @@ getAllFromDatabase('courses')
     addCoursesToDOM(twelveMostPopularCourses, popularCoursesWrapperElement, true);
   })
   .catch((error) => console.log(error));
-
-// Add blogs to dom
-const addBlogsToDom = (blogs, blogsWrapper) => {
-  blogsWrapper.innerHTML = '';
-  let newBlog = null;
-  blogs.forEach((blog) => {
-    newBlog = {
-      title: blog.title,
-      date: formatDate(blog.created_at),
-      likes: blog.likes,
-      comments: blog.comments,
-      src: blog.src,
-      writer: blog.writer,
-      readingTime: blog.reading_time,
-      subject: blog.subject,
-    };
-    blogsWrapper.insertAdjacentHTML('beforeend', blogCardTemplate(newBlog));
-  });
-};
 
 getAllFromDatabase('blogs').then((blogs) => {
   const lastFourBlog = blogs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
