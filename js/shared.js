@@ -1,19 +1,6 @@
 import database from './api.js';
 import { courseCardTemplate } from './template.js';
 
-const generateRandomID = () => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-';
-  const charactersLength = characters.length;
-  const randomStringLength = Math.floor(Math.random() * (78 - 7)) + 6;
-  const timestamp = new Date().getTime();
-  let result = `${timestamp * 23}`;
-  for (let i = 0; i < randomStringLength; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  result += timestamp * 24;
-  return result;
-};
-
 async function getAllFromDatabase(tableName) {
   const { data, error } = await database.from(tableName).select();
   if (error) {
@@ -132,4 +119,4 @@ const categoryPersianEquivalent = (category) => {
   return categoryPersian;
 };
 
-export { removeLoader, getAllFromDatabase, getOneFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, generateRandomID, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };
+export { removeLoader, getAllFromDatabase, getOneFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };
