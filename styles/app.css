@@ -1855,6 +1855,10 @@ video {
   width: 100vw;
 }
 
+.w-72 {
+  width: 18rem;
+}
+
 .max-w-60 {
   max-width: 15rem;
 }
