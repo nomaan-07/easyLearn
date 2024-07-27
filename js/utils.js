@@ -36,6 +36,7 @@ const applyDiscountToPrice = (price, discount) => {
   return discount === 100 ? 0 : (price * (100 - discount)) / 100;
 };
 
+// index.js - course.js
 const formatDate = (date) => {
   const dateList = new Date(date).toLocaleDateString('fa-IR').split('/');
   const year = dateList[0];
@@ -44,4 +45,30 @@ const formatDate = (date) => {
   return `${year}/${month}/${day}`;
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice, formatDate };
+// course-category.js - course.js
+const categoryInPersian = (category) => {
+  let categoryPersian = null;
+  switch (category) {
+    case 'python':
+      categoryPersian = 'پایتون';
+      break;
+    case 'hack':
+      categoryPersian = 'امنیت';
+      break;
+    case 'front-end':
+      categoryPersian = 'فرانت اند';
+      break;
+    case 'soft-skill':
+      categoryPersian = 'مهارت های نرم';
+      break;
+    case 'all-courses':
+      categoryPersian = 'دوره ها';
+      break;
+    case 'popular-courses':
+      categoryPersian = 'دوره های محبوب';
+      break;
+  }
+  return categoryPersian;
+};
+
+export { removeLoader, generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice, formatDate, categoryInPersian };

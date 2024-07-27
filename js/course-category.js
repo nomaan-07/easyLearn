@@ -1,9 +1,9 @@
 import { getAllFromDatabase } from './api.js';
-import { addCoursesToDOM, categoryPersianEquivalent } from './shared.js';
+import { addCoursesToDOM } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './domElements.js';
-import { removeLoader, getQueryParameters, applyDiscountToPrice } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, categoryInPersian } from './utils.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');
@@ -12,8 +12,8 @@ let categoryCourses = [];
 let filteredCourses = [];
 let searchedCourses = [];
 
-if (categoryParam && categoryPersianEquivalent(categoryParam)) {
-  const categoryPersian = categoryPersianEquivalent(categoryParam);
+if (categoryParam && categoryInPersian(categoryParam)) {
+  const categoryPersian = categoryInPersian(categoryParam);
   if (categoryPersian === 'دوره ها' || categoryPersian === 'دوره های محبوب') {
     categoryTitle.innerText = `${categoryPersian}`;
   } else {

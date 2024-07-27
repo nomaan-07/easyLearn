@@ -31,29 +31,4 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   });
 };
 
-const categoryPersianEquivalent = (category) => {
-  let categoryPersian = null;
-  switch (category) {
-    case 'python':
-      categoryPersian = 'پایتون';
-      break;
-    case 'hack':
-      categoryPersian = 'امنیت';
-      break;
-    case 'front-end':
-      categoryPersian = 'فرانت اند';
-      break;
-    case 'soft-skill':
-      categoryPersian = 'مهارت های نرم';
-      break;
-    case 'all-courses':
-      categoryPersian = 'دوره ها';
-      break;
-    case 'popular-courses':
-      categoryPersian = 'دوره های محبوب';
-      break;
-  }
-  return categoryPersian;
-};
-
-export { addCoursesToDOM, categoryPersianEquivalent };
+export { addCoursesToDOM };

@@ -1,5 +1,4 @@
 import { getAllFromDatabase, getOneFromDatabase } from './api.js';
-import { categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
@@ -22,7 +21,7 @@ import {
   responseCommentSubmitButtons,
 } from './domElements.js';
 
-import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice, formatDate } from './utils.js';
+import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice, formatDate, categoryInPersian } from './utils.js';
 import { toggleLike } from './uiHandlers.js';
 
 let courseSearchParam = getQueryParameters('course');
@@ -32,7 +31,7 @@ if (!courseSearchParam) {
 }
 
 const breadCrumbLinksHandler = (name, slug, category) => {
-  const categoryName = categoryPersianEquivalent(category);
+  const categoryName = categoryInPersian(category);
   breadcrumbCourseCategory.innerText = categoryName;
   breadcrumbCourseCategory.href = `./course-category.html?category=${category}`;
   breadcrumbCourseName.innerText = name;
