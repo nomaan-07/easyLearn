@@ -5,11 +5,12 @@ const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-';
   const charactersLength = characters.length;
   const randomStringLength = Math.floor(Math.random() * (78 - 7)) + 6;
-  let result = `${new Date().getTime() * 23}`;
+  const timestamp = new Date().getTime();
+  let result = `${timestamp * 23}`;
   for (let i = 0; i < randomStringLength; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  result += new Date().getTime() * 24;
+  result += timestamp * 24;
   return result;
 };
 

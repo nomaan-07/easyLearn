@@ -6,7 +6,7 @@ const updateLike = (isLiked, svg, likeElem, count) => {
     likeElem.innerText = count + 1;
   } else {
     svg.innerHTML = '<use href="#heart-outline"></use>';
-    likeElem.innerText = count - 1;
+    likeElem.innerText = count ? count - 1 : count;
   }
 };
 // course.js
