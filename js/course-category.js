@@ -3,9 +3,10 @@ import { removeLoader, addCoursesToDOM, getFinalPrice, categoryPersianEquivalent
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './domElements.js';
+import { getQueryParameters } from './utils.js';
 
-let categoryParam = new URLSearchParams(location.search).get('category');
-let searchParam = new URLSearchParams(location.search).get('search');
+let categoryParam = getQueryParameters('category');
+let searchParam = getQueryParameters('search');
 
 let categoryCourses = [];
 let filteredCourses = [];
