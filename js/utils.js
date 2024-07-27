@@ -36,4 +36,12 @@ const applyDiscountToPrice = (price, discount) => {
   return discount === 100 ? 0 : (price * (100 - discount)) / 100;
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice };
+const formatDate = (date) => {
+  const dateList = new Date(date).toLocaleDateString('fa-IR').split('/');
+  const year = dateList[0];
+  const month = dateList[1].padStart(2, '۰');
+  const day = dateList[2].padStart(2, '۰');
+  return `${year}/${month}/${day}`;
+};
+
+export { removeLoader, generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice, formatDate };

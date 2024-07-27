@@ -1,5 +1,5 @@
 import { getAllFromDatabase, getOneFromDatabase } from './api.js';
-import { formatDate, categoryPersianEquivalent } from './shared.js';
+import { categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
@@ -22,7 +22,7 @@ import {
   responseCommentSubmitButtons,
 } from './domElements.js';
 
-import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice } from './utils.js';
+import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice, formatDate } from './utils.js';
 import { toggleLike } from './uiHandlers.js';
 
 let courseSearchParam = getQueryParameters('course');

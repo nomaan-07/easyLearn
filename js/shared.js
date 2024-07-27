@@ -31,14 +31,6 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   });
 };
 
-const formatDate = (date) => {
-  const dateList = new Date(date).toLocaleDateString('fa-IR').split('/');
-  const year = dateList[0];
-  const month = dateList[1].padStart(2, '۰');
-  const day = dateList[2].padStart(2, '۰');
-  return `${year}/${month}/${day}`;
-};
-
 const categoryPersianEquivalent = (category) => {
   let categoryPersian = null;
   switch (category) {
@@ -64,4 +56,4 @@ const categoryPersianEquivalent = (category) => {
   return categoryPersian;
 };
 
-export { addCoursesToDOM, formatDate, categoryPersianEquivalent };
+export { addCoursesToDOM, categoryPersianEquivalent };
