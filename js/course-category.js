@@ -1,9 +1,9 @@
 import { getAllFromDatabase } from './api.js';
-import { removeLoader, addCoursesToDOM, getFinalPrice, categoryPersianEquivalent } from './shared.js';
+import { removeLoader, addCoursesToDOM, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './domElements.js';
-import { getQueryParameters } from './utils.js';
+import { getQueryParameters, applyDiscountToPrice } from './utils.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');
@@ -73,9 +73,9 @@ const displayCourses = (filterType) => {
   } else if (filterType === 'cash') {
     filteredCourses = courses.filter((course) => course.discount != 100);
   } else if (filterType === 'cheapest') {
-    filteredCourses = [...filteredCourses].sort((a, b) => getFinalPrice(a.price, a.discount) - getFinalPrice(b.price, b.discount));
+    filteredCourses = [...filteredCourses].sort((a, b) => applyDiscountToPrice(a.price, a.discount) - applyDiscountToPrice(b.price, b.discount));
   } else if (filterType === 'expensive') {
-    filteredCourses = [...filteredCourses].sort((a, b) => getFinalPrice(b.price, b.discount) - getFinalPrice(a.price, a.discount));
+    filteredCourses = [...filteredCourses].sort((a, b) => applyDiscountToPrice(b.price, b.discount) - applyDiscountToPrice(a.price, a.discount));
   } else if (filterType === 'popular') {
     filteredCourses = [...filteredCourses].sort((a, b) => b.students - a.students);
   }

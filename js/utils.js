@@ -24,4 +24,9 @@ const getCommentID = (el) => {
   return commentID;
 };
 
-export { generateRandomID, getQueryParameters, getCommentID };
+// shared.js - course-category.js
+const applyDiscountToPrice = (price, discount) => {
+  return discount === 100 ? 0 : (price * (100 - discount)) / 100;
+};
+
+export { generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice };

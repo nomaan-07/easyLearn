@@ -1,13 +1,10 @@
 import { courseCardTemplate } from './template.js';
+import { applyDiscountToPrice } from './utils.js';
 
 const removeLoader = () => {
   document.body.classList.remove('h-0');
   document.body.classList.remove('overflow-y-hidden');
   document.querySelector('.loader-wrapper').classList.add('hide');
-};
-
-const getFinalPrice = (price, discount) => {
-  return discount === 100 ? 0 : (price * (100 - discount)) / 100;
 };
 
 window.addCourseToCart = (id) => {
@@ -21,7 +18,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let newCourse = null;
   let finalPrice = null;
   courses.forEach((course) => {
-    finalPrice = course.discount !== 100 ? getFinalPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان';
+    finalPrice = course.discount !== 100 ? applyDiscountToPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان';
     newCourse = {
       id: course.id,
       name: course.name,
@@ -73,4 +70,4 @@ const categoryPersianEquivalent = (category) => {
   return categoryPersian;
 };
 
-export { removeLoader, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };
+export { removeLoader, addCoursesToDOM, formatDate, categoryPersianEquivalent };

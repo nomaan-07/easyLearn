@@ -1,5 +1,5 @@
 import { getAllFromDatabase, getOneFromDatabase } from './api.js';
-import { removeLoader, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
+import { removeLoader, formatDate, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
@@ -22,7 +22,7 @@ import {
   responseCommentSubmitButtons,
 } from './domElements.js';
 
-import { getCommentID, getQueryParameters } from './utils.js';
+import { getCommentID, getQueryParameters, applyDiscountToPrice } from './utils.js';
 import { toggleLike } from './uiHandlers.js';
 
 let courseSearchParam = getQueryParameters('course');
@@ -64,7 +64,7 @@ const commentSectionHandler = (comment) => {
 const addCourseDetailToDOM = (courseObject) => {
   courseDescription.innerHTML = '';
   let course = {
-    finalPrice: courseObject.discount !== 100 ? getFinalPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان',
+    finalPrice: courseObject.discount !== 100 ? applyDiscountToPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان',
     id: courseObject.id,
     name: courseObject.name,
     caption: courseObject.caption,
