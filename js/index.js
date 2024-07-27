@@ -3,7 +3,7 @@ import './header.js';
 import './aos.initialize.js';
 import { heroParticlesJS } from './particles-initialize.js';
 import { heroTypewriter } from './typewriter-initialize.js';
-import { getAllFromDatabase } from './api.js';
+import { getAllFromDatabase } from './database-api.js';
 import { addCoursesToDOM, addBlogsToDom } from './dom-handlers.js';
 import { blogCardTemplate } from './template.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './dom-elements.js';
