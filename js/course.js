@@ -97,12 +97,6 @@ const addCourseDetailToDOM = (courseObject) => {
       FilteredComments.forEach((comment) => {
         commentsWrapper.insertAdjacentHTML('beforeend', CourseCommentSectionHandler(comment));
       });
-      // const replyOpenButtons = document.querySelectorAll('.open-reply-btn');
-      // const allCommentsTextareaElements = document.querySelectorAll('.reply-comment-textarea');
-      // const replyCancelButtons = document.querySelectorAll('.reply-comment-cancel-btn');
-      // const replySubmitButtons = document.querySelectorAll('.reply-comment-submit-btn');
-
-      // handleReply(replyOpenButtons, replyCancelButtons, replySubmitButtons, allCommentsTextareaElements, course.id);
     } else {
       commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
     }
@@ -153,63 +147,6 @@ const toggleHeadLine = (titleElem) => {
     headlineBody.style.maxHeight = '0px';
   }
 };
-
-//  reply comments
-// const handleReply = (openButtons, cancelButtons, submitButtons, textareaElements, postID) => {
-//   let commentID = null;
-//   let wrapper = null;
-//   let textarea = null;
-//   openButtons.forEach((btn) => {
-//     btn.addEventListener('click', () => {
-//       commentID = getParentID(btn, 'comment');
-//       wrapper = document.querySelector(`#reply-wrapper-comment-${commentID}`);
-//       textarea = document.querySelector(`#reply-textarea-comment-${commentID}`);
-//       toggleTextarea(wrapper, textarea, true);
-//     });
-//   });
-//   cancelButtons.forEach((btn) => {
-//     btn.addEventListener('click', () => {
-//       commentID = getParentID(btn, 'comment');
-//       wrapper = document.querySelector(`#reply-wrapper-comment-${commentID}`);
-//       textarea = document.querySelector(`#reply-textarea-comment-${commentID}`);
-//       toggleTextarea(wrapper, textarea);
-//     });
-//   });
-//   submitButtons.forEach((btn) => {
-//     btn.addEventListener('click', () => {
-//       commentID = getParentID(btn, 'comment');
-//       wrapper = document.querySelector(`#reply-wrapper-comment-${commentID}`);
-//       textarea = document.querySelector(`#reply-textarea-comment-${commentID}`);
-//       submitReplyComment(wrapper, textarea, commentID);
-//     });
-//   });
-//   textareaElements.forEach((el) => el.addEventListener('input', textareaAutoResize));
-// };
-
-// const submitReplyComment = (wrapper, textarea, commentID) => {
-//   const message = textarea.value.trim();
-//   let dbReplies = null;
-//   let newReply = null;
-//   getOneFromDatabase('comments', 'id', commentID).then((comment) => {
-//     newReply = {
-//       id: comment.replies.length + 1,
-//       date: new Date(),
-//       message,
-//       confirmed: false,
-//       // FIXME
-//       writer: 'نعمان ریگی',
-//       // FIXME
-//       image_src:
-//         'https://vqvbwalqiwdeyzuiltqm.supabase.co/storage/v1/object/sign/avatars/my-avatar.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL215LWF2YXRhci5wbmciLCJpYXQiOjE3MjIxMTc0MzksImV4cCI6MTc1MzY1MzQzOX0.S0ITdZzEtumNjKJwpEZOrddHWluxZt2qv5-_kQMfE90&t=2024-07-27T21%3A57%3A18.946Z',
-//     };
-//     dbReplies = comment.replies;
-//     dbReplies.push(newReply);
-
-//     updateInDatabase('comments', { replies: dbReplies }, commentID);
-//   });
-//   toggleTextarea(wrapper, textarea);
-//   textarea.value = '';
-// };
 
 const handleLike = () => {
   const likeButtons = document.querySelectorAll('.like-btn');
