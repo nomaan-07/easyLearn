@@ -31,12 +31,12 @@ if (categoryParam && categoryInPersian(categoryParam)) {
 
 // overall Search handler
 const overallSearchHandler = (allCourses) => {
-  let regex = new RegExp(searchParam, 'gi');
-  let searchResult = allCourses.filter((course) => {
-    return course.name.match(regex);
+  let regex = new RegExp(`${searchParam}`, 'gi');
+  let result = allCourses.filter((course) => {
+    return course.name.match(regex) || course.search_keywords.includes(searchParam);
   });
-  searchResult.length > 0 || searchResultWrapper.classList.remove('hidden');
-  return searchResult;
+  result.length || searchResultWrapper.classList.remove('hidden');
+  return Array.from(new Set(result));
 };
 
 // Add Course to DOM
