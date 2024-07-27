@@ -1,4 +1,4 @@
-import { getCommentID } from './utils.js';
+import { getParentID } from './utils.js';
 
 const updateLike = (isLiked, svg, likeElem, count) => {
   if (isLiked) {
@@ -12,7 +12,7 @@ const updateLike = (isLiked, svg, likeElem, count) => {
 // course.js
 // FIXME: add to database instead of localStorage
 const toggleLike = (btn, isLoading = false) => {
-  const commentID = getCommentID(btn);
+  const commentID = getParentID(btn, 'comment');
   const isLiked = localStorage.getItem(`isLiked-${commentID}`) === 'true';
   const likeElem = btn.children[1];
   const svg = btn.children[0];
@@ -25,4 +25,21 @@ const toggleLike = (btn, isLoading = false) => {
   }
 };
 
-export { toggleLike };
+// course.js - dom-handlers.js
+const textareaAutoResize = (event) => {
+  event.target.style.height = '160px';
+  event.target.style.height = `${event.target.scrollHeight}px`;
+};
+
+// course.js - domHandler.js
+const toggleTextarea = (wrapper, textarea, openTextarea = false) => {
+  if (openTextarea) {
+    wrapper.classList.remove('max-h-0');
+    wrapper.classList.remove('overflow-hidden');
+    textarea.focus();
+  } else {
+    wrapper.classList.add('max-h-0');
+    wrapper.classList.add('overflow-hidden');
+  }
+};
+export { toggleLike, textareaAutoResize, toggleTextarea };

@@ -1,5 +1,6 @@
 import { courseCardTemplate, blogCardTemplate, headlineTemplate, CourseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, categoryInPersian } from './utils.js';
+import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 
 window.addCourseToCart = (id) => {
   console.log(id);
@@ -77,10 +78,12 @@ const CourseCommentSectionHandler = (comment) => {
   let repliesTemplate = '';
   if (replies) {
     replies.forEach((reply) => {
-      repliesTemplate += commentReplyTemplate(reply);
+      if (reply.confirmed) {
+        repliesTemplate += commentReplyTemplate(reply);
+      }
     });
   }
   return commentTemplate(comment, repliesTemplate);
 };
 
-export { addCoursesToDOM, addBlogsToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler };
+export { addCoursesToDOM, addBlogsToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, toggleTextarea };

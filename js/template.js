@@ -335,7 +335,7 @@ const CourseHeadlineSessionTemplate = (session, number) => {
 // dom-handlers.js
 const commentTemplate = (comment, replies) => {
   const template = `
-    <div class="comment pt-4" id="comment-${comment.id}">
+    <div class="comment pt-4" id="${comment.id}">
       <div class="comment-header sm:text-xl flex items-center gap-2 w-fit font-VazirMedium theme-bg-color-10 py-px pl-4 rounded-full">
         <div class="size-12 rounded-full overflow-hidden">
           <img class="w-full h-full object-cover" src="${comment.image_src}" alt="${comment.writer}">
@@ -357,8 +357,8 @@ const commentTemplate = (comment, replies) => {
               <span>${comment.likes}</span>
             </div>
             <!-- End of Likes -->
-            <!-- Response Comment Btn -->
-            <div class="open-response-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg theme-text-color md:text-inherit md:cursor-pointer md:hover:theme-text-color transition-colors">
+            <!-- reply Comment Btn -->
+            <div class="open-reply-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg theme-text-color md:text-inherit md:cursor-pointer md:hover:theme-text-color transition-colors">
               <svg class="size-5">
                 <use href="#chat-bubble-left-ellipsis"></use>
               </svg>
@@ -374,15 +374,15 @@ const commentTemplate = (comment, replies) => {
       ${replies}
       </div>
       <!-- End of Reply comments -->
-      <!-- New Response Comment -->
-      <div class="response-comment-wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden" id="response-wrapper-comment-${comment.id}">
-        <textarea class="response-comment-textarea w-full h-40 border bg-transparent border-slate-200 dark:border-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="response-textarea-comment-${comment.id}" placeholder="پاسخ..."></textarea>
+      <!-- New reply Comment -->
+      <div class="reply-comment-wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden" id="reply-wrapper-comment-${comment.id}">
+        <textarea class="reply-comment-textarea w-full h-40 border bg-transparent border-slate-200 dark:border-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="reply-textarea-comment-${comment.id}" placeholder="پاسخ..."></textarea>
         <div class="flex items-center justify-end gap-2">
-          <div class="response-comment-cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
-          <div class="response-comment-submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
+          <div class="reply-comment-cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
+          <div class="reply-comment-submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
         </div>
       </div>
-      <!-- End of New Response Comment -->
+      <!-- End of New reply Comment -->
       <div></div>
     </div>`;
   return template;
@@ -390,6 +390,7 @@ const commentTemplate = (comment, replies) => {
 
 // dom-handlers.js
 const commentReplyTemplate = (reply) => {
+  let comment = reply.message.replace(/\n/g, '<br>');
   const template = `
   <div class="replay-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
       <div class="flex items-start gap-2 font-VazirMedium border-b border-b-slate-300 dark:border-b-slate-600">
@@ -403,7 +404,7 @@ const commentReplyTemplate = (reply) => {
       </div>
       <!-- Reply Comment Content -->
       <div class="w-full resize-none overflow-hidden mt-4 z-20">
-        <p>${reply.message}</p>
+        <p>${comment}</p>
       </div>
     </div>`;
 

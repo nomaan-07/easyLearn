@@ -25,10 +25,10 @@ const getQueryParameters = (paramName) => {
 };
 
 // course.js
-const getCommentID = (el) => {
-  const comment = el.closest('.comment');
-  const commentID = comment.getAttribute('id');
-  return commentID;
+const getParentID = (el, parentClass) => {
+  const parent = el.closest(`.${parentClass}`);
+  const parentID = parent.getAttribute('id');
+  return parentID;
 };
 
 // shared.js - course-category.js - course.js
@@ -71,4 +71,13 @@ const categoryInPersian = (category) => {
   return categoryPersian;
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice, formatDate, categoryInPersian };
+// course.js
+const getReplyCommentWrapper = (id) => {
+  return document.querySelector(`#reply-wrapper-comment-${id}`);
+};
+// course.js
+const getReplyCommentTextarea = (id) => {
+  return document.querySelector(`#reply-textarea-comment-${id}`);
+};
+
+export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea };

@@ -55,8 +55,6 @@ const newCommentWrapper = document.querySelector('.new-comment-wrapper');
 const newCommentTextarea = document.querySelector('#new-comment-textarea');
 const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
-const responseCommentWrappers = document.querySelectorAll('.response-comment-wrapper');
-const responseCommentSubmitButtons = document.querySelectorAll('.response-comment-submit-btn');
 
 export {
   latestCoursesWrapperElement,
@@ -83,8 +81,6 @@ export {
   newCommentTextarea,
   newCommentSubmitBtn,
   newCommentCloseBtn,
-  responseCommentWrappers,
-  responseCommentSubmitButtons,
   mobileMenuOpenBtn,
   mobileMenuCloseBtn,
   mobileMenu,
