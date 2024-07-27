@@ -21,7 +21,10 @@ import {
   responseCommentSubmitButtons,
 } from './domElements.js';
 
-let courseSearchParam = new URLSearchParams(location.search).get('course');
+import { getCommentID, getQueryParameters } from './utils.js';
+import { toggleLike } from './uiHandlers.js';
+
+let courseSearchParam = getQueryParameters('course');
 
 if (!courseSearchParam) {
   location.replace('404.html');
@@ -177,12 +180,6 @@ const toggleHeadLine = (titleElem) => {
   }
 };
 
-const getCommentID = (el) => {
-  const comment = el.closest('.comment');
-  const commentID = comment.getAttribute('id');
-  return commentID;
-};
-
 const toggleTextarea = (btn = false, openTextarea = false) => {
   let wrapper = newCommentWrapper;
   let textarea = newCommentTextarea;
@@ -215,43 +212,12 @@ const textareaAutoResize = (event) => {
   event.target.style.height = `${event.target.scrollHeight}px`;
 };
 
-const addLike = (svg, el, count) => {
-  svg.innerHTML = '<use href="#heart"></use>';
-  el.innerText = count + 1;
-};
-
-const reduceLike = (svg, el, count) => {
-  svg.innerHTML = '<use href="#heart-outline"></use>';
-  el.innerText = count - 1;
-};
-
-// FIXME: add to database instead of localStorage
-const toggleLike = (btn, isLoading = false) => {
-  const commentID = getCommentID(btn);
-  const isLiked = localStorage.getItem(`isLiked-${commentID}`) === 'true';
-  const likeElem = btn.children[1];
-  const svg = btn.children[0];
-  const likeCount = Number(likeElem.innerText);
-  if (isLoading) {
-    isLiked ? addLike(svg, likeElem, likeCount) : null;
-  } else {
-    if (isLiked) {
-      localStorage.setItem(`isLiked-${commentID}`, false);
-      reduceLike(svg, likeElem, likeCount);
-    } else {
-      localStorage.setItem(`isLiked-${commentID}`, true);
-      addLike(svg, likeElem, likeCount);
-    }
-  }
-};
-
 const handleReplyAndLikes = () => {
   const likeButtons = document.querySelectorAll('.like-btn');
   const openResponseButtons = document.querySelectorAll('.open-response-btn');
   const allCommentsTextareaElements = document.querySelectorAll('.response-comment-textarea');
   const closeResponseButtons = document.querySelectorAll('.response-comment-cancel-btn');
 
-  console.log(allCommentsTextareaElements);
   likeButtons.forEach((btn) => {
     toggleLike(btn, true);
   });
