@@ -1,3 +1,5 @@
+import { getCommentID } from './utils.js';
+
 const updateLike = (isLiked, svg, likeElem, count) => {
   if (isLiked) {
     svg.innerHTML = '<use href="#heart"></use>';
