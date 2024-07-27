@@ -11,6 +11,13 @@ const generateRandomID = () => {
   return result;
 };
 
+// index.js - course.js - courses.js
+const removeLoader = () => {
+  document.body.classList.remove('h-0');
+  document.body.classList.remove('overflow-y-hidden');
+  document.querySelector('.loader-wrapper').classList.add('hide');
+};
+
 // course.js
 const getQueryParameters = (paramName) => {
   const params = new URLSearchParams(window.location.search);
@@ -24,9 +31,9 @@ const getCommentID = (el) => {
   return commentID;
 };
 
-// shared.js - course-category.js
+// shared.js - course-category.js - course.js
 const applyDiscountToPrice = (price, discount) => {
   return discount === 100 ? 0 : (price * (100 - discount)) / 100;
 };
 
-export { generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice };
+export { removeLoader, generateRandomID, getQueryParameters, getCommentID, applyDiscountToPrice };

@@ -1,9 +1,9 @@
 import { getAllFromDatabase } from './api.js';
-import { removeLoader, addCoursesToDOM, categoryPersianEquivalent } from './shared.js';
+import { addCoursesToDOM, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './domElements.js';
-import { getQueryParameters, applyDiscountToPrice } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice } from './utils.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');

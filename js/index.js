@@ -4,9 +4,10 @@ import './aos.initialize.js';
 import './hero.js';
 import './testimonials.js';
 import { getAllFromDatabase } from './api.js';
-import { removeLoader, addCoursesToDOM, formatDate } from './shared.js';
+import { addCoursesToDOM, formatDate } from './shared.js';
 import { blogCardTemplate } from './template.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './domElements.js';
+import { removeLoader } from './utils.js';
 
 getAllFromDatabase('courses')
   .then((courses) => {

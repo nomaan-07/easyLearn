@@ -1,12 +1,6 @@
 import { courseCardTemplate } from './template.js';
 import { applyDiscountToPrice } from './utils.js';
 
-const removeLoader = () => {
-  document.body.classList.remove('h-0');
-  document.body.classList.remove('overflow-y-hidden');
-  document.querySelector('.loader-wrapper').classList.add('hide');
-};
-
 window.addCourseToCart = (id) => {
   console.log(id);
 };
@@ -70,4 +64,4 @@ const categoryPersianEquivalent = (category) => {
   return categoryPersian;
 };
 
-export { removeLoader, addCoursesToDOM, formatDate, categoryPersianEquivalent };
+export { addCoursesToDOM, formatDate, categoryPersianEquivalent };
