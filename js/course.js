@@ -77,12 +77,11 @@ const addCourseDetailToDOM = (courseObject) => {
     category: courseObject.category[0],
     slug: courseObject.slug,
     headlines: courseObject.headlines,
+    sessionsCount: courseObject.sessions_count,
+    videosLength: courseObject.videos_length,
+    situation: courseObject.complete ? 'تکمیل' : 'درحال برگزاری',
     // FIXME: updated_at instead of created_at
     date: formatDate(courseObject.created_at),
-    // FIXME
-    sessionsCount: null,
-    videosLength: null,
-    situation: null,
   };
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
