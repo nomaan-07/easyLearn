@@ -1,50 +1,4 @@
-import database from './api.js';
 import { courseCardTemplate } from './template.js';
-
-async function getAllFromDatabase(tableName) {
-  const { data, error } = await database.from(tableName).select();
-  if (error) {
-    console.error('Error getting data', error);
-    return error;
-  }
-  return data;
-}
-
-async function getOneFromDatabase(tableName, key, value) {
-  const { data, error } = await database.from(tableName).select().eq(key, value).single();
-  if (error) {
-    console.error('Error getting data', error);
-    return error;
-  }
-  return data;
-}
-
-async function addToDatabase(tableName, items) {
-  const { error } = await database.from(tableName).insert(items);
-  if (error) {
-    console.error('Error adding data', error);
-    return error;
-  }
-  return null;
-}
-
-async function updateInDatabase(tableName, items, ID) {
-  const { error } = await database.from(tableName).update(items).eq('id', ID);
-  if (error) {
-    console.error('Error updating data', error);
-    return error;
-  }
-  return null;
-}
-
-async function deleteFromDatabase(tableName, ID) {
-  const { error } = await database.from(tableName).delete().eq('id', ID);
-  if (error) {
-    console.error('Error deleting data', error);
-    return error;
-  }
-  return null;
-}
 
 const removeLoader = () => {
   document.body.classList.remove('h-0');
@@ -119,4 +73,4 @@ const categoryPersianEquivalent = (category) => {
   return categoryPersian;
 };
 
-export { removeLoader, getAllFromDatabase, getOneFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };
+export { removeLoader, getFinalPrice, addCoursesToDOM, formatDate, categoryPersianEquivalent };

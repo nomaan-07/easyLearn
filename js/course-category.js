@@ -1,4 +1,5 @@
-import { removeLoader, getAllFromDatabase, addCoursesToDOM, getFinalPrice, categoryPersianEquivalent } from './shared.js';
+import { getAllFromDatabase } from './api.js';
+import { removeLoader, addCoursesToDOM, getFinalPrice, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './domElements.js';

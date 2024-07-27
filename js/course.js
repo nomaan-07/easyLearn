@@ -1,4 +1,5 @@
-import { removeLoader, getAllFromDatabase, getOneFromDatabase, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
+import { getAllFromDatabase, getOneFromDatabase } from './api.js';
+import { removeLoader, getFinalPrice, formatDate, categoryPersianEquivalent } from './shared.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate, headlineTemplate, headlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
