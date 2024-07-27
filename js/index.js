@@ -1,13 +1,17 @@
 import './change-theme.js';
 import './header.js';
 import './aos.initialize.js';
-import './hero.js';
-import './testimonials.js';
+import { heroParticlesJS } from './particles-initialize.js';
+import { heroTypewriter } from './typewriter-initialize.js';
 import { getAllFromDatabase } from './api.js';
-import { addCoursesToDOM } from './shared.js';
+import { addCoursesToDOM } from './dom-handlers.js';
 import { blogCardTemplate } from './template.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './domElements.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './dom-elements.js';
 import { removeLoader, formatDate } from './utils.js';
+
+// hero Section animations
+heroParticlesJS();
+heroTypewriter();
 
 getAllFromDatabase('courses')
   .then((courses) => {
@@ -42,8 +46,59 @@ getAllFromDatabase('blogs').then((blogs) => {
   addBlogsToDom(lastFourBlog, blogsWrapperElement);
 });
 
+// TestimonialSwiper
+const testimonialSwiper = new Swiper('.testimonials-swiper', {
+  effect: 'creative',
+  grabCursor: true,
+  centeredSlides: true,
+  slidesPerView: 'auto',
+  loop: true,
+
+  creativeEffect: {
+    next: {
+      shadow: false,
+      translate: ['-110%', 0, -100],
+      opacity: 0.8,
+    },
+    prev: {
+      shadow: false,
+      translate: ['110%', 0, -100],
+      opacity: 0.8,
+    },
+  },
+
+  breakpoints: {
+    640: {
+      slidesPerView: 2,
+    },
+    1024: {
+      slidesPerView: 3,
+      creativeEffect: {
+        limitProgress: 20,
+      },
+    },
+    1280: {
+      slidesPerView: 4,
+      creativeEffect: {
+        limitProgress: 20,
+      },
+    },
+    1536: {
+      slidesPerView: 5,
+      creativeEffect: {
+        limitProgress: 20,
+      },
+    },
+  },
+
+  navigation: {
+    nextEl: '.testimonials-swiper-next-btn',
+    prevEl: '.testimonials-swiper-prev-btn',
+  },
+});
+
 // Popular Courses Swiper
-const swiper = new Swiper('.popular-courses-swiper', {
+const popularCourse = new Swiper('.popular-courses-swiper', {
   slidesPerView: 1,
   loop: true,
   autoplay: {

@@ -19,10 +19,10 @@ import {
   newCommentCloseBtn,
   responseCommentWrappers,
   responseCommentSubmitButtons,
-} from './domElements.js';
+} from './dom-elements.js';
 
 import { removeLoader, getCommentID, getQueryParameters, applyDiscountToPrice, formatDate, categoryInPersian } from './utils.js';
-import { toggleLike } from './uiHandlers.js';
+import { toggleLike } from './ui-handlers.js';
 
 let courseSearchParam = getQueryParameters('course');
 

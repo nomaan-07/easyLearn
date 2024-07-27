@@ -5,7 +5,7 @@ window.addCourseToCart = (id) => {
   console.log(id);
 };
 
-// Add courses to DOM
+// index.html - course-category.html
 const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
   coursesWrapper.innerHTML = '';

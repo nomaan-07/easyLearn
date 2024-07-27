@@ -16,7 +16,7 @@ import {
   searchBarSearchBtn,
   mobileSearchInput,
   mobileSearchBtn,
-} from './domElements.js';
+} from './dom-elements.js';
 
 const openMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);
