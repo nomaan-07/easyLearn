@@ -16,7 +16,7 @@ const courseCardTemplate = (course) => {
               </svg>
             </div>`;
   }
-  const courseTemplateHtml = `            
+  const template = `            
                 <!-- Course -->
             <div class="${course.courseWrapperClass} group">
               <!-- Course Banner -->
@@ -76,7 +76,7 @@ const courseCardTemplate = (course) => {
               </div>
               <!-- End of Course -->
             </div>`;
-  return courseTemplateHtml;
+  return template;
 };
 
 // index.js
