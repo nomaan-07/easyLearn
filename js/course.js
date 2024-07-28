@@ -5,7 +5,7 @@ import { courseInfoTemplate, courseDataTemplate } from './template.js';
 import {
   courseInfoWrapper,
   courseDataWrapper,
-  courseDescription,
+  courseDescriptionElem,
   headlinesWrapper,
   descriptionShadow,
   commentsWrapper,
@@ -19,7 +19,7 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler } from './dom-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
@@ -30,73 +30,69 @@ if (!courseSearchParam) {
   location.replace('404.html');
 }
 
-const addCourseDetailToDOM = (courseObject) => {
-  courseDescription.innerHTML = '';
-  let course = {
-    finalPrice: courseObject.discount !== 100 ? applyDiscountToPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان!',
-    id: courseObject.id,
-    name: courseObject.name,
-    caption: courseObject.caption,
-    src: courseObject.src,
-    teacher: courseObject.teacher,
-    students: courseObject.students.toLocaleString('fa-IR'),
-    ratePercent: Math.floor((courseObject.rate * 100) / 5),
-    discountPercent: courseObject.discount,
-    price: courseObject.price.toLocaleString('fa-IR'),
-    description: courseObject.description,
-    category: courseObject.category[0],
-    slug: courseObject.slug,
-    headlines: courseObject.headlines,
-    sessionsCount: courseObject.sessions_count,
-    videosLength: courseObject.videos_length,
-    situation: courseObject.complete ? 'تکمیل' : 'درحال برگزاری',
+const courseObject = (dbCourse) => {
+  const course = {
+    finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
+    id: dbCourse.id,
+    name: dbCourse.name,
+    caption: dbCourse.caption,
+    src: dbCourse.src,
+    teacher: dbCourse.teacher,
+    students: dbCourse.students.toLocaleString('fa-IR'),
+    ratePercent: Math.floor((dbCourse.rate * 100) / 5),
+    discountPercent: dbCourse.discount,
+    price: dbCourse.price.toLocaleString('fa-IR'),
+    description: dbCourse.description,
+    category: dbCourse.category[0],
+    slug: dbCourse.slug,
+    headlines: dbCourse.headlines,
+    sessionsCount: dbCourse.sessions_count,
+    videosLength: dbCourse.videos_length,
+    situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
     // FIXME: updated_at instead of created_at
-    date: formatDate(courseObject.created_at),
+    date: formatDate(dbCourse.created_at),
   };
+  return course;
+};
+
+const addCourseDetailToDOM = (dbCourse) => {
+  let course = courseObject(dbCourse);
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
   breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, 'course');
   // Info and banner section
-  courseInfoWrapper.innerHTML = '';
-  courseInfoWrapper.insertAdjacentHTML('beforeend', courseInfoTemplate(course));
+  insertToDom(courseInfoWrapper, courseInfoTemplate(course));
   // Data section
-  courseDataWrapper.innerHTML = '';
-  courseDataWrapper.insertAdjacentHTML('beforeend', courseDataTemplate(course));
-
+  insertToDom(courseDataWrapper, courseDataTemplate(course));
   // Description section
-  courseDescription.innerHTML = '';
   if (course.description) {
-    courseDescription.insertAdjacentHTML('beforeend', course.description);
+    insertToDom(courseDescriptionElem, course.description);
   } else {
-    courseDescription.closest('#course-description-wrapper').classList.add('hidden');
+    courseDescriptionElem.closest('#course-description-wrapper').classList.add('hidden');
   }
 
   // Headline section
-  headlinesWrapper.innerHTML = '';
+  let headlines = '';
   if (course.headlines) {
     course.headlines.forEach((headline) => {
-      headlinesWrapper.insertAdjacentHTML('beforeend', CourseHeadlineSectionHandler(headline));
+      headlines += CourseHeadlineSectionHandler(headline);
     });
-    const headlinesTitleElem = document.querySelectorAll('.headline__title');
-    headlinesTitleElem.forEach((titleElem) =>
-      titleElem.addEventListener('click', () => {
-        toggleHeadLine(titleElem);
-      })
-    );
+    insertToDom(headlinesWrapper, headlines);
   } else {
     headlinesWrapper.parentElement.classList.add('hidden');
   }
 
   // comments section
   getAllFromDatabase('comments').then((comments) => {
-    commentsWrapper.innerHTML = '';
+    let commentsElements = '';
     let FilteredComments = comments.filter((comment) => {
       return comment.course_id === course.id;
     });
     if (FilteredComments.length) {
       FilteredComments.forEach((comment) => {
-        commentsWrapper.insertAdjacentHTML('beforeend', CourseCommentSectionHandler(comment));
+        commentsElements += CourseCommentSectionHandler(comment);
       });
+      insertToDom(commentsWrapper, commentsElements);
     } else {
       commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
     }
@@ -112,7 +108,7 @@ getOneFromDatabase('courses', 'slug', courseSearchParam)
 const toggleDescription = () => {
   const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];
   descriptionToggleClasses.forEach((toggleClass) => {
-    courseDescription.classList.toggle(toggleClass);
+    courseDescriptionElem.classList.toggle(toggleClass);
   });
 
   showAllDescriptionBtn.children[0].classList.toggle('hidden');
@@ -122,40 +118,44 @@ const toggleDescription = () => {
   descriptionShadow.classList.toggle('hidden');
 };
 
-// toggle headline
-const toggleHeadLine = (titleElem) => {
-  let totalHeadlineBodyHeight = 0;
+const toggleHeadLine = (event) => {
+  if (event.target.matches('.headline__title') || event.target.closest('.headline__title')) {
+    let titleElem = event.target;
+    if (!event.target.matches('.headline__title')) {
+      titleElem = event.target.closest('.headline__title');
+    }
 
-  const headlineBody = titleElem.nextElementSibling;
-  const headLineChildren = headlineBody.children;
+    let titleELemToggleClasses = ['theme-bg-color', 'text-white', 'bg-slate-100', 'dark:bg-slate-700', 'md:hover:theme-text-color'];
+    let totalHeadlineBodyHeight = 0;
 
-  titleElem.classList.toggle('theme-bg-color');
-  titleElem.classList.toggle('text-white');
-  titleElem.classList.toggle('bg-slate-100');
-  titleElem.classList.toggle('dark:bg-slate-700');
-  titleElem.classList.toggle('md:hover:theme-text-color');
-  // Headline Chevron left icon
-  titleElem.children[1].children[1].classList.toggle('-rotate-90');
+    const headlineBody = titleElem.nextElementSibling;
+    const headLineChildren = headlineBody.children;
 
-  for (const child of headLineChildren) {
-    totalHeadlineBodyHeight += child.offsetHeight;
-  }
+    titleELemToggleClasses.forEach((toggleClass) => titleElem.classList.toggle(toggleClass));
 
-  if (headlineBody.offsetHeight === 0) {
-    headlineBody.style.maxHeight = `${totalHeadlineBodyHeight}px`;
-  } else {
-    headlineBody.style.maxHeight = '0px';
+    // Headline Chevron left icon
+    titleElem.children[1].children[1].classList.toggle('-rotate-90');
+
+    for (const child of headLineChildren) {
+      totalHeadlineBodyHeight += child.offsetHeight;
+    }
+
+    if (headlineBody.offsetHeight === 0) {
+      headlineBody.style.maxHeight = `${totalHeadlineBodyHeight}px`;
+    } else {
+      headlineBody.style.maxHeight = '0px';
+    }
   }
 };
 
-const handleLike = () => {
-  const likeButtons = document.querySelectorAll('.like-btn');
+// const handleLike = () => {
+//   const likeButtons = document.querySelectorAll('.like-btn');
 
-  likeButtons.forEach((btn) => {
-    toggleLike(btn, true);
-  });
-  likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)));
-};
+//   likeButtons.forEach((btn) => {
+//     toggleLike(btn, true);
+//   });
+//   likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)));
+// };
 
 const handleReplyAndLike = (event) => {
   let commentID = null;
@@ -207,5 +207,6 @@ addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrappe
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitComment(newCommentTextarea, newCommentWrapper));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
+headlinesWrapper.addEventListener('click', toggleHeadLine);
 commentsWrapper.addEventListener('click', handleReplyAndLike);
 window.addEventListener('load', removeLoader);

@@ -45,7 +45,7 @@ const breadcrumbCourseCategory = document.querySelector('.breadcrumb__course-cat
 const breadcrumbCourseName = document.querySelector('.breadcrumb__course-name');
 const courseInfoWrapper = document.querySelector('#course-info');
 const courseDataWrapper = document.querySelector('#course-data-wrapper');
-const courseDescription = document.querySelector('.course-description');
+const courseDescriptionElem = document.querySelector('.course-description');
 const headlinesWrapper = document.querySelector('#headlines-wrapper');
 const descriptionShadow = document.querySelector('.course-description-shadow ');
 const commentsWrapper = document.querySelector('.comments-wrapper');
@@ -71,7 +71,7 @@ export {
   breadcrumbCourseName,
   courseInfoWrapper,
   courseDataWrapper,
-  courseDescription,
+  courseDescriptionElem,
   headlinesWrapper,
   descriptionShadow,
   commentsWrapper,

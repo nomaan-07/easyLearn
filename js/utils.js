@@ -80,4 +80,14 @@ const getReplyCommentTextarea = (id) => {
   return document.querySelector(`#reply-textarea-comment-${id}`);
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea };
+const emptyDomElemContent = (domElem) => {
+  domElem.innerHTML = '';
+};
+
+// course.js
+const insertToDom = (domElem, content) => {
+  emptyDomElemContent(domElem);
+  domElem.insertAdjacentHTML('beforeend', content);
+};
+
+export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea, emptyDomElemContent, insertToDom };
