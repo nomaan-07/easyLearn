@@ -21,14 +21,14 @@ import {
 
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
-import { submitCommentReply } from './database-handlers.js';
+import { submitCommentReply, submitNewComment } from './database-handlers.js';
 
 let courseSearchParam = getQueryParameters('course');
 
 if (!courseSearchParam) {
   location.replace('404.html');
 }
-
+let courseID = null;
 const courseObject = (dbCourse) => {
   const course = {
     finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
@@ -56,6 +56,7 @@ const courseObject = (dbCourse) => {
 
 const addCourseDetailToDOM = (dbCourse) => {
   let course = courseObject(dbCourse);
+  courseID = course.id;
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
   breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, 'course');
@@ -85,7 +86,7 @@ const addCourseDetailToDOM = (dbCourse) => {
   getAllFromDatabase('comments').then((comments) => {
     let commentsElements = '';
     let FilteredComments = comments.filter((comment) => {
-      return comment.course_id === course.id;
+      return comment.page_id === course.id && comment.confirmed;
     });
     if (FilteredComments.length) {
       FilteredComments.forEach((comment) => {
@@ -194,17 +195,10 @@ const handleReplyAndLike = (event) => {
   }
 };
 
-// FIXME: Send Comment to database
-const submitComment = (textarea, wrapper) => {
-  const comment = textarea.value.trim();
-  toggleTextarea(newCommentWrapper, newCommentTextarea);
-  // TODO: modal comment submit
-};
-
 showAllDescriptionBtn.addEventListener('click', toggleDescription);
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
-newCommentSubmitBtn.addEventListener('click', () => submitComment(newCommentTextarea, newCommentWrapper));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, courseID));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
 headlinesWrapper.addEventListener('click', toggleHeadLine);
 commentsWrapper.addEventListener('click', handleReplyAndLike);

@@ -335,6 +335,7 @@ const courseHeadlineSessionTemplate = (session, number) => {
 
 // dom-handlers.js
 const commentTemplate = (comment, replies) => {
+  let date = formatDate(comment.created_at);
   const template = `
     <div class="comment pt-4" id="${comment.id}">
       <div class="comment-header sm:text-xl flex items-center gap-2 w-fit font-VazirMedium theme-bg-color-10 py-px pl-4 rounded-full">
@@ -348,7 +349,7 @@ const commentTemplate = (comment, replies) => {
         <p>${comment.message}</p>
         <!-- Comment Info -->
         <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
-          <span>${comment.date}</span>
+          <span>${date}</span>
           <div class="flex flex-wrap gap-2 text-slate-900">
             <!-- Likes -->
             <div class="like-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg md:cursor-pointer group">
