@@ -1,4 +1,4 @@
-import { getAllFromDatabase } from './api.js';
+import { getAllFromDatabase } from './database-api.js';
 import { addCoursesToDOM } from './dom-handlers.js';
 import './header.js';
 import './change-theme.js';

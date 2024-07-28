@@ -1,4 +1,4 @@
-import { getAllFromDatabase, getOneFromDatabase, updateInDatabase } from './database-api.js';
+import { getAllFromDatabase, getOneFromDatabase } from './database-api.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate } from './template.js';
