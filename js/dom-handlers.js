@@ -1,5 +1,5 @@
 import { courseCardTemplate, blogCardTemplate, headlineTemplate, CourseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, categoryInPersian } from './utils.js';
+import { applyDiscountToPrice, formatDate, categoryInPersian, insertToDom } from './utils.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 
 window.addCourseToCart = (id) => {
@@ -9,9 +9,9 @@ window.addCourseToCart = (id) => {
 // index.html - course-category.html
 const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
-  coursesWrapper.innerHTML = '';
   let newCourse = null;
   let finalPrice = null;
+  let coursesHtml = '';
   courses.forEach((course) => {
     finalPrice = course.discount !== 100 ? applyDiscountToPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان!';
     newCourse = {
@@ -28,14 +28,15 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
       slug: course.slug,
       courseWrapperClass,
     };
-    coursesWrapper.insertAdjacentHTML('beforeend', courseCardTemplate(newCourse));
+    coursesHtml += courseCardTemplate(newCourse);
   });
+  insertToDom(coursesWrapper, coursesHtml);
 };
 
 //index.html
 const addBlogsToDom = (blogs, blogsWrapper) => {
-  blogsWrapper.innerHTML = '';
   let newBlog = null;
+  let blogsHtml = '';
   blogs.forEach((blog) => {
     newBlog = {
       title: blog.title,
@@ -47,8 +48,9 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
       readingTime: blog.reading_time,
       subject: blog.subject,
     };
-    blogsWrapper.insertAdjacentHTML('beforeend', blogCardTemplate(newBlog));
+    blogsHtml += blogCardTemplate(newBlog);
   });
+  insertToDom(blogsWrapper, blogsHtml);
 };
 
 // course.js

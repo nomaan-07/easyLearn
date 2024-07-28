@@ -56,7 +56,6 @@ getAllFromDatabase('courses')
       });
     }
     filteredCourses = categoryCourses;
-    coursesWrapperElement.innerHTML = '';
     addCoursesToDOM(categoryCourses, coursesWrapperElement);
   })
   .catch((error) => console.error('Error Getting Courses', error));
@@ -65,7 +64,6 @@ getAllFromDatabase('courses')
 const displayCourses = (filterType) => {
   let courses = searchedCourses.length > 0 ? searchedCourses : categoryCourses;
 
-  coursesWrapperElement.innerHTML = '';
   if (filterType === 'all') {
     filteredCourses = courses;
   } else if (filterType === 'free') {

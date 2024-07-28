@@ -84,7 +84,7 @@ const emptyDomElemContent = (domElem) => {
   domElem.innerHTML = '';
 };
 
-// course.js
+// course.js - dom-handlers.js
 const insertToDom = (domElem, content) => {
   emptyDomElemContent(domElem);
   domElem.insertAdjacentHTML('beforeend', content);
