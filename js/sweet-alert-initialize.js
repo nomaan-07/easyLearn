@@ -25,7 +25,7 @@ const sweetAlert = (message, type) => {
     position: 'top-start',
     width: 'fit-content',
     showConfirmButton: false,
-    timer: 100000,
+    timer: 4000,
     timerProgressBar: true,
     backdrop: false,
     customClass: {

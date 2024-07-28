@@ -161,7 +161,7 @@ const handleReplyAndLike = (event) => {
   let commentID = null;
   let wrapper = null;
   let textarea = null;
-  let openReplyBtn = null;
+
   // open reply
   if (event.target.matches('.open-reply-btn') || event.target.closest('.open-reply-btn')) {
     commentID = getParentID(event.target, 'comment');
@@ -175,16 +175,13 @@ const handleReplyAndLike = (event) => {
     wrapper = getReplyCommentWrapper(commentID);
     textarea = getReplyCommentTextarea(commentID);
     toggleTextarea(wrapper, textarea, false);
-    textarea.value = '';
   }
   // submit reply
   if (event.target.matches('.reply-comment-submit-btn') || event.target.closest('.reply-comment-submit-btn')) {
     commentID = getParentID(event.target, 'comment');
     wrapper = getReplyCommentWrapper(commentID);
     textarea = getReplyCommentTextarea(commentID);
-    submitCommentReply(textarea, commentID);
-    toggleTextarea(wrapper, textarea, false);
-    textarea.value = '';
+    submitCommentReply(textarea, wrapper, commentID);
   }
   // like handle
   if (event.target.matches('.like-btn') || event.target.closest('.like-btn')) {

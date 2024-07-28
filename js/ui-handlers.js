@@ -38,6 +38,7 @@ const toggleTextarea = (wrapper, textarea, openTextarea = false) => {
     wrapper.classList.remove('overflow-hidden');
     textarea.focus();
   } else {
+    textarea.value = '';
     wrapper.classList.add('max-h-0');
     wrapper.classList.add('overflow-hidden');
   }
