@@ -1,11 +1,13 @@
 import { getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
+import { generateRandomID } from './utils.js';
 
 // course.js
 const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName) => {
   const message = newCommentTextarea.value.trim();
   let newComment = {
+    id: generateRandomID(),
     message,
     page_id: pageID,
     page_name: pageName,
@@ -33,7 +35,7 @@ const submitCommentReply = (textarea, wrapper, commentID) => {
   let newReply = null;
   getOneFromDatabase('comments', 'id', commentID).then((comment) => {
     newReply = {
-      id: comment.replies ? comment.replies.length + 1 : 1,
+      id: generateRandomID(),
       date: new Date(),
       message,
       confirmed: false,
