@@ -23,12 +23,13 @@ import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, get
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { submitCommentReply, submitNewComment } from './database-handlers.js';
 
+let course = null;
 let courseSearchParam = getQueryParameters('course');
 
 if (!courseSearchParam) {
   location.replace('404.html');
 }
-let courseID = null;
+
 const courseObject = (dbCourse) => {
   const course = {
     finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
@@ -55,8 +56,7 @@ const courseObject = (dbCourse) => {
 };
 
 const addCourseDetailToDOM = (dbCourse) => {
-  let course = courseObject(dbCourse);
-  courseID = course.id;
+  course = courseObject(dbCourse);
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
   breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, 'course');
@@ -198,7 +198,7 @@ const handleReplyAndLike = (event) => {
 showAllDescriptionBtn.addEventListener('click', toggleDescription);
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
-newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, courseID));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
 headlinesWrapper.addEventListener('click', toggleHeadLine);
 commentsWrapper.addEventListener('click', handleReplyAndLike);

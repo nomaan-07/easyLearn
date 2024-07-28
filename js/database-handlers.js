@@ -2,11 +2,12 @@ import { getOneFromDatabase, updateInDatabase, addToDatabase } from './database-
 import { toggleTextarea } from './ui-handlers.js';
 
 // course.js
-const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID) => {
+const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName) => {
   const message = newCommentTextarea.value.trim();
   let newComment = {
     message,
     page_id: pageID,
+    page_name: pageName,
     // FIXME
     writer: 'نعمان ریگی',
     // FIXME
