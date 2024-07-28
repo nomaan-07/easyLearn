@@ -19,9 +19,8 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
-import { breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler } from './dom-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 
 let courseSearchParam = getQueryParameters('course');

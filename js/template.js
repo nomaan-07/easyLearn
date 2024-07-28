@@ -306,7 +306,7 @@ const headlineTemplate = (headline, sessions, number) => {
 };
 
 // dom-handlers.js
-const CourseHeadlineSessionTemplate = (session, number) => {
+const courseHeadlineSessionTemplate = (session, number) => {
   let sessionHref = `href="lesson.html?lesson=${session.id}"`;
   let sessionIcon = 'eye';
   let sessionClasses = 'md:hover:theme-text-color group';
@@ -413,4 +413,4 @@ const commentReplyTemplate = (reply) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, CourseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate };
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate };

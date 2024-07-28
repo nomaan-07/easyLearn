@@ -1,3 +1,4 @@
+import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './template.js';
 const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-';
   const charactersLength = characters.length;
@@ -90,4 +91,39 @@ const insertToDom = (domElem, content) => {
   domElem.insertAdjacentHTML('beforeend', content);
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea, emptyDomElemContent, insertToDom };
+// course.js
+const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, page) => {
+  const categoryName = categoryInPersian(category);
+  categoryElement.innerText = categoryName;
+  categoryElement.href = `./${page}-category.html?category=${category}`;
+  nameElement.innerText = name;
+  nameElement.href = `./${page}.html?${page}=${slug}`;
+};
+
+// course.js
+const CourseHeadlineSectionHandler = (headline) => {
+  let sessions = headline.sessions;
+  let sessionsTemplate = '';
+  if (sessions.length) {
+    sessions.forEach((session, index) => {
+      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1);
+    });
+  }
+  return headlineTemplate(headline, sessionsTemplate, sessions.length);
+};
+
+// course.js
+const CourseCommentSectionHandler = (comment) => {
+  let replies = comment.replies;
+  let repliesTemplate = '';
+  if (replies) {
+    replies.forEach((reply) => {
+      if (reply.confirmed) {
+        repliesTemplate += commentReplyTemplate(reply);
+      }
+    });
+  }
+  return commentTemplate(comment, repliesTemplate);
+};
+
+export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea, emptyDomElemContent, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler };

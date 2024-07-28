@@ -1,6 +1,6 @@
-import { courseCardTemplate, blogCardTemplate, headlineTemplate, CourseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, categoryInPersian, insertToDom } from './utils.js';
-import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
+import { courseCardTemplate, blogCardTemplate } from './template.js';
+import { applyDiscountToPrice, formatDate, insertToDom } from './utils.js';
+import { toggleTextarea } from './ui-handlers.js';
 
 window.addCourseToCart = (id) => {
   console.log(id);
@@ -53,39 +53,4 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
   insertToDom(blogsWrapper, blogsHtml);
 };
 
-// course.js
-const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, page) => {
-  const categoryName = categoryInPersian(category);
-  categoryElement.innerText = categoryName;
-  categoryElement.href = `./${page}-category.html?category=${category}`;
-  nameElement.innerText = name;
-  nameElement.href = `./${page}.html?${page}=${slug}`;
-};
-
-// course.js
-const CourseHeadlineSectionHandler = (headline) => {
-  let sessions = headline.sessions;
-  let sessionsTemplate = '';
-  if (sessions.length) {
-    sessions.forEach((session, index) => {
-      sessionsTemplate += CourseHeadlineSessionTemplate(session, index + 1);
-    });
-  }
-  return headlineTemplate(headline, sessionsTemplate, sessions.length);
-};
-
-// course.js
-const CourseCommentSectionHandler = (comment) => {
-  let replies = comment.replies;
-  let repliesTemplate = '';
-  if (replies) {
-    replies.forEach((reply) => {
-      if (reply.confirmed) {
-        repliesTemplate += commentReplyTemplate(reply);
-      }
-    });
-  }
-  return commentTemplate(comment, repliesTemplate);
-};
-
-export { addCoursesToDOM, addBlogsToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, toggleTextarea };
+export { addCoursesToDOM, addBlogsToDom, toggleTextarea };
