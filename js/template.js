@@ -172,7 +172,7 @@ const courseInfoTemplate = (course) => {
 
   const template = `
     <!-- Banner -->
-    <div class="lg:order-2 lg:w-1/2 lg:h[344px] lg:h-[356px] overflow-hidden rounded-2xl">
+    <div class="lg:order-2 lg:w-1/2 lg:h[344px] lg:h-[356px] overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
       <img class="size-full" src="${course.src}" alt="${course.name}" />
     </div>
     <!-- End of Banner -->
