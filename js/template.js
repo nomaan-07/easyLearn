@@ -307,17 +307,17 @@ const headlineTemplate = (headline, sessions, number) => {
 
 // dom-handlers.js
 const CourseHeadlineSessionTemplate = (session, number) => {
-  let sessionTag = 'a';
   let sessionHref = `href="lesson.html?lesson=${session.id}"`;
   let sessionIcon = 'eye';
+  let sessionClasses = 'md:hover:theme-text-color group';
   if (session.isLocked) {
-    sessionTag = 'div';
     sessionHref = '';
     sessionIcon = 'lock-closed';
+    sessionClasses = 'theme-bg-color-10 dark:bg-yellow-600/10 cursor-default';
   }
   const template = `
           <!-- Session -->
-        <${sessionTag} ${sessionHref}class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x- w-full p-4 md:hover:theme-text-color group">
+        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x- w-full p-4 ${sessionClasses}">
           <div class="flex items-center gap-2">
             <span class="text-center shrink-0 w-8 h-8 pt-1.5 bg-white dark:bg-slate-800 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors">${number}</span>
             <span class="text-lg transition-colors line-clamp-2">${session.name}</span>
@@ -328,7 +328,7 @@ const CourseHeadlineSessionTemplate = (session, number) => {
               <use href="#${sessionIcon}"></use>
             </svg>
           </div>
-        </${sessionTag}>
+        </a>
         <!-- End of Session -->`;
   return template;
 };
