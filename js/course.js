@@ -33,7 +33,7 @@ if (!courseSearchParam) {
 const addCourseDetailToDOM = (courseObject) => {
   courseDescription.innerHTML = '';
   let course = {
-    finalPrice: courseObject.discount !== 100 ? applyDiscountToPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان',
+    finalPrice: courseObject.discount !== 100 ? applyDiscountToPrice(courseObject.price, courseObject.discount).toLocaleString('fa-IR') : 'رایگان!',
     id: courseObject.id,
     name: courseObject.name,
     caption: courseObject.caption,

@@ -13,7 +13,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let newCourse = null;
   let finalPrice = null;
   courses.forEach((course) => {
-    finalPrice = course.discount !== 100 ? applyDiscountToPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان';
+    finalPrice = course.discount !== 100 ? applyDiscountToPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان!';
     newCourse = {
       id: course.id,
       name: course.name,
