@@ -15,7 +15,7 @@ const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID) => {
   };
   toggleTextarea(newCommentWrapper, newCommentTextarea);
   // TODO: modal comment submit
-  message, addToDatabase('comments', newComment);
+  message && addToDatabase('comments', newComment);
 };
 
 // course.js
