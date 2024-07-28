@@ -57,7 +57,7 @@ const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, catego
   categoryElement.innerText = categoryName;
   categoryElement.href = `./${page}-category.html?category=${category}`;
   nameElement.innerText = name;
-  nameElement.href = `./${page}.html?course=${slug}`;
+  nameElement.href = `./${page}.html?${page}=${slug}`;
 };
 
 // course.js
