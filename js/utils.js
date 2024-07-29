@@ -1,14 +1,18 @@
 import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './template.js';
+
 const generateRandomID = () => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
   const randomStringLength = Math.floor(Math.random() * (78 - 7)) + 6;
   const timestamp = new Date().getTime();
-  let result = `${timestamp * 23}`;
+  let result = `${timestamp.toString(36).substring(2)}`;
   for (let i = 0; i < randomStringLength; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  result += timestamp * 24;
+  for (let i = 0; i < 5; i++) {
+    result += Math.random().toString(36).substring(2);
+  }
+  result += timestamp.toString(36);
   return result;
 };
 
