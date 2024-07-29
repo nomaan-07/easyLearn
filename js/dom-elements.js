@@ -58,6 +58,9 @@ const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
 // Elements of blogs.js
 const blogsWrapperElement = document.querySelector('.blogs-wrapper');
+const blogsSortButtons = document.querySelectorAll('.blog-sort-btn');
+const searchBlogInput = document.querySelector('#search-blog-input');
+
 export {
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
@@ -108,4 +111,6 @@ export {
   heroLightSVG,
   heroDarkSVG,
   blogsWrapperElement,
+  blogsSortButtons,
+  searchBlogInput,
 };

@@ -43,4 +43,25 @@ const toggleTextarea = (wrapper, textarea, openTextarea = false) => {
     wrapper.classList.add('overflow-hidden');
   }
 };
-export { toggleLike, textareaAutoResize, toggleTextarea };
+
+// course-category.js - blogs.js
+function activeFilterBtn(btn) {
+  btn.classList.add('theme-bg-color-10');
+  btn.classList.add('theme-text-color');
+  btn.children[0].classList.add('theme-bg-color');
+  btn.children[0].classList.remove('bg-slate-200');
+  btn.children[0].classList.remove('dark:bg-slate-500');
+}
+
+// course-category.js - blogs.js
+const removeFilterButtonsClasses = (buttons) => {
+  buttons.forEach((btn) => {
+    btn.classList.remove('theme-bg-color-10');
+    btn.classList.remove('theme-text-color');
+    btn.children[0].classList.remove('theme-bg-color');
+    btn.children[0].classList.add('bg-slate-200');
+    btn.children[0].classList.add('dark:bg-slate-500');
+  });
+};
+
+export { toggleLike, textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses };

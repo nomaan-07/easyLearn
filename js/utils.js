@@ -151,6 +151,12 @@ const sortArray = (array, sortField, isAscending = false) => {
     case 'price':
       sortedArray.sort((a, b) => applyDiscountToPrice(a.price, a.discount) - applyDiscountToPrice(b.price, b.discount));
       break;
+    case 'comments':
+      sortedArray.sort((a, b) => new Date(a.comments) - new Date(b.comments));
+      break;
+    case 'reading_time':
+      sortedArray.sort((a, b) => new Date(a.reading_time) - new Date(b.reading_time));
+      break;
   }
   isAscending && sortedArray.reverse();
   return sortedArray;

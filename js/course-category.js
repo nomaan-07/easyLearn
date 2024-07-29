@@ -4,6 +4,7 @@ import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './dom-elements.js';
 import { removeLoader, getQueryParameters, applyDiscountToPrice, categoryInPersian, sortArray } from './utils.js';
+import { activeFilterBtn, removeFilterButtonsClasses } from './ui-handlers.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');
@@ -87,36 +88,20 @@ const removeSortButtonsClasses = () => {
   });
 };
 
-const removeFilterButtonsClasses = () => {
-  courseFilterButtons.forEach((btn) => {
-    btn.classList.remove('theme-bg-color-10');
-    btn.classList.remove('theme-text-color');
-    btn.children[0].classList.remove('theme-bg-color');
-    btn.children[0].classList.add('bg-slate-200');
-    btn.children[0].classList.add('dark:bg-slate-500');
-  });
-};
-
 function ActiveSortBtn(btn) {
   btn.classList.add('theme-bg-color-10');
   btn.classList.add('theme-text-color');
 }
-function ActiveFilterBtn(btn) {
-  btn.classList.add('theme-bg-color-10');
-  btn.classList.add('theme-text-color');
-  btn.children[0].classList.add('theme-bg-color');
-  btn.children[0].classList.remove('bg-slate-200');
-  btn.children[0].classList.remove('dark:bg-slate-500');
-}
+
 const filterCourses = (btn) => {
   const filterType = btn.dataset.filter;
 
   window.scrollY > 64 && window.scrollTo(0, 64);
 
   removeSortButtonsClasses();
-  removeFilterButtonsClasses();
+  removeFilterButtonsClasses(courseFilterButtons);
 
-  ActiveFilterBtn(btn);
+  activeFilterBtn(btn);
   displayCourses(filterType);
 };
 
@@ -131,8 +116,8 @@ const sortCourses = (btn) => {
 
 const searchCourse = () => {
   removeSortButtonsClasses();
-  removeFilterButtonsClasses();
-  ActiveFilterBtn(courseFilterButtons[0]);
+  removeFilterButtonsClasses(courseFilterButtons);
+  activeFilterBtn(courseFilterButtons[0]);
   let searchCourseInputValue = searchCourseInput.value.trim();
   let regex = new RegExp(searchCourseInputValue, 'gi');
   searchedCourses = categoryCourses.filter((course) => {
@@ -155,6 +140,5 @@ courseSortButtons.forEach((btn) => {
   btn.addEventListener('click', () => sortCourses(btn));
 });
 
-window.addEventListener('load', removeLoader);
-
 searchCourseInput.addEventListener('input', searchCourse);
+window.addEventListener('load', removeLoader);
