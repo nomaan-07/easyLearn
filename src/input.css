@@ -279,6 +279,19 @@
     @apply theme-bg-color rounded-full h-1;
   }
   /* End of SweetAlert */
+  /* Blog Content */
+  #article-content img {
+    @apply my-5 rounded-2xl;
+  }
+  #article-content h1,
+  #article-content h2,
+  #article-content h3,
+  #article-content h4,
+  #article-content h5,
+  #article-content h6 {
+    @apply my-5 font-VazirBlack;
+  }
+  /* End of Blog Content */
 }
 
 @layer utilities {
