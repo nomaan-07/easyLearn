@@ -43,10 +43,11 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
       date: formatDate(blog.created_at),
       likes: blog.likes,
       comments: blog.comments,
-      src: blog.src,
+      src: blog.image_src,
       writer: blog.writer,
       readingTime: blog.reading_time,
       subject: blog.subject,
+      slug: blog.slug,
     };
     blogsHtml += blogCardTemplate(newBlog);
   });
