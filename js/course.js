@@ -103,9 +103,9 @@ const addCourseDetailToDOM = (dbCourse) => {
 
 getOneFromDatabase('courses', 'slug', courseSearchParam)
   .then((course) => {
-    addCourseDetailToDOM(course);
+    course ? addCourseDetailToDOM(course) : location.replace('./404.html');
   })
-  .catch(() => location.replace('404.html'));
+  .catch((error) => console.error(error));
 
 const toggleDescription = () => {
   const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];
