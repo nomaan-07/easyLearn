@@ -121,6 +121,7 @@ const CourseCommentSectionHandler = (comment) => {
   let replies = comment.replies;
   let repliesTemplate = '';
   if (replies) {
+    replies = sortArray(replies, 'create');
     replies.forEach((reply) => {
       if (reply.confirmed) {
         repliesTemplate += commentReplyTemplate(reply);
@@ -130,4 +131,45 @@ const CourseCommentSectionHandler = (comment) => {
   return commentTemplate(comment, repliesTemplate);
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea, emptyDomElemContent, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler };
+// index.js - course-category.js
+const sortArray = (array, sortField, isAscending = false) => {
+  let sortedArray = [...array];
+
+  switch (sortField) {
+    case 'create':
+      sortedArray.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      break;
+    case 'update':
+      sortedArray.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
+      break;
+    case 'students':
+      sortedArray.sort((a, b) => new Date(a.students) - new Date(b.students));
+      break;
+    case 'likes':
+      sortedArray.sort((a, b) => new Date(a.likes) - new Date(b.likes));
+      break;
+    case 'price':
+      sortedArray.sort((a, b) => applyDiscountToPrice(a.price, a.discount) - applyDiscountToPrice(b.price, b.discount));
+      break;
+  }
+  isAscending && sortedArray.reverse();
+  return sortedArray;
+};
+
+export {
+  removeLoader,
+  generateRandomID,
+  getQueryParameters,
+  getParentID,
+  applyDiscountToPrice,
+  formatDate,
+  categoryInPersian,
+  getReplyCommentWrapper,
+  getReplyCommentTextarea,
+  emptyDomElemContent,
+  insertToDom,
+  breadCrumbLinksHandler,
+  CourseHeadlineSectionHandler,
+  CourseCommentSectionHandler,
+  sortArray,
+};

@@ -6,7 +6,7 @@ import { heroTypewriter } from './typewriter-initialize.js';
 import { getAllFromDatabase } from './database-api.js';
 import { addCoursesToDOM, addBlogsToDom } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './dom-elements.js';
-import { removeLoader } from './utils.js';
+import { removeLoader, sortArray } from './utils.js';
 
 // hero Section animations
 heroParticlesJS();
@@ -14,15 +14,15 @@ heroTypewriter();
 
 getAllFromDatabase('courses')
   .then((courses) => {
-    const LastTenCourses = courses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
-    const twelveMostPopularCourses = courses.sort((a, b) => b.students - a.students).slice(0, 12);
+    const LastTenCourses = sortArray(courses, 'create', true).slice(0, 10);
+    const twelveMostPopularCourses = sortArray(courses, 'students', true).slice(0, 12);
     addCoursesToDOM(LastTenCourses, latestCoursesWrapperElement);
     addCoursesToDOM(twelveMostPopularCourses, popularCoursesWrapperElement, true);
   })
   .catch((error) => console.log(error));
 
 getAllFromDatabase('blogs').then((blogs) => {
-  const lastFourBlog = blogs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+  const lastFourBlog = sortArray(blogs, 'create', true).slice(0, 5);
   addBlogsToDom(lastFourBlog, blogsWrapperElement);
 });
 

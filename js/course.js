@@ -19,7 +19,7 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, sortArray } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { submitCommentReply, submitNewComment } from './database-handlers.js';
 
@@ -89,6 +89,8 @@ const addCourseDetailToDOM = (dbCourse) => {
       return comment.page_id === course.id && comment.confirmed;
     });
     if (FilteredComments.length) {
+      // FIXME: sort array
+      FilteredComments = sortArray(FilteredComments, 'create', true);
       FilteredComments.forEach((comment) => {
         commentsElements += CourseCommentSectionHandler(comment);
       });

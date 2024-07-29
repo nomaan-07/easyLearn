@@ -36,7 +36,7 @@ const submitCommentReply = (textarea, wrapper, commentID) => {
   getOneFromDatabase('comments', 'id', commentID).then((comment) => {
     newReply = {
       id: generateRandomID(),
-      date: new Date(),
+      created_at: new Date(),
       message,
       confirmed: false,
       // FIXME

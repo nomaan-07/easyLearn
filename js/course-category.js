@@ -3,7 +3,7 @@ import { addCoursesToDOM } from './dom-handlers.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './dom-elements.js';
-import { removeLoader, getQueryParameters, applyDiscountToPrice, categoryInPersian } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, categoryInPersian, sortArray } from './utils.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');
@@ -43,9 +43,9 @@ const overallSearchHandler = (allCourses) => {
 getAllFromDatabase('courses')
   .then((allCourses) => {
     if (categoryParam === 'all-courses') {
-      categoryCourses = allCourses.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      categoryCourses = sortArray(allCourses, 'create', true);
     } else if (categoryParam === 'popular-courses') {
-      categoryCourses = allCourses.sort((a, b) => b.students - a.students);
+      categoryCourses = sortArray(allCourses, 'students', true);
       removeSortButtonsClasses();
       ActiveSortBtn(courseSortButtons[2]);
     } else if (searchParam) {
@@ -71,11 +71,11 @@ const displayCourses = (filterType) => {
   } else if (filterType === 'cash') {
     filteredCourses = courses.filter((course) => course.discount != 100);
   } else if (filterType === 'cheapest') {
-    filteredCourses = [...filteredCourses].sort((a, b) => applyDiscountToPrice(a.price, a.discount) - applyDiscountToPrice(b.price, b.discount));
+    filteredCourses = sortArray(filteredCourses, 'price');
   } else if (filterType === 'expensive') {
-    filteredCourses = [...filteredCourses].sort((a, b) => applyDiscountToPrice(b.price, b.discount) - applyDiscountToPrice(a.price, a.discount));
+    filteredCourses = sortArray(filteredCourses, 'price', true);
   } else if (filterType === 'popular') {
-    filteredCourses = [...filteredCourses].sort((a, b) => b.students - a.students);
+    filteredCourses = sortArray(filteredCourses, 'students', true);
   }
   addCoursesToDOM(filteredCourses, coursesWrapperElement);
 };

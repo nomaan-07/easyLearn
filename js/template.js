@@ -393,7 +393,7 @@ const commentTemplate = (comment, replies) => {
 // dom-handlers.js
 const commentReplyTemplate = (reply) => {
   const comment = reply.message.replace(/\n/g, '<br>');
-  const date = formatDate(reply.date);
+  const date = formatDate(reply.created_at);
   const template = `
   <div class="replay-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
       <div class="flex items-start gap-2 font-VazirMedium border-b border-b-slate-300 dark:border-b-slate-600">
