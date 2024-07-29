@@ -5,7 +5,7 @@ import { heroParticlesJS } from './particles-initialize.js';
 import { heroTypewriter } from './typewriter-initialize.js';
 import { getAllFromDatabase } from './database-api.js';
 import { addCoursesToDOM, addBlogsToDom } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, blogsWrapperElement } from './dom-elements.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement } from './dom-elements.js';
 import { removeLoader, sortArray } from './utils.js';
 
 // hero Section animations
@@ -23,7 +23,7 @@ getAllFromDatabase('courses')
 
 getAllFromDatabase('blogs').then((blogs) => {
   const lastFourBlog = sortArray(blogs, 'create', true).slice(0, 5);
-  addBlogsToDom(lastFourBlog, blogsWrapperElement);
+  addBlogsToDom(lastFourBlog, lastBlogsWrapperElement);
 });
 
 // TestimonialSwiper

@@ -269,7 +269,7 @@
     overflow: hidden !important;
   }
   .notification__content {
-    @apply text-base text-slate-900 dark:text-white bg-white dark:bg-slate-600 flex items-center gap-2 sm:gap-4 overflow-hidden rounded-xl pb-0;
+    @apply text-base text-slate-900 dark:text-white bg-white dark:bg-slate-600 items-center gap-2 sm:gap-4 overflow-hidden rounded-xl pb-0;
     display: flex !important;
   }
   .notification__icon {

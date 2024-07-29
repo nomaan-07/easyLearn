@@ -1144,7 +1144,6 @@ video {
 }
 
 .notification__content {
-  display: flex;
   align-items: center;
   gap: 0.5rem;
   overflow: hidden;
@@ -3636,10 +3635,6 @@ video {
   padding-top: 2rem;
 }
 
-.pb-0\.5 {
-  padding-bottom: 0.125rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -5152,6 +5147,10 @@ video {
     top: 5rem;
   }
 
+  .md\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .md\:mb-14 {
     margin-bottom: 3.5rem;
   }
@@ -5176,10 +5175,6 @@ video {
     margin-top: 2.25rem;
   }
 
-  .md\:mb-0 {
-    margin-bottom: 0px;
-  }
-
   .md\:block {
     display: block;
   }
@@ -5201,10 +5196,6 @@ video {
   .md\:size-16 {
     width: 4rem;
     height: 4rem;
-  }
-
-  .md\:h-48 {
-    height: 12rem;
   }
 
   .md\:h-\[184px\] {
