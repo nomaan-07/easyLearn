@@ -29,7 +29,7 @@ const mobileSearchBtn = document.querySelector('.mobile-search-btn');
 // Elements of index.html
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
-const lastBlogsWrapperElement = document.querySelector('.blogs-wrapper');
+const lastBlogsWrapperElement = document.querySelector('.last-blogs-wrapper');
 
 // Elements of course-category.html
 const courseFilterButtons = document.querySelectorAll('.course-filter-btn');
@@ -57,7 +57,7 @@ const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
 // Elements of blogs.js
-
+const blogsWrapperElement = document.querySelector('.blogs-wrapper');
 export {
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
@@ -107,4 +107,5 @@ export {
   favIcon,
   heroLightSVG,
   heroDarkSVG,
+  blogsWrapperElement,
 };
