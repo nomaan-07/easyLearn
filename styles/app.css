@@ -4888,6 +4888,10 @@ video {
     align-self: auto;
   }
 
+  .xs\:rounded-2xl {
+    border-radius: 1rem;
+  }
+
   .xs\:rounded-tl-\[100px\] {
     border-top-left-radius: 100px;
   }
@@ -5275,6 +5279,11 @@ video {
     display: flex;
   }
 
+  .md\:size-10 {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
   .md\:size-11 {
     width: 2.75rem;
     height: 2.75rem;
@@ -5288,11 +5297,6 @@ video {
   .md\:size-16 {
     width: 4rem;
     height: 4rem;
-  }
-
-  .md\:size-10 {
-    width: 2.5rem;
-    height: 2.5rem;
   }
 
   .md\:h-\[184px\] {
@@ -5548,16 +5552,6 @@ video {
   .dark\:md\:hover\:bg-slate-600:hover:is(.dark *) {
     --tw-bg-opacity: 1;
     background-color: rgb(71 85 105 / var(--tw-bg-opacity));
-  }
-
-  .group:hover .dark\:md\:group-hover\:text-rose-300:is(.dark *) {
-    --tw-text-opacity: 1;
-    color: rgb(253 164 175 / var(--tw-text-opacity));
-  }
-
-  .group:hover .dark\:md\:group-hover\:text-rose-400:is(.dark *) {
-    --tw-text-opacity: 1;
-    color: rgb(251 113 133 / var(--tw-text-opacity));
   }
 }
 
@@ -5891,16 +5885,6 @@ video {
   .\32xl\:size-7 {
     width: 1.75rem;
     height: 1.75rem;
-  }
-
-  .\32xl\:size-11 {
-    width: 2.75rem;
-    height: 2.75rem;
-  }
-
-  .\32xl\:size-1\/2 {
-    width: 50%;
-    height: 50%;
   }
 
   .\32xl\:h-9 {
