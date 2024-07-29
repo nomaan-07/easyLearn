@@ -1931,6 +1931,10 @@ video {
   width: 100vw;
 }
 
+.w-32 {
+  width: 8rem;
+}
+
 .max-w-60 {
   max-width: 15rem;
 }
@@ -3977,6 +3981,10 @@ video {
 
 .opacity-80 {
   opacity: 0.8;
+}
+
+.opacity-40 {
+  opacity: 0.4;
 }
 
 .bg-blend-normal {
