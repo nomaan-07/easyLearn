@@ -350,7 +350,7 @@ const commentTemplate = (comment, replies) => {
         <!-- Comment Info -->
         <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
           <span>${date}</span>
-          <div class="flex flex-wrap gap-2 text-slate-900">
+          <div class="flex flex-wrap gap-2 text-slate-900 select-none">
             <!-- Likes -->
             <div class="like-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg md:cursor-pointer group">
               <svg class="size-5 text-rose-500 md:group-hover:text-rose-600 transition-colors">
@@ -379,7 +379,7 @@ const commentTemplate = (comment, replies) => {
       <!-- New reply Comment -->
       <div class="reply-comment-wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden" id="reply-wrapper-comment-${comment.id}">
         <textarea class="reply-comment-textarea w-full h-40 border bg-transparent border-slate-200 dark:border-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="reply-textarea-comment-${comment.id}" placeholder="پاسخ..."></textarea>
-        <div class="flex items-center justify-end gap-2">
+        <div class="flex items-center justify-end gap-2 select-none">
           <div class="reply-comment-cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
           <div class="reply-comment-submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
         </div>
