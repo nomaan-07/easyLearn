@@ -91,10 +91,15 @@ const emptyDomElemContent = (domElem) => {
   domElem.innerHTML = '';
 };
 
-// course.js
+// course.js - blog.js
 const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, categoryName, page) => {
+  if (page === 'blog') {
+    categoryElement.href = `./${page}s.html?category=${category}`;
+  } else if (page === 'course') {
+    categoryElement.href = `./${page}-category.html?category=${category}`;
+  }
+
   categoryElement.innerText = categoryName;
-  categoryElement.href = `./${page}-category.html?category=${category}`;
   nameElement.innerText = name;
   nameElement.href = `./${page}.html?${page}=${slug}`;
 };

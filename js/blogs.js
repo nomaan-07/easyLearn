@@ -2,7 +2,7 @@ import './header.js';
 import './change-theme.js';
 import { blogsWrapperElement, blogsSortButtons, searchBlogInput } from './dom-elements.js';
 import { getAllFromDatabase } from './database-api.js';
-import { removeLoader, sortArray } from './utils.js';
+import { getQueryParameters, removeLoader, sortArray } from './utils.js';
 import { addBlogCardsToDOM } from './dom-handlers.js';
 import { activeFilterBtn, removeFilterButtonsClasses } from './ui-handlers.js';
 
@@ -10,11 +10,39 @@ let allBlogs = [];
 let sortedBLogs = [];
 let searchedBlogs = [];
 
+const blogsParam = getQueryParameters('category');
+
+const getCategoryBlogs = (allBlogs) => {
+  let categoryBlogs = null;
+  switch (blogsParam) {
+    case 'programming-basics':
+      categoryBlogs = allBlogs.filter((blog) => blog.category === 'programming-basics');
+      break;
+    case 'python':
+      categoryBlogs = allBlogs.filter((blog) => blog.category === 'python');
+      break;
+    case 'java-script':
+      categoryBlogs = allBlogs.filter((blog) => blog.category === 'java-script');
+      break;
+    case 'hack':
+      categoryBlogs = allBlogs.filter((blog) => blog.category === 'hack');
+      break;
+    case null:
+      categoryBlogs = allBlogs;
+      break;
+    default:
+      location.replace('./404.html');
+  }
+  return categoryBlogs;
+};
+
 async function fetchAndDisplayBlogs() {
   try {
     const blogs = await getAllFromDatabase('blogs');
-    allBlogs = sortArray(blogs, 'create', true);
+    allBlogs = getCategoryBlogs(sortArray(blogs, 'create', true));
+
     addBlogCardsToDOM(allBlogs, blogsWrapperElement);
+    getCategoryBlogs(allBlogs);
   } catch (error) {
     console.error('Failed to fetch blogs', error);
   }
@@ -46,7 +74,7 @@ const displaySortedBLogs = (type) => {
   addBlogCardsToDOM(sortedBLogs, blogsWrapperElement);
 };
 
-const sortBlogs = (btn) => {
+const sortBlogsHandler = (btn) => {
   const sortType = btn.dataset.sort;
   window.scrollY > 64 && window.scrollTo(0, 64);
   removeFilterButtonsClasses(blogsSortButtons);
@@ -54,7 +82,7 @@ const sortBlogs = (btn) => {
   displaySortedBLogs(sortType);
 };
 
-const searchBlog = (event) => {
+const searchBlogHandler = (event) => {
   removeFilterButtonsClasses(blogsSortButtons);
   activeFilterBtn(blogsSortButtons[0]);
   let inputValue = event.target.value;
@@ -67,8 +95,8 @@ const searchBlog = (event) => {
 };
 
 blogsSortButtons.forEach((btn) => {
-  btn.addEventListener('click', () => sortBlogs(btn));
+  btn.addEventListener('click', () => sortBlogsHandler(btn));
 });
 
-searchBlogInput.addEventListener('input', searchBlog);
+searchBlogInput.addEventListener('input', searchBlogHandler);
 window.addEventListener('load', removeLoader);
