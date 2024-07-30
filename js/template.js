@@ -428,8 +428,8 @@ const blogTemplate = (blog) => {
             <!-- End of Title -->
             <!-- Detail -->
             <div class="blog__detail flex flex-col xs:flex-row justify-between sm:justify-center md:justify-between flex-wrap gap-3 xs:gap-6 xs:font-VazirMedium text-sm xl:text-base border-y border-y-slate-200 dark:border-y-slate-600 py-3 px-5">
+            <!-- Category -->
               <div class="flex items-center gap-2">
-                <!-- Category -->
                 <svg class="size-5 theme-text-color">
                   <use href="#folder-open"></use>
                 </svg>
@@ -459,7 +459,7 @@ const blogTemplate = (blog) => {
             </div>
             <!-- End of Detail -->
             <!-- Banner -->
-            <div class="w-full lg:h[344px] lg:h-96 xl:w-[800px] xl:h-[520px] mx-auto px-5">
+            <div class="w-auto h-fit mx-auto px-5">
               <div class="rounded-2xl overflow-hidden">
                 <img class="size-full" src="${blog.imageSrc}" alt="${blog.title}" />
               </div>
