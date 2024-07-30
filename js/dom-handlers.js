@@ -43,7 +43,7 @@ const addBlogCardsToDOM = (blogs, blogsWrapper) => {
       date: formatDate(blog.created_at),
       likes: blog.likes,
       comments: blog.comments,
-      src: blog.image_src,
+      image_src: blog.image_src,
       writer: blog.writer,
       readingTime: blog.reading_time,
       subject: blog.subject,

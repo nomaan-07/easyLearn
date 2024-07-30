@@ -36,7 +36,7 @@ const courseObject = (dbCourse) => {
     id: dbCourse.id,
     name: dbCourse.name,
     caption: dbCourse.caption,
-    src: dbCourse.src,
+    image_src: dbCourse.image_src,
     teacher: dbCourse.teacher,
     students: dbCourse.students.toLocaleString('fa-IR'),
     ratePercent: Math.floor((dbCourse.rate * 100) / 5),

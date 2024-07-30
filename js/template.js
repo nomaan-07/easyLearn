@@ -86,7 +86,7 @@ const blogCardTemplate = (blog) => {
       <div class="p-4 bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl group relative overflow-hidden">
         <!-- Blog Banner -->
         <a href="./blog.html?article=${blog.slug}" class="block w-full h-44 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden relative">
-          <img class="size-full object-cover" loading="lazy" src="${blog.src}" alt="${blog.title}" />
+          <img class="size-full object-cover" loading="lazy" src="${blog.image_src}" alt="${blog.title}" />
           <svg class="hidden lg:block absolute size-full inset-0 theme-bg-color text-white p-3 opacity-80 group-hover:opacity-0 group-hover:translate-y-44 duration-500 rounded-2xl transition-all">
             <use href="#logo"></use>
           </svg>
@@ -173,7 +173,7 @@ const courseInfoTemplate = (course) => {
   const template = `
     <!-- Banner -->
     <div class="lg:order-2 lg:w-1/2 lg:h[344px] lg:h-[356px] overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-      <img class="size-full" src="${course.src}" alt="${course.name}" />
+      <img class="size-full" src="${course.image_src}" alt="${course.name}" />
     </div>
     <!-- End of Banner -->
     <!-- Course Info -->
