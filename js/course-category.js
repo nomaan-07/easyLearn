@@ -120,7 +120,6 @@ const searchCourse = () => {
   let searchCourseInputValue = searchCourseInput.value.trim();
   let regex = new RegExp(searchCourseInputValue, 'gi');
   searchedCourses = categoryCourses.filter((course) => {
-    console.log(course.name);
     return course.name.match(regex) || course.search_keywords.includes(searchCourseInputValue.toLowerCase());
   });
   if (searchCourseInputValue) {

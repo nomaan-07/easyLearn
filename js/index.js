@@ -41,20 +41,21 @@ const testimonialSwiper = new Swiper('.testimonials-swiper', {
     },
     1024: {
       slidesPerView: 3,
+      // spaceBetween: 10,
       creativeEffect: {
-        limitProgress: 20,
+        limitProgress: 2,
       },
     },
     1280: {
       slidesPerView: 4,
       creativeEffect: {
-        limitProgress: 20,
+        limitProgress: 3,
       },
     },
     1536: {
       slidesPerView: 5,
       creativeEffect: {
-        limitProgress: 20,
+        limitProgress: 4,
       },
     },
   },
