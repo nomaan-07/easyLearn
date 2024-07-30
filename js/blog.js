@@ -51,6 +51,25 @@ const addBlogToDom = (dbBlog) => {
   fetchAndDisplayComments(commentsWrapper, blog.id);
 };
 
+async function copyBlogLinkToClipboard(event) {
+  try {
+    let blogLink = null;
+    let element = event.target.matches('.blog__copy-link-btn') ? event.target : event.target.closest('.blog__copy-link-btn');
+    if (element) {
+      // check if clicked on the use element of svg
+      if (element.matches('use')) {
+        blogLink = element.parentElement.nextElementSibling.value;
+      } else {
+        blogLink = element.nextElementSibling.value;
+      }
+    }
+    await navigator.clipboard.writeText(blogLink);
+  } catch (error) {
+    console.error('Failed to copy link', error);
+  }
+}
+
+blogWrapper.addEventListener('click', copyBlogLinkToClipboard);
 window.addEventListener('load', removeLoader);
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
