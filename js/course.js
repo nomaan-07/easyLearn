@@ -19,9 +19,10 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, sortArray } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitCommentReply, submitNewComment } from './database-handlers.js';
+import { insertToDOM } from './dom-handlers.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');
@@ -53,6 +54,7 @@ const courseObject = (dbCourse) => {
     price: dbCourse.price.toLocaleString('fa-IR'),
     description: dbCourse.description,
     category: dbCourse.category[0],
+    categoryName: categoryInPersian(dbCourse.category[0]),
     slug: dbCourse.slug,
     headlines: dbCourse.headlines,
     sessionsCount: dbCourse.sessions_count,
@@ -68,14 +70,14 @@ const addCourseToDOM = (dbCourse) => {
   course = courseObject(dbCourse);
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
-  breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, 'course');
+  breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, course.categoryName, 'course');
   // Info and banner section
-  insertToDom(courseInfoWrapper, courseInfoTemplate(course));
+  insertToDOM(courseInfoWrapper, courseInfoTemplate(course));
   // Data section
-  insertToDom(courseDataWrapper, courseDataTemplate(course));
+  insertToDOM(courseDataWrapper, courseDataTemplate(course));
   // Description section
   if (course.description) {
-    insertToDom(courseDescriptionElem, course.description);
+    insertToDOM(courseDescriptionElem, course.description);
   } else {
     courseDescriptionElem.closest('#course-description-wrapper').classList.add('hidden');
   }
@@ -86,7 +88,7 @@ const addCourseToDOM = (dbCourse) => {
     course.headlines.forEach((headline) => {
       headlines += CourseHeadlineSectionHandler(headline);
     });
-    insertToDom(headlinesWrapper, headlines);
+    insertToDOM(headlinesWrapper, headlines);
   } else {
     headlinesWrapper.parentElement.classList.add('hidden');
   }

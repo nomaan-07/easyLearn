@@ -1,6 +1,12 @@
 import { courseCardTemplate, blogCardTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, insertToDom } from './utils.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
+
+// course.js - dom-handlers.js - blog.js
+const insertToDOM = (domElem, content) => {
+  emptyDomElemContent(domElem);
+  domElem.insertAdjacentHTML('beforeend', content);
+};
 
 window.addCourseToCart = (id) => {
   console.log(id);
@@ -30,7 +36,7 @@ const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
     };
     coursesHtml += courseCardTemplate(newCourse);
   });
-  insertToDom(coursesWrapper, coursesHtml);
+  insertToDOM(coursesWrapper, coursesHtml);
 };
 
 //index.html
@@ -51,7 +57,7 @@ const addBlogCardsToDOM = (blogs, blogsWrapper) => {
     };
     blogsHtml += blogCardTemplate(newBlog);
   });
-  insertToDom(blogsWrapper, blogsHtml);
+  insertToDOM(blogsWrapper, blogsHtml);
 };
 
-export { addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea };
+export { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea };

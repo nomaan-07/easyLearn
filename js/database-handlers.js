@@ -1,8 +1,8 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { generateRandomID, sortArray, CourseCommentSectionHandler, insertToDom } from './utils.js';
-import { addCourseCardsToDOM, addBlogCardsToDOM } from './dom-handlers.js';
+import { generateRandomID, sortArray, CourseCommentSectionHandler } from './utils.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement } from './dom-elements.js';
 
 // index.js
@@ -41,7 +41,7 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
       FilteredComments.forEach((comment) => {
         commentsElements += CourseCommentSectionHandler(comment);
       });
-      insertToDom(commentsWrapper, commentsElements);
+      insertToDOM(commentsWrapper, commentsElements);
     } else {
       commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
     }

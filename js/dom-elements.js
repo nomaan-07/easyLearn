@@ -61,6 +61,11 @@ const blogsWrapperElement = document.querySelector('.blogs-wrapper');
 const blogsSortButtons = document.querySelectorAll('.blog-sort-btn');
 const searchBlogInput = document.querySelector('#search-blog-input');
 
+// Elements of blog.js
+const breadcrumbBlogCategory = document.querySelector('.breadcrumb__blog-category');
+const breadcrumbBlogName = document.querySelector('.breadcrumb__blog-name');
+const blogWrapper = document.querySelector('.blog__wrapper');
+
 export {
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
@@ -113,4 +118,7 @@ export {
   blogsWrapperElement,
   blogsSortButtons,
   searchBlogInput,
+  breadcrumbBlogCategory,
+  breadcrumbBlogName,
+  blogWrapper,
 };

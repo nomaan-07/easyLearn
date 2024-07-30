@@ -85,7 +85,7 @@ const blogCardTemplate = (blog) => {
       <!-- Blog -->
       <div class="p-4 bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl group relative overflow-hidden">
         <!-- Blog Banner -->
-        <a href="./blog.html?article=${blog.slug}" class="block w-full h-44 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden relative">
+        <a href="./blog.html?blog=${blog.slug}" class="block w-full h-44 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden relative">
           <img class="size-full object-cover" loading="lazy" src="${blog.image_src}" alt="${blog.title}" />
           <svg class="hidden lg:block absolute size-full inset-0 theme-bg-color text-white p-3 opacity-80 group-hover:opacity-0 group-hover:translate-y-44 duration-500 rounded-2xl transition-all">
             <use href="#logo"></use>
@@ -93,7 +93,7 @@ const blogCardTemplate = (blog) => {
         </a>
         <!-- End of Blag Banner -->
         <!-- Blog Title -->
-        <a class="block font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2 mt-4" href="./blog.html?article=${blog.slug}">${blog.title}</a>
+        <a class="block font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2 mt-4" href="./blog.html?blog=${blog.slug}">${blog.title}</a>
         <!-- End of Blog Title -->
         <!-- Writer and Category -->
         <div class="flex items-center justify-between gap-2 font-VazirBold text-xs border-t border-t-slate-200 dark:border-t-slate-700 mt-4 pt-4">
@@ -145,7 +145,7 @@ const blogCardTemplate = (blog) => {
         </div>
         <!-- End of Date -->
         <!-- Blog Link-->
-        <a class="blog-card-link group/btn" href="./blog.html?article=${blog.slug}">
+        <a class="blog-card-link group/btn" href="./blog.html?blog=${blog.slug}">
           <span class="transition-colors">مطالعه مقاله</span>
           <svg class="size-4 md:absolute md:left-4 md:group-hover/btn:left-1 transition-all">
             <use href="#left-arrow"></use>
@@ -278,7 +278,7 @@ const courseDataTemplate = (course) => {
   return template;
 };
 
-// dom-handlers.js
+// utils.js
 const headlineTemplate = (headline, sessions, number) => {
   if (!sessions) {
     sessions = '<p class ="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
@@ -305,7 +305,7 @@ const headlineTemplate = (headline, sessions, number) => {
   return template;
 };
 
-// dom-handlers.js
+// utils.js
 const courseHeadlineSessionTemplate = (session, number) => {
   let sessionHref = `href="lesson.html?lesson=${session.id}"`;
   let sessionIcon = 'eye';
@@ -333,7 +333,7 @@ const courseHeadlineSessionTemplate = (session, number) => {
   return template;
 };
 
-// dom-handlers.js
+// utils.js
 const commentTemplate = (comment, replies) => {
   let date = formatDate(comment.created_at);
   const template = `
@@ -390,7 +390,7 @@ const commentTemplate = (comment, replies) => {
   return template;
 };
 
-// dom-handlers.js
+// utils.js
 const commentReplyTemplate = (reply) => {
   const comment = reply.message.replace(/\n/g, '<br>');
   const date = formatDate(reply.created_at);
@@ -414,4 +414,79 @@ const commentReplyTemplate = (reply) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate };
+// blog.js
+const blogTemplate = (blog) => {
+  let likeIcon = blog.isLiked ? 'heart' : 'heart-outline';
+  const template = `
+              <!-- Title -->
+            <div class="flex xs:items-end gap-1 text-xl xs:text-2xl md:text-3xl font-VazirBlack">
+              <div class="size-9 sm:size-10 md:size-11 2xl:size-12 animate-float-fast">
+                <img class="w-full h-full" src="./images/icons/pencil.png" />
+              </div>
+              <h1 class="blog__title">${blog.title}</h1>
+            </div>
+            <!-- End of Title -->
+            <!-- Detail -->
+            <div class="blog__detail flex flex-col xs:flex-row justify-between sm:justify-center md:justify-between flex-wrap gap-3 xs:gap-6 xs:font-VazirMedium text-sm xl:text-base border-y border-y-slate-200 dark:border-y-slate-600 py-3 px-5">
+              <div class="flex items-center gap-2">
+                <!-- Category -->
+                <svg class="size-5 theme-text-color">
+                  <use href="#folder-open"></use>
+                </svg>
+                <a href="./blogs.html?category=${blog.category}" class="hover:theme-text-color transition-colors">${blog.categoryName}</a>
+              </div>
+              <!-- Writer -->
+              <div class="flex items-center gap-2">
+                <svg class="size-5 theme-text-color">
+                  <use href="#pencil-square"></use>
+                </svg>
+                <span>${blog.writer}</span>
+              </div>
+              <!-- Reading Time -->
+              <div class="flex items-center gap-2">
+                <svg class="size-5 theme-text-color">
+                  <use href="#timer"></use>
+                </svg>
+                <span>${blog.readingTime} دقیقه</span>
+              </div>
+              <!-- Date -->
+              <div class="flex items-center gap-2">
+                <svg class="size-5 theme-text-color">
+                  <use href="#calendar-days"></use>
+                </svg>
+                <span>${blog.date}</span>
+              </div>
+            </div>
+            <!-- End of Detail -->
+            <!-- Banner -->
+            <div class="w-full lg:h[344px] lg:h-96 xl:w-[800px] xl:h-[520px] mx-auto px-5">
+              <div class="rounded-2xl overflow-hidden">
+                <img class="size-full" src="${blog.imageSrc}" alt="${blog.title}" />
+              </div>
+            </div>
+            <!-- End of Banner -->
+            <!--  Article -->
+            <article id="article-content" class="border-y border-y-slate-200 dark:border-y-slate-600 py-5 text-sm/7 md:text-lg/8 xl:text-xl/9 mt-5 font-VazirLight">${blog.content}</article>
+            <!-- End of Article -->
+            <!-- Like and Copy Link -->
+            <div class="flex flex-col xs:flex-row xs:items-center justify-between gap-1">
+              <!-- Like -->
+              <div class="blog__like-btn flex items-center gap-1 self-start xs:self-auto bg-slate-300 text-slate-900 py-1 px-2 rounded-lg md:cursor-pointer group">
+                <svg class="size-6 text-rose-500 md:group-hover:text-rose-700 transition-colors">
+                  <use href="#${likeIcon}"></use>
+                </svg>
+                <span>${blog.likes}</span>
+              </div>
+              <!-- BLog link -->
+              <div class="blog__copy-link-btn flex items-center gap-1 self-end xs:self-auto bg-slate-300 text-slate-900 py-1 px-2 rounded-xl md:cursor-pointer group">
+                <svg class="size-6 md:cursor-pointer md:group-hover:theme-text-color transition-colors">
+                  <use href="#clipboard-document"></use>
+                </svg>
+                <input class="w-32 text-xs sm:text-sm font-VazirLight outline-none bg-transparent cursor-pointer" dir="ltr" value="https://easylearn.ir/blogs.html?blog=${blog.slug}" type="text" readonly />
+              </div>
+            </div>
+            <!-- End of Like and Copy Link -->`;
+  return template;
+};
+
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate };

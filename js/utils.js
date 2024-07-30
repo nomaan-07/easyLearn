@@ -50,7 +50,7 @@ const formatDate = (date) => {
   return `${year}/${month}/${day}`;
 };
 
-// course-category.js - course.js
+// course-category.js - course.js - blog.js
 const categoryInPersian = (category) => {
   let categoryPersian = null;
   switch (category) {
@@ -72,6 +72,8 @@ const categoryInPersian = (category) => {
     case 'popular-courses':
       categoryPersian = 'دوره های محبوب';
       break;
+    case 'programming-basics':
+      categoryPersian = 'مبانی برنامه نویسی';
   }
   return categoryPersian;
 };
@@ -89,15 +91,8 @@ const emptyDomElemContent = (domElem) => {
   domElem.innerHTML = '';
 };
 
-// course.js - dom-handlers.js
-const insertToDom = (domElem, content) => {
-  emptyDomElemContent(domElem);
-  domElem.insertAdjacentHTML('beforeend', content);
-};
-
 // course.js
-const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, page) => {
-  const categoryName = categoryInPersian(category);
+const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, categoryName, page) => {
   categoryElement.innerText = categoryName;
   categoryElement.href = `./${page}-category.html?category=${category}`;
   nameElement.innerText = name;
@@ -162,20 +157,4 @@ const sortArray = (array, sortField, isAscending = false) => {
   return sortedArray;
 };
 
-export {
-  removeLoader,
-  generateRandomID,
-  getQueryParameters,
-  getParentID,
-  applyDiscountToPrice,
-  formatDate,
-  categoryInPersian,
-  getReplyCommentWrapper,
-  getReplyCommentTextarea,
-  emptyDomElemContent,
-  insertToDom,
-  breadCrumbLinksHandler,
-  CourseHeadlineSectionHandler,
-  CourseCommentSectionHandler,
-  sortArray,
-};
+export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea, emptyDomElemContent, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, sortArray };
