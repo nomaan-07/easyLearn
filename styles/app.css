@@ -5534,11 +5534,6 @@ video {
     left: 0px;
   }
 
-  .group:hover .md\:group-hover\:text-rose-600 {
-    --tw-text-opacity: 1;
-    color: rgb(225 29 72 / var(--tw-text-opacity));
-  }
-
   .group:hover .md\:group-hover\:text-rose-700 {
     --tw-text-opacity: 1;
     color: rgb(190 18 60 / var(--tw-text-opacity));

@@ -353,7 +353,7 @@ const commentTemplate = (comment, replies) => {
           <div class="flex flex-wrap gap-2 text-slate-900 select-none">
             <!-- Likes -->
             <div class="like-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg md:cursor-pointer group">
-              <svg class="size-5 text-rose-500 md:group-hover:text-rose-600 transition-colors">
+              <svg class="size-5 text-rose-500 md:group-hover:text-rose-700 transition-colors">
                 <use href="#heart-outline"></use>
               </svg>
               <span>${comment.likes}</span>
