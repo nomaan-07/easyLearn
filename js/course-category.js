@@ -34,7 +34,7 @@ if (categoryParam && categoryInPersian(categoryParam)) {
 const overallSearchHandler = (allCourses) => {
   let regex = new RegExp(`${searchParam}`, 'gi');
   let result = allCourses.filter((course) => {
-    return course.name.match(regex) || course.search_keywords.includes(searchParam);
+    return course.name.match(regex) || course.search_keywords.includes(searchParam.toLowerCase());
   });
   result.length || searchResultWrapper.classList.remove('hidden');
   return Array.from(new Set(result));
