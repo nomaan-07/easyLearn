@@ -18,14 +18,14 @@ import {
   mobileSearchBtn,
 } from './dom-elements.js';
 
-const openMenu = (menu, directionClass) => {
+const openMobileMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);
   menu.classList.remove(`${directionClass}-[-280px]`);
   overlay.classList.add('show');
   overlay.classList.remove('hide');
 };
 
-const closeMenus = () => {
+const closeMobileHeaderMenus = () => {
   mobileMenu.classList.remove('right-0');
   mobileMenu.classList.add('right-[-280px]');
   mobileCart.classList.remove('left-0');
@@ -109,10 +109,10 @@ mobileSearchInput.addEventListener('keypress', (event) => {
   }
 });
 
-mobileMenuOpenBtn.addEventListener('click', () => openMenu(mobileMenu, 'right'));
-mobileCartOpenBtn.addEventListener('click', () => openMenu(mobileCart, 'left'));
-mobileMenuCloseBtn.addEventListener('click', closeMenus);
-mobileCartCloseBtn.addEventListener('click', closeMenus);
-overlay.addEventListener('click', closeMenus);
+mobileMenuOpenBtn.addEventListener('click', () => openMobileMenu(mobileMenu, 'right'));
+mobileCartOpenBtn.addEventListener('click', () => openMobileMenu(mobileCart, 'left'));
+mobileMenuCloseBtn.addEventListener('click', closeMobileHeaderMenus);
+mobileCartCloseBtn.addEventListener('click', closeMobileHeaderMenus);
+overlay.addEventListener('click', closeMobileHeaderMenus);
 window.addEventListener('scroll', headerScrollHandler);
 headerSearchToggleBtn.addEventListener('click', headerSearchBarToggle);
