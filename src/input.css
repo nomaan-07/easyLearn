@@ -280,15 +280,15 @@
   }
   /* End of SweetAlert */
   /* Blog Content */
-  #article-content img {
+  .blog__content img {
     @apply my-5 rounded-2xl;
   }
-  #article-content h1,
-  #article-content h2,
-  #article-content h3,
-  #article-content h4,
-  #article-content h5,
-  #article-content h6 {
+  .blog__content h1,
+  .blog__content h2,
+  .blog__content h3,
+  .blog__content h4,
+  .blog__content h5,
+  .blog__content h6 {
     @apply my-5 font-VazirBlack;
   }
   /* End of Blog Content */

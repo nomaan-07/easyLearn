@@ -1203,18 +1203,18 @@ video {
 
 /* Blog Content */
 
-#article-content img {
+.blog__content img {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   border-radius: 1rem;
 }
 
-#article-content h1,
-  #article-content h2,
-  #article-content h3,
-  #article-content h4,
-  #article-content h5,
-  #article-content h6 {
+.blog__content h1,
+  .blog__content h2,
+  .blog__content h3,
+  .blog__content h4,
+  .blog__content h5,
+  .blog__content h6 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   font-family: Vazir Black;
@@ -5308,10 +5308,6 @@ video {
     height: 4rem;
   }
 
-  .md\:h-\[184px\] {
-    height: 184px;
-  }
-
   .md\:h-\[410px\] {
     height: 410px;
   }
@@ -5608,10 +5604,6 @@ video {
 
   .lg\:h-24 {
     height: 6rem;
-  }
-
-  .lg\:h-52 {
-    height: 13rem;
   }
 
   .lg\:h-96 {
