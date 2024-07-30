@@ -1,5 +1,5 @@
 import { getAllFromDatabase } from './database-api.js';
-import { addCoursesToDOM } from './dom-handlers.js';
+import { addCourseCardsToDOM } from './dom-handlers.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './dom-elements.js';
@@ -57,7 +57,7 @@ getAllFromDatabase('courses')
       });
     }
     filteredCourses = categoryCourses;
-    addCoursesToDOM(categoryCourses, coursesWrapperElement);
+    addCourseCardsToDOM(categoryCourses, coursesWrapperElement);
   })
   .catch((error) => console.error('Error Getting Courses', error));
 
@@ -78,7 +78,7 @@ const displayCourses = (filterType) => {
   } else if (filterType === 'popular') {
     filteredCourses = sortArray(filteredCourses, 'students', true);
   }
-  addCoursesToDOM(filteredCourses, coursesWrapperElement);
+  addCourseCardsToDOM(filteredCourses, coursesWrapperElement);
 };
 
 const removeSortButtonsClasses = () => {
@@ -130,7 +130,7 @@ const searchCourse = () => {
     searchedCourses = [];
   }
   searchedCourses = searchCourseInputValue ? searchedCourses : categoryCourses;
-  addCoursesToDOM(searchedCourses, coursesWrapperElement);
+  addCourseCardsToDOM(searchedCourses, coursesWrapperElement);
 };
 
 courseFilterButtons.forEach((btn) => {

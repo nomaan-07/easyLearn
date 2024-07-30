@@ -3,7 +3,7 @@ import './change-theme.js';
 import { blogsWrapperElement, blogsSortButtons, searchBlogInput } from './dom-elements.js';
 import { getAllFromDatabase } from './database-api.js';
 import { removeLoader, sortArray } from './utils.js';
-import { addBlogsToDom } from './dom-handlers.js';
+import { addBlogCardsToDOM } from './dom-handlers.js';
 import { activeFilterBtn, removeFilterButtonsClasses } from './ui-handlers.js';
 
 let allBlogs = [];
@@ -14,7 +14,7 @@ async function fetchAndDisplayBlogs() {
   try {
     const blogs = await getAllFromDatabase('blogs');
     allBlogs = sortArray(blogs, 'create', true);
-    addBlogsToDom(allBlogs, blogsWrapperElement);
+    addBlogCardsToDOM(allBlogs, blogsWrapperElement);
   } catch (error) {
     console.error('Failed to fetch blogs', error);
   }
@@ -43,7 +43,7 @@ const displaySortedBLogs = (type) => {
       sortedBLogs = sortArray(sortedBLogs, 'reading_time', true);
       break;
   }
-  addBlogsToDom(sortedBLogs, blogsWrapperElement);
+  addBlogCardsToDOM(sortedBLogs, blogsWrapperElement);
 };
 
 const sortBlogs = (btn) => {
@@ -63,7 +63,7 @@ const searchBlog = (event) => {
     return blog.title.match(regex);
   });
   searchedBlogs = sortArray(searchedBlogs, 'create', true);
-  addBlogsToDom(searchedBlogs, blogsWrapperElement);
+  addBlogCardsToDOM(searchedBlogs, blogsWrapperElement);
 };
 
 blogsSortButtons.forEach((btn) => {

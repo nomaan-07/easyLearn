@@ -55,7 +55,7 @@ const courseObject = (dbCourse) => {
   return course;
 };
 
-const addCourseDetailToDOM = (dbCourse) => {
+const addCourseToDOM = (dbCourse) => {
   course = courseObject(dbCourse);
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
@@ -103,7 +103,7 @@ const addCourseDetailToDOM = (dbCourse) => {
 
 getOneFromDatabase('courses', 'slug', courseSearchParam)
   .then((course) => {
-    course ? addCourseDetailToDOM(course) : location.replace('./404.html');
+    course ? addCourseToDOM(course) : location.replace('./404.html');
   })
   .catch((error) => console.error(error));
 

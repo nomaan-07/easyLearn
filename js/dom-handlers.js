@@ -7,7 +7,7 @@ window.addCourseToCart = (id) => {
 };
 
 // index.html - course-category.html
-const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
+const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
   let newCourse = null;
   let finalPrice = null;
@@ -34,7 +34,7 @@ const addCoursesToDOM = (courses, coursesWrapper, isSwiper = false) => {
 };
 
 //index.html
-const addBlogsToDom = (blogs, blogsWrapper) => {
+const addBlogCardsToDOM = (blogs, blogsWrapper) => {
   let newBlog = null;
   let blogsHtml = '';
   blogs.forEach((blog) => {
@@ -54,4 +54,4 @@ const addBlogsToDom = (blogs, blogsWrapper) => {
   insertToDom(blogsWrapper, blogsHtml);
 };
 
-export { addCoursesToDOM, addBlogsToDom, toggleTextarea };
+export { addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea };
