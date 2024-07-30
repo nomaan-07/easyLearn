@@ -286,7 +286,7 @@ const headlineTemplate = (headline, sessions, number) => {
   const template = `
               <div class="w-full overflow-hidden rounded-2xl">
                   <!-- Headline header -->
-                  <div class="headline__title bg-slate-100 dark:bg-slate-700 md:hover:theme-text-color">
+                  <div class="headline__title">
                     <span class="font-VazirBold text-lg line-clamp-2">${headline.title}</span>
                     <div class="flex items-center justify-end gap-2">
                       <span>${number} جلسه</span>
