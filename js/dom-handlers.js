@@ -18,7 +18,7 @@ const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
       id: course.id,
       name: course.name,
       caption: course.caption,
-      src: course.src,
+      src: course.image_src,
       teacher: course.teacher,
       students: course.students.toLocaleString('fa-IR'),
       rate: course.rate,
