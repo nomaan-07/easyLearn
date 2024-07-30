@@ -2,8 +2,8 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, CourseCommentSectionHandler } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement } from './dom-elements.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom } from './dom-handlers.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper } from './dom-elements.js';
 
 // index.js
 async function fetchAndDisplayMainPageCourses() {
@@ -28,7 +28,7 @@ async function fetchAndDisplayMainPageBlogs() {
   }
 }
 
-// comments section
+// course.js - blog.js
 async function fetchAndDisplayComments(commentsWrapper, pageID) {
   try {
     const comments = await getAllFromDatabase('comments');
@@ -50,7 +50,7 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
   }
 }
 
-// course.js
+// comments section - course.js - blog.js
 const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName) => {
   const message = newCommentTextarea.value.trim();
   let newComment = {
@@ -75,7 +75,7 @@ const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageNam
   }
 };
 
-// course.js
+// comments section - course.js - blog.js
 const submitCommentReply = (textarea, wrapper, commentID) => {
   const message = textarea.value.trim();
   let dbReplies = null;
@@ -106,4 +106,15 @@ const submitCommentReply = (textarea, wrapper, commentID) => {
   });
 };
 
-export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments };
+// blog.js
+async function fetchAndDisplayRecantBlogs() {
+  try {
+    const allBlogs = await getAllFromDatabase('blogs');
+    const lastFourBlog = sortArray(allBlogs, 'create', true).slice(0, 4);
+    addRecentBlogsToDom(lastFourBlog, recentBlogsWrapper);
+  } catch (error) {
+    console.error('Failed to fetch recent blogs', error);
+  }
+}
+
+export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs };

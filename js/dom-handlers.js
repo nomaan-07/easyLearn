@@ -1,6 +1,7 @@
-import { courseCardTemplate, blogCardTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent } from './utils.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate } from './template.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
+import { submitCommentReply } from './database-handlers.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -17,7 +18,7 @@ const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
   let newCourse = null;
   let finalPrice = null;
-  let coursesHtml = '';
+  let coursesTemplate = '';
   courses.forEach((course) => {
     finalPrice = course.discount !== 100 ? applyDiscountToPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان!';
     newCourse = {
@@ -34,15 +35,15 @@ const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
       slug: course.slug,
       courseWrapperClass,
     };
-    coursesHtml += courseCardTemplate(newCourse);
+    coursesTemplate += courseCardTemplate(newCourse);
   });
-  insertToDOM(coursesWrapper, coursesHtml);
+  insertToDOM(coursesWrapper, coursesTemplate);
 };
 
 //index.html
 const addBlogCardsToDOM = (blogs, blogsWrapper) => {
   let newBlog = null;
-  let blogsHtml = '';
+  let blogsTemplate = '';
   blogs.forEach((blog) => {
     newBlog = {
       title: blog.title,
@@ -55,9 +56,61 @@ const addBlogCardsToDOM = (blogs, blogsWrapper) => {
       subject: blog.subject,
       slug: blog.slug,
     };
-    blogsHtml += blogCardTemplate(newBlog);
+    blogsTemplate += blogCardTemplate(newBlog);
   });
-  insertToDOM(blogsWrapper, blogsHtml);
+  insertToDOM(blogsWrapper, blogsTemplate);
 };
 
-export { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea };
+// blog.js
+const addRecentBlogsToDom = (blogs, blogsWrapper) => {
+  let blogsTemplate = '';
+  let newBlog = null;
+  blogs.forEach((blog) => {
+    newBlog = {
+      title: blog.title,
+      date: formatDate(blog.created_at),
+      slug: blog.slug,
+      writer: blog.writer,
+    };
+    blogsTemplate += recentBlogTemplate(newBlog);
+  });
+  insertToDOM(blogsWrapper, blogsTemplate);
+};
+
+// comments section - course.js - blog.js
+const handleReplyAndLike = (event) => {
+  let commentID = null;
+  let wrapper = null;
+  let textarea = null;
+
+  // open reply
+  if (event.target.matches('.open-reply-btn') || event.target.closest('.open-reply-btn')) {
+    commentID = getParentID(event.target, 'comment');
+    wrapper = getReplyCommentWrapper(commentID);
+    textarea = getReplyCommentTextarea(commentID);
+    toggleTextarea(wrapper, textarea, true);
+  }
+  // Cancel Reply
+  if (event.target.matches('.reply-comment-cancel-btn') || event.target.closest('.reply-comment-cancel-btn')) {
+    commentID = getParentID(event.target, 'comment');
+    wrapper = getReplyCommentWrapper(commentID);
+    textarea = getReplyCommentTextarea(commentID);
+    toggleTextarea(wrapper, textarea, false);
+  }
+  // submit reply
+  if (event.target.matches('.reply-comment-submit-btn') || event.target.closest('.reply-comment-submit-btn')) {
+    commentID = getParentID(event.target, 'comment');
+    wrapper = getReplyCommentWrapper(commentID);
+    textarea = getReplyCommentTextarea(commentID);
+    submitCommentReply(textarea, wrapper, commentID);
+  }
+  // FIXME: like handle
+  if (event.target.matches('.like-btn') || event.target.closest('.like-btn')) {
+    commentID = getParentID(event.target, 'comment');
+    wrapper = getReplyCommentWrapper(commentID);
+    textarea = getReplyCommentTextarea(commentID);
+    console.log(commentID);
+  }
+};
+
+export { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleReplyAndLike };

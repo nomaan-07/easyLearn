@@ -1,13 +1,17 @@
 import './header.js';
 import './change-theme.js';
-import { breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper } from './dom-elements.js';
+import { breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper, commentsWrapper, addNewCommentBtn, newCommentWrapper, newCommentTextarea, newCommentSubmitBtn, newCommentCloseBtn } from './dom-elements.js';
 import { removeLoader, getQueryParameters, breadCrumbLinksHandler, categoryInPersian, formatDate } from './utils.js';
 import { getOneFromDatabase } from './database-api.js';
 import { blogTemplate } from './template.js';
-import { insertToDOM } from './dom-handlers.js';
+import { insertToDOM, handleReplyAndLike } from './dom-handlers.js';
+import { fetchAndDisplayRecantBlogs, fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
+import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 
 let blog = null;
 let blogParam = getQueryParameters('blog');
+
+fetchAndDisplayRecantBlogs();
 
 async function fetchAndDisplayBlog() {
   try {
@@ -43,6 +47,14 @@ const addBlogToDom = (dbBlog) => {
   breadCrumbLinksHandler(breadcrumbBlogCategory, breadcrumbBlogName, blog.title, blog.slug, blog.category, blog.categoryName, 'blog');
   // blog
   insertToDOM(blogWrapper, blogTemplate(blog));
+  // comments
+  fetchAndDisplayComments(commentsWrapper, blog.id);
 };
 
 window.addEventListener('load', removeLoader);
+
+addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
+newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, blog.id, blog.title));
+newCommentTextarea.addEventListener('input', textareaAutoResize);
+commentsWrapper.addEventListener('click', handleReplyAndLike);

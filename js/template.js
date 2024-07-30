@@ -489,4 +489,31 @@ const blogTemplate = (blog) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate };
+// dom-handlers.js
+const recentBlogTemplate = (blog) => {
+  const template = `
+      <div class="p-4 bg-slate-100 dark:bg-slate-700 rounded-2xl mt-5">
+        <a class="md:hover:theme-text-color transition-colors" href="./blog.html?blog=${blog.slug}">${blog.title}</a>
+        <!-- Writer and Date -->
+        <div class="flex items-center justify-end gap-4 font-VazirBold text-xs mt-4">
+          <!-- Writer -->
+          <div class="flex items-center gap-1">
+            <svg class="size-4 theme-text-color">
+              <use href="#pencil-square"></use>
+            </svg>
+            <span>${blog.writer}</span>
+          </div>
+          <!-- Date -->
+          <div href="./blogs" class="flex items-center gap-1 font-VazirBold text-xs">
+            <svg class="size-4 theme-text-color">
+              <use href="#calendar-days"></use>
+            </svg>
+            <span>${blog.date}</span>
+          </div>
+        </div>
+        <!-- End of Writer and Date -->
+      </div>`;
+  return template;
+};
+
+export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate };

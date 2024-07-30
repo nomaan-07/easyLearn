@@ -19,10 +19,10 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitCommentReply, submitNewComment } from './database-handlers.js';
-import { insertToDOM } from './dom-handlers.js';
+import { insertToDOM, handleReplyAndLike } from './dom-handlers.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');
@@ -151,46 +151,12 @@ const toggleHeadLine = (event) => {
 //   likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)));
 // };
 
-const handleReplyAndLike = (event) => {
-  let commentID = null;
-  let wrapper = null;
-  let textarea = null;
-
-  // open reply
-  if (event.target.matches('.open-reply-btn') || event.target.closest('.open-reply-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
-    toggleTextarea(wrapper, textarea, true);
-  }
-  // Cancel Reply
-  if (event.target.matches('.reply-comment-cancel-btn') || event.target.closest('.reply-comment-cancel-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
-    toggleTextarea(wrapper, textarea, false);
-  }
-  // submit reply
-  if (event.target.matches('.reply-comment-submit-btn') || event.target.closest('.reply-comment-submit-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
-    submitCommentReply(textarea, wrapper, commentID);
-  }
-  // like handle
-  if (event.target.matches('.like-btn') || event.target.closest('.like-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
-    console.log(commentID);
-  }
-};
-
 showAllDescriptionBtn.addEventListener('click', toggleDescription);
+headlinesWrapper.addEventListener('click', toggleHeadLine);
+window.addEventListener('load', removeLoader);
+
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-headlinesWrapper.addEventListener('click', toggleHeadLine);
 commentsWrapper.addEventListener('click', handleReplyAndLike);
-window.addEventListener('load', removeLoader);

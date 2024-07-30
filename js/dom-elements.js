@@ -47,14 +47,8 @@ const courseInfoWrapper = document.querySelector('#course-info');
 const courseDataWrapper = document.querySelector('#course-data-wrapper');
 const courseDescriptionElem = document.querySelector('.course-description');
 const headlinesWrapper = document.querySelector('#headlines-wrapper');
-const descriptionShadow = document.querySelector('.course-description-shadow ');
-const commentsWrapper = document.querySelector('.comments-wrapper');
+const descriptionShadow = document.querySelector('.course-description-shadow');
 const showAllDescriptionBtn = document.querySelector('#course-show-all-description-btn');
-const addNewCommentBtn = document.querySelector('.new-comment-btn');
-const newCommentWrapper = document.querySelector('.new-comment-wrapper');
-const newCommentTextarea = document.querySelector('#new-comment-textarea');
-const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
-const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
 // Elements of blogs.js
 const blogsWrapperElement = document.querySelector('.blogs-wrapper');
@@ -65,6 +59,15 @@ const searchBlogInput = document.querySelector('#search-blog-input');
 const breadcrumbBlogCategory = document.querySelector('.breadcrumb__blog-category');
 const breadcrumbBlogName = document.querySelector('.breadcrumb__blog-name');
 const blogWrapper = document.querySelector('.blog__wrapper');
+const recentBlogsWrapper = document.querySelector('.recent-blogs-wrapper');
+
+// comments section - course.js - blog.js
+const commentsWrapper = document.querySelector('.comments-wrapper');
+const addNewCommentBtn = document.querySelector('.new-comment-btn');
+const newCommentWrapper = document.querySelector('.new-comment-wrapper');
+const newCommentTextarea = document.querySelector('#new-comment-textarea');
+const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
+const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
 export {
   latestCoursesWrapperElement,
@@ -121,4 +124,5 @@ export {
   breadcrumbBlogCategory,
   breadcrumbBlogName,
   blogWrapper,
+  recentBlogsWrapper,
 };
