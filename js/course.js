@@ -21,13 +21,22 @@ import {
 
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, insertToDom, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, sortArray } from './utils.js';
 import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
-import { submitCommentReply, submitNewComment } from './database-handlers.js';
+import { fetchAndDisplayComments, submitCommentReply, submitNewComment } from './database-handlers.js';
 
 let course = null;
-let courseSearchParam = getQueryParameters('course');
+let courseParam = getQueryParameters('course');
 
-if (!courseSearchParam) {
+if (!courseParam) {
   location.replace('404.html');
+}
+
+async function fetchAndDisplayCourse() {
+  try {
+    const course = await getOneFromDatabase('courses', 'slug', courseParam);
+    course ? addCourseToDOM(course) : location.replace('./404.html');
+  } catch (error) {
+    console.error('Failed to fetch searched course', error);
+  }
 }
 
 const courseObject = (dbCourse) => {
@@ -83,29 +92,10 @@ const addCourseToDOM = (dbCourse) => {
   }
 
   // comments section
-  getAllFromDatabase('comments').then((comments) => {
-    let commentsElements = '';
-    let FilteredComments = comments.filter((comment) => {
-      return comment.page_id === course.id && comment.confirmed;
-    });
-    if (FilteredComments.length) {
-      // FIXME: sort array
-      FilteredComments = sortArray(FilteredComments, 'create', true);
-      FilteredComments.forEach((comment) => {
-        commentsElements += CourseCommentSectionHandler(comment);
-      });
-      insertToDom(commentsWrapper, commentsElements);
-    } else {
-      commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
-    }
-  });
+  fetchAndDisplayComments(commentsWrapper, course.id);
 };
 
-getOneFromDatabase('courses', 'slug', courseSearchParam)
-  .then((course) => {
-    course ? addCourseToDOM(course) : location.replace('./404.html');
-  })
-  .catch((error) => console.error(error));
+fetchAndDisplayCourse();
 
 const toggleDescription = () => {
   const descriptionToggleClasses = ['max-h-48', 'sm:max-h-80', 'md:max-h-96', 'max-h-full'];

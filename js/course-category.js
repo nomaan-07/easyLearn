@@ -3,8 +3,8 @@ import { addCourseCardsToDOM } from './dom-handlers.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './dom-elements.js';
-import { removeLoader, getQueryParameters, applyDiscountToPrice, categoryInPersian, sortArray } from './utils.js';
-import { activeFilterBtn, removeFilterButtonsClasses } from './ui-handlers.js';
+import { removeLoader, getQueryParameters, categoryInPersian, sortArray } from './utils.js';
+import { activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn } from './ui-handlers.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');
@@ -30,6 +30,32 @@ if (categoryParam && categoryInPersian(categoryParam)) {
   location.replace('404.html');
 }
 
+// Add Course to DOM
+async function fetchAndDisplayCategoryCoursesToDOM() {
+  try {
+    const allCourses = await getAllFromDatabase('courses');
+    if (categoryParam === 'all-courses') {
+      categoryCourses = sortArray(allCourses, 'create', true);
+    } else if (categoryParam === 'popular-courses') {
+      categoryCourses = sortArray(allCourses, 'students', true);
+      removeSortButtonsClasses();
+      activeSortBtn(courseSortButtons[2]);
+    } else if (searchParam) {
+      categoryCourses = overallSearchHandler(allCourses);
+    } else {
+      categoryCourses = allCourses.filter((course) => {
+        return course.category.includes(categoryParam);
+      });
+    }
+    filteredCourses = categoryCourses;
+    addCourseCardsToDOM(categoryCourses, coursesWrapperElement);
+  } catch (error) {
+    console.error('Failed to fetch courses', error);
+  }
+}
+
+fetchAndDisplayCategoryCoursesToDOM();
+
 // overall Search handler
 const overallSearchHandler = (allCourses) => {
   let regex = new RegExp(`${searchParam}`, 'gi');
@@ -40,30 +66,15 @@ const overallSearchHandler = (allCourses) => {
   return Array.from(new Set(result));
 };
 
-// Add Course to DOM
-getAllFromDatabase('courses')
-  .then((allCourses) => {
-    if (categoryParam === 'all-courses') {
-      categoryCourses = sortArray(allCourses, 'create', true);
-    } else if (categoryParam === 'popular-courses') {
-      categoryCourses = sortArray(allCourses, 'students', true);
-      removeSortButtonsClasses();
-      ActiveSortBtn(courseSortButtons[2]);
-    } else if (searchParam) {
-      categoryCourses = overallSearchHandler(allCourses);
-    } else {
-      categoryCourses = allCourses.filter((course) => {
-        return course.category.includes(categoryParam);
-      });
-    }
-    filteredCourses = categoryCourses;
-    addCourseCardsToDOM(categoryCourses, coursesWrapperElement);
-  })
-  .catch((error) => console.error('Error Getting Courses', error));
-
 // Filter and Sort Courses and Add Them To DOM
 const displayCourses = (filterType) => {
-  let courses = searchedCourses.length > 0 ? searchedCourses : categoryCourses;
+  let courses = null;
+  if (searchedCourses.length > 0) {
+    courses = searchedCourses;
+  } else {
+    courses = categoryCourses;
+    searchCourseInput.value = '';
+  }
 
   if (filterType === 'all') {
     filteredCourses = courses;
@@ -81,24 +92,12 @@ const displayCourses = (filterType) => {
   addCourseCardsToDOM(filteredCourses, coursesWrapperElement);
 };
 
-const removeSortButtonsClasses = () => {
-  courseSortButtons.forEach((btn) => {
-    btn.classList.remove('theme-bg-color-10');
-    btn.classList.remove('theme-text-color');
-  });
-};
-
-function ActiveSortBtn(btn) {
-  btn.classList.add('theme-bg-color-10');
-  btn.classList.add('theme-text-color');
-}
-
 const filterCourses = (btn) => {
   const filterType = btn.dataset.filter;
 
   window.scrollY > 64 && window.scrollTo(0, 64);
 
-  removeSortButtonsClasses();
+  removeSortButtonsClasses(courseSortButtons);
   removeFilterButtonsClasses(courseFilterButtons);
 
   activeFilterBtn(btn);
@@ -107,15 +106,15 @@ const filterCourses = (btn) => {
 
 const sortCourses = (btn) => {
   const sortType = btn.dataset.sort;
-  removeSortButtonsClasses();
+  removeSortButtonsClasses(courseSortButtons);
 
-  ActiveSortBtn(btn);
+  activeSortBtn(btn);
 
   displayCourses(sortType);
 };
 
 const searchCourse = () => {
-  removeSortButtonsClasses();
+  removeSortButtonsClasses(courseSortButtons);
   removeFilterButtonsClasses(courseFilterButtons);
   activeFilterBtn(courseFilterButtons[0]);
   let searchCourseInputValue = searchCourseInput.value.trim();

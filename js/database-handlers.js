@@ -1,7 +1,54 @@
-import { getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
+import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { generateRandomID } from './utils.js';
+import { generateRandomID, sortArray, CourseCommentSectionHandler, insertToDom } from './utils.js';
+import { addCourseCardsToDOM, addBlogCardsToDOM } from './dom-handlers.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement } from './dom-elements.js';
+
+// index.js
+async function fetchAndDisplayMainPageCourses() {
+  try {
+    const allCourses = await getAllFromDatabase('courses');
+    const lastTenCourse = sortArray(allCourses, 'create', true).slice(0, 10);
+    const twelveMostPopularCourse = sortArray(allCourses, 'students', true).slice(0, 12);
+    addCourseCardsToDOM(lastTenCourse, latestCoursesWrapperElement);
+    addCourseCardsToDOM(twelveMostPopularCourse, popularCoursesWrapperElement, true);
+  } catch (error) {
+    console.error('Failed to Fetch courses', error);
+  }
+}
+// index.js
+async function fetchAndDisplayMainPageBlogs() {
+  try {
+    const allBlogs = await getAllFromDatabase('blogs');
+    const lastFiveBlog = sortArray(allBlogs, 'create', true).slice(0, 5);
+    addBlogCardsToDOM(lastFiveBlog, lastBlogsWrapperElement);
+  } catch (error) {
+    console.error('Failed to fetch blogs', error);
+  }
+}
+
+// comments section
+async function fetchAndDisplayComments(commentsWrapper, pageID) {
+  try {
+    const comments = await getAllFromDatabase('comments');
+    let commentsElements = '';
+    let FilteredComments = comments.filter((comment) => {
+      return comment.page_id === pageID && comment.confirmed;
+    });
+    if (FilteredComments.length) {
+      FilteredComments = sortArray(FilteredComments, 'create', true);
+      FilteredComments.forEach((comment) => {
+        commentsElements += CourseCommentSectionHandler(comment);
+      });
+      insertToDom(commentsWrapper, commentsElements);
+    } else {
+      commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
+    }
+  } catch (error) {
+    console.error('Failed to fetch comments');
+  }
+}
 
 // course.js
 const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName) => {
@@ -59,4 +106,4 @@ const submitCommentReply = (textarea, wrapper, commentID) => {
   });
 };
 
-export { submitCommentReply, submitNewComment };
+export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments };

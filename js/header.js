@@ -91,15 +91,18 @@ searchBarSearchBtn.addEventListener('click', () => {
   let inputValue = searchBarInput.value.trim();
   overallSearchHandler(inputValue);
 });
+
 mobileSearchBtn.addEventListener('click', () => {
   let inputValue = mobileSearchInput.value.trim();
   overallSearchHandler(inputValue);
 });
+
 searchBarInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     overallSearchHandler(event.target.value.trim());
   }
 });
+
 mobileSearchInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     overallSearchHandler(event.target.value.trim());

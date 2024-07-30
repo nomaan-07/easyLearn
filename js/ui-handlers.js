@@ -64,4 +64,18 @@ const removeFilterButtonsClasses = (buttons) => {
   });
 };
 
-export { toggleLike, textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses };
+// course-category.js
+const removeSortButtonsClasses = (buttons) => {
+  buttons.forEach((btn) => {
+    btn.classList.remove('theme-bg-color-10');
+    btn.classList.remove('theme-text-color');
+  });
+};
+
+// course-category.js
+const activeSortBtn = (btn) => {
+  btn.classList.add('theme-bg-color-10');
+  btn.classList.add('theme-text-color');
+};
+
+export { toggleLike, textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn };
