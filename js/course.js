@@ -40,34 +40,31 @@ async function fetchAndDisplayCourse() {
   }
 }
 
-const courseObject = (dbCourse) => {
-  const course = {
-    finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
-    id: dbCourse.id,
-    name: dbCourse.name,
-    caption: dbCourse.caption,
-    image_src: dbCourse.image_src,
-    teacher: dbCourse.teacher,
-    students: dbCourse.students.toLocaleString('fa-IR'),
-    ratePercent: Math.floor((dbCourse.rate * 100) / 5),
-    discountPercent: dbCourse.discount,
-    price: dbCourse.price.toLocaleString('fa-IR'),
-    description: dbCourse.description,
-    category: dbCourse.category[0],
-    categoryName: categoryInPersian(dbCourse.category[0]),
-    slug: dbCourse.slug,
-    headlines: dbCourse.headlines,
-    sessionsCount: dbCourse.sessions_count,
-    videosLength: dbCourse.videos_length,
-    situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
-    // FIXME: updated_at instead of created_at
-    date: formatDate(dbCourse.created_at),
-  };
-  return course;
-};
+const createCourseObject = (dbCourse) => ({
+  finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
+  id: dbCourse.id,
+  name: dbCourse.name,
+  caption: dbCourse.caption,
+  image_src: dbCourse.image_src,
+  teacher: dbCourse.teacher,
+  students: dbCourse.students.toLocaleString('fa-IR'),
+  ratePercent: Math.floor((dbCourse.rate * 100) / 5),
+  discountPercent: dbCourse.discount,
+  price: dbCourse.price.toLocaleString('fa-IR'),
+  description: dbCourse.description,
+  category: dbCourse.category[0],
+  categoryName: categoryInPersian(dbCourse.category[0]),
+  slug: dbCourse.slug,
+  headlines: dbCourse.headlines,
+  sessionsCount: dbCourse.sessions_count,
+  videosLength: dbCourse.videos_length,
+  situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
+  // FIXME: updated_at instead of created_at
+  date: formatDate(dbCourse.created_at),
+});
 
 const addCourseToDOM = (dbCourse) => {
-  course = courseObject(dbCourse);
+  course = createCourseObject(dbCourse);
   document.title = `${course.name} | ایزی‌لرن`;
   // breadcrumb
   breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, course.categoryName, 'course');
