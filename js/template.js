@@ -466,7 +466,7 @@ const blogTemplate = (blog) => {
             </div>
             <!-- End of Banner -->
             <!--  Blog Content -->
-            <article class="blog__content border-y border-y-slate-200 dark:border-y-slate-600 py-5 text-sm/7 md:text-lg/8 xl:text-xl/9 mt-5 font-VazirLight">${blog.content}</article>
+            <article class="blog__content">${blog.content}</article>
             <!-- End of Blog Content -->
             <!-- Like and Copy Link -->
             <div class="flex flex-col xs:flex-row xs:items-center justify-between gap-1">
