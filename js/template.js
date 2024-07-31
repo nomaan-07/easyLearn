@@ -1,5 +1,6 @@
 // shared.js - index.js
 import { formatDate } from './utils.js';
+
 const courseCardTemplate = (course) => {
   let finalPriceTemplate = null;
   if (course.discountPercent === 100) {
