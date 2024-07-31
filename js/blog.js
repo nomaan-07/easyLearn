@@ -44,6 +44,7 @@ const createBlogObject = (dbBlog) => ({
 
 const addBlogToDom = (dbBlog) => {
   blog = createBlogObject(dbBlog);
+  document.title = `${blog.title} | ایزی‌لرن`;
   // breadcrumb
   breadCrumbLinksHandler(breadcrumbBlogCategory, breadcrumbBlogName, blog.title, blog.slug, blog.category, blog.categoryName, 'blog');
   // blog
