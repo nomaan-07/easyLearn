@@ -7,6 +7,7 @@ import { blogTemplate } from './template.js';
 import { insertToDOM, handleReplyAndLike } from './dom-handlers.js';
 import { fetchAndDisplayRecantBlogs, fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
+import { sweetAlert } from './sweet-alert-initialize.js';
 
 let blog = null;
 let blogParam = getQueryParameters('blog');
@@ -53,19 +54,17 @@ const addBlogToDom = (dbBlog) => {
 
 async function copyBlogLinkToClipboard(event) {
   try {
-    let blogLink = null;
-    let element = event.target.matches('.blog__copy-link-btn') ? event.target : event.target.closest('.blog__copy-link-btn');
-    if (element) {
-      // check if clicked on the use element of svg
-      if (element.matches('use')) {
-        blogLink = element.parentElement.nextElementSibling.value;
-      } else {
-        blogLink = element.nextElementSibling.value;
-      }
+    const element = event.target.closest('.blog__copy-link-btn');
+    if (!element) return;
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      sweetAlert('لینک کپی نشد، لطفا بعدا تلاش کنید.', 'failed');
+      throw new Error('Clipboard API not supported');
     }
-    await navigator.clipboard.writeText(blogLink);
+    await navigator.clipboard.writeText(element.dataset.link);
+    sweetAlert('لینک با موفقیت کپی شد.', 'success');
   } catch (error) {
     console.error('Failed to copy link', error);
+    sweetAlert('لینک کپی نشد، لطفا بعدا تلاش کنید.', 'failed');
   }
 }
 

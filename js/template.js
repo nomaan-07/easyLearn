@@ -478,8 +478,8 @@ const blogTemplate = (blog) => {
                 <span>${blog.likes}</span>
               </div>
               <!-- BLog link -->
-              <div class="flex items-center gap-1 self-end xs:self-auto bg-slate-300 text-slate-900 py-1 px-2 rounded-xl md:cursor-pointer group">
-                <svg class="blog__copy-link-btn size-6 md:cursor-pointer md:group-hover:theme-text-color transition-colors">
+              <div class="blog__copy-link-btn flex items-center gap-1 self-end xs:self-auto bg-slate-300 text-slate-900 py-1 px-2 rounded-xl md:cursor-pointer group" data-link="${location.origin}/blogs.html?blog=${blog.slug}">
+                <svg class="size-6 md:cursor-pointer md:group-hover:theme-text-color transition-colors">
                   <use href="#clipboard-document"></use>
                 </svg>
                 <input class="w-32 text-xs sm:text-sm font-VazirLight outline-none bg-transparent cursor-pointer" dir="ltr" value="${location.origin}/blogs.html?blog=${blog.slug}" type="text" readonly />
