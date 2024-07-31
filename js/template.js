@@ -448,7 +448,7 @@ const blogTemplate = (blog) => {
                 <svg class="size-5 theme-text-color">
                   <use href="#timer"></use>
                 </svg>
-                <span>${blog.readingTime} دقیقه</span>
+                <span>زمان مطالعه: ${blog.readingTime} دقیقه</span>
               </div>
               <!-- Date -->
               <div class="flex items-center gap-2">
