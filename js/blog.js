@@ -1,6 +1,6 @@
 import './header.js';
 import './change-theme.js';
-import { breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper, commentsWrapper, addNewCommentBtn, newCommentWrapper, newCommentTextarea, newCommentSubmitBtn, newCommentCloseBtn } from './dom-elements.js';
+import { localStorageUserID, breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper, commentsWrapper, addNewCommentBtn, newCommentWrapper, newCommentTextarea, newCommentSubmitBtn, newCommentCloseBtn } from './dom-elements.js';
 import { removeLoader, getQueryParameters, breadCrumbLinksHandler, categoryInPersian, formatDate } from './utils.js';
 import { getOneFromDatabase } from './database-api.js';
 import { blogTemplate } from './template.js';
@@ -11,6 +11,20 @@ import { sweetAlert } from './sweet-alert-initialize.js';
 
 let blog = null;
 let blogParam = getQueryParameters('blog');
+let user = null;
+
+async function fetchUser() {
+  try {
+    if (localStorageUserID) {
+      const dbUser = await getOneFromDatabase('users', 'id', localStorageUserID);
+      user = dbUser;
+    }
+  } catch (error) {
+    console.error('Failed to fetch user', error);
+  }
+}
+
+fetchUser();
 
 fetchAndDisplayRecantBlogs();
 
@@ -74,6 +88,6 @@ window.addEventListener('load', removeLoader);
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
-newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, blog.id, blog.title));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, blog.id, blog.title, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-commentsWrapper.addEventListener('click', handleReplyAndLike);
+commentsWrapper.addEventListener('click', (event) => handleReplyAndLike(event, user));

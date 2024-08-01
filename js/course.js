@@ -3,6 +3,7 @@ import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate } from './template.js';
 import {
+  localStorageUserID,
   courseInfoWrapper,
   courseDataWrapper,
   courseDescriptionElem,
@@ -26,6 +27,20 @@ import { insertToDOM, handleReplyAndLike } from './dom-handlers.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');
+let user = null;
+
+async function fetchUser() {
+  try {
+    if (localStorageUserID) {
+      const dbUser = await getOneFromDatabase('users', 'id', localStorageUserID);
+      user = dbUser;
+    }
+  } catch (error) {
+    console.error('Failed to fetch user', error);
+  }
+}
+
+fetchUser();
 
 if (!courseParam) {
   location.replace('404.html');
@@ -154,6 +169,6 @@ window.addEventListener('load', removeLoader);
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
-newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-commentsWrapper.addEventListener('click', handleReplyAndLike);
+commentsWrapper.addEventListener('click', (event) => handleReplyAndLike(event, user));

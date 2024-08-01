@@ -51,18 +51,15 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
 }
 
 // comments section - course.js - blog.js
-const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName) => {
+const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName, user) => {
   const message = newCommentTextarea.value.trim();
   let newComment = {
     id: generateRandomID(),
     message,
     page_id: pageID,
     page_name: pageName,
-    // FIXME
-    writer: 'نعمان ریگی',
-    // FIXME
-    image_src:
-      'https://vqvbwalqiwdeyzuiltqm.supabase.co/storage/v1/object/sign/avatars/my-avatar.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL215LWF2YXRhci5wbmciLCJpYXQiOjE3MjIxMTc0MzksImV4cCI6MTc1MzY1MzQzOX0.S0ITdZzEtumNjKJwpEZOrddHWluxZt2qv5-_kQMfE90&t=2024-07-27T21%3A57%3A18.946Z',
+    writer: user.username,
+    image_src: user.image_src,
   };
 
   if (message) {
@@ -76,7 +73,7 @@ const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageNam
 };
 
 // comments section - course.js - blog.js
-const submitCommentReply = (textarea, wrapper, commentID) => {
+const submitCommentReply = (textarea, wrapper, commentID, user) => {
   const message = textarea.value.trim();
   let dbReplies = null;
   let newReply = null;
@@ -86,11 +83,8 @@ const submitCommentReply = (textarea, wrapper, commentID) => {
       created_at: new Date(),
       message,
       confirmed: false,
-      // FIXME
-      writer: 'نعمان ریگی',
-      // FIXME
-      image_src:
-        'https://vqvbwalqiwdeyzuiltqm.supabase.co/storage/v1/object/sign/avatars/my-avatar.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL215LWF2YXRhci5wbmciLCJpYXQiOjE3MjIxMTc0MzksImV4cCI6MTc1MzY1MzQzOX0.S0ITdZzEtumNjKJwpEZOrddHWluxZt2qv5-_kQMfE90&t=2024-07-27T21%3A57%3A18.946Z',
+      writer: user.username,
+      image_src: user.image_src,
     };
     dbReplies = comment.replies ? comment.replies : [];
     dbReplies.push(newReply);

@@ -7,7 +7,9 @@ const emptyValueValidation = (value) => {
 
 const usernameValidation = (username) => {
   const regex = /[A-Za-z0-9_]+/;
-  return regex.test(username);
+  if (!regex.test(username)) return 'char';
+  if (username.length > 12 || username.length < 4) return 'length';
+  return true;
 };
 
 const emailValidation = (email) => {
@@ -25,8 +27,8 @@ const signupFormValidation = (username, email, password, allUsers) => {
   const isUsernameEmpty = !emptyValueValidation(username);
   const isEmailEmpty = !emptyValueValidation(email);
   const isPasswordEmpty = !emptyValueValidation(password);
-  let allUsernames = allUsers.filter((user) => user.username === username);
-  let allEmails = allUsers.filter((user) => user.email === email);
+  let allUsernames = allUsers.find((user) => user.username === username);
+  let allEmails = allUsers.find((user) => user.email === email);
 
   if (isUsernameEmpty && isEmailEmpty && isPasswordEmpty) {
     sweetAlert('لطفا نام کاربری،‌ ایمیل و رمز عبور را وارد کنید.', 'failed');
@@ -42,15 +44,17 @@ const signupFormValidation = (username, email, password, allUsers) => {
     sweetAlert('لطفا ایمیل را وارد کنید.', 'failed');
   } else if (isPasswordEmpty) {
     sweetAlert('لطفا رمز عبور را وارد کنید.', 'failed');
-  } else if (!usernameValidation(username)) {
+  } else if (usernameValidation(username) === 'char') {
     sweetAlert('در نام کاربری فقط استفاده از حروف انگلیسی، اعداد و _(آندرلاین) مجاز است.', 'failed');
+  } else if (usernameValidation(username) === 'length') {
+    sweetAlert('نام کاربری باید بین ۴ تا ۱۲ کاراکتر باشد.', 'failed');
   } else if (!emailValidation(email)) {
     sweetAlert('لطفا ایمیل را به درستی وارد کنید.', 'failed');
   } else if (!passwordValidation(password)) {
     sweetAlert('رمز عبور باید حداقل ۸ کاراکتر باشد.', 'failed');
-  } else if (allUsernames.length) {
+  } else if (allUsernames) {
     sweetAlert('نام کاربری قبلا انتخاب شده است.', 'failed');
-  } else if (allEmails.length) {
+  } else if (allEmails) {
     sweetAlert('این ایمیل قبلا ثبت نام کرده است.', 'failed');
   } else {
     sweetAlert('ثبت نام با موفقیت انجام شد.', 'success');

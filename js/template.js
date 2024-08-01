@@ -352,18 +352,30 @@ const courseHeadlineSessionTemplate = (session, number) => {
 
 // utils.js
 const commentTemplate = (comment, replies) => {
+  const message = comment.message.replace(/\n/g, '<br>');
   let date = formatDate(comment.created_at);
+  let userAvatar = '';
+  if (comment.image_src) {
+    userAvatar = `<img class="w-full h-full object-cover" src="${comment.image_src}" alt="${comment.writer}">`;
+  } else {
+    userAvatar = `
+      <div class="flex items-center justify-center size-11 rounded-full bg-slate-500">
+        <svg class="size-6 text-slate-100">
+          <use href="#user"></use>
+        </svg>
+      </div>
+    `;
+  }
+
   const template = `
     <div class="comment pt-4" id="${comment.id}">
       <div class="comment-header sm:text-xl flex items-center gap-2 w-fit font-VazirMedium theme-bg-color-10 py-px pl-4 rounded-full">
-        <div class="size-12 rounded-full overflow-hidden">
-          <img class="w-full h-full object-cover" src="${comment.image_src}" alt="${comment.writer}">
-        </div>
+        <div class="flex items-center justify-center size-12 rounded-full overflow-hidden">${userAvatar}</div>
         <span>${comment.writer}</span>
       </div>
       <!-- Comment Content -->
       <div class="w-full text-white bg-slate-500 rounded-2xl px-4 pt-4 pb-1 resize-none overflow-hidden mt-4 relative z-20">
-        <p>${comment.message}</p>
+        <p>${message}</p>
         <!-- Comment Info -->
         <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
           <span>${date}</span>
@@ -409,14 +421,24 @@ const commentTemplate = (comment, replies) => {
 
 // utils.js
 const commentReplyTemplate = (reply) => {
-  const comment = reply.message.replace(/\n/g, '<br>');
+  const message = reply.message.replace(/\n/g, '<br>');
   const date = formatDate(reply.created_at);
+  let userAvatar = '';
+  if (reply.image_src) {
+    userAvatar = `<img class="w-full h-full object-cover" src="${reply.image_src}" alt="${reply.writer}">`;
+  } else {
+    userAvatar = `
+      <div class="flex items-center justify-center size-10 rounded-full bg-slate-300 dark:bg-slate-600">
+        <svg class="size-6 text-inherit">
+          <use href="#user"></use>
+        </svg>
+      </div>
+    `;
+  }
   const template = `
   <div class="replay-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
       <div class="flex items-start gap-2 font-VazirMedium border-b border-b-slate-300 dark:border-b-slate-600">
-        <div class="size-12 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
-          <img class="w-full h-full object-cover" src="${reply.image_src}" alt="${reply.writer}">
-        </div>
+        <div class="size-12 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">${userAvatar}</div>
         <div>
           <p class="sm:text-lg">${reply.writer}</p>
           <span>${date}</span>
@@ -424,7 +446,7 @@ const commentReplyTemplate = (reply) => {
       </div>
       <!-- Reply Comment Content -->
       <div class="w-full resize-none overflow-hidden mt-4 z-20">
-        <p>${comment}</p>
+        <p>${message}</p>
       </div>
     </div>`;
 

@@ -42,7 +42,7 @@ const submitSignupForm = (event) => {
     emailInput.value = '';
     passwordInput.value = '';
     setTimeout(() => {
-      location.replace = './index.html';
+      location.replace('./index.html');
     }, 2000);
   }
 };

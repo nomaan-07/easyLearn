@@ -85,7 +85,7 @@ const addRecentBlogsToDom = (blogs, blogsWrapper) => {
 };
 
 // comments section - course.js - blog.js
-const handleReplyAndLike = (event) => {
+const handleReplyAndLike = (event, user) => {
   let commentID = null;
   let wrapper = null;
   let textarea = null;
@@ -109,7 +109,7 @@ const handleReplyAndLike = (event) => {
     commentID = getParentID(event.target, 'comment');
     wrapper = getReplyCommentWrapper(commentID);
     textarea = getReplyCommentTextarea(commentID);
-    submitCommentReply(textarea, wrapper, commentID);
+    submitCommentReply(textarea, wrapper, commentID, user);
   }
   // FIXME: like handle
   if (event.target.matches('.like-btn') || event.target.closest('.like-btn')) {
