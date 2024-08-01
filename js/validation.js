@@ -63,4 +63,26 @@ const signupFormValidation = (username, email, password, allUsers) => {
   return false;
 };
 
-export { emptyValueValidation, emailValidation, passwordValidation, signupFormValidation };
+// login.js
+const loginFormValidation = (email, password, user) => {
+  const isEmailEmpty = !emptyValueValidation(email);
+  const isPasswordEmpty = !emptyValueValidation(password);
+
+  if (isEmailEmpty && isPasswordEmpty) {
+    sweetAlert('لطفا ایمیل و رمز عبور را وارد کنید.', 'failed');
+  } else if (isEmailEmpty) {
+    sweetAlert('لطفا ایمیل را وارد کنید.', 'failed');
+  } else if (isPasswordEmpty) {
+    sweetAlert('لطفا رمز عبور را وارد کنید.', 'failed');
+  } else if (!user) {
+    sweetAlert('کاربری با این ایمیل یافت نشد.', 'failed');
+  } else if (user.password !== password) {
+    sweetAlert('رمز عبور اشتباه است.', 'failed');
+  } else {
+    sweetAlert(`${user.username} عزیز، ورود موفقیت آمیز بود.`, 'success');
+    return true;
+  }
+  return false;
+};
+
+export { emptyValueValidation, emailValidation, passwordValidation, signupFormValidation, loginFormValidation };

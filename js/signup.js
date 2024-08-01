@@ -7,26 +7,18 @@ import { moveInLabelElement, moveOutLabelElement } from './ui-handlers.js';
 
 sweetAlert('لطفا از نام کاربری و رمز عبور واقعی خود استفاده نکنید.', 'info');
 
-let allUsers = null;
-
-getAllFromDatabase('users')
-  .then((users) => {
-    allUsers = users;
-  })
-  .catch((error) => {
-    console.error('Failed to fetch users', error);
-  });
-
 if (localStorageTheme) {
   document.documentElement.className = `scroll-smooth ${localStorageTheme}`;
   favIcon.href = `images/favIcons/${localStorageTheme}-favicon-64x64.png`;
 }
 
-const submitSignupForm = (event) => {
+const submitSignupForm = async (event) => {
   event.preventDefault();
   const usernameInputValue = usernameInput.value.trim();
   const emailInputValue = emailInput.value.trim();
   const passwordInputValue = passwordInput.value.trim();
+
+  let allUsers = await getAllFromDatabase('users');
 
   if (signupFormValidation(usernameInputValue, emailInputValue, passwordInputValue, allUsers)) {
     let newUser = {
@@ -42,7 +34,7 @@ const submitSignupForm = (event) => {
     emailInput.value = '';
     passwordInput.value = '';
     setTimeout(() => {
-      history.back();
+      location.href('./index.html');
     }, 2000);
   }
 };
