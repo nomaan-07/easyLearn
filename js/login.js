@@ -18,10 +18,8 @@ const submitLoginForm = async (event) => {
   let user = users.find((user) => user.email === emailInputValue);
   if (loginFormValidation(emailInputValue, passwordInputValue, user)) {
     localStorage.setItem('userID', user.id);
-    emailInput.value = '';
-    passwordInput.value = '';
     setTimeout(() => {
-      location.href('./index.html');
+      location.replace('./index.html');
     }, 2000);
   }
 };

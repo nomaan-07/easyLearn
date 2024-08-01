@@ -30,11 +30,8 @@ const submitSignupForm = async (event) => {
     };
     addToDatabase('users', newUser);
     localStorage.setItem('userID', newUser.id);
-    usernameInput.value = '';
-    emailInput.value = '';
-    passwordInput.value = '';
     setTimeout(() => {
-      location.href('./index.html');
+      location.replace('./index.html');
     }, 2000);
   }
 };
