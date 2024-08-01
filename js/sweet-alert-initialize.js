@@ -48,6 +48,10 @@ const sweetAlert = (message, type) => {
         animate__bounceOutRight
         `,
     },
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
   });
 };
 

@@ -67,7 +67,7 @@ const recentBlogsWrapper = document.querySelector('.recent-blogs-wrapper');
 const commentsWrapper = document.querySelector('.comments-wrapper');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
-const newCommentTextarea = document.querySelector('#new-comment-textainputElementsformrea');
+const newCommentTextarea = document.querySelector('#new-comment-textarea');
 const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
