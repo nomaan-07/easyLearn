@@ -1,3 +1,4 @@
+import { sweetAlert } from './sweet-alert-initialize.js';
 import { getParentID } from './utils.js';
 
 const updateLike = (isLiked, svg, likeElem, count) => {
@@ -32,11 +33,13 @@ const textareaAutoResize = (event) => {
 };
 
 // course.js - domHandler.js
-const toggleTextarea = (wrapper, textarea, openTextarea = false) => {
-  if (openTextarea) {
+const toggleTextarea = (wrapper, textarea, user = true, openTextarea = false) => {
+  if (user && openTextarea) {
     wrapper.classList.remove('max-h-0');
     wrapper.classList.remove('overflow-hidden');
     textarea.focus();
+  } else if (!user) {
+    sweetAlert('برای ثبت نظر باید در سایت ثبت نام کنید.', 'info');
   } else {
     textarea.value = '';
     wrapper.classList.add('max-h-0');

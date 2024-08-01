@@ -95,14 +95,14 @@ const handleReplyAndLike = (event, user) => {
     commentID = getParentID(event.target, 'comment');
     wrapper = getReplyCommentWrapper(commentID);
     textarea = getReplyCommentTextarea(commentID);
-    toggleTextarea(wrapper, textarea, true);
+    toggleTextarea(wrapper, textarea, user, true);
   }
   // Cancel Reply
   if (event.target.matches('.reply-comment-cancel-btn') || event.target.closest('.reply-comment-cancel-btn')) {
     commentID = getParentID(event.target, 'comment');
     wrapper = getReplyCommentWrapper(commentID);
     textarea = getReplyCommentTextarea(commentID);
-    toggleTextarea(wrapper, textarea, false);
+    toggleTextarea(wrapper, textarea);
   }
   // submit reply
   if (event.target.matches('.reply-comment-submit-btn') || event.target.closest('.reply-comment-submit-btn')) {

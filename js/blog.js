@@ -86,7 +86,7 @@ async function copyBlogLinkToClipboard(event) {
 blogWrapper.addEventListener('click', copyBlogLinkToClipboard);
 window.addEventListener('load', removeLoader);
 
-addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
+addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, user, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, blog.id, blog.title, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);

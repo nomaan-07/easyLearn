@@ -167,7 +167,7 @@ showAllDescriptionBtn.addEventListener('click', toggleDescription);
 headlinesWrapper.addEventListener('click', toggleHeadLine);
 window.addEventListener('load', removeLoader);
 
-addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, true));
+addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, user, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
