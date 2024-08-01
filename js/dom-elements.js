@@ -1,3 +1,5 @@
+const localStorageTheme = localStorage.getItem('theme');
+
 // Element for Changing Theme
 const colorPlateBtn = document.querySelector('.color-plate-btn');
 const colorPlate = document.querySelector('.color-plate');
@@ -65,11 +67,20 @@ const recentBlogsWrapper = document.querySelector('.recent-blogs-wrapper');
 const commentsWrapper = document.querySelector('.comments-wrapper');
 const addNewCommentBtn = document.querySelector('.new-comment-btn');
 const newCommentWrapper = document.querySelector('.new-comment-wrapper');
-const newCommentTextarea = document.querySelector('#new-comment-textarea');
+const newCommentTextarea = document.querySelector('#new-comment-textainputElementsformrea');
 const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
+// signup.js
+const form = document.querySelector('form');
+const inputElements = document.querySelectorAll('input');
+const formSubmitBtn = document.querySelector('.form__submit-btn');
+const usernameInput = document.querySelector('#username-input');
+const emailInput = document.querySelector('#email-input');
+const passwordInput = document.querySelector('#password-input');
+
 export {
+  localStorageTheme,
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
   lastBlogsWrapperElement,
@@ -125,4 +136,10 @@ export {
   breadcrumbBlogName,
   blogWrapper,
   recentBlogsWrapper,
+  form,
+  inputElements,
+  formSubmitBtn,
+  usernameInput,
+  emailInput,
+  passwordInput,
 };
