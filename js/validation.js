@@ -74,6 +74,8 @@ const loginFormValidation = (email, password, user) => {
     sweetAlert('لطفا ایمیل را وارد کنید.', 'failed');
   } else if (isPasswordEmpty) {
     sweetAlert('لطفا رمز عبور را وارد کنید.', 'failed');
+  } else if (!emailValidation(email)) {
+    sweetAlert('لطفا ایمیل را به درستی وارد کنید.', 'failed');
   } else if (!user) {
     sweetAlert('کاربری با این ایمیل یافت نشد.', 'failed');
   } else if (user.password !== password) {

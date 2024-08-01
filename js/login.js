@@ -1,7 +1,6 @@
 import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, emailInput, passwordInput } from './dom-elements.js';
 import { moveInLabelElement, moveOutLabelElement } from './ui-handlers.js';
-import { getAllFromDatabase, getOneFromDatabase } from './database-api.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
+import { getAllFromDatabase } from './database-api.js';
 import { loginFormValidation } from './validation.js';
 
 if (localStorageTheme) {
