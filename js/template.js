@@ -1,6 +1,22 @@
-// shared.js - index.js
 import { formatDate } from './utils.js';
 
+const loginBtnTemplate = (userID) => {
+  let template = '';
+  if (userID) {
+    template = `
+      <a href="./account.html" class="btn gap-3 theme-bg-color lg:hover:theme-hover-bg-color select-none">
+        <svg class="size-6">
+          <use href="#user"></use>
+        </svg>
+        <span>پنل کاربری</span>
+      </a>`;
+  } else {
+    template = `<a href="./signup.html" class="btn theme-bg-color lg:hover:theme-hover-bg-color select-none">ورود | ثبت نام</a>`;
+  }
+  return template;
+};
+
+// shared.js - index.js
 const courseCardTemplate = (course) => {
   let finalPriceTemplate = null;
   if (course.discountPercent === 100) {
@@ -517,4 +533,4 @@ const recentBlogTemplate = (blog) => {
   return template;
 };
 
-export { courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate };
+export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate };

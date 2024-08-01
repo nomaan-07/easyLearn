@@ -1,4 +1,4 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate } from './template.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
@@ -7,6 +7,13 @@ import { submitCommentReply } from './database-handlers.js';
 const insertToDOM = (domElem, content) => {
   emptyDomElemContent(domElem);
   domElem.insertAdjacentHTML('beforeend', content);
+};
+
+// header.js
+const addLoginBtnToDOM = (loginButtons, userID) => {
+  loginButtons.forEach((btn) => {
+    insertToDOM(btn, loginBtnTemplate(userID));
+  });
 };
 
 window.addCourseToCart = (id) => {
@@ -113,4 +120,4 @@ const handleReplyAndLike = (event) => {
   }
 };
 
-export { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleReplyAndLike };
+export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleReplyAndLike };

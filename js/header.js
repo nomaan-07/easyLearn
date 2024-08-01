@@ -16,7 +16,12 @@ import {
   searchBarSearchBtn,
   mobileSearchInput,
   mobileSearchBtn,
+  loginButtons,
+  localStorageUserID,
 } from './dom-elements.js';
+import { addLoginBtnToDOM } from './dom-handlers.js';
+
+addLoginBtnToDOM(loginButtons, localStorageUserID);
 
 const openMobileMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);

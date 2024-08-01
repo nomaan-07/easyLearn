@@ -1,4 +1,5 @@
 const localStorageTheme = localStorage.getItem('theme');
+const localStorageUserID = localStorage.getItem('userID');
 
 // Element for Changing Theme
 const colorPlateBtn = document.querySelector('.color-plate-btn');
@@ -27,6 +28,7 @@ const searchBarInput = document.querySelector('.search-bar__input');
 const searchBarSearchBtn = document.querySelector('.search-bar__search-btn');
 const mobileSearchInput = document.querySelector('.mobile-search-input');
 const mobileSearchBtn = document.querySelector('.mobile-search-btn');
+const loginButtons = document.querySelectorAll('.login-btn');
 
 // Elements of index.html
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
@@ -81,6 +83,7 @@ const passwordInput = document.querySelector('#password-input');
 
 export {
   localStorageTheme,
+  localStorageUserID,
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
   lastBlogsWrapperElement,
@@ -122,6 +125,7 @@ export {
   searchBarSearchBtn,
   mobileSearchInput,
   mobileSearchBtn,
+  loginButtons,
   colorPlateBtn,
   colorPlate,
   changeThemeButtons,
