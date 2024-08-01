@@ -33,8 +33,8 @@ module.exports = {
         'float-fast': 'float 5s ease infinite',
         rotate: 'rotate 2s ease infinite',
         'to-left': 'to-left 1s ease infinite',
-        'move-right-up': 'move-right-up 1s ease forwards',
-        'move-right-down': 'move-right-down 1s ease forwards',
+        'move-right-up': 'move-right-up 0.75s ease forwards',
+        'move-right-down': 'move-right-down 0.75s ease forwards',
       },
       keyframes: {
         'open-up': {

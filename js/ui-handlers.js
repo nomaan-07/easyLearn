@@ -78,4 +78,22 @@ const activeSortBtn = (btn) => {
   btn.classList.add('theme-text-color');
 };
 
-export { toggleLike, textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn };
+// signup.js
+const moveOutLabelElement = (event) => {
+  if (event.target.matches('input')) {
+    event.target.previousElementSibling.classList.add('animate-move-right-up');
+    event.target.previousElementSibling.classList.remove('animate-move-right-down');
+  }
+};
+
+// signup.js
+const moveInLabelElement = (input) => {
+  input.addEventListener('blur', () => {
+    if (!input.value) {
+      input.previousElementSibling.classList.remove('animate-move-right-up');
+      input.previousElementSibling.classList.add('animate-move-right-down');
+    }
+  });
+};
+
+export { toggleLike, textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement };
