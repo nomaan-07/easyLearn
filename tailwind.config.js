@@ -33,6 +33,8 @@ module.exports = {
         'float-fast': 'float 5s ease infinite',
         rotate: 'rotate 2s ease infinite',
         'to-left': 'to-left 1s ease infinite',
+        'move-right-up': 'move-right-up 1s ease forwards',
+        'move-right-down': 'move-right-down 1s ease forwards',
       },
       keyframes: {
         'open-up': {
@@ -67,6 +69,28 @@ module.exports = {
           },
           '85%': {
             transform: 'translateX(-10%)',
+          },
+        },
+        'move-right-up': {
+          '0%': {
+            transform: 'translate(0 0)',
+          },
+          '40%': {
+            transform: 'translateX(30px)',
+          },
+          '100%': {
+            transform: 'translate(10px, -40px)',
+          },
+        },
+        'move-right-down': {
+          '0%': {
+            transform: 'translate(10px, -40px)',
+          },
+          '40%': {
+            transform: 'translateX(30px)',
+          },
+          '100%': {
+            transform: 'translate(0 0)',
           },
         },
       },

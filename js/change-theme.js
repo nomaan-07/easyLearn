@@ -1,10 +1,10 @@
 import { colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './dom-elements.js';
 
-const setThemeFromLocalStorage = () => {
+const getThemeFromLocalStorage = () => {
   const localStorageTheme = localStorage.getItem('theme');
   localStorageTheme && changeTheme(localStorageTheme);
 };
-setThemeFromLocalStorage();
+getThemeFromLocalStorage();
 
 const toggleColorPlate = () => {
   colorPlate.classList.toggle('hidden');
@@ -47,3 +47,5 @@ changeThemeButtons.forEach((btn) => {
 });
 
 colorPlateBtn.addEventListener('click', toggleColorPlate);
+
+export { getThemeFromLocalStorage };
