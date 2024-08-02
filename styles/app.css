@@ -1429,6 +1429,10 @@ video {
   right: 0px;
 }
 
+.right-2 {
+  right: 0.5rem;
+}
+
 .right-3 {
   right: 0.75rem;
 }
@@ -1463,6 +1467,10 @@ video {
 
 .top-full {
   top: 100%;
+}
+
+.right-1 {
+  right: 0.25rem;
 }
 
 .isolate {
@@ -2050,10 +2058,6 @@ video {
 
 .w-80 {
   width: 20rem;
-}
-
-.w-9 {
-  width: 2.25rem;
 }
 
 .w-\[280px\] {
@@ -4566,8 +4570,20 @@ video {
   transition-duration: 150ms;
 }
 
+.delay-150 {
+  transition-delay: 150ms;
+}
+
+.delay-700 {
+  transition-delay: 700ms;
+}
+
 .duration-500 {
   transition-duration: 500ms;
+}
+
+.duration-150 {
+  transition-duration: 150ms;
 }
 
 .ease-in {
@@ -4640,6 +4656,11 @@ video {
 .show {
   opacity: 1;
   visibility: visible;
+}
+
+.\!show {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .focus-within\:theme-bg-color-10:focus-within {
@@ -4964,11 +4985,6 @@ video {
   background-color: rgb(202 138 4 / 0.1);
 }
 
-.dark\:bg-slate-400:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-}
-
 .dark\:from-slate-800:is(.dark *) {
   --tw-gradient-from: #1e293b var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(30 41 59 / 0) var(--tw-gradient-to-position);
@@ -5118,10 +5134,6 @@ video {
     align-items: flex-end;
   }
 
-  .xs\:items-center {
-    align-items: center;
-  }
-
   .xs\:justify-start {
     justify-content: flex-start;
   }
@@ -5132,10 +5144,6 @@ video {
 
   .xs\:gap-6 {
     gap: 1.5rem;
-  }
-
-  .xs\:self-auto {
-    align-self: auto;
   }
 
   .xs\:rounded-tl-\[100px\] {
@@ -5589,34 +5597,6 @@ video {
     width: auto;
   }
 
-  .md\:w-\[19\%\] {
-    width: 19%;
-  }
-
-  .md\:w-1\/4 {
-    width: 25%;
-  }
-
-  .md\:w-3\/4 {
-    width: 75%;
-  }
-
-  .md\:w-\[22\%\] {
-    width: 22%;
-  }
-
-  .md\:w-\[78\%\] {
-    width: 78%;
-  }
-
-  .md\:w-\[21\%\] {
-    width: 21%;
-  }
-
-  .md\:w-\[79\%\] {
-    width: 79%;
-  }
-
   .md\:max-w-\[448px\] {
     max-width: 448px;
   }
@@ -5803,11 +5783,6 @@ video {
     left: 0px;
   }
 
-  .group:hover .md\:group-hover\:text-rose-700 {
-    --tw-text-opacity: 1;
-    color: rgb(190 18 60 / var(--tw-text-opacity));
-  }
-
   .group:hover .md\:group-hover\:text-white {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -5913,14 +5888,6 @@ video {
 
   .lg\:w-\[482px\] {
     width: 482px;
-  }
-
-  .lg\:w-1\/5 {
-    width: 20%;
-  }
-
-  .lg\:w-4\/5 {
-    width: 80%;
   }
 
   .lg\:cursor-pointer {

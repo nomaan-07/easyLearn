@@ -1,5 +1,7 @@
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { getParentID } from './utils.js';
+import { displayPasswordBtn, passwordInput } from './dom-elements.js';
+import { insertToDOM } from './dom-handlers.js';
 
 // course.js - dom-handlers.js
 const textareaAutoResize = (event) => {
@@ -56,22 +58,44 @@ const activeSortBtn = (btn) => {
   btn.classList.add('theme-text-color');
 };
 
-// signup.js
+// auth.js
 const moveOutLabelElement = (event) => {
   if (event.target.matches('input')) {
     event.target.previousElementSibling.classList.add('animate-move-right-up');
     event.target.previousElementSibling.classList.remove('animate-move-right-down');
+
+    if (event.target.id === 'password-input') {
+      setTimeout(() => {
+        displayPasswordBtn.classList.remove('hide');
+      }, 400);
+    }
   }
 };
 
-// signup.js
+// auth.js
 const moveInLabelElement = (input) => {
   input.addEventListener('blur', () => {
     if (!input.value) {
       input.previousElementSibling.classList.remove('animate-move-right-up');
       input.previousElementSibling.classList.add('animate-move-right-down');
+
+      if (input.id === 'password-input') {
+        displayPasswordBtn.classList.add('hide');
+      }
     }
   });
 };
 
-export { textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement };
+// auth.js
+const showPassword = () => {
+  insertToDOM(displayPasswordBtn, '<use href="#eye-slash"></use>');
+  passwordInput.type = 'text';
+};
+
+// auth.js
+const hidePassword = () => {
+  insertToDOM(displayPasswordBtn, '<use href="#eye"></use>');
+  passwordInput.type = 'password';
+};
+
+export { textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, showPassword, hidePassword };

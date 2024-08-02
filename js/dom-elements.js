@@ -83,6 +83,7 @@ const formSubmitBtn = document.querySelector('.form__submit-btn');
 const usernameInput = document.querySelector('#username-input');
 const emailInput = document.querySelector('#email-input');
 const passwordInput = document.querySelector('#password-input');
+const displayPasswordBtn = document.querySelector('#display-password-btn');
 
 export {
   localStorageTheme,
@@ -150,4 +151,5 @@ export {
   emailInput,
   passwordInput,
   authFormHeader,
+  displayPasswordBtn,
 };
