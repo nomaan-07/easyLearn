@@ -11,7 +11,7 @@ const loginBtnTemplate = (userID) => {
         <span>پنل کاربری</span>
       </a>`;
   } else {
-    template = `<a href="./signup.html" class="btn theme-bg-color lg:hover:theme-hover-bg-color select-none">ورود | ثبت نام</a>`;
+    template = `<a href="./auth.html?operation=signup" class="btn theme-bg-color lg:hover:theme-hover-bg-color select-none">ورود | ثبت نام</a>`;
   }
   return template;
 };
@@ -541,4 +541,21 @@ const recentBlogTemplate = (blog) => {
   return template;
 };
 
-export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate };
+// auth.js
+const authFormHeaderTemplate = (operation) => {
+  let template = '';
+  if (operation === 'signup') {
+    template = `
+            <h2 class="font-VazirBold text-center text-2xl">ثبت نام</h2>
+            <div class="text-center mt-3">قبلا ثبت نام کرده اید؟ <a class="theme-text-color" href="./auth.html?operation=login">وارد شوید.</a></div>
+            `;
+  } else if (operation === 'login') {
+    template = `
+            <h2 class="font-VazirBold text-center text-2xl">ورود</h2>
+            <div class="text-center mt-3">حساب کاربری ندارید؟ <a class="theme-text-color" href="./auth.html?operation=signup">ثبت نام کنید.</a></div>
+            `;
+  }
+  return template;
+};
+
+export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate, authFormHeaderTemplate };

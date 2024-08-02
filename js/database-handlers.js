@@ -3,7 +3,8 @@ import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler } from './utils.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper } from './dom-elements.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput } from './dom-elements.js';
+import { signupFormValidation, loginFormValidation } from './validation.js';
 
 // index.js
 async function fetchAndDisplayMainPageCourses() {
@@ -110,4 +111,46 @@ async function fetchAndDisplayRecantBlogs() {
   }
 }
 
-export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs };
+// auth.js
+const submitSignupForm = async (event) => {
+  event.preventDefault();
+  const usernameInputValue = usernameInput.value.trim();
+  const emailInputValue = emailInput.value.trim();
+  const passwordInputValue = passwordInput.value.trim();
+
+  let allUsers = await getAllFromDatabase('users');
+
+  if (signupFormValidation(usernameInputValue, emailInputValue, passwordInputValue, allUsers)) {
+    let newUser = {
+      id: generateRandomID(),
+      created_at: new Date(),
+      username: usernameInputValue,
+      email: emailInputValue,
+      password: passwordInputValue,
+    };
+    await addToDatabase('users', newUser);
+    localStorage.setItem('userID', newUser.id);
+    setTimeout(() => {
+      location.replace('./index.html');
+    }, 2000);
+  }
+};
+
+// auth.js
+const submitLoginForm = async (event) => {
+  event.preventDefault();
+
+  const emailInputValue = emailInput.value.trim();
+  const passwordInputValue = passwordInput.value.trim();
+
+  let users = await getAllFromDatabase('users');
+  let user = users.find((user) => user.email === emailInputValue);
+  if (loginFormValidation(emailInputValue, passwordInputValue, user)) {
+    localStorage.setItem('userID', user.id);
+    setTimeout(() => {
+      location.replace('./index.html');
+    }, 2000);
+  }
+};
+
+export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm };

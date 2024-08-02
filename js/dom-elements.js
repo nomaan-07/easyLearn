@@ -75,7 +75,8 @@ const newCommentTextarea = document.querySelector('#new-comment-textarea');
 const newCommentSubmitBtn = document.querySelector('#new-comment-submit-btn');
 const newCommentCloseBtn = document.querySelector('#new-comment-cancel-btn');
 
-// signup.js
+// auth.js
+const authFormHeader = document.querySelector('.auth__form-header');
 const form = document.querySelector('form');
 const inputElements = document.querySelectorAll('input');
 const formSubmitBtn = document.querySelector('.form__submit-btn');
@@ -148,4 +149,5 @@ export {
   usernameInput,
   emailInput,
   passwordInput,
+  authFormHeader,
 };
