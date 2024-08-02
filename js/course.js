@@ -22,7 +22,7 @@ import {
 
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian } from './utils.js';
 import { toggleTextarea, textareaAutoResize } from './ui-handlers.js';
-import { fetchAndDisplayComments, submitCommentReply, submitNewComment } from './database-handlers.js';
+import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
 import { insertToDOM, handleCommentReply } from './dom-handlers.js';
 
 let course = null;

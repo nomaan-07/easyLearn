@@ -36,8 +36,6 @@ const switchForms = () => {
 switchForms();
 
 const displayPasswordHandler = () => {
-  console.log(isPasswordShown);
-
   if (isPasswordShown) {
     hidePassword();
     isPasswordShown = false;

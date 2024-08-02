@@ -22,7 +22,7 @@ const passwordValidation = (password) => {
   return false;
 };
 
-// signup.js
+// auth.js
 const signupFormValidation = (username, email, password, allUsers) => {
   const isUsernameEmpty = !emptyValueValidation(username);
   const isEmailEmpty = !emptyValueValidation(email);
@@ -63,7 +63,7 @@ const signupFormValidation = (username, email, password, allUsers) => {
   return false;
 };
 
-// login.js
+// auth.js
 const loginFormValidation = (email, password, user) => {
   const isEmailEmpty = !emptyValueValidation(email);
   const isPasswordEmpty = !emptyValueValidation(password);

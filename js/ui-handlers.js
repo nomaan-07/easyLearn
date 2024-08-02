@@ -1,5 +1,4 @@
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { getParentID } from './utils.js';
 import { displayPasswordBtn, passwordInput } from './dom-elements.js';
 import { insertToDOM } from './dom-handlers.js';
 

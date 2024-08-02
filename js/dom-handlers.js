@@ -2,9 +2,6 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
-import { updateInDatabase, getOneFromDatabase } from './database-api.js';
-import { localStorageUserID } from './dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
