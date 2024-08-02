@@ -94,7 +94,6 @@ const submitCommentReply = (textarea, wrapper, commentID, user) => {
       sweetAlert('نظر شما ثبت شد و پس از بازبینی منتشر می‌شود.', 'success');
       toggleTextarea(wrapper, textarea);
     } else {
-      sweetAlert();
       sweetAlert('نظر نمی‌تواند خالی باشد.', 'info');
     }
   });

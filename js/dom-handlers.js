@@ -2,6 +2,8 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
+import { sweetAlert } from './sweet-alert-initialize.js';
+import { getOneFromDatabase } from './database-api.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -85,37 +87,26 @@ const addRecentBlogsToDom = (blogs, blogsWrapper) => {
 };
 
 // comments section - course.js - blog.js
-const handleReplyAndLike = (event, user) => {
-  let commentID = null;
-  let wrapper = null;
-  let textarea = null;
+const handleReplyAndLike = async (event, user) => {
+  let element = event.target;
+  let commentID = getParentID(element, 'comment');
+  let wrapper = getReplyCommentWrapper(commentID);
+  let textarea = getReplyCommentTextarea(commentID);
 
   // open reply
-  if (event.target.matches('.open-reply-btn') || event.target.closest('.open-reply-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
+  if (element.closest('.open-reply-btn')) {
     toggleTextarea(wrapper, textarea, user, true);
   }
   // Cancel Reply
-  if (event.target.matches('.reply-comment-cancel-btn') || event.target.closest('.reply-comment-cancel-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
+  if (element.closest('.reply-comment-cancel-btn')) {
     toggleTextarea(wrapper, textarea);
   }
   // submit reply
-  if (event.target.matches('.reply-comment-submit-btn') || event.target.closest('.reply-comment-submit-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
+  if (element.closest('.reply-comment-submit-btn')) {
     submitCommentReply(textarea, wrapper, commentID, user);
   }
   // FIXME: like handle
-  if (event.target.matches('.like-btn') || event.target.closest('.like-btn')) {
-    commentID = getParentID(event.target, 'comment');
-    wrapper = getReplyCommentWrapper(commentID);
-    textarea = getReplyCommentTextarea(commentID);
+  if (event.target.closest('.like-btn')) {
     console.log(commentID);
   }
 };
