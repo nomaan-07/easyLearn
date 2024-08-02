@@ -1,6 +1,6 @@
 import './header.js';
 import './change-theme.js';
-import { blogsWrapperElement, blogsSortButtons, searchBlogInput } from './dom-elements.js';
+import { blogsWrapperElement, blogsSortButtons, searchBlogInput, categoryTitle } from './dom-elements.js';
 import { getAllFromDatabase } from './database-api.js';
 import { getQueryParameters, removeLoader, sortArray } from './utils.js';
 import { addBlogCardsToDOM } from './dom-handlers.js';
@@ -11,6 +11,29 @@ let sortedBLogs = [];
 let searchedBlogs = [];
 
 const blogsParam = getQueryParameters('category');
+
+switch (blogsParam) {
+  case 'programming-basics':
+    categoryTitle.textContent = 'مبانی برنامه نویسی';
+    document.title = 'مبانی برنامه نویسی | ایزی‌لرن';
+    break;
+  case 'python':
+    categoryTitle.textContent = 'پایتون';
+    document.title = 'بلاگ - پایتون | ایزی‌لرن';
+    break;
+  case 'java-script':
+    break;
+    categoryTitle.textContent = 'جاوا اسکریپت';
+    document.title = 'بلاگ - جاوا اسکریپت | ایزی‌لرن';
+  case 'hack':
+    categoryTitle.textContent = 'امنیت';
+    document.title = 'بلاگ - امنیت | ایزی‌لرن';
+    break;
+  case null:
+    categoryTitle.textContent = 'مقالات';
+    document.title = 'ایزی‌لرن | بلاگ';
+    break;
+}
 
 const getCategoryBlogs = (allBlogs) => {
   let categoryBlogs = null;

@@ -1,6 +1,9 @@
 const localStorageTheme = localStorage.getItem('theme');
 const localStorageUserID = localStorage.getItem('userID');
 
+// course-category.js - blogs.js
+const categoryTitle = document.querySelector('.category-title');
+
 // Element for Changing Theme
 const colorPlateBtn = document.querySelector('.color-plate-btn');
 const colorPlate = document.querySelector('.color-plate');
@@ -40,7 +43,6 @@ const courseFilterButtons = document.querySelectorAll('.course-filter-btn');
 const courseSortButtons = document.querySelectorAll('.course-sort-btn');
 const coursesWrapperElement = document.querySelector('.courses-wrapper');
 const searchCourseInput = document.querySelector('#search-course-input');
-const categoryTitle = document.querySelector('.category-title');
 const titleIcon = document.querySelector('.title-icon');
 const searchResultWrapper = document.querySelector('.no-result-wrapper');
 
