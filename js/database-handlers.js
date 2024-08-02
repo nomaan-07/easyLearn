@@ -1,7 +1,7 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { generateRandomID, sortArray, CourseCommentSectionHandler } from './utils.js';
+import { generateRandomID, sortArray, commentSectionTemplateHandler } from './utils.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper } from './dom-elements.js';
 
@@ -39,7 +39,7 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
     if (FilteredComments.length) {
       FilteredComments = sortArray(FilteredComments, 'create', true);
       FilteredComments.forEach((comment) => {
-        commentsElements += CourseCommentSectionHandler(comment);
+        commentsElements += commentSectionTemplateHandler(comment);
       });
       insertToDOM(commentsWrapper, commentsElements);
     } else {

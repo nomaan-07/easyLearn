@@ -3,7 +3,7 @@ import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, get
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { getOneFromDatabase } from './database-api.js';
+import { updateInDatabase, getOneFromDatabase } from './database-api.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -87,7 +87,7 @@ const addRecentBlogsToDom = (blogs, blogsWrapper) => {
 };
 
 // comments section - course.js - blog.js
-const handleReplyAndLike = async (event, user) => {
+const handleReplyAndLike = (event, user) => {
   let element = event.target;
   let commentID = getParentID(element, 'comment');
   let wrapper = getReplyCommentWrapper(commentID);

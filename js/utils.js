@@ -117,8 +117,8 @@ const CourseHeadlineSectionHandler = (headline) => {
   return headlineTemplate(headline, sessionsTemplate, sessions.length);
 };
 
-// course.js
-const CourseCommentSectionHandler = (comment) => {
+// database-handler.js
+const commentSectionTemplateHandler = (comment) => {
   let replies = comment.replies;
   let repliesTemplate = '';
   if (replies) {
@@ -184,7 +184,7 @@ export {
   emptyDomElemContent,
   breadCrumbLinksHandler,
   CourseHeadlineSectionHandler,
-  CourseCommentSectionHandler,
+  commentSectionTemplateHandler,
   sortArray,
   deleteUserIDFromLocal,
 };
