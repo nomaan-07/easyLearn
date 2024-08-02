@@ -8,8 +8,19 @@ import { localStorageUserID } from './dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
+  const fragment = document.createDocumentFragment();
+  const tempDiv = document.createElement('div');
+
+  tempDiv.insertAdjacentHTML('beforeend', content);
+
+  // Append the child nodes of the temporary div to the DocumentFragment
+  while (tempDiv.firstChild) {
+    fragment.appendChild(tempDiv.firstChild);
+  }
+
   emptyDomElemContent(domElem);
-  domElem.insertAdjacentHTML('beforeend', content);
+
+  domElem.appendChild(fragment);
 };
 
 // header.js
