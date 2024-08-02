@@ -38,7 +38,6 @@ async function fetchAndDisplayCategoryCoursesToDOM() {
       categoryCourses = sortArray(allCourses, 'create', true);
     } else if (categoryParam === 'popular-courses') {
       categoryCourses = sortArray(allCourses, 'students', true);
-      removeSortButtonsClasses();
       activeSortBtn(courseSortButtons[2]);
     } else if (searchParam) {
       categoryCourses = overallSearchHandler(allCourses);
