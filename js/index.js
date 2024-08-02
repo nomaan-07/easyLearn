@@ -3,8 +3,11 @@ import './header.js';
 import './aos.initialize.js';
 import { heroParticlesJS } from './particles-initialize.js';
 import { heroTypewriter } from './typewriter-initialize.js';
-import { removeLoader } from './utils.js';
+import { removeLoader, deleteUserIDFromLocal } from './utils.js';
 import { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs } from './database-handlers.js';
+import { localStorageUserID } from './dom-elements.js';
+
+deleteUserIDFromLocal(localStorageUserID);
 
 // hero Section animations
 heroParticlesJS();

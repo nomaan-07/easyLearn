@@ -1,4 +1,5 @@
 import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './template.js';
+import { getAllFromDatabase } from './database-api.js';
 
 const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -162,4 +163,28 @@ const sortArray = (array, sortField, isAscending = false) => {
   return sortedArray;
 };
 
-export { removeLoader, generateRandomID, getQueryParameters, getParentID, applyDiscountToPrice, formatDate, categoryInPersian, getReplyCommentWrapper, getReplyCommentTextarea, emptyDomElemContent, breadCrumbLinksHandler, CourseHeadlineSectionHandler, CourseCommentSectionHandler, sortArray };
+// index.js
+const deleteUserIDFromLocal = async (userID) => {
+  let users = await getAllFromDatabase('users');
+  let user = users.find((user) => user.id === userID);
+
+  !user && localStorage.removeItem('userID');
+};
+
+export {
+  removeLoader,
+  generateRandomID,
+  getQueryParameters,
+  getParentID,
+  applyDiscountToPrice,
+  formatDate,
+  categoryInPersian,
+  getReplyCommentWrapper,
+  getReplyCommentTextarea,
+  emptyDomElemContent,
+  breadCrumbLinksHandler,
+  CourseHeadlineSectionHandler,
+  CourseCommentSectionHandler,
+  sortArray,
+  deleteUserIDFromLocal,
+};
