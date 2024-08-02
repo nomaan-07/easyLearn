@@ -2,7 +2,7 @@ import './header.js';
 import './change-theme.js';
 import { localStorageUserID, breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper, commentsWrapper, addNewCommentBtn, newCommentWrapper, newCommentTextarea, newCommentSubmitBtn, newCommentCloseBtn } from './dom-elements.js';
 import { removeLoader, getQueryParameters, breadCrumbLinksHandler, categoryInPersian, formatDate } from './utils.js';
-import { getOneFromDatabase } from './database-api.js';
+import { addToDatabase, getOneFromDatabase, updateInDatabase } from './database-api.js';
 import { blogTemplate } from './template.js';
 import { insertToDOM, handleCommentReply } from './dom-handlers.js';
 import { fetchAndDisplayRecantBlogs, fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
@@ -31,8 +31,12 @@ fetchAndDisplayRecantBlogs();
 async function fetchAndDisplayBlog() {
   try {
     const blog = await getOneFromDatabase('blogs', 'slug', blogParam);
-
-    blog ? addBlogToDom(blog) : location.replace('./404.html');
+    if (blog) {
+      addBlogToDom(blog);
+      updateInDatabase('blogs', { seen: blog.seen + 1 }, blog.id);
+    } else {
+      location.replace('./404.html');
+    }
   } catch (error) {
     console.error('Failed to fetch blog', error);
   }
