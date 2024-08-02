@@ -81,7 +81,7 @@ const displaySortedBLogs = (type) => {
     case 'oldest':
       sortedBLogs = sortArray(sortedBLogs, 'create');
       break;
-    case 'popular':
+    case 'seen':
       sortedBLogs = sortArray(sortedBLogs, 'seen', true);
       break;
     case 'opinion':
