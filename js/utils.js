@@ -146,8 +146,8 @@ const sortArray = (array, sortField, isAscending = false) => {
     case 'students':
       sortedArray.sort((a, b) => new Date(a.students) - new Date(b.students));
       break;
-    case 'likes':
-      sortedArray.sort((a, b) => new Date(a.likes) - new Date(b.likes));
+    case 'seen':
+      sortedArray.sort((a, b) => new Date(a.seen) - new Date(b.seen));
       break;
     case 'price':
       sortedArray.sort((a, b) => applyDiscountToPrice(a.price, a.discount) - applyDiscountToPrice(b.price, b.discount));

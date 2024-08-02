@@ -4,6 +4,7 @@ import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { updateInDatabase, getOneFromDatabase } from './database-api.js';
+import { localStorageUserID } from './dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -57,7 +58,7 @@ const addBlogCardsToDOM = (blogs, blogsWrapper) => {
     newBlog = {
       title: blog.title,
       date: formatDate(blog.created_at),
-      likes: blog.likes,
+      seen: blog.seen,
       comments: blog.comments,
       image_src: blog.image_src,
       writer: blog.writer,
@@ -87,7 +88,7 @@ const addRecentBlogsToDom = (blogs, blogsWrapper) => {
 };
 
 // comments section - course.js - blog.js
-const handleReplyAndLike = (event, user) => {
+const handleCommentReply = (event, user) => {
   let element = event.target;
   let commentID = getParentID(element, 'comment');
   let wrapper = getReplyCommentWrapper(commentID);
@@ -105,10 +106,6 @@ const handleReplyAndLike = (event, user) => {
   if (element.closest('.reply-comment-submit-btn')) {
     submitCommentReply(textarea, wrapper, commentID, user);
   }
-  // FIXME: like handle
-  if (event.target.closest('.like-btn')) {
-    console.log(commentID);
-  }
 };
 
-export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleReplyAndLike };
+export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply };

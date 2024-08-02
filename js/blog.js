@@ -4,7 +4,7 @@ import { localStorageUserID, breadcrumbBlogCategory, breadcrumbBlogName, blogWra
 import { removeLoader, getQueryParameters, breadCrumbLinksHandler, categoryInPersian, formatDate } from './utils.js';
 import { getOneFromDatabase } from './database-api.js';
 import { blogTemplate } from './template.js';
-import { insertToDOM, handleReplyAndLike } from './dom-handlers.js';
+import { insertToDOM, handleCommentReply } from './dom-handlers.js';
 import { fetchAndDisplayRecantBlogs, fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
@@ -51,9 +51,7 @@ const createBlogObject = (dbBlog) => ({
   readingTime: dbBlog.reading_time,
   date: formatDate(dbBlog.created_at),
   content: dbBlog.content,
-  likes: dbBlog.likes,
-  // FIXME
-  isLiked: false,
+  seen: dbBlog.seen,
 });
 
 const addBlogToDom = (dbBlog) => {
@@ -90,4 +88,4 @@ addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrappe
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, blog.id, blog.title, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-commentsWrapper.addEventListener('click', (event) => handleReplyAndLike(event, user));
+commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, user));

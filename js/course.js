@@ -21,9 +21,9 @@ import {
 } from './dom-elements.js';
 
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian } from './utils.js';
-import { toggleLike, toggleTextarea, textareaAutoResize } from './ui-handlers.js';
+import { toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitCommentReply, submitNewComment } from './database-handlers.js';
-import { insertToDOM, handleReplyAndLike } from './dom-handlers.js';
+import { insertToDOM, handleCommentReply } from './dom-handlers.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');
@@ -154,15 +154,6 @@ const toggleHeadLine = (event) => {
   }
 };
 
-// const handleLike = () => {
-//   const likeButtons = document.querySelectorAll('.like-btn');
-
-//   likeButtons.forEach((btn) => {
-//     toggleLike(btn, true);
-//   });
-//   likeButtons.forEach((btn) => btn.addEventListener('click', () => toggleLike(btn)));
-// };
-
 showAllDescriptionBtn.addEventListener('click', toggleDescription);
 headlinesWrapper.addEventListener('click', toggleHeadLine);
 window.addEventListener('load', removeLoader);
@@ -171,4 +162,4 @@ addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrappe
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-commentsWrapper.addEventListener('click', (event) => handleReplyAndLike(event, user));
+commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, user));

@@ -125,16 +125,16 @@ const blogCardTemplate = (blog) => {
           <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${blog.subject}</a>
         </div>
         <!-- End of Writer and Category -->
-        <!-- Likes & Comments && Time -->
+        <!-- Seen & Comments && Time -->
         <div class="flex items-center justify-between gap-2 font-VazirBold text-xs my-4">
-          <!-- Likes and Comments -->
+          <!-- Seen and Comments -->
           <div class="flex items-center gap-2">
-            <!-- Likes -->
+            <!-- Seen -->
             <div class="flex items-center gap-1">
-              <svg class="size-4 text-rose-500">
-                <use href="#heart"></use>
+              <svg class="size-4 theme-text-color">
+                <use href="#eye"></use>
               </svg>
-              <span>${blog.likes}</span>
+              <span>${blog.seen}</span>
             </div>
             <!-- Comments -->
             <div class="flex items-center gap-1">
@@ -152,7 +152,7 @@ const blogCardTemplate = (blog) => {
             <span>زمان مطالعه: <span>${blog.readingTime}</span> دقیقه</span>
           </div>
         </div>
-        <!-- End of Likes & Comments && Time -->
+        <!-- End of Seen & Comments && Time -->
         <!-- Date -->
         <div href="./blogs" class="flex items-center gap-1 font-VazirBold text-xs">
           <svg class="size-4 theme-text-color">
@@ -379,22 +379,12 @@ const commentTemplate = (comment, replies) => {
         <!-- Comment Info -->
         <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
           <span>${date}</span>
-          <div class="flex flex-wrap gap-2 text-slate-900 select-none">
-            <!-- Likes -->
-            <div class="like-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg md:cursor-pointer group">
-              <svg class="size-5 text-rose-500 md:group-hover:text-rose-700 transition-colors">
-                <use href="#heart-outline"></use>
-              </svg>
-              <span>${comment.likes}</span>
-            </div>
-            <!-- End of Likes -->
-            <!-- reply Comment Btn -->
-            <div class="open-reply-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start rounded-lg theme-text-color md:text-inherit md:cursor-pointer md:hover:theme-text-color transition-colors">
-              <svg class="size-5">
-                <use href="#chat-bubble-left-ellipsis"></use>
-              </svg>
-              <span>پاسخ</span>
-            </div>
+          <!-- reply Comment Btn -->
+          <div class="open-reply-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start select-none rounded-lg theme-text-color md:text-slate-900 md:cursor-pointer md:hover:theme-text-color transition-colors">
+            <svg class="size-5">
+              <use href="#chat-bubble-left-ellipsis"></use>
+            </svg>
+            <span>پاسخ</span>
           </div>
         </div>
         <!-- End of Comment Info -->
@@ -455,7 +445,6 @@ const commentReplyTemplate = (reply) => {
 
 // blog.js
 const blogTemplate = (blog) => {
-  let likeIcon = blog.isLiked ? 'heart' : 'heart-outline';
   const template = `
               <!-- Title -->
             <div class="flex xs:items-end gap-1 text-xl xs:text-2xl md:text-3xl font-VazirBlack">
@@ -466,7 +455,7 @@ const blogTemplate = (blog) => {
             </div>
             <!-- End of Title -->
             <!-- Detail -->
-            <div class="blog__detail flex flex-col xs:flex-row justify-between sm:justify-center md:justify-between flex-wrap gap-3 xs:gap-6 xs:font-VazirMedium text-sm xl:text-base border-y border-y-slate-200 dark:border-y-slate-600 py-3 px-5">
+            <div class="blog__detail flex flex-col sm:flex-row justify-between flex-wrap gap-3 xs:gap-6 xs:font-VazirMedium text-sm xl:text-base border-y border-y-slate-200 dark:border-y-slate-600 py-3 px-5">
             <!-- Category -->
               <div class="flex items-center gap-2">
                 <svg class="size-5 theme-text-color">
@@ -486,7 +475,7 @@ const blogTemplate = (blog) => {
                 <svg class="size-5 theme-text-color">
                   <use href="#timer"></use>
                 </svg>
-                <span>زمان مطالعه: ${blog.readingTime} دقیقه</span>
+                <span>${blog.readingTime} دقیقه</span>
               </div>
               <!-- Date -->
               <div class="flex items-center gap-2">
@@ -494,6 +483,13 @@ const blogTemplate = (blog) => {
                   <use href="#calendar-days"></use>
                 </svg>
                 <span>${blog.date}</span>
+              </div>
+              <!-- Seen -->
+              <div class="flex items-center gap-2">
+                <svg class="size-5 theme-text-color">
+                  <use href="#eye"></use>
+                </svg>
+                <span>${blog.seen}</span>
               </div>
             </div>
             <!-- End of Detail -->
@@ -507,24 +503,14 @@ const blogTemplate = (blog) => {
             <!--  Blog Content -->
             <article class="blog__content">${blog.content}</article>
             <!-- End of Blog Content -->
-            <!-- Like and Copy Link -->
-            <div class="flex flex-col xs:flex-row xs:items-center justify-between gap-1">
-              <!-- Like -->
-              <div class="blog__like-btn flex items-center gap-1 self-start xs:self-auto bg-slate-300 text-slate-900 py-1 px-2 rounded-lg md:cursor-pointer group">
-                <svg class="size-6 text-rose-500 md:group-hover:text-rose-700 transition-colors">
-                  <use href="#${likeIcon}"></use>
-                </svg>
-                <span>${blog.likes}</span>
-              </div>
-              <!-- BLog link -->
-              <div class="blog__copy-link-btn flex items-center gap-1 self-end xs:self-auto bg-slate-300 text-slate-900 py-1 px-2 rounded-xl md:cursor-pointer group" data-link="${location.origin}/blogs.html?blog=${blog.slug}">
+            <!-- Copy Link -->
+              <div class="blog__copy-link-btn w-44 flex items-center gap-1 bg-slate-300 text-slate-900 py-1 px-2 rounded-xl md:cursor-pointer group" data-link="${location.origin}/blogs.html?blog=${blog.slug}">
                 <svg class="size-6 md:cursor-pointer md:group-hover:theme-text-color transition-colors">
                   <use href="#clipboard-document"></use>
                 </svg>
                 <input class="w-32 text-xs sm:text-sm font-VazirLight outline-none bg-transparent cursor-pointer" dir="ltr" value="${location.origin}/blogs.html?blog=${blog.slug}" type="text" readonly />
               </div>
-            </div>
-            <!-- End of Like and Copy Link -->`;
+            <!-- End of Copy Link -->`;
   return template;
 };
 

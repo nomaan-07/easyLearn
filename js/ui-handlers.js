@@ -1,31 +1,6 @@
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { getParentID } from './utils.js';
 
-const updateLike = (isLiked, svg, likeElem, count) => {
-  if (isLiked) {
-    svg.innerHTML = '<use href="#heart"></use>';
-    likeElem.innerText = count + 1;
-  } else {
-    svg.innerHTML = '<use href="#heart-outline"></use>';
-    likeElem.innerText = count ? count - 1 : count;
-  }
-};
-// course.js
-// FIXME: add to database instead of localStorage
-const toggleLike = (btn, isLoading = false) => {
-  const commentID = getParentID(btn, 'comment');
-  const isLiked = localStorage.getItem(`isLiked-${commentID}`) === 'true';
-  const likeElem = btn.children[1];
-  const svg = btn.children[0];
-  const likeCount = Number(likeElem.innerText);
-  if (isLoading) {
-    updateLike(isLiked, svg, likeElem, likeCount);
-  } else {
-    localStorage.setItem(`isLiked-${commentID}`, !isLiked);
-    updateLike(!isLiked, svg, likeElem, likeCount);
-  }
-};
-
 // course.js - dom-handlers.js
 const textareaAutoResize = (event) => {
   event.target.style.height = '160px';
@@ -99,4 +74,4 @@ const moveInLabelElement = (input) => {
   });
 };
 
-export { toggleLike, textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement };
+export { textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement };

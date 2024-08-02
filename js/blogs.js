@@ -59,7 +59,7 @@ const displaySortedBLogs = (type) => {
       sortedBLogs = sortArray(sortedBLogs, 'create');
       break;
     case 'popular':
-      sortedBLogs = sortArray(sortedBLogs, 'likes', true);
+      sortedBLogs = sortArray(sortedBLogs, 'seen', true);
       break;
     case 'opinion':
       sortedBLogs = sortArray(sortedBLogs, 'comments', true);
