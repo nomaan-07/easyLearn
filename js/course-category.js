@@ -121,6 +121,13 @@ const searchCourse = () => {
   searchedCourses = categoryCourses.filter((course) => {
     return course.name.match(regex) || course.search_keywords.includes(searchCourseInputValue.toLowerCase());
   });
+
+  if (searchedCourses.length) {
+    searchResultWrapper.classList.add('hidden');
+  } else {
+    searchResultWrapper.classList.remove('hidden');
+  }
+
   if (searchCourseInputValue) {
     filteredCourses = searchedCourses;
   } else {
