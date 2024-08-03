@@ -340,7 +340,7 @@ const courseHeadlineSessionTemplate = (session, number) => {
   if (session.isLocked) {
     sessionHref = '';
     sessionIcon = 'lock-closed';
-    sessionClasses = 'theme-bg-color-10 dark:bg-yellow-600/10 cursor-default';
+    sessionClasses = 'theme-bg-color-10 dark:bg-yellow-600/10 cursor-default headline__lock-session';
   }
   const template = `
           <!-- Session -->

@@ -21,9 +21,10 @@ import {
 } from './dom-elements.js';
 
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian, calculateRemainingTime } from './utils.js';
-import { toggleTextarea, textareaAutoResize } from './ui-handlers.js';
+import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
 import { insertToDOM, handleCommentReply, discountRemainingTimeDisplayHandler } from './dom-handlers.js';
+import { sweetAlert } from './sweet-alert-initialize.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');
@@ -169,3 +170,4 @@ newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrap
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
 commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, user));
+headlinesWrapper.addEventListener('click', headlineLockSessionAlert);

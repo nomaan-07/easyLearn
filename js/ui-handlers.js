@@ -23,6 +23,9 @@ const toggleTextarea = (wrapper, textarea, user = true, openTextarea = false) =>
   }
 };
 
+const headlineLockSessionAlert = (event) => {
+  event.target.closest('.headline__lock-session') && sweetAlert('برای مشاهده‌ی این قسمت باید دوره را تهیه کنید.', 'info');
+};
 // course-category.js - blogs.js
 function activeFilterBtn(btn) {
   btn.classList.add('theme-bg-color-10');
@@ -97,4 +100,4 @@ const hidePassword = () => {
   passwordInput.type = 'password';
 };
 
-export { textareaAutoResize, toggleTextarea, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, showPassword, hidePassword };
+export { textareaAutoResize, toggleTextarea, headlineLockSessionAlert, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, showPassword, hidePassword };
