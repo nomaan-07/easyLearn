@@ -19,6 +19,11 @@ const loginBtnTemplate = (userID) => {
 // shared.js - index.js
 const courseCardTemplate = (course) => {
   let finalPriceTemplate = null;
+  let discountHiddenClass = 'hidden ';
+  if (course.discountPercent) {
+    discountHiddenClass = '';
+  }
+
   if (course.discountPercent === 100) {
     finalPriceTemplate = `
           <div class="text-left">
@@ -42,7 +47,7 @@ const courseCardTemplate = (course) => {
                   <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
                 </a>
                 <!-- Discount Percent -->
-                <div class="absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${course.discountPercent}%</div>
+                <div class="${discountHiddenClass}absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${course.discountPercent}%</div>
               </div>
               <!-- End of Course Banner -->
               <div class="h-[122px] px-4 space-y-2 mt-4">
@@ -78,7 +83,7 @@ const courseCardTemplate = (course) => {
                 <!-- Course Price -->
                 <div>
                   <!-- Price -->
-                  <span class="text-sm sm:text-base line-through text-slate-500 dark:text-slate-300 decoration-red-400">${course.price}</span>
+                  <span class="${discountHiddenClass}text-sm sm:text-base line-through text-slate-500 dark:text-slate-300 decoration-red-400">${course.price}</span>
                   <!-- Final Price -->
                     ${finalPriceTemplate}
                 </div>
@@ -175,8 +180,13 @@ const blogCardTemplate = (blog) => {
 // course.js
 const courseInfoTemplate = (course) => {
   let finalPriceTemplate = null;
+  let discountHiddenClass = `hidden `;
+  if (course.timestamp) {
+    discountHiddenClass = '';
+  }
+
   if (course.discountPercent === 100) {
-    finalPriceTemplate = ` <span class="font-VazirMedium text-green-600 dark:text-green-400">${course.finalPrice}</span>`;
+    finalPriceTemplate = `<span class="font-VazirMedium text-green-600 dark:text-green-400">${course.finalPrice}</span>`;
   } else {
     finalPriceTemplate = `
             <div class="flex items-end font-VazirMedium">
@@ -194,7 +204,7 @@ const courseInfoTemplate = (course) => {
     </div>
     <!-- End of Banner -->
     <!-- Course Info -->
-    <div class="bg-white p-5 lg:w-1/2 dark:bg-slate-800 rounded-2xl shadow">
+    <div class="bg-white p-5 lg:w-1/2 h-max dark:bg-slate-800 rounded-2xl shadow">
       <!-- Course name -->
       <h1 class="lg:order-1 text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
       <!-- Course Caption -->
@@ -213,13 +223,13 @@ const courseInfoTemplate = (course) => {
           </a>
           <!-- End of Teacher -->
           <!-- Discount -->
-          <div class="sm:text-lg font-VazirLight text-center theme-bg-color-10 p-2 lg:px-1 xl:px-2 rounded-2xl mt-4 sm:mt-0">
+          <div class="${discountHiddenClass}sm:text-lg font-VazirLight text-center theme-bg-color-10 p-2 lg:px-1 xl:px-2 rounded-2xl mt-4 sm:mt-0">
             <p class="font-VazirBold theme-text-color"><span>${course.discountPercent}%</span> تخفیف ویژه</p>
             <div class="flex items-center justify-center m-1">
-              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l"><span class="font-VazirBold">2</span> روز</div>
-              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l"><span class="font-VazirBold">12</span> ساعت</div>
-              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l border-l-slate-200 dark:border-l-slate-700"><span class="font-VazirBold">54</span> دقیقه</div>
-              <div><span class="font-VazirBold">29</span> ثانیه</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-day" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> روز</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-hour" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> ساعت</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-minute" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> دقیقه</div>
+              <div><span id="discount-second" class="inline-block w-[22px] md:w-[26px] font-VazirBold theme-text-color"></span> ثانیه</div>
             </div>
           </div>
           <!-- End of Discount -->
@@ -232,7 +242,7 @@ const courseInfoTemplate = (course) => {
           <!-- Price -->
           <div class="flex items-end gap-2 text-lg sm:text-xl lg:text-2xl">
             <!-- Primary Price -->
-            <span class="line-through dark:text-slate-300 text-slate-500 decoration-red-400">${course.price}</span>
+            <span class="${discountHiddenClass}line-through dark:text-slate-300 text-slate-500 decoration-red-400">${course.price}</span>
             <!-- Final Price -->
               ${finalPriceTemplate}
             <!-- End of Final Price -->

@@ -1,4 +1,4 @@
-import { getAllFromDatabase, getOneFromDatabase } from './database-api.js';
+import { getOneFromDatabase } from './database-api.js';
 import './header.js';
 import './change-theme.js';
 import { courseInfoTemplate, courseDataTemplate } from './template.js';
@@ -20,10 +20,10 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian } from './utils.js';
+import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian, calculateRemainingTime } from './utils.js';
 import { toggleTextarea, textareaAutoResize } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
-import { insertToDOM, handleCommentReply } from './dom-handlers.js';
+import { insertToDOM, handleCommentReply, discountRemainingTimeDisplayHandler } from './dom-handlers.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');
@@ -49,7 +49,12 @@ if (!courseParam) {
 async function fetchAndDisplayCourse() {
   try {
     const course = await getOneFromDatabase('courses', 'slug', courseParam);
-    course ? addCourseToDOM(course) : location.replace('./404.html');
+    if (course) {
+      addCourseToDOM(course);
+      discountRemainingTimeDisplayHandler(course.discount_timestamp);
+    } else {
+      location.replace('./404.html');
+    }
   } catch (error) {
     console.error('Failed to fetch searched course', error);
   }
@@ -74,6 +79,7 @@ const createCourseObject = (dbCourse) => ({
   sessionsCount: dbCourse.sessions_count,
   videosLength: dbCourse.videos_length,
   situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
+  timestamp: dbCourse.discount_timestamp,
   // FIXME: updated_at instead of created_at
   date: formatDate(dbCourse.created_at),
 });

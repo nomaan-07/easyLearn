@@ -171,6 +171,29 @@ const deleteUserIDFromLocal = async (userID) => {
   !user && localStorage.removeItem('userID');
 };
 
+const calculateFutureTime = (days, hour = 0, minute = 0, second = 0) => {
+  let now = new Date();
+  now.setDate(now.getDate() + days);
+  let goalDate = new Date(now.getTime());
+  goalDate.setHours(hour, minute, second);
+  let timestamp = goalDate.getTime();
+
+  return timestamp;
+};
+
+const calculateRemainingTime = (timestamp) => {
+  let now = new Date();
+  let futureTime = new Date(timestamp);
+  let differenceInMilliseconds = futureTime - now;
+
+  let days = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((differenceInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((differenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((differenceInMilliseconds % (1000 * 60)) / 1000);
+
+  return { days, hours, minutes, seconds };
+};
+
 export {
   removeLoader,
   generateRandomID,
@@ -187,4 +210,6 @@ export {
   commentSectionTemplateHandler,
   sortArray,
   deleteUserIDFromLocal,
+  calculateFutureTime,
+  calculateRemainingTime,
 };

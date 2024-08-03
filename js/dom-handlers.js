@@ -1,5 +1,5 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea } from './utils.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 
@@ -116,4 +116,24 @@ const handleCommentReply = (event, user) => {
   }
 };
 
-export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply };
+// course.js
+const discountRemainingTimeDisplayHandler = (timestamp) => {
+  const dayElem = document.getElementById('discount-day');
+  const hourElem = document.getElementById('discount-hour');
+  const minuteElem = document.getElementById('discount-minute');
+  const secondElem = document.getElementById('discount-second');
+
+  setInterval(() => {
+    let remainingTime = calculateRemainingTime(timestamp);
+    let remainingDays = String(remainingTime.days).padStart(2, '0');
+    let remainingHours = String(remainingTime.hours).padStart(2, '0');
+    let remainingMinutes = String(remainingTime.minutes).padStart(2, '0');
+    let remainingSeconds = String(remainingTime.seconds).padStart(2, '0');
+    dayElem.textContent = remainingDays;
+    hourElem.textContent = remainingHours;
+    minuteElem.textContent = remainingMinutes;
+    secondElem.textContent = remainingSeconds;
+  }, 1000);
+};
+
+export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, discountRemainingTimeDisplayHandler };
