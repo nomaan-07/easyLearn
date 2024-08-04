@@ -2,7 +2,7 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom } from './dom-handlers.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation } from './validation.js';
 
@@ -14,6 +14,8 @@ async function fetchAndDisplayMainPageCourses() {
     const twelveMostPopularCourse = sortArray(allCourses, 'students', true).slice(0, 12);
     addCourseCardsToDOM(lastTenCourse, latestCoursesWrapperElement);
     addCourseCardsToDOM(twelveMostPopularCourse, popularCoursesWrapperElement, true);
+    latestCoursesWrapperElement.addEventListener('click', (event) => addCourseToCartHandler(event, lastTenCourse));
+    popularCoursesWrapperElement.addEventListener('click', (event) => addCourseToCartHandler(event, twelveMostPopularCourse));
   } catch (error) {
     console.error('Failed to Fetch courses', error);
   }

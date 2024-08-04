@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
     <link id="favicon" rel="icon" href="./images/favIcons/fuchsia-favicon-64x64.png" />
+    <link rel="stylesheet" href="./vendor/animate/animate.min.css" />
+    <link rel="stylesheet" href="./vendor/Sweetalert2/sweetalert2.min.css" />
     <link rel="stylesheet" href="./styles/app.css" />
   </head>
   <body class="text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 font-Vazir overflow-x-hidden h-0 overflow-y-hidden relative">
@@ -177,6 +179,13 @@
         <path
           d="M 20.572266 3.0117188 C 20.239891 2.9764687 19.878625 3.028375 19.515625 3.171875 C 19.065625 3.348875 12.014406 6.3150313 5.4414062 9.0820312 L 3.2695312 9.9960938 C 2.4285313 10.337094 2.0039062 10.891672 2.0039062 11.638672 C 2.0039062 12.161672 2.22525 12.871063 3.28125 13.289062 L 6.9472656 14.757812 C 7.2642656 15.708813 8.0005469 17.916906 8.1855469 18.503906 C 8.2955469 18.851906 8.5733906 19.728594 9.2753906 19.933594 C 9.4193906 19.982594 9.5696563 20.007813 9.7226562 20.007812 C 10.165656 20.007812 10.484625 19.801641 10.640625 19.681641 L 12.970703 17.710938 L 15.800781 20.328125 C 15.909781 20.439125 16.486719 21 17.261719 21 C 18.228719 21 18.962234 20.195016 19.115234 19.416016 C 19.198234 18.989016 21.927734 5.2870625 21.927734 5.2890625 C 22.172734 4.1900625 21.732219 3.6199531 21.449219 3.3769531 C 21.206719 3.1694531 20.904641 3.0469688 20.572266 3.0117188 z M 19.910156 5.171875 C 19.533156 7.061875 17.478016 17.378234 17.166016 18.865234 L 13.029297 15.039062 L 10.222656 17.416016 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.272669 8.8885973 10.404094 11.662239 8.0078125 13.025391 L 4.53125 11.636719 L 6.21875 10.927734 C 10.51775 9.1177344 18.174156 5.893875 19.910156 5.171875 z"
         ></path>
+      </symbol>
+      <symbol id="trash" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+        />
       </symbol>
       <symbol id="toman" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 28" fill="currentColor">
         <path
@@ -373,29 +382,14 @@
               <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-lg p-5 space-y-4">
                 <!-- Cart Header -->
                 <div class="flex items-center justify-between pb-2 border-b border-b-slate-200 dark:border-b-slate-700 text-xs">
-                  <span>۲ مورد</span>
+                  <span class="header__cart-courses-number">0 مورد</span>
                   <a href="./cart.html" class="transition-colors hover:theme-text-color">مشاهده ی سبد خرید</a>
                 </div>
                 <!-- Courses -->
-                <div class="my-4 space-y-4 select-none overflow-y-auto max-h-44">
-                  <!-- Course -->
-                  <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-200 dark:border-b-slate-700">
-                    <div>
-                      <a href="./course.html" class="font-VazirMedium transition-colors hover:theme-text-color"> دوره ی جامع جاوا اسکریپت </a>
-                      <div class="flex items-center gap-3 mt-3">
-                        <span class="text-sm line-through text-slate-500 dark:text-slate-300 decoration-red-400">3,750,000</span>
-                        <div class="flex items-end">
-                          <span class="text-green-600 dark:text-green-400">3,400,000</span>
-                          <svg class="size-7 mr-[-3px]">
-                            <use href="#toman"></use>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    <img src="images/courses/JavaScript.jpg" class="w-20 h-full" alt="" />
-                  </div>
+                <div class="header__cart-courses my-4 space-y-4 select-none overflow-y-auto max-h-[272px]">
+                  <p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>
                 </div>
-                <div class="flex items-center justify-between font-VazirMedium">
+                <div class="header__cart-total-price hidden items-center justify-between font-VazirMedium">
                   قیمت کل:
                   <div class="flex items-end">
                     <span class="text-green-600 dark:text-green-400">3,400,000</span>
@@ -405,7 +399,7 @@
                   </div>
                 </div>
                 <!-- Pay Btn -->
-                <a href="./cart.html" class="btn theme-bg-color mt-4 md:hover:theme-hover-bg-color">تکمیل سفارش</a>
+                <a href="./course-category.html?category=all-courses" class="header__cart-pay-btn btn theme-bg-color mt-4 hover:theme-hover-bg-color">همه ی دوره ها</a>
               </div>
             </div>
           </div>
@@ -534,7 +528,7 @@
         </li>
       </ul>
       <!-- Login Btn -->
-      <a href="./auth.html?operation=signup" class="btn theme-bg-color mt-4 md:hover:theme-hover-bg-color">ورود | ثبت نام</a>
+      <div class="login-btn"><a href="./auth.html?operation=signup" class="btn theme-bg-color mt-4 md:hover:theme-hover-bg-color">ورود | ثبت نام</a></div>
     </div>
     <!-- Mobile Shopping Cart -->
     <div class="mobile-shopping-cart fixed top-0 left-[-280px] bottom-0 w-[280px] bg-white dark:bg-slate-800 z-50 transition-all lg:hidden overflow-y-auto p-2">
@@ -545,30 +539,14 @@
             <use href="#x-mark"></use>
           </svg>
         </div>
-        <span class="theme-text-color font-VazirBold text-lg select-none">سبد خرید</span>
+        <span class="header__cart-courses-number text-xs self-end">0 مورد</span>
+        <a href="./cart.html" class="theme-text-color font-VazirBold text-lg select-none">سبد خرید</a>
       </div>
-
       <!-- Courses -->
-      <div class="my-4 space-y-4 select-none overflow-y-auto max-h-[272px]">
-        <!-- Course -->
-        <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-200 dark:border-b-slate-700">
-          <div>
-            <span class="font-VazirMedium">دوره ی جامع جاوا اسکریپت</span>
-            <div class="flex items-center gap-3 mt-3">
-              <span class="text-sm line-through text-slate-500 dark:text-slate-300 decoration-red-400">3,750,000</span>
-              <div class="flex items-end">
-                <span class="text-green-600 dark:text-green-400">3,400,000</span>
-                <svg class="size-7 mr-[-3px]">
-                  <use href="#toman"></use>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <img src="images/courses/JavaScript.jpg" class="w-20 h-full" alt="" />
-        </div>
+      <div class="header__cart-courses my-4 space-y-4 select-none overflow-y-auto max-h-[272px]">
+        <p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>
       </div>
-      <div class="flex items-center justify-between font-VazirMedium">
+      <div class="header__cart-total-price hidden items-center justify-between font-VazirMedium">
         قیمت کل:
         <div class="flex items-end">
           <span class="text-green-600 dark:text-green-400">3,400,000</span>
@@ -578,7 +556,7 @@
         </div>
       </div>
       <!-- Pay Btn -->
-      <a href="./cart.html" class="btn theme-bg-color mt-4 md:hover:theme-hover-bg-color">تکمیل سفارش</a>
+      <a href="./course-category.html?category=all-courses" class="header__cart-pay-btn btn theme-bg-color mt-4 md:hover:theme-hover-bg-color">همه ی دوره ها</a>
     </div>
     <!-- End of Header -->
 
@@ -1092,6 +1070,7 @@
     <!-- Bottom bg shape -->
     <div class="absolute bottom-0 left-0 right-0 opacity-30 mx-auto w-full h-[450px] sm:h-[500px] lg:h-96 -z-10 theme-bg-color"></div>
 
+    <script src="./vendor/Sweetalert2/sweetalert2.all.min.js"></script>
     <script type="module" src="./js/course-category.js"></script>
   </body>
 </html>

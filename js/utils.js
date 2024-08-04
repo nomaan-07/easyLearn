@@ -181,6 +181,7 @@ const calculateFutureTime = (days, hour = 0, minute = 0, second = 0) => {
   return timestamp;
 };
 
+// dom-handler.js
 const calculateRemainingTime = (timestamp) => {
   let now = new Date();
   let futureTime = new Date(timestamp);

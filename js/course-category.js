@@ -1,5 +1,5 @@
 import { getAllFromDatabase } from './database-api.js';
-import { addCourseCardsToDOM } from './dom-handlers.js';
+import { addCourseCardsToDOM, addCourseToCartHandler } from './dom-handlers.js';
 import './header.js';
 import './change-theme.js';
 import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './dom-elements.js';
@@ -48,6 +48,7 @@ async function fetchAndDisplayCategoryCoursesToDOM() {
     }
     filteredCourses = categoryCourses;
     addCourseCardsToDOM(categoryCourses, coursesWrapperElement);
+    coursesWrapperElement.addEventListener('click', (event) => addCourseToCartHandler(event, categoryCourses));
   } catch (error) {
     console.error('Failed to fetch courses', error);
   }

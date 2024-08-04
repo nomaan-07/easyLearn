@@ -5,7 +5,8 @@ import { heroParticlesJS } from './particles-initialize.js';
 import { heroTypewriter } from './typewriter-initialize.js';
 import { removeLoader, deleteUserIDFromLocal } from './utils.js';
 import { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs } from './database-handlers.js';
-import { localStorageUserID } from './dom-elements.js';
+import { latestCoursesWrapperElement, localStorageUserID, popularCoursesWrapperElement } from './dom-elements.js';
+import { addCourseToCartHandler } from './dom-handlers.js';
 
 deleteUserIDFromLocal(localStorageUserID);
 

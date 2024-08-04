@@ -1,7 +1,9 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate } from './template.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
+import { headerCartCoursesNumbers, headerCartCoursesWrappers, headerCartPayButtons } from './dom-elements.js';
+import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -136,4 +138,64 @@ const discountRemainingTimeDisplayHandler = (timestamp) => {
   }, 1000);
 };
 
-export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, discountRemainingTimeDisplayHandler };
+// index.js
+const addCourseToCartHandler = (event, courses) => {
+  let dbCourse = null;
+
+  if (event.target.closest('.course__add-to-cart-btn')) {
+    let courseID = event.target.closest('.course__add-to-cart-btn').dataset.course_id;
+    dbCourse = courses.length ? courses.find((course) => course.id === courseID) : courses;
+
+    let course = {
+      id: dbCourse.id,
+      name: dbCourse.name,
+      finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایــــــگان!',
+      discount: dbCourse.discount,
+      imageSrc: dbCourse.image_src,
+      slug: dbCourse.slug,
+    };
+
+    let localCourses = JSON.parse(localStorage.getItem('courses'));
+
+    if (localCourses) {
+      let courseInLocalCourse = localCourses.find((localCourse) => localCourse.id === course.id);
+      if (!courseInLocalCourse) {
+        localCourses.push(course);
+        sweetAlert(`دوره به سبد خرید اضافه شد.`, 'success');
+      } else {
+        sweetAlert('این دوره در سبد خرید موجود است.', 'failed');
+      }
+
+      localStorage.setItem('courses', JSON.stringify(localCourses));
+    } else {
+      localStorage.setItem('courses', JSON.stringify([course]));
+    }
+    updateHederCartDetail();
+  }
+};
+
+const updateHederCartDetail = () => {
+  const localCourses = JSON.parse(localStorage.getItem('courses'));
+  let coursesTemplate = '';
+  if (localCourses && localCourses.length) {
+    headerCartCoursesNumbers.forEach((elem) => (elem.innerText = `${localCourses.length} مورد`));
+
+    localCourses.forEach((course) => (coursesTemplate += headerCartCourseTemplate(course)));
+
+    headerCartCoursesWrappers.forEach((courseWrappers) => insertToDOM(courseWrappers, coursesTemplate));
+
+    headerCartPayButtons.forEach((btn) => {
+      btn.href = './cart.html';
+      btn.textContent = 'تکمیل سفارش';
+    });
+  } else {
+    headerCartCoursesNumbers.forEach((elem) => (elem.innerText = `0 مورد`));
+    headerCartCoursesWrappers.forEach((elem) => insertToDOM(elem, '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'));
+    headerCartPayButtons.forEach((btn) => {
+      btn.href = './course-category.html?category=all-courses';
+      btn.textContent = 'همه‌ی دوره‌ها';
+    });
+  }
+};
+
+export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, discountRemainingTimeDisplayHandler, addCourseToCartHandler, updateHederCartDetail };

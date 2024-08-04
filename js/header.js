@@ -19,9 +19,10 @@ import {
   loginButtons,
   localStorageUserID,
 } from './dom-elements.js';
-import { addLoginBtnToDOM } from './dom-handlers.js';
+import { addLoginBtnToDOM, updateHederCartDetail } from './dom-handlers.js';
 
 addLoginBtnToDOM(loginButtons, localStorageUserID);
+updateHederCartDetail();
 
 const openMobileMenu = (menu, directionClass) => {
   menu.classList.add(`${directionClass}-0`);

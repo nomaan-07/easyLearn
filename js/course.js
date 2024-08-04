@@ -23,7 +23,7 @@ import {
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian, calculateRemainingTime } from './utils.js';
 import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
-import { insertToDOM, handleCommentReply, discountRemainingTimeDisplayHandler } from './dom-handlers.js';
+import { insertToDOM, handleCommentReply, discountRemainingTimeDisplayHandler, addCourseToCartHandler } from './dom-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 let course = null;
@@ -70,8 +70,8 @@ const createCourseObject = (dbCourse) => ({
   teacher: dbCourse.teacher,
   students: dbCourse.students.toLocaleString('fa-IR'),
   ratePercent: Math.floor((dbCourse.rate * 100) / 5),
-  discountPercent: dbCourse.discount,
-  price: dbCourse.price.toLocaleString('fa-IR'),
+  discount: dbCourse.discount,
+  price: dbCourse.price,
   description: dbCourse.description,
   category: dbCourse.category[0],
   categoryName: categoryInPersian(dbCourse.category[0]),
@@ -92,6 +92,7 @@ const addCourseToDOM = (dbCourse) => {
   breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, course.categoryName, 'course');
   // Info and banner section
   insertToDOM(courseInfoWrapper, courseInfoTemplate(course));
+  courseInfoWrapper.addEventListener('click', (event) => addCourseToCartHandler(event, course));
   // Data section
   insertToDOM(courseDataWrapper, courseDataTemplate(course));
   // Description section

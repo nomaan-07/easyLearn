@@ -1,4 +1,4 @@
-import { formatDate } from './utils.js';
+import { applyDiscountToPrice, formatDate } from './utils.js';
 
 const loginBtnTemplate = (userID) => {
   let template = '';
@@ -91,7 +91,7 @@ const courseCardTemplate = (course) => {
               </div>
               <!-- End of Students && Rating && Price  -->
               <!-- Cart Btn  -->
-              <div class="absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer" onclick="addCourseToCart('${course.id}')">
+              <div class="course__add-to-cart-btn absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer"  data-course_id="${course.id}">
                 <svg class="size-6">
                   <use href="#shopping-bag"></use>
                 </svg>
@@ -179,13 +179,14 @@ const blogCardTemplate = (blog) => {
 
 // course.js
 const courseInfoTemplate = (course) => {
+  let price = course.price.toLocaleString('fa-IR');
   let finalPriceTemplate = null;
   let discountHiddenClass = `hidden `;
   if (course.timestamp) {
     discountHiddenClass = '';
   }
 
-  if (course.discountPercent === 100) {
+  if (course.discount === 100) {
     finalPriceTemplate = `<span class="font-VazirMedium text-green-600 dark:text-green-400">${course.finalPrice}</span>`;
   } else {
     finalPriceTemplate = `
@@ -204,7 +205,7 @@ const courseInfoTemplate = (course) => {
     </div>
     <!-- End of Banner -->
     <!-- Course Info -->
-    <div class="bg-white p-5 lg:w-1/2 h-max dark:bg-slate-800 rounded-2xl shadow">
+    <div class="bg-white p-5 lg:w-1/2 h-max dark:bg-slate-800 rounded-2xl shadow"  data-course_id="${course.id}>
       <!-- Course name -->
       <h1 class="lg:order-1 text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
       <!-- Course Caption -->
@@ -224,7 +225,7 @@ const courseInfoTemplate = (course) => {
           <!-- End of Teacher -->
           <!-- Discount -->
           <div class="${discountHiddenClass}sm:text-lg font-VazirLight text-center theme-bg-color-10 p-2 lg:px-1 xl:px-2 rounded-2xl mt-4 sm:mt-0">
-            <p class="font-VazirBold theme-text-color"><span>${course.discountPercent}%</span> تخفیف ویژه</p>
+            <p class="font-VazirBold theme-text-color"><span>${course.discount}%</span> تخفیف ویژه</p>
             <div class="flex items-center justify-center m-1">
               <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-day" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> روز</div>
               <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-hour" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> ساعت</div>
@@ -238,11 +239,11 @@ const courseInfoTemplate = (course) => {
         <!-- Purchase and Price -->
         <div class="flex flex-col-reverse sm:flex-row gap-3 justify-between items-center mt-4 md:mt-6 2xl:flex-col-reverse 2xl:items-start 2xl:gap-4">
           <!-- Purchase Btn -->
-          <div class="btn w-full sm:w-auto 2xl:w-full theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت نام در دوره</div>
+          <div class="course__add-to-cart-btn btn w-full sm:w-auto 2xl:w-full theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer" data-course_id="${course.id}">ثبت نام در دوره</div>
           <!-- Price -->
           <div class="flex items-end gap-2 text-lg sm:text-xl lg:text-2xl">
             <!-- Primary Price -->
-            <span class="${discountHiddenClass}line-through dark:text-slate-300 text-slate-500 decoration-red-400">${course.price}</span>
+            <span class="${discountHiddenClass}line-through dark:text-slate-300 text-slate-500 decoration-red-400">${price}</span>
             <!-- Final Price -->
               ${finalPriceTemplate}
             <!-- End of Final Price -->
@@ -568,4 +569,43 @@ const authFormHeaderTemplate = (operation) => {
   return template;
 };
 
-export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate, authFormHeaderTemplate };
+// dom-handlers.js
+const headerCartCourseTemplate = (course) => {
+  let priceTemplate = null;
+  let discountClass = '';
+  if (course.discount === 100) {
+    priceTemplate = `<span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>`;
+  } else {
+    priceTemplate = `
+            <div class="flex items-end">
+              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
+              <svg class="size-7 mr-[-3px]">
+                <use href="#toman"></use>
+              </svg>
+            </div>`;
+  }
+  if (course.discount === 0) discountClass = 'hidden ';
+
+  const template = `
+    <!-- Cart Course -->
+      <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-200 dark:border-b-slate-700 relative">
+      <!-- Cart Course Discount Percent -->
+        <div class="${discountClass}absolute top-0 left-0 flex items-end justify-center px-1 h-5 theme-bg-color text-white text-sm rounded-tl-xl rounded-br-xl">${course.discount}</div>
+        <div>
+          <a href="./course.html?course=${course.slug}" class="font-VazirMedium transition-colors hover:theme-text-color line-clamp-1 text-sm">${course.name}</a>
+          <div class="flex items-end gap-3 mt-3">
+            ${priceTemplate}
+            <div class="size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all">
+              <svg class="size-5">
+                <use href="#trash"></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <img src="${course.imageSrc}" class="w-20 h-full rounded-xl" alt="${course.name}" />
+      </div>
+    <!-- End of Cart Course -->`;
+  return template;
+};
+
+export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate, authFormHeaderTemplate, headerCartCourseTemplate };
