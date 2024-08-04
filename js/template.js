@@ -590,16 +590,16 @@ const headerCartCourseTemplate = (course) => {
     <!-- Cart Course -->
       <div class="flex items-center justify-between h-20 pb-4 border-b border-b-slate-200 dark:border-b-slate-700 relative">
       <!-- Cart Course Discount Percent -->
-        <div class="${discountClass}absolute top-0 left-0 flex items-end justify-center px-1 h-5 theme-bg-color text-white text-sm rounded-tl-xl rounded-br-xl">${course.discount}</div>
+        <div class="${discountClass}absolute top-0 left-0 flex items-end justify-center px-1 h-5 theme-bg-color text-white text-sm rounded-tl-xl rounded-br-xl">${course.discount}٪</div>
         <div>
           <a href="./course.html?course=${course.slug}" class="font-VazirMedium transition-colors hover:theme-text-color line-clamp-1 text-sm">${course.name}</a>
           <div class="flex items-end gap-3 mt-3">
-            ${priceTemplate}
             <div class="size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all">
               <svg class="size-5">
                 <use href="#trash"></use>
               </svg>
             </div>
+            ${priceTemplate}
           </div>
         </div>
         <img src="${course.imageSrc}" class="w-20 h-full rounded-xl" alt="${course.name}" />
