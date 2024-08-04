@@ -1010,6 +1010,10 @@ video {
 
 /* End of Breadcrumb */
 
+.course-description img {
+  border-radius: 1rem;
+}
+
 /* Headline Title */
 
 .headline__title {
@@ -1975,10 +1979,6 @@ video {
   max-height: 3rem;
 }
 
-.max-h-44 {
-  max-height: 11rem;
-}
-
 .max-h-48 {
   max-height: 12rem;
 }
@@ -2061,10 +2061,6 @@ video {
 
 .w-80 {
   width: 20rem;
-}
-
-.w-9 {
-  width: 2.25rem;
 }
 
 .w-\[22px\] {
@@ -3338,17 +3334,16 @@ video {
   border-top-right-radius: 0.25rem;
 }
 
-.rounded-b-full {
-  border-bottom-right-radius: 9999px;
-  border-bottom-left-radius: 9999px;
-}
-
 .rounded-bl {
   border-bottom-left-radius: 0.25rem;
 }
 
 .rounded-br {
   border-bottom-right-radius: 0.25rem;
+}
+
+.rounded-br-xl {
+  border-bottom-right-radius: 0.75rem;
 }
 
 .rounded-ee {
@@ -3375,20 +3370,16 @@ video {
   border-top-left-radius: 76px;
 }
 
+.rounded-tl-xl {
+  border-top-left-radius: 0.75rem;
+}
+
 .rounded-tr {
   border-top-right-radius: 0.25rem;
 }
 
 .rounded-tr-2xl {
   border-top-right-radius: 1rem;
-}
-
-.rounded-tl-xl {
-  border-top-left-radius: 0.75rem;
-}
-
-.rounded-br-xl {
-  border-bottom-right-radius: 0.75rem;
 }
 
 .border {
