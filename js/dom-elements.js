@@ -35,6 +35,7 @@ const loginButtons = document.querySelectorAll('.login-btn');
 const headerCartCoursesNumberElements = document.querySelectorAll('.header__cart-courses-number');
 const headerCartCoursesWrappers = document.querySelectorAll('.header__cart-courses');
 const headerCartPayButtons = document.querySelectorAll('.header__cart-pay-btn');
+const headerCartTotalPriceElements = document.querySelectorAll('.header__cart-total-price');
 
 // Elements of index.html
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
@@ -158,4 +159,5 @@ export {
   headerCartCoursesNumberElements,
   headerCartCoursesWrappers,
   headerCartPayButtons,
+  headerCartTotalPriceElements,
 };

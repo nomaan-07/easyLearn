@@ -2,7 +2,7 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID } from './dom-elements.js';
+import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID, headerCartTotalPriceElements } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -155,6 +155,7 @@ const addToLocalCourseIfNotExist = (localCourses, course) => {
   }
 };
 
+// database-handlers.js
 const addCourseToCartHandler = (event, courses) => {
   if (!event.target.closest('.course__add-to-cart-btn')) return;
 
@@ -174,19 +175,31 @@ const addCourseToCartHandler = (event, courses) => {
   updateHederCartDetail();
 };
 
+// header.js
 const updateHederCartDetail = () => {
   if (!localStorageUserID) {
     return;
   }
 
-  const localCourses = getLocalCourses();
   let coursesTemplate = '';
+  let courseTotalPrice = 0;
+  const localCourses = getLocalCourses();
+
   if (localCourses && localCourses.length) {
     headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `${localCourses.length} مورد`));
 
-    localCourses.forEach((course) => (coursesTemplate += headerCartCourseTemplate(course)));
+    localCourses.forEach((course) => {
+      coursesTemplate += headerCartCourseTemplate(course);
+      courseTotalPrice += course.finalPriceInt;
+    });
 
     headerCartCoursesWrappers.forEach((courseWrappers) => insertToDOM(courseWrappers, coursesTemplate));
+
+    headerCartTotalPriceElements.forEach((elem) => {
+      elem.classList.add('flex');
+      elem.classList.remove('hidden');
+      elem.querySelector('span').innerText = courseTotalPrice ? courseTotalPrice.toLocaleString('fa-IR') : 'صـــفر';
+    });
 
     headerCartPayButtons.forEach((btn) => {
       btn.href = './cart.html';
@@ -195,6 +208,13 @@ const updateHederCartDetail = () => {
   } else {
     headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `0 مورد`));
     headerCartCoursesWrappers.forEach((elem) => insertToDOM(elem, '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'));
+
+    headerCartTotalPriceElements.forEach((elem) => {
+      elem.classList.remove('flex');
+      elem.classList.add('hidden');
+      elem.querySelector('span').innerText = 'صـــفر';
+    });
+
     headerCartPayButtons.forEach((btn) => {
       btn.href = './course-category.html?category=all-courses';
       btn.textContent = 'همه‌ی دوره‌ها';

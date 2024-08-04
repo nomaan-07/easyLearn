@@ -199,6 +199,7 @@ const calculateRemainingTime = (timestamp) => {
 const createCartCourseObject = (dbCourse) => ({
   id: dbCourse.id,
   name: dbCourse.name,
+  finalPriceInt: dbCourse.discount != 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount) : 0,
   finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایــــــگان!',
   discount: dbCourse.discount,
   imageSrc: dbCourse.image_src,
