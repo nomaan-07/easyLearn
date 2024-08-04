@@ -594,7 +594,7 @@ const headerCartCourseTemplate = (course) => {
         <div>
           <a href="./course.html?course=${course.slug}" class="font-VazirMedium transition-colors hover:theme-text-color line-clamp-1 text-sm">${course.name}</a>
           <div class="flex items-end gap-3 mt-3">
-            <div class="size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all">
+            <div class="header__cart-course-remove-btn size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all" data-course_id=${course.id}>
               <svg class="size-5">
                 <use href="#trash"></use>
               </svg>

@@ -18,8 +18,9 @@ import {
   mobileSearchBtn,
   loginButtons,
   localStorageUserID,
+  headerCartCoursesWrappers,
 } from './dom-elements.js';
-import { addLoginBtnToDOM, updateHederCartDetail } from './dom-handlers.js';
+import { addLoginBtnToDOM, updateHederCartDetail, removeCourseFromCartHandler } from './dom-handlers.js';
 
 updateHederCartDetail();
 addLoginBtnToDOM(loginButtons, localStorageUserID);
@@ -122,3 +123,4 @@ mobileCartCloseBtn.addEventListener('click', closeMobileHeaderMenus);
 overlay.addEventListener('click', closeMobileHeaderMenus);
 window.addEventListener('scroll', headerScrollHandler);
 headerSearchToggleBtn.addEventListener('click', headerSearchBarToggle);
+headerCartCoursesWrappers.forEach((wrapper) => wrapper.addEventListener('click', removeCourseFromCartHandler));

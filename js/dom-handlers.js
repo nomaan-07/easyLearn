@@ -176,6 +176,18 @@ const addCourseToCartHandler = (event, courses) => {
 };
 
 // header.js
+const removeCourseFromCartHandler = (event) => {
+  if (!event.target.closest('.header__cart-course-remove-btn')) return;
+  const courseID = event.target.closest('.header__cart-course-remove-btn').dataset.course_id;
+
+  const localCourses = getLocalCourses();
+  const filterDeletedCourse = localCourses.filter((localCourse) => localCourse.id !== courseID);
+  localStorage.setItem('courses', JSON.stringify(filterDeletedCourse));
+  sweetAlert('دوره‌ از سبد خرید حذف شد.', 'success');
+  updateHederCartDetail();
+};
+
+// header.js
 const updateHederCartDetail = () => {
   if (!localStorageUserID) {
     return;
@@ -222,4 +234,4 @@ const updateHederCartDetail = () => {
   }
 };
 
-export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, discountRemainingTimeDisplayHandler, addCourseToCartHandler, updateHederCartDetail };
+export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, discountRemainingTimeDisplayHandler, addCourseToCartHandler, updateHederCartDetail, removeCourseFromCartHandler };
