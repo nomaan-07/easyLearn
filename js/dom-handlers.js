@@ -1,8 +1,8 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime } from './utils.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { headerCartCoursesNumbers, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID } from './dom-elements.js';
+import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -138,51 +138,51 @@ const discountRemainingTimeDisplayHandler = (timestamp) => {
   }, 1000);
 };
 
-// index.js
-const addCourseToCartHandler = (event, courses) => {
-  let dbCourse = null;
-
-  if (event.target.closest('.course__add-to-cart-btn')) {
-    if (!localStorageUserID) {
-      sweetAlert('برای ثبت نام در دوره، ابتدا باید در سایت ثبت نام کنید.', 'info');
-      return;
-    }
-    let courseID = event.target.closest('.course__add-to-cart-btn').dataset.course_id;
-    dbCourse = courses.length ? courses.find((course) => course.id === courseID) : courses;
-
-    let course = {
-      id: dbCourse.id,
-      name: dbCourse.name,
-      finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایــــــگان!',
-      discount: dbCourse.discount,
-      imageSrc: dbCourse.image_src,
-      slug: dbCourse.slug,
-    };
-
-    let localCourses = JSON.parse(localStorage.getItem('courses'));
-
-    if (localCourses) {
-      let courseInLocalCourse = localCourses.find((localCourse) => localCourse.id === course.id);
-      if (!courseInLocalCourse) {
-        localCourses.push(course);
-        sweetAlert(`دوره به سبد خرید اضافه شد.`, 'success');
-      } else {
-        sweetAlert('این دوره در سبد خرید موجود است.', 'failed');
-      }
-
-      localStorage.setItem('courses', JSON.stringify(localCourses));
+const addToLocalCourseIfNotExist = (localCourses, course) => {
+  if (localCourses) {
+    let courseInLocalCourse = localCourses.find((localCourse) => localCourse.id === course.id);
+    if (!courseInLocalCourse) {
+      localCourses.push(course);
+      sweetAlert(`دوره به سبد خرید اضافه شد.`, 'success');
     } else {
-      localStorage.setItem('courses', JSON.stringify([course]));
+      sweetAlert('این دوره در سبد خرید موجود است.', 'failed');
     }
-    updateHederCartDetail();
+
+    localStorage.setItem('courses', JSON.stringify(localCourses));
+  } else {
+    sweetAlert(`دوره به سبد خرید اضافه شد.`, 'success');
+    localStorage.setItem('courses', JSON.stringify([course]));
   }
 };
 
+const addCourseToCartHandler = (event, courses) => {
+  if (!event.target.closest('.course__add-to-cart-btn')) return;
+
+  if (!localStorageUserID) {
+    sweetAlert('برای ثبت نام در دوره، ابتدا باید در سایت ثبت نام کنید.', 'info');
+    return;
+  }
+
+  const courseID = event.target.closest('.course__add-to-cart-btn').dataset.course_id;
+  const dbCourse = courses.length ? courses.find((course) => course.id === courseID) : courses;
+
+  const course = createCartCourseObject(dbCourse);
+  const localCourses = getLocalCourses();
+
+  addToLocalCourseIfNotExist(localCourses, course);
+
+  updateHederCartDetail();
+};
+
 const updateHederCartDetail = () => {
-  const localCourses = JSON.parse(localStorage.getItem('courses'));
+  if (!localStorageUserID) {
+    return;
+  }
+
+  const localCourses = getLocalCourses();
   let coursesTemplate = '';
   if (localCourses && localCourses.length) {
-    headerCartCoursesNumbers.forEach((elem) => (elem.innerText = `${localCourses.length} مورد`));
+    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `${localCourses.length} مورد`));
 
     localCourses.forEach((course) => (coursesTemplate += headerCartCourseTemplate(course)));
 
@@ -193,7 +193,7 @@ const updateHederCartDetail = () => {
       btn.textContent = 'تکمیل سفارش';
     });
   } else {
-    headerCartCoursesNumbers.forEach((elem) => (elem.innerText = `0 مورد`));
+    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `0 مورد`));
     headerCartCoursesWrappers.forEach((elem) => insertToDOM(elem, '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'));
     headerCartPayButtons.forEach((btn) => {
       btn.href = './course-category.html?category=all-courses';

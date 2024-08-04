@@ -32,7 +32,7 @@ const searchBarSearchBtn = document.querySelector('.search-bar__search-btn');
 const mobileSearchInput = document.querySelector('.mobile-search-input');
 const mobileSearchBtn = document.querySelector('.mobile-search-btn');
 const loginButtons = document.querySelectorAll('.login-btn');
-const headerCartCoursesNumbers = document.querySelectorAll('.header__cart-courses-number');
+const headerCartCoursesNumberElements = document.querySelectorAll('.header__cart-courses-number');
 const headerCartCoursesWrappers = document.querySelectorAll('.header__cart-courses');
 const headerCartPayButtons = document.querySelectorAll('.header__cart-pay-btn');
 
@@ -155,7 +155,7 @@ export {
   passwordInput,
   authFormHeader,
   displayPasswordBtn,
-  headerCartCoursesNumbers,
+  headerCartCoursesNumberElements,
   headerCartCoursesWrappers,
   headerCartPayButtons,
 };

@@ -181,7 +181,7 @@ const calculateFutureTime = (days, hour = 0, minute = 0, second = 0) => {
   return timestamp;
 };
 
-// dom-handler.js
+// dom-handlers.js
 const calculateRemainingTime = (timestamp) => {
   let now = new Date();
   let futureTime = new Date(timestamp);
@@ -194,6 +194,19 @@ const calculateRemainingTime = (timestamp) => {
 
   return { days, hours, minutes, seconds };
 };
+
+// dom-handlers.js
+const createCartCourseObject = (dbCourse) => ({
+  id: dbCourse.id,
+  name: dbCourse.name,
+  finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایــــــگان!',
+  discount: dbCourse.discount,
+  imageSrc: dbCourse.image_src,
+  slug: dbCourse.slug,
+});
+
+// dom-handlers.js
+const getLocalCourses = () => localStorage.getItem('courses') && JSON.parse(localStorage.getItem('courses'));
 
 export {
   removeLoader,
@@ -213,4 +226,6 @@ export {
   deleteUserIDFromLocal,
   calculateFutureTime,
   calculateRemainingTime,
+  createCartCourseObject,
+  getLocalCourses,
 };
