@@ -2,7 +2,7 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { headerCartCoursesNumbers, headerCartCoursesWrappers, headerCartPayButtons } from './dom-elements.js';
+import { headerCartCoursesNumbers, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -143,6 +143,10 @@ const addCourseToCartHandler = (event, courses) => {
   let dbCourse = null;
 
   if (event.target.closest('.course__add-to-cart-btn')) {
+    if (!localStorageUserID) {
+      sweetAlert('برای ثبت نام در دوره، ابتدا باید در سایت ثبت نام کنید.', 'info');
+      return;
+    }
     let courseID = event.target.closest('.course__add-to-cart-btn').dataset.course_id;
     dbCourse = courses.length ? courses.find((course) => course.id === courseID) : courses;
 
