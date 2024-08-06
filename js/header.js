@@ -20,8 +20,9 @@ import {
   localStorageUserID,
   headerCartCoursesWrappers,
 } from './dom-elements.js';
-import { addLoginBtnToDOM, updateHederCartDetail, removeCourseFromCartHandler } from './dom-handlers.js';
+import { changeTopBannerBackgroundColor, addLoginBtnToDOM, updateHederCartDetail, removeCourseFromCartHandler } from './dom-handlers.js';
 
+changeTopBannerBackgroundColor();
 updateHederCartDetail();
 addLoginBtnToDOM(loginButtons, localStorageUserID);
 

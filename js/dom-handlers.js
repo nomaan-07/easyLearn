@@ -2,7 +2,20 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID, headerCartTotalPriceElements, cartNoCourseWrapper, cartDetailWrapper, cartCoursesWrapper, cartTotalPrice, cartCourseNumberElement, headerCartBadgeNumberElements } from './dom-elements.js';
+import {
+  topBannerElement,
+  headerCartCoursesNumberElements,
+  headerCartCoursesWrappers,
+  headerCartPayButtons,
+  localStorageUserID,
+  headerCartTotalPriceElements,
+  cartNoCourseWrapper,
+  cartDetailWrapper,
+  cartCoursesWrapper,
+  cartTotalPrice,
+  cartCourseNumberElement,
+  headerCartBadgeNumberElements,
+} from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -27,10 +40,6 @@ const addLoginBtnToDOM = (loginButtons, userID) => {
   loginButtons.forEach((btn) => {
     insertToDOM(btn, loginBtnTemplate(userID));
   });
-};
-
-window.addCourseToCart = (id) => {
-  console.log(id);
 };
 
 // index.html - course-category.html
@@ -293,4 +302,25 @@ const updateCartPageDetail = () => {
   }
 };
 
-export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler, updateHederCartDetail, removeCourseFromCartHandler, updateCartPageDetail };
+// Header.js
+const changeTopBannerBackgroundColor = () => {
+  const colors = ['bg-fuchsia-600', 'bg-rose-600', 'bg-violet-600', 'bg-emerald-600', 'bg-lime-600', 'bg-amber-600', 'bg-sky-600'];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  topBannerElement.classList.add(colors[randomIndex]);
+};
+
+export {
+  insertToDOM,
+  addLoginBtnToDOM,
+  addCourseCardsToDOM,
+  addBlogCardsToDOM,
+  toggleTextarea,
+  addRecentBlogsToDom,
+  handleCommentReply,
+  courseDiscountRemainingTimeDisplayHandler,
+  addCourseToCartHandler,
+  updateHederCartDetail,
+  removeCourseFromCartHandler,
+  updateCartPageDetail,
+  changeTopBannerBackgroundColor,
+};

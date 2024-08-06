@@ -14,6 +14,7 @@ const heroLightSVG = document.querySelector('.hero-light-svg');
 const heroDarkSVG = document.querySelector('.hero-dark-svg');
 
 // Elements of Header
+const topBannerElement = document.querySelector('.top-banner');
 const mobileMenuOpenBtn = document.querySelector('.mobile-menu-open-btn');
 const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close-btn');
 const mobileMenu = document.querySelector('.mobile-menu');
@@ -37,6 +38,7 @@ const headerCartCoursesWrappers = document.querySelectorAll('.header__cart-cours
 const headerCartPayButtons = document.querySelectorAll('.header__cart-pay-btn');
 const headerCartTotalPriceElements = document.querySelectorAll('.header__cart-total-price');
 const headerCartBadgeNumberElements = document.querySelectorAll('.header__courses-number-badge');
+
 // Elements of index.html
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
@@ -131,6 +133,7 @@ export {
   mobileCartOpenBtn,
   mobileCartCloseBtn,
   mobileCart,
+  topBannerElement,
   header,
   headerLogoWrapper,
   mobileMenuItems,
