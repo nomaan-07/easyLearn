@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>پنل کاربری | ایزی‌لرن</title>
+    <link id="favicon" rel="icon" href="./images/favIcons/fuchsia-favicon-64x64.png" />
+    <link rel="stylesheet" href="./styles/app.css" />
+  </head>
+
+  <body class="text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 font-Vazir overflow-x-hidden h-0 overflow-y-hidden relative">
+    <svg class="hidden">
+      <symbol id="arrow-right-start-on-rectangle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+      </symbol>
+      <symbol id="bars-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+      </symbol>
+      <symbol id="course" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 48 48">
+        <g data-name="38. book on monitor/computer">
+          <path
+            d="M44,5H36V1a1,1,0,0,0-1-1H15a3,3,0,0,0-3,3V5H4A3,3,0,0,0,1,8V37a3,3,0,0,0,3,3H21l-.67,2H18a2,2,0,0,0-2,2v3a1,1,0,0,0,1,1H31a1,1,0,0,0,1-1V44a2,2,0,0,0-2-2H27.72l-.67-2H44a3,3,0,0,0,3-3V8A3,3,0,0,0,44,5ZM34,26v2H15a1,1,0,0,1,0-2Zm0-2H18V2H34ZM14,3a1,1,0,0,1,1-1h1V24a5.18,5.18,0,0,0-2,.18ZM3,8A1,1,0,0,1,4,7h8V27a3,3,0,0,0,3,3H35a1,1,0,0,0,1-1V7h8a1,1,0,0,1,1,1V32H3ZM30,46H18V44H30Zm-4.39-4H22.39l.66-2H25ZM45,37a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V34H45Z"
+          ></path>
+          <path d="M23.29 36.71a1 1 0 1 0 0-1.42A1 1 0 0 0 23.29 36.71zM22 17h8a1 1 0 0 0 0-2H22A1 1 0 0 0 22 17zM28 19H24a1 1 0 0 0 0 2h4A1 1 0 0 0 28 19zM22 11h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H22a1 1 0 0 0-1 1v4A1 1 0 0 0 22 11zm1-4h6V9H23z"></path>
+        </g>
+      </symbol>
+      <symbol id="logo" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 465.000000 299.000000" preserveAspectRatio="xMidYMid meet">
+        <g transform="translate(0.000000,299.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+          <path
+            d="M2673 2951 c-114 -54 -199 -156 -288 -343 -88 -186 -113 -360 -68 -461 30 -64 115 -152 177 -181 129 -61 96 -59 996 -66 590 -5 840 -11 879 -19 138 -31 259 -132 262 -218 1 -27 1 -26 11 7 15 50 3 273 -17 340 -43 140 -125 237 -247 295 -148 71 -103 67 -953 75 -443 4 -785 12 -805 17 -91 25 -103 57 -42 115 99 97 219 109 428 42 105 -33 111 -32 124 18 33 121 -71 317 -202 382 -76 38 -171 37 -255 -3z"
+          ></path>
+          <path
+            d="M1910 2829 c-85 -71 -161 -135 -167 -142 -10 -10 -5 -49 23 -192 37 -190 64 -359 64 -412 0 -50 -36 -84 -100 -94 -83 -13 -97 -6 -110 54 -29 141 -88 251 -186 348 -50 50 -66 60 -77 51 -7 -6 -53 -95 -102 -197 l-88 -184 109 -113 c121 -126 151 -170 140 -212 -14 -57 -164 -188 -354 -311 -41 -26 -70 -51 -65 -56 4 -4 93 -62 197 -128 155 -98 193 -118 208 -110 44 24 143 182 178 284 l17 50 134 6 c119 5 140 8 186 32 109 56 172 155 201 317 17 97 17 90 -24 810 -8 140 -14 272 -14 293 0 20 -3 37 -7 36 -5 0 -78 -59 -163 -130z"
+          ></path>
+          <path
+            d="M678 2308 c-51 -101 -96 -189 -101 -198 -5 -11 13 -36 66 -91 109 -112 170 -202 169 -247 -2 -41 -29 -75 -84 -103 -125 -64 -497 -75 -655 -19 -32 11 -59 20 -60 20 -2 0 -2 -113 -1 -252 l3 -252 44 -13 c125 -36 380 -35 526 2 101 26 204 82 267 146 203 207 234 648 70 1001 -42 89 -113 188 -137 188 -8 0 -52 -75 -107 -182z"
+          ></path>
+          <path d="M294 1991 c-151 -69 -127 -292 34 -320 94 -17 178 34 201 123 22 90 -28 181 -114 205 -54 15 -73 14 -121 -8z"></path>
+          <path d="M4016 1631 l-198 -198 11 -69 c6 -38 29 -184 51 -324 87 -542 118 -669 171 -685 65 -21 143 165 184 437 25 167 16 862 -13 1006 l-7 32 -199 -199z"></path>
+          <path d="M2517 1717 c-79 -20 -138 -111 -123 -190 16 -84 84 -140 172 -140 98 0 164 68 164 168 0 113 -102 191 -213 162z"></path>
+          <path
+            d="M3380 1348 c-62 -90 -115 -171 -118 -181 -3 -12 26 -49 97 -122 80 -84 101 -111 101 -134 0 -17 -6 -31 -16 -35 -9 -3 -150 -6 -315 -6 -231 0 -300 3 -303 13 -2 6 -11 44 -20 82 -25 107 -76 203 -157 289 -39 42 -78 76 -85 76 -9 0 -51 -74 -108 -192 l-93 -193 109 -112 c118 -122 153 -178 137 -222 -21 -54 -138 -157 -314 -276 -55 -38 -100 -72 -100 -76 0 -10 375 -249 391 -249 32 0 127 138 174 254 l37 91 62 3 c54 3 61 5 61 23 0 41 44 100 93 126 37 19 117 19 154 -1 42 -21 81 -70 89 -111 7 -37 31 -48 40 -17 3 9 14 35 25 58 39 80 155 112 235 65 35 -21 37 -21 50 -4 56 75 84 190 91 383 6 181 -7 280 -56 406 -30 78 -115 214 -137 221 -7 2 -62 -69 -124 -159z"
+          ></path>
+          <path d="M3017 432 c-79 -54 -86 -157 -16 -217 37 -31 68 -39 114 -31 104 20 143 153 66 229 -39 39 -120 49 -164 19z"></path>
+          <path d="M3394 431 c-85 -52 -80 -177 9 -231 86 -53 197 13 197 115 0 52 -17 84 -59 112 -42 28 -104 30 -147 4z"></path>
+        </g>
+      </symbol>
+      <symbol id="photo" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+        ></path>
+      </symbol>
+      <symbol id="user-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      </symbol>
+      <symbol id="x-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+      </symbol>
+    </svg>
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-slate-800 lg:bg-transparent lg:dark:bg-transparent h-20 flex items-center justify-between px-4">
+      <!-- Menu Open Btn -->
+      <div class="mobile-menu-open-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
+        <svg class="size-7">
+          <use href="#bars-3"></use>
+        </svg>
+      </div>
+      <!-- End of Menu Open Btn -->
+      <!-- App Logo -->
+      <a href="./index.html" class="lg:hidden block transition-all w-24">
+        <svg class="w-full h-16 theme-text-color">
+          <use href="#logo"></use>
+        </svg>
+      </a>
+      <!-- End of App Logo -->
+      <!-- Placeholder -->
+      <div></div>
+    </header>
+    <!-- End of Header -->
+    <!-- Menu Wrapper -->
+    <div class="account__menu-wrapper fixed top-0 -right-64 lg:right-0 bottom-0 w-64 bg-white dark:bg-slate-800 transition-all z-50">
+      <!-- Menu Header -->
+      <div class="flex items-center justify-between p-2">
+        <!-- App Logo -->
+        <a href="./index.html" class="block transition-all w-20 lg:w-24">
+          <svg class="w-full h-16 theme-text-color">
+            <use href="#logo"></use>
+          </svg>
+        </a>
+        <!-- End of App Logo -->
+        <!-- Menu Close Btn-->
+        <div class="mobile-menu-close-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
+          <svg class="size-6">
+            <use href="#x-mark"></use>
+          </svg>
+        </div>
+        <!-- End of Menu Close Btn-->
+      </div>
+      <!-- End of Menu Header -->
+      <!-- Menu -->
+      <ul class="text-lg sm:text-xl font-VazirMedium border-t border-t-slate-200 dark:border-slate-700">
+        <li class="account__menu-item account__menu-item--active" data-section="courses">
+          <svg class="size-6">
+            <use href="#course"></use>
+          </svg>
+          <span>دوره‌های من</span>
+        </li>
+        <li class="account__menu-item" data-section="account-detail">
+          <svg class="size-6">
+            <use href="#user-circle"></use>
+          </svg>
+          <span>جزئیات حساب</span>
+        </li>
+        <li class="account__menu-item" data-section="logout">
+          <svg class="size-6">
+            <use href="#arrow-right-start-on-rectangle"></use>
+          </svg>
+          <span>خروج از حساب کاربری</span>
+        </li>
+      </ul>
+      <!-- End of Menu -->
+    </div>
+    <!-- End of Menu Wrapper -->
+
+    <!-- Main -->
+    <main class="main mr-4 lg:mr-72 ml-4">
+      <div class="container">
+        <!-- Account Username -->
+        <div class="account__username font-VazirBlack text-xl sm:text-2xl lg:text-3xl mt-5 mb-10 text-center">
+          <!-- Username PlaceHolder -->
+          <div class="flex justify-center gap-1 min-h-7 sm:min-h-8 lg:h-9">
+            <div class="w-24 sm:w-28 lg:w-36 h-5 lg:h-6 theme-bg-color-10 rounded-2xl"></div>
+            <div class="w-36 sm:w-48 lg:w-56 h-5 lg:h-6 bg-slate-200 dark:bg-slate-700 rounded-2xl"></div>
+          </div>
+          <!-- End of Username PlaceHolder -->
+        </div>
+        <!-- End of Account Username -->
+        <!-- Courses -->
+        <div class="account__courses-wrapper grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+          <!-- PlaceHolder Course -->
+          <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+            <!-- Course Banner -->
+            <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <svg class="size-full text-slate-100 dark:text-slate-700">
+                <use href="#photo"></use>
+              </svg>
+            </a>
+            <!-- End of Course Banner -->
+            <!-- Course Name -->
+            <div class="space-y-2 mt-4 px-4">
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+              <div class="w-full h-4 bg-slate-100 dark:bg-slate-700"></div>
+            </div>
+            <!-- End of Course Name -->
+          </div>
+          <!-- End of PlaceHolder Course -->
+        </div>
+        <!-- End of Courses -->
+      </div>
+    </main>
+    <!-- End of Main -->
+
+    <!-- Change Theme -->
+    <div class="flex z-30 items-end gap-4 fixed left-2 bottom-5 theme-text-color select-none">
+      <!-- Show On Click -- Color Plate-->
+      <div class="color-plate hidden animate-open-up items-center flex-wrap gap-x-2 gap-y-2 p-1 bg-white dark:bg-slate-800 shadow w-48 sm:w-96 h-24 sm:h-12 rounded-lg transition-all child:cursor-pointer child:w-10 child:h-10 child:rounded-full">
+        <div class="change-theme-btn change-theme-btn--dark bg-slate-900" data-theme="dark"></div>
+        <div class="change-theme-btn bg-fuchsia-600" data-theme="fuchsia"></div>
+        <div class="change-theme-btn bg-rose-600" data-theme="rose"></div>
+        <div class="change-theme-btn bg-violet-600" data-theme="violet"></div>
+        <div class="change-theme-btn bg-sky-600" data-theme="sky"></div>
+        <div class="change-theme-btn bg-emerald-600" data-theme="emerald"></div>
+        <div class="change-theme-btn bg-lime-600" data-theme="lime"></div>
+        <div class="change-theme-btn bg-amber-600" data-theme="amber"></div>
+      </div>
+      <!-- color plate Btn -->
+      <img class="color-plate-btn md:ml-1 size-10 md:size-12 lg:cursor-pointer transition-all" src="./images/icons/brush.png" />
+    </div>
+    <!-- Overlay -->
+    <div class="overlay fixed inset-0 theme-bg-color-10 dark:bg-slate-700/50 backdrop-blur-md z-40 hide transition-all"></div>
+    <!-- Loader -->
+    <div class="loader-wrapper fixed inset-0 bg-slate-100 z-50 flex items-center justify-center transition-all">
+      <div class="loader"></div>
+    </div>
+
+    <script type="module" src="./js/acount.js"></script>
+  </body>
+</html>

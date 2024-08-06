@@ -628,6 +628,7 @@ const headerCartCourseTemplate = (course) => {
   return template;
 };
 
+// cart.js
 const cartCourseTemplate = (course) => {
   let price = course.price.toLocaleString('fa-IR');
   let finalPriceTemplate = `
@@ -699,4 +700,37 @@ const cartCourseTemplate = (course) => {
   return template;
 };
 
-export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate, authFormHeaderTemplate, headerCartCourseTemplate, cartCourseTemplate };
+const accountCourseTemplate = (course) => {
+  const template = `
+      <!-- Course -->
+      <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
+        <!-- Course Banner -->
+        <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700" href="./course.html?course=${course.slug}">
+          <img class="size-full object-cover" loading="lazy" src="${course.image_src}" alt="${course.name}" />
+        </a>
+        <!-- End of Course Banner -->
+        <!-- Course Name -->
+        <a class="block mt-4 px-4 font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html?course=${course.slug}">${course.name}</a>
+        <!-- End of Course Name -->
+      </div>
+      <!-- End of Course -->`;
+  return template;
+};
+
+export {
+  loginBtnTemplate,
+  courseCardTemplate,
+  blogCardTemplate,
+  courseInfoTemplate,
+  courseDataTemplate,
+  headlineTemplate,
+  courseHeadlineSessionTemplate,
+  commentTemplate,
+  commentReplyTemplate,
+  blogTemplate,
+  recentBlogTemplate,
+  authFormHeaderTemplate,
+  headerCartCourseTemplate,
+  cartCourseTemplate,
+  accountCourseTemplate,
+};

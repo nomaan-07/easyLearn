@@ -1,4 +1,4 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate } from './template.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
@@ -15,6 +15,8 @@ import {
   cartTotalPrice,
   cartCourseNumberElement,
   headerCartBadgeNumberElements,
+  accountMenuItemElements,
+  accountCoursesWrapper,
 } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
@@ -204,7 +206,7 @@ const addCourseToCartHandler = (event, courses) => {
 };
 
 // header.js
-const removeCourseFromCartHandler = (event, cartPage = false) => {
+const removeCourseFromCartHandler = (event) => {
   if (!event.target.closest('.cart__course-remove-btn')) return;
   const courseID = event.target.closest('.cart__course-remove-btn').dataset.course_id;
 
@@ -273,7 +275,7 @@ const updateHederCartDetail = () => {
   }
 };
 
-// Cart.js
+// cart.js
 const updateCartPageDetail = () => {
   if (!localStorageUserID) {
     location.replace('./auth.html?operation=signup');
@@ -303,11 +305,24 @@ const updateCartPageDetail = () => {
   }
 };
 
-// Header.js
+// header.js
 const changeTopBannerBackgroundColor = () => {
   const colors = ['bg-fuchsia-600', 'bg-rose-600', 'bg-violet-600', 'bg-emerald-600', 'bg-lime-600', 'bg-amber-600', 'bg-sky-600'];
   const randomIndex = Math.floor(Math.random() * colors.length);
   topBannerElement.classList.add(colors[randomIndex]);
+};
+
+// account.js
+const addAccountCourseToDOM = (courses) => {
+  let coursesTemplate = '';
+  courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));
+  insertToDOM(accountCoursesWrapper, coursesTemplate);
+};
+
+// account.js
+const displayChosenAccountSection = (element) => {
+  accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
+  element.classList.add('account__menu-item--active');
 };
 
 export {
@@ -324,4 +339,6 @@ export {
   removeCourseFromCartHandler,
   updateCartPageDetail,
   changeTopBannerBackgroundColor,
+  displayChosenAccountSection,
+  addAccountCourseToDOM,
 };

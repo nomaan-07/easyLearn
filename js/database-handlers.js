@@ -2,8 +2,8 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID } from './dom-elements.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM } from './dom-handlers.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, accountCoursesWrapper } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation } from './validation.js';
 
 // index.js
@@ -186,4 +186,12 @@ const purchaseCourses = async () => {
   }
 };
 
-export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm, purchaseCourses };
+// account.js
+const fetchAndDisplayAccountCourses = async () => {
+  const dbCourses = await getAllFromDatabase('courses');
+
+  let filteredCourses = dbCourses.filter((course) => course.students_id && course.students_id.some((id) => id === localStorageUserID));
+  addAccountCourseToDOM(filteredCourses);
+};
+
+export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm, purchaseCourses, fetchAndDisplayAccountCourses };

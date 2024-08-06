@@ -99,7 +99,18 @@ const cartCoursesWrapper = document.querySelector('.cart__courses-wrapper');
 const cartTotalPrice = document.querySelector('.cart__total-price');
 const cartPayBtn = document.querySelector('.cart__pay-btn');
 
+// account.js
+
+const accountMenuItemElements = document.querySelectorAll('.account__menu-item');
+const accountCoursesWrapper = document.querySelector('.account__courses-wrapper');
+const accountUsernameElement = document.querySelector('.account__username');
+const accountMenuWrapper = document.querySelector('.account__menu-wrapper');
+
 export {
+  accountMenuItemElements,
+  accountCoursesWrapper,
+  accountUsernameElement,
+  accountMenuWrapper,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,

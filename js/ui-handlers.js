@@ -1,5 +1,5 @@
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { displayPasswordBtn, passwordInput } from './dom-elements.js';
+import { displayPasswordBtn, passwordInput, accountMenuWrapper, overlay } from './dom-elements.js';
 import { insertToDOM } from './dom-handlers.js';
 
 // course.js - dom-handlers.js
@@ -100,4 +100,17 @@ const hidePassword = () => {
   passwordInput.type = 'password';
 };
 
-export { textareaAutoResize, toggleTextarea, headlineLockSessionAlert, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, showPassword, hidePassword };
+//account.js
+const openMobileAccountMenu = () => {
+  accountMenuWrapper.classList.remove('-right-64');
+  accountMenuWrapper.classList.add('right-0');
+  overlay.classList.remove('hide');
+};
+//account.js
+const closeMobileAccountMenu = () => {
+  accountMenuWrapper.classList.add('-right-64');
+  accountMenuWrapper.classList.remove('right-0');
+  overlay.classList.add('hide');
+};
+
+export { textareaAutoResize, toggleTextarea, headlineLockSessionAlert, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, showPassword, hidePassword, openMobileAccountMenu, closeMobileAccountMenu };

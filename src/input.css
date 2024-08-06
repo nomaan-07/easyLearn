@@ -332,6 +332,16 @@
     @apply text-rose-500;
   }
   /* End of Blog Content */
+
+  /* Account */
+  .account__menu-item {
+    @apply flex items-center gap-2 px-5 py-3 md:py-4 md:hover:theme-bg-color-10 md:hover:theme-text-color transition-colors md:cursor-pointer;
+  }
+  .account__menu-item--active {
+    background-color: var(--theme-color) !important;
+    color: #fff !important;
+  }
+  /* End of Account */
 }
 
 @layer utilities {
