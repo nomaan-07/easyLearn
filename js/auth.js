@@ -1,5 +1,5 @@
 import './aos.initialize.js';
-import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn } from './dom-elements.js';
+import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { getQueryParameters } from './utils.js';
 import { moveInLabelElement, moveOutLabelElement, showPassword, hidePassword } from './ui-handlers.js';
@@ -15,6 +15,8 @@ if (localStorageTheme) {
   document.documentElement.className = `scroll-smooth ${localStorageTheme}`;
   favIcon.href = `images/favIcons/${localStorageTheme}-favicon-64x64.png`;
 }
+
+if (localStorageUserID) location.replace('./index.html');
 
 const switchForms = () => {
   insertToDOM(authFormHeader, authFormHeaderTemplate(operationParam));
