@@ -1,5 +1,5 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses } from './utils.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import {
@@ -83,8 +83,9 @@ const addBlogCardsToDOM = (blogs, blogsWrapper) => {
       image_src: blog.image_src,
       writer: blog.writer,
       readingTime: blog.reading_time,
-      subject: blog.subject,
       slug: blog.slug,
+      category: blog.category,
+      categoryName: categoryInPersian(blog.category),
     };
     blogsTemplate += blogCardTemplate(newBlog);
   });

@@ -138,7 +138,7 @@ const blogCardTemplate = (blog) => {
             <span>${blog.writer}</span>
           </div>
           <!-- Category -->
-          <a href="./blogs" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${blog.subject}</a>
+          <a href="./blogs.html?category=${blog.category}" class="flex justify-center theme-text-color bg-slate-100 dark:bg-slate-700 md:hover:bg-slate-200 dark:md:hover:bg-slate-600 py-0.5 px-2 rounded-full transition-colors">${blog.categoryName}</a>
         </div>
         <!-- End of Writer and Category -->
         <!-- Seen & Comments && Time -->
