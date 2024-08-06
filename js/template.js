@@ -247,10 +247,10 @@ const courseInfoTemplate = (course) => {
           <div class="${discountHiddenClass}sm:text-lg font-VazirLight text-center theme-bg-color-10 p-2 lg:px-1 xl:px-2 rounded-2xl mt-4 sm:mt-0">
             <p class="font-VazirBold theme-text-color"><span>${course.discount}%</span> تخفیف ویژه</p>
             <div class="flex items-center justify-center m-1">
-              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-day" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> روز</div>
-              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-hour" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> ساعت</div>
-              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-minute" class="inline-block w-[22px] md:w-[26px] font-VazirBold"></span> دقیقه</div>
-              <div><span id="discount-second" class="inline-block w-[22px] md:w-[26px] font-VazirBold theme-text-color"></span> ثانیه</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-day" class="inline-block w-[22px] md:w-[26px] font-VazirBold">00</span> روز</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-hour" class="inline-block w-[22px] md:w-[26px] font-VazirBold">00</span> ساعت</div>
+              <div class="pl-3 ml-3 lg:pl-2.5 lg:ml-2.5 xl:pl-3 xl:ml-3 border-l theme-border-color"><span id="discount-minute" class="inline-block w-[22px] md:w-[26px] font-VazirBold">00</span> دقیقه</div>
+              <div><span id="discount-second" class="inline-block w-[22px] md:w-[26px] font-VazirBold theme-text-color">00</span> ثانیه</div>
             </div>
           </div>
           <!-- End of Discount -->
