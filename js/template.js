@@ -457,7 +457,7 @@ const commentReplyTemplate = (reply) => {
     `;
   }
   const template = `
-  <div class="replay-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
+  <div class="reply-comment mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
       <div class="flex items-start gap-2 font-VazirMedium border-b border-b-slate-300 dark:border-b-slate-600">
         <div class="size-12 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">${userAvatar}</div>
         <div>

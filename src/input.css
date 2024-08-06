@@ -197,13 +197,13 @@
   /* End of Headline Title */
   /* Comment Header */
   .comment-header,
-  .response-comment-wrapper {
+  .reply-comment-wrapper {
     position: relative;
   }
   .comment-header::after,
   .comment-header::before,
-  .response-comment-wrapper::before,
-  .replay-comment::before {
+  .reply-comment-wrapper::before,
+  .reply-comment::before {
     @apply absolute content-[''] rounded-full;
   }
   .comment-header::after,
@@ -224,28 +224,28 @@
     height: 31px !important;
   }
 
-  .response-comment-wrapper::before {
+  .reply-comment-wrapper::before {
     background-color: #e2e8f0;
     left: 50%;
     width: 2px;
     height: 36px;
     top: -36px;
   }
-  .dark .response-comment-wrapper::before {
+  .dark .reply-comment-wrapper::before {
     background-color: #475569;
   }
 
-  .replay-comment::before {
+  .reply-comment::before {
     background-color: #e2e8f0;
     left: 50%;
     width: 2px;
     height: 21.5px;
     top: -21px;
   }
-  .dark .replay-comment::before {
+  .dark .reply-comment::before {
     background-color: #334155;
   }
-  .replay-comment:first-child::before {
+  .reply-comment:first-child::before {
     background-color: #64748b !important;
   }
   /* End of Comment Header */
