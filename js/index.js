@@ -5,8 +5,7 @@ import { heroParticlesJS } from './particles-initialize.js';
 import { heroTypewriter } from './typewriter-initialize.js';
 import { removeLoader, deleteUserIDFromLocal } from './utils.js';
 import { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs } from './database-handlers.js';
-import { latestCoursesWrapperElement, localStorageUserID, popularCoursesWrapperElement } from './dom-elements.js';
-import { addCourseToCartHandler } from './dom-handlers.js';
+import { localStorageUserID } from './dom-elements.js';
 
 deleteUserIDFromLocal(localStorageUserID);
 
@@ -90,7 +89,7 @@ const popularCourse = new Swiper('.popular-courses-swiper', {
     1280: {
       slidesPerView: 4,
     },
-    1536: {
+    1640: {
       slidesPerView: 5,
     },
   },
