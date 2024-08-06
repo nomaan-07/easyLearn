@@ -1,7 +1,7 @@
 import './aos.initialize.js';
 import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { getQueryParameters } from './utils.js';
+import { getQueryParameters, removeLoader } from './utils.js';
 import { moveInLabelElement, moveOutLabelElement, showPassword, hidePassword } from './ui-handlers.js';
 import { submitLoginForm, submitSignupForm } from './database-handlers.js';
 import { authFormHeaderTemplate } from './template.js';
@@ -50,3 +50,4 @@ const displayPasswordHandler = () => {
 form.addEventListener('click', moveOutLabelElement);
 inputElements.forEach((input) => moveInLabelElement(input));
 displayPasswordBtn.addEventListener('click', displayPasswordHandler);
+window.addEventListener('load', removeLoader);
