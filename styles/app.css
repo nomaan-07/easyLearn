@@ -1497,6 +1497,30 @@ video {
   top: 100%;
 }
 
+.-right-2 {
+  right: -0.5rem;
+}
+
+.-top-2 {
+  top: -0.5rem;
+}
+
+.-top-2\.5 {
+  top: -0.625rem;
+}
+
+.-top-3 {
+  top: -0.75rem;
+}
+
+.-top-3\.5 {
+  top: -0.875rem;
+}
+
+.-top-4 {
+  top: -1rem;
+}
+
 .isolate {
   isolation: isolate;
 }
