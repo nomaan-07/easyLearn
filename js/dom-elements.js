@@ -89,6 +89,14 @@ const emailInput = document.querySelector('#email-input');
 const passwordInput = document.querySelector('#password-input');
 const displayPasswordBtn = document.querySelector('#display-password-btn');
 
+// cart.js
+const cartCourseNumberElement = document.querySelector('.cart__courses-number');
+const cartNoCourseWrapper = document.querySelector('.cart__no-course-wrapper');
+const cartDetailWrapper = document.querySelector('.cart__detail-wrapper');
+const cartCoursesWrapper = document.querySelector('.cart__courses-wrapper');
+const cartTotalPrice = document.querySelector('.cart__total-price');
+const cartPayBtn = document.querySelector('.cart__pay-btn');
+
 export {
   localStorageTheme,
   localStorageUserID,
@@ -160,4 +168,10 @@ export {
   headerCartCoursesWrappers,
   headerCartPayButtons,
   headerCartTotalPriceElements,
+  cartCourseNumberElement,
+  cartNoCourseWrapper,
+  cartDetailWrapper,
+  cartCoursesWrapper,
+  cartTotalPrice,
+  cartPayBtn,
 };

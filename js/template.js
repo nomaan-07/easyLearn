@@ -1,3 +1,4 @@
+import { localStorageUserID } from './dom-elements.js';
 import { applyDiscountToPrice, formatDate } from './utils.js';
 
 const loginBtnTemplate = (userID) => {
@@ -18,11 +19,17 @@ const loginBtnTemplate = (userID) => {
 
 // shared.js - index.js
 const courseCardTemplate = (course) => {
-  let finalPriceTemplate = null;
+  let purchaseBtnHiddenClass = 'flex ';
+  let studentBadgeHiddenClass = 'hidden ';
   let discountHiddenClass = 'hidden ';
-  if (course.discountPercent) {
-    discountHiddenClass = '';
+
+  let finalPriceTemplate = null;
+
+  if (course.isPurchased) {
+    purchaseBtnHiddenClass = 'hidden ';
+    studentBadgeHiddenClass = '';
   }
+  if (course.discountPercent) discountHiddenClass = '';
 
   if (course.discountPercent === 100) {
     finalPriceTemplate = `
@@ -42,12 +49,16 @@ const courseCardTemplate = (course) => {
                 <!-- Course -->
             <div class="${course.courseWrapperClass} group">
               <!-- Course Banner -->
-              <div class="h-40 rounded-b-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700">
+              <div class="h-40 rounded-b-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700 relative">
                 <a class="size-full" href="./course.html?course=${course.slug}">
                   <img class="size-full object-cover" loading="lazy" src="${course.src}" alt="${course.name}" />
                 </a>
                 <!-- Discount Percent -->
                 <div class="${discountHiddenClass}absolute top-3 left-0 flex items-end justify-center w-10 h-6 theme-bg-color text-white rounded-r-full">${course.discountPercent}%</div>
+                <!-- End of Discount Percent -->
+                <!-- Student Badge --> 
+                <span class="${studentBadgeHiddenClass}theme-bg-color p-1 text-sm absolute mx-auto bottom-0 rounded-tl-xl text-white">دانشجوی دوره اید.</span>
+                <!-- End of Student Badge --> 
               </div>
               <!-- End of Course Banner -->
               <div class="h-[122px] px-4 space-y-2 mt-4">
@@ -91,7 +102,7 @@ const courseCardTemplate = (course) => {
               </div>
               <!-- End of Students && Rating && Price  -->
               <!-- Cart Btn  -->
-              <div class="course__add-to-cart-btn absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 flex items-center justify-center w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer"  data-course_id="${course.id}">
+              <div class="course__add-to-cart-btn ${purchaseBtnHiddenClass}items-center justify-center absolute mx-auto left-0 right-0 bottom-2 lg:-bottom-10 lg:group-hover:bottom-2 w-10 h-10 theme-bg-color hover:theme-hover-bg-color text-white rounded-full transition-all md:cursor-pointer"  data-course_id="${course.id}">
                 <svg class="size-6">
                   <use href="#shopping-bag"></use>
                 </svg>
@@ -179,9 +190,18 @@ const blogCardTemplate = (blog) => {
 
 // course.js
 const courseInfoTemplate = (course) => {
-  let price = course.price.toLocaleString('fa-IR');
-  let finalPriceTemplate = null;
+  const courseStudentsID = course.students_id;
+  const price = course.price.toLocaleString('fa-IR');
+
   let discountHiddenClass = `hidden `;
+
+  let finalPriceTemplate = null;
+  let purchaseBtnTemplate = `<div class="course__add-to-cart-btn btn w-full sm:w-auto 2xl:w-full theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer" data-course_id="${course.id}">ثبت نام در دوره</div>`;
+
+  if (course.isPurchased) {
+    purchaseBtnTemplate = `<p class="theme-text-color font-VazirBold lg:text-lg xl:text-xl">شما دانشجوی دوره اید.</p>`;
+  }
+
   if (course.timestamp) {
     discountHiddenClass = '';
   }
@@ -205,7 +225,7 @@ const courseInfoTemplate = (course) => {
     </div>
     <!-- End of Banner -->
     <!-- Course Info -->
-    <div class="bg-white p-5 lg:w-1/2 h-max dark:bg-slate-800 rounded-2xl shadow"  data-course_id="${course.id}>
+    <div class="bg-white p-5 lg:w-1/2 h-max dark:bg-slate-800 rounded-2xl shadow"  data-course_id="${course.id}">
       <!-- Course name -->
       <h1 class="lg:order-1 text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
       <!-- Course Caption -->
@@ -239,7 +259,7 @@ const courseInfoTemplate = (course) => {
         <!-- Purchase and Price -->
         <div class="flex flex-col-reverse sm:flex-row gap-3 justify-between items-center mt-4 md:mt-6 2xl:flex-col-reverse 2xl:items-start 2xl:gap-4">
           <!-- Purchase Btn -->
-          <div class="course__add-to-cart-btn btn w-full sm:w-auto 2xl:w-full theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer" data-course_id="${course.id}">ثبت نام در دوره</div>
+          ${purchaseBtnTemplate}
           <!-- Price -->
           <div class="flex items-end gap-2 text-lg sm:text-xl lg:text-2xl">
             <!-- Primary Price -->
@@ -334,11 +354,11 @@ const headlineTemplate = (headline, sessions, number) => {
 };
 
 // utils.js
-const courseHeadlineSessionTemplate = (session, number) => {
+const courseHeadlineSessionTemplate = (session, number, isPurchased) => {
   let sessionHref = `href="lesson.html?lesson=${session.id}"`;
   let sessionIcon = 'eye';
   let sessionClasses = 'md:hover:theme-text-color group';
-  if (session.isLocked) {
+  if (session.isLocked && !isPurchased) {
     sessionHref = '';
     sessionIcon = 'lock-closed';
     sessionClasses = 'theme-bg-color-10 dark:bg-yellow-600/10 cursor-default headline__lock-session';
@@ -594,7 +614,7 @@ const headerCartCourseTemplate = (course) => {
         <div>
           <a href="./course.html?course=${course.slug}" class="font-VazirMedium transition-colors hover:theme-text-color line-clamp-1 text-sm">${course.name}</a>
           <div class="flex items-end gap-3 mt-3">
-            <div class="header__cart-course-remove-btn size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all" data-course_id=${course.id}>
+            <div class="cart__course-remove-btn size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all" data-course_id=${course.id}>
               <svg class="size-5">
                 <use href="#trash"></use>
               </svg>
@@ -608,4 +628,75 @@ const headerCartCourseTemplate = (course) => {
   return template;
 };
 
-export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate, authFormHeaderTemplate, headerCartCourseTemplate };
+const cartCourseTemplate = (course) => {
+  let price = course.price.toLocaleString('fa-IR');
+  let finalPriceTemplate = `
+            <div class="flex items-end font-VazirMedium">
+              <span class="text-green-600 dark:text-green-400">${course.finalPrice}</span>
+              <svg class="size-7 sm:size-8 lg:size-9 mr-[-3px]">
+                <use href="#toman"></use>
+              </svg>
+            </div>`;
+  let discountHiddenClass = ``;
+  let priceHiddenClass = '';
+
+  if (!course.timestamp) {
+    discountHiddenClass = 'hidden ';
+  }
+
+  if (course.discount === 100) {
+    finalPriceTemplate = `<span class="font-VazirMedium text-green-600 dark:text-green-400">${course.finalPrice}</span>`;
+  } else if (course.discount === 0) {
+    priceHiddenClass = `hidden `;
+  }
+
+  const template = `
+    <!-- Course -->
+    <div class="w-full space-y-4 p-5 bg-white dark:bg-slate-800 rounded-2xl shadow dark:shadow-none dark:border dark:border-slate-700">
+      <!-- Image & Name and Caption -->
+      <div class="flex items-center gap-3 lg:gap-6">
+        <img class="w-20 h-16 sm:h-20 sm:w-32 lg:w-56 lg:h-auto rounded-xl" src="${course.imageSrc}" alt="${course.name}" />
+        <!-- Name and Caption -->
+        <div>
+          <a class="font-VazirBold sm:text-lg md:hover:theme-text-color transition-all line-clamp-2 overflow-hidden" href="./course.html?course=${course.slug}">${course.name}</a>
+          <p class="hidden lg:line-clamp-2 mt-4 font-VazirLight max-h-12">${course.caption}</p>
+        </div>
+        <!-- End of Name and Caption -->
+      </div>
+      <!-- End of Image & Name and Caption -->
+      <!-- Discount and Price -->
+      <div class="space-y-2 xs:space-y-0 xs:flex gap-8">
+        <!-- Discount -->
+        <div class="${discountHiddenClass}sm:text-lg theme-text-color shrink-0">
+          <p class="font-VazirBold"><span>${course.discount}%</span> تخفیف ویژه</p>
+          <div class="cart__discount-timer w-36" data-timestamp="${course.timestamp}">00 : 00 : 00 : 00</div>
+        </div>
+        <!-- End of Discount -->
+        <!-- Remove Btn and Price -->
+        <div class="flex justify-between items-center gap-2 flex-wrap w-full">
+          <!-- Price -->
+          <div class="flex items-end gap-2 text-lg sm:text-xl lg:text-2xl">
+            <!-- Primary Price -->
+            <span class="${priceHiddenClass}line-through dark:text-slate-300 text-slate-500 decoration-red-400">${price}</span>
+            <!-- Final Price -->
+              ${finalPriceTemplate}
+            <!-- End of Final Price -->
+          </div>
+          <!-- End of Price -->
+          <!-- Remove Btn -->
+          <div class="cart__course-remove-btn size-6 flex items-center justify-center theme-bg-color-10 dark:bg-rose-600/10 text-rose-600 cursor-pointer rounded-full md:hover:scale-105 transition-all" data-course_id="${course.id}">
+            <svg class="size-5">
+              <use href="#trash"></use>
+            </svg>
+          </div>
+          <!-- End of Remove Btn -->
+        </div>
+        <!-- End of Remove Btn and Price -->
+      </div>
+      <!-- End of Discount and Price -->
+    </div>
+    <!-- End of Course -->`;
+  return template;
+};
+
+export { loginBtnTemplate, courseCardTemplate, blogCardTemplate, courseInfoTemplate, courseDataTemplate, headlineTemplate, courseHeadlineSessionTemplate, commentTemplate, commentReplyTemplate, blogTemplate, recentBlogTemplate, authFormHeaderTemplate, headerCartCourseTemplate, cartCourseTemplate };

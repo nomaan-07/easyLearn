@@ -23,7 +23,7 @@ import {
 import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian, calculateRemainingTime } from './utils.js';
 import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
-import { insertToDOM, handleCommentReply, discountRemainingTimeDisplayHandler, addCourseToCartHandler } from './dom-handlers.js';
+import { insertToDOM, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler } from './dom-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 let course = null;
@@ -52,7 +52,7 @@ async function fetchAndDisplayCourse() {
     const course = await getOneFromDatabase('courses', 'slug', courseParam);
     if (course) {
       addCourseToDOM(course);
-      discountRemainingTimeDisplayHandler(course.discount_timestamp);
+      courseDiscountRemainingTimeDisplayHandler(course.discount_timestamp);
     } else {
       location.replace('./404.html');
     }
@@ -81,6 +81,7 @@ const createCourseObject = (dbCourse) => ({
   videosLength: dbCourse.videos_length,
   situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
   timestamp: dbCourse.discount_timestamp,
+  isPurchased: dbCourse.students_id && dbCourse.students_id.includes(localStorageUserID),
   // FIXME: updated_at instead of created_at
   date: formatDate(dbCourse.created_at),
 });
@@ -106,7 +107,7 @@ const addCourseToDOM = (dbCourse) => {
   let headlines = '';
   if (course.headlines) {
     course.headlines.forEach((headline) => {
-      headlines += CourseHeadlineSectionHandler(headline);
+      headlines += CourseHeadlineSectionHandler(headline, course.isPurchased);
     });
     insertToDOM(headlinesWrapper, headlines);
   } else {

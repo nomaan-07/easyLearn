@@ -1,8 +1,8 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate } from './template.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID, headerCartTotalPriceElements } from './dom-elements.js';
+import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID, headerCartTotalPriceElements, cartNoCourseWrapper, cartDetailWrapper, cartCoursesWrapper, cartTotalPrice, cartCourseNumberElement } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -53,6 +53,7 @@ const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
       price: course.price.toLocaleString('fa-IR'),
       finalPrice: finalPrice,
       slug: course.slug,
+      isPurchased: course.students_id && course.students_id.includes(localStorageUserID),
       courseWrapperClass,
     };
     coursesTemplate += courseCardTemplate(newCourse);
@@ -119,7 +120,7 @@ const handleCommentReply = (event, user) => {
 };
 
 // course.js
-const discountRemainingTimeDisplayHandler = (timestamp) => {
+const courseDiscountRemainingTimeDisplayHandler = (timestamp) => {
   const dayElem = document.getElementById('discount-day');
   const hourElem = document.getElementById('discount-hour');
   const minuteElem = document.getElementById('discount-minute');
@@ -135,6 +136,22 @@ const discountRemainingTimeDisplayHandler = (timestamp) => {
     hourElem.textContent = remainingHours;
     minuteElem.textContent = remainingMinutes;
     secondElem.textContent = remainingSeconds;
+  }, 1000);
+};
+
+const cartCourseDiscountRemainingTimeDisplayHandler = (element) => {
+  const timestamp = Number(element.dataset.timestamp);
+  if (!timestamp) return;
+
+  setInterval(() => {
+    let remainingTime = calculateRemainingTime(timestamp);
+
+    let remainingDays = String(remainingTime.days).padStart(2, '0');
+    let remainingHours = String(remainingTime.hours).padStart(2, '0');
+    let remainingMinutes = String(remainingTime.minutes).padStart(2, '0');
+    let remainingSeconds = String(remainingTime.seconds).padStart(2, '0');
+    element.textContent = `${remainingDays} : ${remainingHours} : ${remainingMinutes} : ${remainingSeconds}`;
+    element.textContent = `${remainingSeconds} : ${remainingMinutes} : ${remainingHours} : ${remainingDays}`;
   }, 1000);
 };
 
@@ -161,6 +178,7 @@ const addCourseToCartHandler = (event, courses) => {
 
   if (!localStorageUserID) {
     sweetAlert('برای ثبت نام در دوره، ابتدا باید در سایت ثبت نام کنید.', 'info');
+    localStorage.removeItem('courses');
     return;
   }
 
@@ -176,15 +194,16 @@ const addCourseToCartHandler = (event, courses) => {
 };
 
 // header.js
-const removeCourseFromCartHandler = (event) => {
-  if (!event.target.closest('.header__cart-course-remove-btn')) return;
-  const courseID = event.target.closest('.header__cart-course-remove-btn').dataset.course_id;
+const removeCourseFromCartHandler = (event, cartPage = false) => {
+  if (!event.target.closest('.cart__course-remove-btn')) return;
+  const courseID = event.target.closest('.cart__course-remove-btn').dataset.course_id;
 
   const localCourses = getLocalCourses();
   const filterDeletedCourse = localCourses.filter((localCourse) => localCourse.id !== courseID);
   localStorage.setItem('courses', JSON.stringify(filterDeletedCourse));
   sweetAlert('دوره‌ از سبد خرید حذف شد.', 'success');
   updateHederCartDetail();
+  if (cartCoursesWrapper) updateCartPageDetail();
 };
 
 // header.js
@@ -198,7 +217,7 @@ const updateHederCartDetail = () => {
   const localCourses = getLocalCourses();
 
   if (localCourses && localCourses.length) {
-    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `${localCourses.length} مورد`));
+    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `${localCourses.length} دوره`));
 
     localCourses.forEach((course) => {
       coursesTemplate += headerCartCourseTemplate(course);
@@ -218,7 +237,7 @@ const updateHederCartDetail = () => {
       btn.textContent = 'تکمیل سفارش';
     });
   } else {
-    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `0 مورد`));
+    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `0 دوره`));
     headerCartCoursesWrappers.forEach((elem) => insertToDOM(elem, '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'));
 
     headerCartTotalPriceElements.forEach((elem) => {
@@ -234,4 +253,34 @@ const updateHederCartDetail = () => {
   }
 };
 
-export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, discountRemainingTimeDisplayHandler, addCourseToCartHandler, updateHederCartDetail, removeCourseFromCartHandler };
+// Cart.js
+const updateCartPageDetail = () => {
+  if (!localStorageUserID) {
+    location.replace('./auth.html?operation=signup');
+  }
+
+  let coursesTemplate = '';
+  let courseTotalPrice = 0;
+
+  const localCourses = getLocalCourses();
+  if (localCourses && localCourses.length) {
+    cartCourseNumberElement.textContent = `${localCourses.length} دوره`;
+    cartNoCourseWrapper.classList.add('hidden');
+    cartDetailWrapper.classList.remove('hidden');
+    localCourses.forEach((course) => {
+      coursesTemplate += cartCourseTemplate(course);
+      courseTotalPrice += course.finalPriceInt;
+    });
+    insertToDOM(cartCoursesWrapper, coursesTemplate);
+    const timerElements = document.querySelectorAll('.cart__discount-timer');
+    timerElements.forEach((element) => cartCourseDiscountRemainingTimeDisplayHandler(element));
+
+    cartTotalPrice.textContent = courseTotalPrice ? courseTotalPrice.toLocaleString('fa-IR') : 'صـــفر';
+  } else {
+    cartCourseNumberElement.textContent = `0 دوره`;
+    cartNoCourseWrapper.classList.remove('hidden');
+    cartDetailWrapper.classList.add('hidden');
+  }
+};
+
+export { insertToDOM, addLoginBtnToDOM, addCourseCardsToDOM, addBlogCardsToDOM, toggleTextarea, addRecentBlogsToDom, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler, updateHederCartDetail, removeCourseFromCartHandler, updateCartPageDetail };

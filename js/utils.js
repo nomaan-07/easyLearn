@@ -106,12 +106,12 @@ const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, catego
 };
 
 // course.js
-const CourseHeadlineSectionHandler = (headline) => {
+const CourseHeadlineSectionHandler = (headline, isPurchased) => {
   let sessions = headline.sessions;
   let sessionsTemplate = '';
   if (sessions.length) {
     sessions.forEach((session, index) => {
-      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1);
+      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1, isPurchased);
     });
   }
   return headlineTemplate(headline, sessionsTemplate, sessions.length);
@@ -204,6 +204,9 @@ const createCartCourseObject = (dbCourse) => ({
   discount: dbCourse.discount,
   imageSrc: dbCourse.image_src,
   slug: dbCourse.slug,
+  price: dbCourse.price,
+  caption: dbCourse.caption,
+  timestamp: dbCourse.discount_timestamp,
 });
 
 // dom-handlers.js

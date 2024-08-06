@@ -1,9 +1,9 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { generateRandomID, sortArray, commentSectionTemplateHandler } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput } from './dom-elements.js';
+import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses } from './utils.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail } from './dom-handlers.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation } from './validation.js';
 
 // index.js
@@ -155,4 +155,35 @@ const submitLoginForm = async (event) => {
   }
 };
 
-export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm };
+const purchaseCourses = async () => {
+  try {
+    let courseStudentCount = null;
+
+    const userPurchasedCourses = getLocalCourses();
+    const dbCourses = await getAllFromDatabase('courses');
+
+    let filteredCourses = dbCourses.filter((course) => userPurchasedCourses.some((purchasedCourse) => purchasedCourse.id === course.id));
+
+    for (let course of filteredCourses) {
+      const courseStudentsID = course.students_id || [];
+      courseStudentCount = course.students;
+
+      courseStudentsID.push(localStorageUserID);
+      courseStudentCount++;
+      await updateInDatabase('courses', { students_id: courseStudentsID, students: courseStudentCount }, course.id);
+    }
+
+    localStorage.removeItem('courses');
+    sweetAlert('خرید با موفقیت انجام شد.', 'success');
+    updateCartPageDetail();
+    updateHederCartDetail();
+    setTimeout(() => {
+      location.href = './index.html';
+    }, 3000);
+  } catch (error) {
+    console.log('Failed to purchase courses', error);
+    sweetAlert('متاسفانه خرید انجام نشد، لطفا بعدا تلاش کنید.', 'failed');
+  }
+};
+
+export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm, purchaseCourses };
