@@ -36,7 +36,7 @@ const headerCartCoursesNumberElements = document.querySelectorAll('.header__cart
 const headerCartCoursesWrappers = document.querySelectorAll('.header__cart-courses');
 const headerCartPayButtons = document.querySelectorAll('.header__cart-pay-btn');
 const headerCartTotalPriceElements = document.querySelectorAll('.header__cart-total-price');
-
+const headerCartBadgeNumberElements = document.querySelectorAll('.header__courses-number-badge');
 // Elements of index.html
 const latestCoursesWrapperElement = document.querySelector('.latest-courses-wrapper');
 const popularCoursesWrapperElement = document.querySelector('.popular-courses-wrapper');
@@ -164,6 +164,7 @@ export {
   passwordInput,
   authFormHeader,
   displayPasswordBtn,
+  headerCartBadgeNumberElements,
   headerCartCoursesNumberElements,
   headerCartCoursesWrappers,
   headerCartPayButtons,

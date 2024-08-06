@@ -2,7 +2,7 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses } from './utils.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
-import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID, headerCartTotalPriceElements, cartNoCourseWrapper, cartDetailWrapper, cartCoursesWrapper, cartTotalPrice, cartCourseNumberElement } from './dom-elements.js';
+import { headerCartCoursesNumberElements, headerCartCoursesWrappers, headerCartPayButtons, localStorageUserID, headerCartTotalPriceElements, cartNoCourseWrapper, cartDetailWrapper, cartCoursesWrapper, cartTotalPrice, cartCourseNumberElement, headerCartBadgeNumberElements } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -217,7 +217,12 @@ const updateHederCartDetail = () => {
   const localCourses = getLocalCourses();
 
   if (localCourses && localCourses.length) {
-    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `${localCourses.length} دوره`));
+    headerCartBadgeNumberElements.forEach((elem) => {
+      elem.textContent = localCourses.length;
+      elem.classList.remove('hidden');
+      elem.classList.add('flex');
+    });
+    headerCartCoursesNumberElements.forEach((elem) => (elem.textContent = `${localCourses.length} دوره`));
 
     localCourses.forEach((course) => {
       coursesTemplate += headerCartCourseTemplate(course);
@@ -237,6 +242,11 @@ const updateHederCartDetail = () => {
       btn.textContent = 'تکمیل سفارش';
     });
   } else {
+    headerCartBadgeNumberElements.forEach((elem) => {
+      elem.textContent = 0;
+      elem.classList.add('hidden');
+      elem.classList.remove('flex');
+    });
     headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `0 دوره`));
     headerCartCoursesWrappers.forEach((elem) => insertToDOM(elem, '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'));
 
