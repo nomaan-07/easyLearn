@@ -1,8 +1,8 @@
 import './aos.initialize.js';
-import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID } from './dom-elements.js';
+import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID, passwordInput } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { getQueryParameters, removeLoader } from './utils.js';
-import { moveInLabelElement, moveOutLabelElement, showPassword, hidePassword } from './ui-handlers.js';
+import { moveInLabelElement, moveOutLabelElement, displayPasswordHandler } from './ui-handlers.js';
 import { submitLoginForm, submitSignupForm } from './database-handlers.js';
 import { authFormHeaderTemplate } from './template.js';
 import { insertToDOM } from './dom-handlers.js';
@@ -37,17 +37,7 @@ const switchForms = () => {
 
 switchForms();
 
-const displayPasswordHandler = () => {
-  if (isPasswordShown) {
-    hidePassword();
-    isPasswordShown = false;
-  } else {
-    showPassword();
-    isPasswordShown = true;
-  }
-};
-
 form.addEventListener('click', moveOutLabelElement);
 inputElements.forEach((input) => moveInLabelElement(input));
-displayPasswordBtn.addEventListener('click', displayPasswordHandler);
+displayPasswordBtn.addEventListener('click', () => displayPasswordHandler(displayPasswordBtn, passwordInput));
 window.addEventListener('load', removeLoader);

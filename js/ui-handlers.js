@@ -88,18 +88,25 @@ const moveInLabelElement = (input) => {
   });
 };
 
-// auth.js
-const showPassword = () => {
+const showPassword = (displayPasswordBtn, passwordInput) => {
   displayPasswordBtn.children[0].classList.add('hidden');
   displayPasswordBtn.children[1].classList.remove('hidden');
   passwordInput.type = 'text';
 };
 
 // auth.js
-const hidePassword = () => {
+const hidePassword = (displayPasswordBtn, passwordInput) => {
   displayPasswordBtn.children[0].classList.remove('hidden');
   displayPasswordBtn.children[1].classList.add('hidden');
   passwordInput.type = 'password';
+};
+
+const displayPasswordHandler = (displayPasswordBtn, passwordInput) => {
+  if (passwordInput.type === 'password') {
+    showPassword(displayPasswordBtn, passwordInput);
+  } else {
+    hidePassword(displayPasswordBtn, passwordInput);
+  }
 };
 
 //account.js
@@ -115,4 +122,4 @@ const closeMobileAccountMenu = () => {
   overlay.classList.add('hide');
 };
 
-export { textareaAutoResize, toggleTextarea, headlineLockSessionAlert, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, showPassword, hidePassword, openMobileAccountMenu, closeMobileAccountMenu };
+export { textareaAutoResize, toggleTextarea, headlineLockSessionAlert, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, moveInLabelElement, moveOutLabelElement, displayPasswordHandler, openMobileAccountMenu, closeMobileAccountMenu };

@@ -112,6 +112,7 @@ const accountChangeDetailSubmitBtn = document.querySelector('.account__detail-su
 const accountChangePasswordSubmitBtn = document.querySelector('.account__password-submit-btn');
 const currentPasswordInputElem = document.querySelector('#current-password-input');
 const newPasswordInputElem = document.querySelector('#new-password-input');
+const accountDisplayPasswordButtons = document.querySelectorAll('.account__display-password-btn');
 
 export {
   accountMenuItemElements,
@@ -125,6 +126,7 @@ export {
   accountChangePasswordSubmitBtn,
   currentPasswordInputElem,
   newPasswordInputElem,
+  accountDisplayPasswordButtons,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,
