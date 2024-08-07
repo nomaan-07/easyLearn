@@ -90,13 +90,15 @@ const moveInLabelElement = (input) => {
 
 // auth.js
 const showPassword = () => {
-  insertToDOM(displayPasswordBtn, '<use href="#eye-slash"></use>');
+  displayPasswordBtn.children[0].classList.add('hidden');
+  displayPasswordBtn.children[1].classList.remove('hidden');
   passwordInput.type = 'text';
 };
 
 // auth.js
 const hidePassword = () => {
-  insertToDOM(displayPasswordBtn, '<use href="#eye"></use>');
+  displayPasswordBtn.children[0].classList.remove('hidden');
+  displayPasswordBtn.children[1].classList.add('hidden');
   passwordInput.type = 'password';
 };
 
