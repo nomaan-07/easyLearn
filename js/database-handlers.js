@@ -201,13 +201,13 @@ const fetchAndDisplayAccountCourses = async () => {
   addAccountCourseToDOM(filteredCourses);
 };
 
-//account.js
+// account.js
 const fetchAndDisplayAccountUserDetail = async () => {
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
   addUserAccountDetailToDOM(user);
 };
 
-//account.js
+// account.js
 const submitAccountDetailChanges = async (event) => {
   event.preventDefault();
 
@@ -226,6 +226,7 @@ const submitAccountDetailChanges = async (event) => {
   }
 };
 
+// account.js
 const submitAccountUPasswordChanges = async (event) => {
   event.preventDefault();
 

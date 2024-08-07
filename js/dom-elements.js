@@ -113,6 +113,7 @@ const accountChangePasswordSubmitBtn = document.querySelector('.account__passwor
 const currentPasswordInputElem = document.querySelector('#current-password-input');
 const newPasswordInputElem = document.querySelector('#new-password-input');
 const accountDisplayPasswordButtons = document.querySelectorAll('.account__display-password-btn');
+const accountChangeProfilePictureBtn = document.querySelector('.change-profile-picture-btn');
 
 export {
   accountMenuItemElements,
@@ -127,6 +128,7 @@ export {
   currentPasswordInputElem,
   newPasswordInputElem,
   accountDisplayPasswordButtons,
+  accountChangeProfilePictureBtn,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,
