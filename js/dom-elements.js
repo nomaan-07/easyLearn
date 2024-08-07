@@ -102,6 +102,7 @@ const cartPayBtn = document.querySelector('.cart__pay-btn');
 // account.js
 
 const accountMenuItemElements = document.querySelectorAll('.account__menu-item');
+const accountSectionWrappers = document.querySelectorAll('.account__section-wrapper');
 const accountCoursesWrapper = document.querySelector('.account__courses-wrapper');
 const accountUsernameElement = document.querySelector('.account__username');
 const accountMenuWrapper = document.querySelector('.account__menu-wrapper');
@@ -117,6 +118,7 @@ const accountChangeProfilePictureBtn = document.querySelector('.change-profile-p
 
 export {
   accountMenuItemElements,
+  accountSectionWrappers,
   accountCoursesWrapper,
   accountUsernameElement,
   accountMenuWrapper,

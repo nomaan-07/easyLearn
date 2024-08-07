@@ -1,7 +1,7 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses } from './utils.js';
+import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
@@ -242,6 +242,20 @@ const submitAccountUPasswordChanges = async (event) => {
   }
 };
 
+const fetchAccountUser = async () => {
+  if (!localStorageUserID) {
+    location.replace('./auth.html?operation=signup');
+  }
+
+  const user = await getOneFromDatabase('users', 'id', localStorageUserID);
+  if (user.role === 'admin') {
+    location.replace('./admin-panel.html?role=admin');
+  }
+  setTimeout(() => {
+    removeLoader();
+  }, 500);
+};
+
 export {
   fetchAndDisplayMainPageCourses,
   fetchAndDisplayMainPageBlogs,
@@ -256,4 +270,5 @@ export {
   fetchAndDisplayAccountUserDetail,
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
+  fetchAccountUser,
 };

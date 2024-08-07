@@ -20,9 +20,9 @@ import {
   accountUsernameElement,
   usernameInput,
   emailInput,
-  accountDetailWrapper,
   accountSectionNameElement,
   userAccountProfilePictureWrapper,
+  accountSectionWrappers,
 } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
@@ -337,30 +337,19 @@ const displayChosenAccountSection = (element) => {
   accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
   element.classList.add('account__menu-item--active');
   closeMobileAccountMenu();
+  accountSectionNameElement.textContent = element.children[1].textContent;
 
-  switch (element.dataset.section) {
-    case 'courses':
-      accountCoursesWrapper.classList.add('grid');
-      accountCoursesWrapper.classList.remove('hidden');
-
-      accountDetailWrapper.classList.remove('sm:grid');
-      accountDetailWrapper.classList.add('hidden');
-
-      accountSectionNameElement.textContent = 'دوره‌های من';
-      break;
-    case 'account-detail':
-      accountCoursesWrapper.classList.remove('grid');
-      accountCoursesWrapper.classList.add('hidden');
-
-      accountDetailWrapper.classList.add('sm:grid');
-      accountDetailWrapper.classList.remove('hidden');
-
-      accountSectionNameElement.textContent = 'جزئیات حساب کاربری';
-      break;
-    case 'logout':
-      localStorage.removeItem('userID');
-      location.replace('./index.html');
-      break;
+  if (element.dataset.section === 'logout') {
+    localStorage.removeItem('userID');
+    location.replace('./index.html');
+  } else {
+    accountSectionWrappers.forEach((wrapper) => {
+      if (wrapper.dataset.section === element.dataset.section) {
+        wrapper.classList.remove('hidden');
+      } else {
+        wrapper.classList.add('hidden');
+      }
+    });
   }
 };
 
