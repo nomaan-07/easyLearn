@@ -61,7 +61,7 @@
     </svg>
 
     <!-- Header -->
-    <header class="bg-white dark:bg-slate-800 lg:bg-transparent lg:dark:bg-transparent h-20 flex items-center justify-between px-4">
+    <header class="bg-white dark:bg-slate-800 lg:bg-transparent lg:dark:bg-transparent h-20 lg:h-0 flex items-center justify-between px-4">
       <!-- Menu Open Btn -->
       <div class="mobile-menu-open-btn bg-slate-100 dark:bg-slate-900 p-2 rounded-full lg:hidden">
         <svg class="size-7">
@@ -77,7 +77,7 @@
       </a>
       <!-- End of App Logo -->
       <!-- Placeholder -->
-      <div></div>
+      <div class="size-11"></div>
     </header>
     <!-- End of Header -->
     <!-- Menu Wrapper -->
@@ -126,10 +126,15 @@
     <!-- End of Menu Wrapper -->
 
     <!-- Main -->
-    <main class="main mr-4 lg:mr-72 ml-4">
+    <main class="main mr-4 lg:mr-72 ml-4 pb-6">
       <div class="container">
+        <!-- Section Name -->
+        <div class="flex justify-center">
+          <span class="account__section-name lg:hidden font-VazirMedium sm:text-lg inline-block py-2 px-4 theme-bg-color text-white rounded-b-2xl">دوره‌های من</span>
+        </div>
+        <!-- End of Section Name -->
         <!-- Account Username -->
-        <div class="account__username font-VazirBlack text-xl sm:text-2xl lg:text-3xl mt-5 mb-10 text-center">
+        <div class="account__username font-VazirBlack text-xl sm:text-2xl lg:text-3xl mt-5 mb-8 sm:mb-10 text-center">
           <!-- Username PlaceHolder -->
           <div class="flex justify-center gap-1 min-h-7 sm:min-h-8 lg:h-9">
             <div class="w-24 sm:w-28 lg:w-36 h-5 lg:h-6 theme-bg-color-10 rounded-2xl"></div>

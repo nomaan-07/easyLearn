@@ -710,7 +710,7 @@ const accountCourseTemplate = (course) => {
         </a>
         <!-- End of Course Banner -->
         <!-- Course Name -->
-        <a class="block mt-4 px-4 font-VazirBold text-lg h-[60px] hover:theme-text-color transition-all line-clamp-2" href="./course.html?course=${course.slug}">${course.name}</a>
+        <a class="block mt-4 px-4 font-VazirBold text-lg sm:h-14 hover:theme-text-color transition-all sm:line-clamp-2" href="./course.html?course=${course.slug}">${course.name}</a>
         <!-- End of Course Name -->
       </div>
       <!-- End of Course -->`;
