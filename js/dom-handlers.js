@@ -1,6 +1,6 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian } from './utils.js';
-import { toggleTextarea } from './ui-handlers.js';
+import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import {
   topBannerElement,
@@ -328,12 +328,14 @@ const addAccountCourseToDOM = (courses) => {
 const displayChosenAccountSection = (element) => {
   accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
   element.classList.add('account__menu-item--active');
+  closeMobileAccountMenu();
+
   switch (element.dataset.section) {
     case 'courses':
       accountCoursesWrapper.classList.add('grid');
       accountCoursesWrapper.classList.remove('hidden');
 
-      accountDetailWrapper.classList.remove('grid');
+      accountDetailWrapper.classList.remove('sm:grid');
       accountDetailWrapper.classList.add('hidden');
 
       accountSectionNameElement.textContent = 'دوره‌های من';
@@ -342,7 +344,7 @@ const displayChosenAccountSection = (element) => {
       accountCoursesWrapper.classList.remove('grid');
       accountCoursesWrapper.classList.add('hidden');
 
-      accountDetailWrapper.classList.add('grid');
+      accountDetailWrapper.classList.add('sm:grid');
       accountDetailWrapper.classList.remove('hidden');
 
       accountSectionNameElement.textContent = 'جزئیات حساب کاربری';

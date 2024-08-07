@@ -5194,6 +5194,11 @@ video {
     top: -6rem;
   }
 
+  .xs\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
   .xs\:mt-5 {
     margin-top: 1.25rem;
   }
@@ -5386,6 +5391,10 @@ video {
 
   .sm\:flex {
     display: flex;
+  }
+
+  .sm\:grid {
+    display: grid;
   }
 
   .sm\:size-10 {
@@ -6021,14 +6030,6 @@ video {
 
   .lg\:order-2 {
     order: 2;
-  }
-
-  .lg\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-
-  .lg\:col-span-8 {
-    grid-column: span 8 / span 8;
   }
 
   .lg\:mx-0 {
