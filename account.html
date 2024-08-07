@@ -10,6 +10,9 @@
 
   <body class="text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 font-Vazir overflow-x-hidden h-0 overflow-y-hidden relative">
     <svg class="hidden">
+      <symbol id="arrow-path" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+      </symbol>
       <symbol id="arrow-right-start-on-rectangle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
       </symbol>
@@ -51,6 +54,9 @@
           stroke-linejoin="round"
           d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
         ></path>
+      </symbol>
+      <symbol id="user" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
       </symbol>
       <symbol id="user-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -144,7 +150,7 @@
         </div>
         <!-- End of Account Username -->
         <!-- Courses -->
-        <div class="account__courses-wrapper grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+        <section class="account__courses-wrapper grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
           <!-- PlaceHolder Course -->
           <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-700 rounded-2xl pb-5">
             <!-- Course Banner -->
@@ -281,8 +287,72 @@
             <!-- End of Course Name -->
           </div>
           <!-- End of PlaceHolder Course -->
-        </div>
+        </section>
         <!-- End of Courses -->
+        <!-- Account Detail -->
+        <section class="account__detail-wrapper hidden grid-cols-12 gap-6 text-lg font-VazirMedium">
+          <!-- Profile picture, Username and Email -->
+          <form class="col-span-12 md:col-span-6 xl:col-span-8 2xl:col-span-9 bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border-slate-700 p-5 rounded-2xl">
+            <!-- Picture Wrapper -->
+            <div class="relative size-36">
+              <!-- Profile Picture -->
+              <div class="size-full rounded-full overflow-hidden">
+                <div class="flex items-center justify-center size-full theme-bg-color-10">
+                  <svg class="size-20 theme-text-color">
+                    <use href="#user"></use>
+                  </svg>
+                </div>
+              </div>
+              <!-- End of Profile Picture -->
+              <!-- Upload Picture Btn-->
+              <div class="change-profile-picture-btn absolute bottom-0 left-0 theme-bg-color text-white rounded-full p-1 md:cursor-pointer">
+                <svg class="size-8">
+                  <use href="#arrow-path"></use>
+                </svg>
+                <input type="file" id="file-input" accept="image/*" class="hidden" />
+              </div>
+              <!-- End of Upload Picture btn -->
+            </div>
+            <!-- End of Picture Wrapper -->
+            <!-- Username and Email -->
+            <div class="flex flex-col sm:flex-row md:flex-col xl:flex-row gap-8 mt-10">
+              <!-- Username -->
+              <div class="flex flex-col gap-2 w-full">
+                <label for="username-input">نام کاربری</label>
+                <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" id="username-input" type="text" />
+              </div>
+              <!-- End of Username -->
+              <!-- Email -->
+              <div class="flex flex-col gap-2 w-full">
+                <label for="email-input">ایمیل</label>
+                <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" dir="ltr" id="email-input" type="email" />
+              </div>
+              <!-- End of Email -->
+            </div>
+            <!-- End of Username and Email -->
+            <button class="account__detail-submit-btn btn w-full xs:w-64 mx-auto theme-bg-color md:hover:theme-hover-bg-color mt-8" type="submit">تغییر اطلاعات</button>
+          </form>
+          <!-- End of Profile picture, Username and Email -->
+          <!-- Password -->
+          <form class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-3 h-fit bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border-slate-700 p-5 rounded-2xl space-y-8">
+            <!-- Current Password -->
+            <div class="flex flex-col gap-2 w-full">
+              <label for="current-password-input">رمز عبور فعلی</label>
+              <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" id="current-password-input" type="password" />
+            </div>
+            <!-- End of Current Password -->
+            <!-- New Password -->
+            <div class="flex flex-col gap-2 w-full">
+              <label for="new-password-input">رمز عبور جدید</label>
+              <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" dir="ltr" id="new-password-input" type="password" />
+            </div>
+            <!-- End of New Password -->
+            <!-- End of Username and Email -->
+            <button class="account__password-submit-btn btn w-full xs:w-64 mx-auto theme-bg-color md:hover:theme-hover-bg-color" type="submit">تغییر رمز عبور</button>
+          </form>
+          <!-- End of Password -->
+        </section>
+        <!-- End of Account Detail -->
       </div>
     </main>
     <!-- End of Main -->

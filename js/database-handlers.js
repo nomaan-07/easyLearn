@@ -2,8 +2,8 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, accountCoursesWrapper } from './dom-elements.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserDetailToDOM } from './dom-handlers.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation } from './validation.js';
 
 // index.js
@@ -194,4 +194,10 @@ const fetchAndDisplayAccountCourses = async () => {
   addAccountCourseToDOM(filteredCourses);
 };
 
-export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm, purchaseCourses, fetchAndDisplayAccountCourses };
+//account.js
+const fetchAndDisplayAccountUserDetail = async () => {
+  const user = await getOneFromDatabase('users', 'id', localStorageUserID);
+  addUserDetailToDOM(user);
+};
+
+export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm, purchaseCourses, fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail };

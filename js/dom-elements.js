@@ -105,12 +105,16 @@ const accountMenuItemElements = document.querySelectorAll('.account__menu-item')
 const accountCoursesWrapper = document.querySelector('.account__courses-wrapper');
 const accountUsernameElement = document.querySelector('.account__username');
 const accountMenuWrapper = document.querySelector('.account__menu-wrapper');
+const accountDetailWrapper = document.querySelector('.account__detail-wrapper');
+const accountSectionNameElement = document.querySelector('.account__section-name');
 
 export {
   accountMenuItemElements,
   accountCoursesWrapper,
   accountUsernameElement,
   accountMenuWrapper,
+  accountDetailWrapper,
+  accountSectionNameElement,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,

@@ -1,18 +1,13 @@
 import './change-theme.js';
-import { accountMenuItemElements, accountUsernameElement, localStorageUserID, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from './dom-elements.js';
+import { accountMenuItemElements, localStorageUserID, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from './dom-elements.js';
 import { removeLoader } from './utils.js';
-import { displayChosenAccountSection, insertToDOM } from './dom-handlers.js';
-import { fetchAndDisplayAccountCourses } from './database-handlers.js';
-import { getOneFromDatabase } from './database-api.js';
+import { displayChosenAccountSection } from './dom-handlers.js';
+import { fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail } from './database-handlers.js';
 import { openMobileAccountMenu, closeMobileAccountMenu } from './ui-handlers.js';
-let user = null;
-const fetchUser = async () => {
-  user = await getOneFromDatabase('users', 'id', localStorageUserID);
-  insertToDOM(accountUsernameElement, `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`);
-};
 
-fetchUser();
+if (!localStorageUserID) location.replace('./auth.html?operation=signup');
 
+fetchAndDisplayAccountUserDetail();
 fetchAndDisplayAccountCourses();
 
 window.addEventListener('load', removeLoader);

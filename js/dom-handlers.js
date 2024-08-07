@@ -17,6 +17,11 @@ import {
   headerCartBadgeNumberElements,
   accountMenuItemElements,
   accountCoursesWrapper,
+  accountUsernameElement,
+  usernameInput,
+  emailInput,
+  accountDetailWrapper,
+  accountSectionNameElement,
 } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
@@ -319,10 +324,41 @@ const addAccountCourseToDOM = (courses) => {
   insertToDOM(accountCoursesWrapper, coursesTemplate);
 };
 
-// account.js
+// database-handler.js
 const displayChosenAccountSection = (element) => {
   accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
   element.classList.add('account__menu-item--active');
+  switch (element.dataset.section) {
+    case 'courses':
+      accountCoursesWrapper.classList.add('grid');
+      accountCoursesWrapper.classList.remove('hidden');
+
+      accountDetailWrapper.classList.remove('grid');
+      accountDetailWrapper.classList.add('hidden');
+
+      accountSectionNameElement.textContent = 'دوره‌های من';
+      break;
+    case 'account-detail':
+      accountCoursesWrapper.classList.remove('grid');
+      accountCoursesWrapper.classList.add('hidden');
+
+      accountDetailWrapper.classList.add('grid');
+      accountDetailWrapper.classList.remove('hidden');
+
+      accountSectionNameElement.textContent = 'جزئیات حساب کاربری';
+      break;
+    case 'logout':
+      localStorage.removeItem('userID');
+      location.replace('./index.html');
+      break;
+  }
+};
+
+// database-handler.js
+const addUserDetailToDOM = (user) => {
+  insertToDOM(accountUsernameElement, `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`);
+  usernameInput.placeholder = user.username;
+  emailInput.placeholder = user.email;
 };
 
 export {
@@ -341,4 +377,5 @@ export {
   changeTopBannerBackgroundColor,
   displayChosenAccountSection,
   addAccountCourseToDOM,
+  addUserDetailToDOM,
 };
