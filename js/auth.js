@@ -7,8 +7,6 @@ import { submitLoginForm, submitSignupForm } from './database-handlers.js';
 import { authFormHeaderTemplate } from './template.js';
 import { insertToDOM } from './dom-handlers.js';
 
-let isPasswordShown = false;
-
 const operationParam = getQueryParameters('operation');
 
 if (localStorageTheme) {
