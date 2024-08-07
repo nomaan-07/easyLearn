@@ -27,8 +27,8 @@ const signupFormValidation = (username, email, password, allUsers) => {
   const isUsernameEmpty = !emptyValueValidation(username);
   const isEmailEmpty = !emptyValueValidation(email);
   const isPasswordEmpty = !emptyValueValidation(password);
-  let allUsernames = allUsers.find((user) => user.username === username);
-  let allEmails = allUsers.find((user) => user.email === email);
+  let dbUsername = allUsers.find((user) => user.username === username);
+  let dbEmail = allUsers.find((user) => user.email === email);
 
   if (isUsernameEmpty && isEmailEmpty && isPasswordEmpty) {
     sweetAlert('لطفا نام کاربری،‌ ایمیل و رمز عبور را وارد کنید.', 'failed');
@@ -52,9 +52,9 @@ const signupFormValidation = (username, email, password, allUsers) => {
     sweetAlert('لطفا ایمیل را به درستی وارد کنید.', 'failed');
   } else if (!passwordValidation(password)) {
     sweetAlert('رمز عبور باید حداقل ۸ کاراکتر باشد.', 'failed');
-  } else if (allUsernames) {
+  } else if (dbUsername) {
     sweetAlert('نام کاربری قبلا انتخاب شده است.', 'failed');
-  } else if (allEmails) {
+  } else if (dbEmail) {
     sweetAlert('این ایمیل قبلا ثبت نام کرده است.', 'failed');
   } else {
     sweetAlert('ثبت نام با موفقیت انجام شد.', 'success');
@@ -87,4 +87,60 @@ const loginFormValidation = (email, password, user) => {
   return false;
 };
 
-export { emptyValueValidation, emailValidation, passwordValidation, signupFormValidation, loginFormValidation };
+const accountChangeDetailFormValidation = (username, email, allUsers) => {
+  let dbUsername = allUsers.find((user) => user.username === username);
+  let dbEmail = allUsers.find((user) => user.email === email);
+
+  let isUsernameValid = true;
+  let isEmailValid = true;
+
+  // Validate username
+  if (emptyValueValidation(username)) {
+    isUsernameValid = false;
+    if (usernameValidation(username) === 'char') {
+      sweetAlert('در نام کاربری فقط استفاده از حروف انگلیسی، اعداد و _(آندرلاین) مجاز است.', 'failed');
+    } else if (usernameValidation(username) === 'length') {
+      sweetAlert('نام کاربری باید بین ۴ تا ۱۲ کاراکتر باشد.', 'failed');
+    } else if (dbUsername) {
+      sweetAlert('نام کاربری قبلا انتخاب شده است.', 'failed');
+    } else {
+      isUsernameValid = true;
+    }
+  }
+
+  // Validate email
+  if (emptyValueValidation(email)) {
+    isEmailValid = false;
+    if (!emailValidation(email)) {
+      sweetAlert('لطفا ایمیل را به درستی وارد کنید.', 'failed');
+    } else if (dbEmail) {
+      sweetAlert('این ایمیل در سایت ثبت نام کرده است.', 'failed');
+    } else {
+      isEmailValid = true;
+    }
+  }
+
+  isEmailValid && isUsernameValid && sweetAlert(`مشخصات با موفقیت تغییر یافت.`, 'success');
+  return isEmailValid && isUsernameValid;
+};
+
+const accountChangePasswordFormValidation = (currentPassword, newPassword, user) => {
+  const isCurrentPasswordEmpty = !emptyValueValidation(currentPassword);
+  const isNewPasswordEmpty = !emptyValueValidation(newPassword);
+
+  if (isCurrentPasswordEmpty) {
+    sweetAlert('لطفا رمز عبور فعلی را وارد کنید.', 'failed');
+  } else if (isNewPasswordEmpty) {
+    sweetAlert('لطفا رمز عبور جدید را وارد کنید.', 'failed');
+  } else if (currentPassword !== user.password) {
+    sweetAlert('رمز عبور فعلی اشتباه است.', 'failed');
+  } else if (!passwordValidation(newPassword)) {
+    sweetAlert('رمز عبور باید حداقل ۸ کاراکتر باشد.', 'failed');
+  } else {
+    sweetAlert('رمز عبور با موفقیت تغییر یافت.', 'success');
+    return true;
+  }
+  return false;
+};
+
+export { emptyValueValidation, emailValidation, passwordValidation, signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation };

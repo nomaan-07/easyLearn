@@ -321,7 +321,6 @@ const changeTopBannerBackgroundColor = () => {
 // account.js
 const addAccountCourseToDOM = (courses) => {
   let coursesTemplate = '';
-  console.log(courses);
 
   if (courses.length) {
     courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));

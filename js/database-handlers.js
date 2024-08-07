@@ -3,8 +3,8 @@ import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses } from './utils.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID } from './dom-elements.js';
-import { signupFormValidation, loginFormValidation } from './validation.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
+import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
 // index.js
 async function fetchAndDisplayMainPageCourses() {
@@ -120,7 +120,7 @@ const submitSignupForm = async (event) => {
   const emailInputValue = emailInput.value.trim();
   const passwordInputValue = passwordInput.value.trim();
 
-  let allUsers = await getAllFromDatabase('users');
+  const allUsers = await getAllFromDatabase('users');
 
   if (signupFormValidation(usernameInputValue, emailInputValue, passwordInputValue, allUsers)) {
     let newUser = {
@@ -145,7 +145,8 @@ const submitLoginForm = async (event) => {
   const emailInputValue = emailInput.value.trim();
   const passwordInputValue = passwordInput.value.trim();
 
-  let users = await getAllFromDatabase('users');
+  const users = await getAllFromDatabase('users');
+
   let user = users.find((user) => user.email === emailInputValue);
   if (loginFormValidation(emailInputValue, passwordInputValue, user)) {
     localStorage.setItem('userID', user.id);
@@ -200,4 +201,52 @@ const fetchAndDisplayAccountUserDetail = async () => {
   addUserAccountDetailToDOM(user);
 };
 
-export { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs, submitCommentReply, submitNewComment, fetchAndDisplayComments, fetchAndDisplayRecantBlogs, submitSignupForm, submitLoginForm, purchaseCourses, fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail };
+//account.js
+const submitAccountDetailChanges = async (event) => {
+  event.preventDefault();
+
+  const usernameInputValue = usernameInput.value.trim();
+  const emailInputValue = emailInput.value.trim();
+
+  const allUsers = (usernameInputValue || emailInputValue) && (await getAllFromDatabase('users'));
+
+  if (allUsers && accountChangeDetailFormValidation(usernameInputValue, emailInputValue, allUsers)) {
+    let username = usernameInputValue || usernameInput.placeholder;
+    let email = emailInputValue || emailInput.placeholder;
+    updateInDatabase('users', { username, email }, localStorageUserID);
+    addUserAccountDetailToDOM({ username, email });
+    usernameInput.value = '';
+    emailInput.value = '';
+  }
+};
+
+const submitAccountUPasswordChanges = async (event) => {
+  event.preventDefault();
+
+  const currentPasswordInputValue = currentPasswordInputElem.value.trim();
+  const newPasswordInputValue = newPasswordInputElem.value.trim();
+
+  const user = (currentPasswordInputValue || newPasswordInputValue) && (await getOneFromDatabase('users', 'id', localStorageUserID));
+
+  if (user && accountChangePasswordFormValidation(currentPasswordInputValue, newPasswordInputValue, user)) {
+    updateInDatabase('users', { password: newPasswordInputValue }, localStorageUserID);
+    currentPasswordInputElem.value = '';
+    newPasswordInputElem.value = '';
+  }
+};
+
+export {
+  fetchAndDisplayMainPageCourses,
+  fetchAndDisplayMainPageBlogs,
+  submitCommentReply,
+  submitNewComment,
+  fetchAndDisplayComments,
+  fetchAndDisplayRecantBlogs,
+  submitSignupForm,
+  submitLoginForm,
+  purchaseCourses,
+  fetchAndDisplayAccountCourses,
+  fetchAndDisplayAccountUserDetail,
+  submitAccountDetailChanges,
+  submitAccountUPasswordChanges,
+};

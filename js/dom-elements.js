@@ -108,6 +108,10 @@ const accountMenuWrapper = document.querySelector('.account__menu-wrapper');
 const accountDetailWrapper = document.querySelector('.account__detail-wrapper');
 const accountSectionNameElement = document.querySelector('.account__section-name');
 const userAccountProfilePictureWrapper = document.querySelector('.account__user-profile-picture');
+const accountChangeDetailSubmitBtn = document.querySelector('.account__detail-submit-btn');
+const accountChangePasswordSubmitBtn = document.querySelector('.account__password-submit-btn');
+const currentPasswordInputElem = document.querySelector('#current-password-input');
+const newPasswordInputElem = document.querySelector('#new-password-input');
 
 export {
   accountMenuItemElements,
@@ -117,6 +121,10 @@ export {
   accountDetailWrapper,
   accountSectionNameElement,
   userAccountProfilePictureWrapper,
+  accountChangeDetailSubmitBtn,
+  accountChangePasswordSubmitBtn,
+  currentPasswordInputElem,
+  newPasswordInputElem,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,

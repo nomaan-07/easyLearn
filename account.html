@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>پنل کاربری | ایزی‌لرن</title>
     <link id="favicon" rel="icon" href="./images/favIcons/fuchsia-favicon-64x64.png" />
+    <link rel="stylesheet" href="./vendor/Sweetalert2/sweetalert2.min.css" />
+    <link rel="stylesheet" href="./vendor/animate/animate.min.css" />
     <link rel="stylesheet" href="./styles/app.css" />
   </head>
 
@@ -19,6 +21,13 @@
       <symbol id="bars-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
       </symbol>
+      <symbol id="check-badge" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+        ></path>
+      </symbol>
       <symbol id="course" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 48 48">
         <g data-name="38. book on monitor/computer">
           <path
@@ -26,6 +35,9 @@
           ></path>
           <path d="M23.29 36.71a1 1 0 1 0 0-1.42A1 1 0 0 0 23.29 36.71zM22 17h8a1 1 0 0 0 0-2H22A1 1 0 0 0 22 17zM28 19H24a1 1 0 0 0 0 2h4A1 1 0 0 0 28 19zM22 11h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H22a1 1 0 0 0-1 1v4A1 1 0 0 0 22 11zm1-4h6V9H23z"></path>
         </g>
+      </symbol>
+      <symbol id="information-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"></path>
       </symbol>
       <symbol id="logo" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 465.000000 299.000000" preserveAspectRatio="xMidYMid meet">
         <g transform="translate(0.000000,299.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
@@ -60,6 +72,9 @@
       </symbol>
       <symbol id="user-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      </symbol>
+      <symbol id="x-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
       </symbol>
       <symbol id="x-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
@@ -319,7 +334,7 @@
               <!-- Username -->
               <div class="flex flex-col gap-2 w-full">
                 <label for="username-input">نام کاربری</label>
-                <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" id="username-input" type="text" />
+                <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" dir="ltr" id="username-input" type="text" />
               </div>
               <!-- End of Username -->
               <!-- Email -->
@@ -338,7 +353,7 @@
             <!-- Current Password -->
             <div class="flex flex-col gap-2 w-full">
               <label for="current-password-input">رمز عبور فعلی</label>
-              <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" id="current-password-input" type="password" />
+              <input class="p-2 border theme-border-color bg-transparent outline-none rounded-xl" dir="ltr" id="current-password-input" type="password" />
             </div>
             <!-- End of Current Password -->
             <!-- New Password -->
@@ -380,6 +395,7 @@
       <div class="loader"></div>
     </div>
 
+    <script src="./vendor/Sweetalert2/sweetalert2.all.min.js"></script>
     <script type="module" src="./js/acount.js"></script>
   </body>
 </html>
