@@ -169,7 +169,7 @@ window.addEventListener('load', removeLoader);
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, user, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
-newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, course.id, course.name, user));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, 'course', course.id, course.name, course.slug, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, user));
+commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, 'course', course.name, course.slug, user));
 headlinesWrapper.addEventListener('click', headlineLockSessionAlert);

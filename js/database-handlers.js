@@ -54,7 +54,7 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
 }
 
 // comments section - course.js - blog.js
-const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageName, user) => {
+const submitNewComment = (newCommentWrapper, newCommentTextarea, pageType, pageID, pageName, pageSlug, user) => {
   const message = newCommentTextarea.value.trim();
   let newComment = {
     id: generateRandomID(),
@@ -63,6 +63,8 @@ const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageNam
     page_name: pageName,
     writer: user.username,
     image_src: user.image_src,
+    page_slug: pageSlug,
+    page_type: pageType,
   };
 
   if (message) {
@@ -76,7 +78,7 @@ const submitNewComment = (newCommentWrapper, newCommentTextarea, pageID, pageNam
 };
 
 // comments section - course.js - blog.js
-const submitCommentReply = (textarea, wrapper, commentID, user) => {
+const submitCommentReply = (textarea, wrapper, commentID, pageType, pageName, pageSlug, user) => {
   const message = textarea.value.trim();
   let dbReplies = null;
   let newReply = null;
@@ -88,6 +90,9 @@ const submitCommentReply = (textarea, wrapper, commentID, user) => {
       confirmed: false,
       writer: user.username,
       image_src: user.image_src,
+      page_type: pageType,
+      page_name: pageName,
+      page_slug: pageSlug,
     };
     dbReplies = comment.replies ? comment.replies : [];
     dbReplies.push(newReply);

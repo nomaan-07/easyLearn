@@ -117,7 +117,7 @@ const addRecentBlogsToDom = (blogs, blogsWrapper) => {
 };
 
 // comments section - course.js - blog.js
-const handleCommentReply = (event, user) => {
+const handleCommentReply = (event, pageType, pageName, pageSlug, user) => {
   let element = event.target;
   let commentID = getParentID(element, 'comment');
   let wrapper = getReplyCommentWrapper(commentID);
@@ -133,7 +133,7 @@ const handleCommentReply = (event, user) => {
   }
   // submit reply
   if (element.closest('.reply-comment-submit-btn')) {
-    submitCommentReply(textarea, wrapper, commentID, user);
+    submitCommentReply(textarea, wrapper, commentID, pageType, pageName, pageSlug, user);
   }
 };
 

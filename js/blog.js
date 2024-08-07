@@ -90,6 +90,6 @@ window.addEventListener('load', removeLoader);
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, user, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
-newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, blog.id, blog.title, user));
+newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, 'blog', blog.id, blog.title, blog.slug, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
-commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, user));
+commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, 'blog', blog.title, blog.slug, user));
