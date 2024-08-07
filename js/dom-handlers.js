@@ -1,4 +1,4 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate } from './template.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian } from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
@@ -22,6 +22,7 @@ import {
   emailInput,
   accountDetailWrapper,
   accountSectionNameElement,
+  userAccountProfilePictureWrapper,
 } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
@@ -320,7 +321,15 @@ const changeTopBannerBackgroundColor = () => {
 // account.js
 const addAccountCourseToDOM = (courses) => {
   let coursesTemplate = '';
-  courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));
+  console.log(courses);
+
+  if (courses.length) {
+    courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));
+  } else {
+    coursesTemplate = `
+    <p class="text-center text-xl font-VazirMedium">شما در هیچ دوره‌ای شرکت نکرده‌اید.</p>
+    <a href="./course-category.html?category=all-courses" class="btn theme-bg-color md:hover:theme-hover-bg-color">همه‌ی دوره‌ها</a>`;
+  }
   insertToDOM(accountCoursesWrapper, coursesTemplate);
 };
 
@@ -357,10 +366,13 @@ const displayChosenAccountSection = (element) => {
 };
 
 // database-handler.js
-const addUserDetailToDOM = (user) => {
+const addUserAccountDetailToDOM = (user) => {
   insertToDOM(accountUsernameElement, `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`);
+
   usernameInput.placeholder = user.username;
   emailInput.placeholder = user.email;
+
+  user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
 };
 
 export {
@@ -379,5 +391,5 @@ export {
   changeTopBannerBackgroundColor,
   displayChosenAccountSection,
   addAccountCourseToDOM,
-  addUserDetailToDOM,
+  addUserAccountDetailToDOM,
 };

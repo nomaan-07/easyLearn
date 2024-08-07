@@ -717,6 +717,20 @@ const accountCourseTemplate = (course) => {
   return template;
 };
 
+const userAccountProfilePictureTemplate = (imageSrc) => {
+  let template = `
+          <div class="flex items-center justify-center size-full theme-bg-color-10">
+            <svg class="size-20 theme-text-color">
+              <use href="#user"></use>
+            </svg>
+          </div>`;
+
+  if (imageSrc) {
+    template = `<img class="size-full" src="${imageSrc}" alt="تصویر پروفایل">`;
+  }
+  return template;
+};
+
 export {
   loginBtnTemplate,
   courseCardTemplate,
@@ -733,4 +747,5 @@ export {
   headerCartCourseTemplate,
   cartCourseTemplate,
   accountCourseTemplate,
+  userAccountProfilePictureTemplate,
 };

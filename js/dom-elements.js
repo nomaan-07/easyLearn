@@ -107,6 +107,7 @@ const accountUsernameElement = document.querySelector('.account__username');
 const accountMenuWrapper = document.querySelector('.account__menu-wrapper');
 const accountDetailWrapper = document.querySelector('.account__detail-wrapper');
 const accountSectionNameElement = document.querySelector('.account__section-name');
+const userAccountProfilePictureWrapper = document.querySelector('.account__user-profile-picture');
 
 export {
   accountMenuItemElements,
@@ -115,6 +116,7 @@ export {
   accountMenuWrapper,
   accountDetailWrapper,
   accountSectionNameElement,
+  userAccountProfilePictureWrapper,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,
