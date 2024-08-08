@@ -1,6 +1,13 @@
-const sweetAlert = (message, type) => {
+const sweetAlert = (message, type, btn = false) => {
   let icon = null;
   let iconColorClasses = null;
+
+  let confirmBtn = false;
+  let alertTimer = 4000;
+  let alertPosition = 'top-start';
+  let showAnimation = 'animate__bounceInRight';
+  let hideAnimation = 'animate__bounceOutRight';
+
   if (type === 'success') {
     icon = 'check-badge';
     iconColorClasses = 'text-green-600 dark:text-green-400';
@@ -12,6 +19,14 @@ const sweetAlert = (message, type) => {
     iconColorClasses = 'text-yellow-500';
   }
 
+  if (btn) {
+    confirmBtn = true;
+    alertTimer = false;
+    alertPosition = 'center';
+    showAnimation = 'animate__fadeIn';
+    hideAnimation = 'animate__fadeOut';
+  }
+
   Swal.fire({
     html: `
       <div class="notification__container">
@@ -21,11 +36,15 @@ const sweetAlert = (message, type) => {
           </svg>
           <span>${message}</span>
         </div>
+        <div class="notification__btn-wrapper">
+          <div class="notification__confirm-btn"></div>
+        </div>
       </div>`,
-    position: 'top-start',
+    position: alertPosition,
     width: 'fit-content',
-    showConfirmButton: false,
-    timer: 4000,
+    showConfirmButton: confirmBtn,
+    confirmButtonText: 'تایید',
+    timer: alertTimer,
     timerProgressBar: true,
     backdrop: false,
     customClass: {
@@ -34,18 +53,20 @@ const sweetAlert = (message, type) => {
       popup: 'notification__content',
       icon: 'notification__icon',
       timerProgressBar: 'notification-timer-progress-bar',
+      confirmButton: 'notification__confirm-btn',
+      actions: 'notification__btn-wrapper',
     },
     showClass: {
       popup: `
         animate__animated
-        animate__bounceInRight
+        ${showAnimation}
         animate__faster
       `,
     },
     hideClass: {
       popup: `
         animate__animated
-        animate__bounceOutRight
+        ${hideAnimation}
         `,
     },
     didOpen: (toast) => {
