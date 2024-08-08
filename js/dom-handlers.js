@@ -1,5 +1,5 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian } from './utils.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from './template.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray } from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import {
@@ -23,6 +23,7 @@ import {
   accountSectionNameElement,
   userAccountProfilePictureWrapper,
   accountSectionWrappers,
+  adminPanelCommentsWrapper,
 } from './dom-elements.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 
@@ -363,6 +364,25 @@ const addUserAccountDetailToDOM = (user) => {
   user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
 };
 
+//database-handlers.js
+const addAdminPanelCommentsToDOM = (comments) => {
+  let commentsTemplate = '';
+  const allComments = comments;
+
+  //first
+  comments.forEach((comment) => {
+    if (comment.replies) {
+      comment.replies.forEach((commentReply) => allComments.push(commentReply));
+    }
+  });
+
+  const sortedComments = sortArray(allComments, 'create', true);
+  sortedComments.forEach((comment) => {
+    commentsTemplate += adminPanelCommentTemplate(comment);
+  });
+  insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
+};
+
 export {
   insertToDOM,
   addLoginBtnToDOM,
@@ -380,4 +400,5 @@ export {
   displayChosenAccountSection,
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
+  addAdminPanelCommentsToDOM,
 };

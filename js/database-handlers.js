@@ -2,7 +2,7 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM } from './dom-handlers.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM, addAdminPanelCommentsToDOM } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
@@ -93,6 +93,7 @@ const submitCommentReply = (textarea, wrapper, commentID, pageType, pageName, pa
       page_type: pageType,
       page_name: pageName,
       page_slug: pageSlug,
+      comment_id: commentID,
     };
     dbReplies = comment.replies ? comment.replies : [];
     dbReplies.push(newReply);
@@ -247,6 +248,7 @@ const submitAccountUPasswordChanges = async (event) => {
   }
 };
 
+// account.js
 const fetchAccountUser = async () => {
   if (!localStorageUserID) {
     location.replace('./auth.html?operation=signup');
@@ -259,6 +261,12 @@ const fetchAccountUser = async () => {
   setTimeout(() => {
     removeLoader();
   }, 500);
+};
+
+//admin-panel.js
+const fetchAndDisplayAdminPanelComments = async () => {
+  const dbComments = await getAllFromDatabase('comments');
+  addAdminPanelCommentsToDOM(dbComments);
 };
 
 export {
@@ -276,4 +284,5 @@ export {
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
   fetchAccountUser,
+  fetchAndDisplayAdminPanelComments,
 };

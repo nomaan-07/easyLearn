@@ -100,7 +100,6 @@ const cartTotalPrice = document.querySelector('.cart__total-price');
 const cartPayBtn = document.querySelector('.cart__pay-btn');
 
 // account.js
-
 const accountMenuItemElements = document.querySelectorAll('.account__menu-item');
 const accountSectionWrappers = document.querySelectorAll('.account__section-wrapper');
 const accountCoursesWrapper = document.querySelector('.account__courses-wrapper');
@@ -116,21 +115,10 @@ const newPasswordInputElem = document.querySelector('#new-password-input');
 const accountDisplayPasswordButtons = document.querySelectorAll('.account__display-password-btn');
 const accountChangeProfilePictureBtn = document.querySelector('.change-profile-picture-btn');
 
+// admin-panel.js
+const adminPanelCommentsWrapper = document.querySelector('.admin__comments-wrapper');
+
 export {
-  accountMenuItemElements,
-  accountSectionWrappers,
-  accountCoursesWrapper,
-  accountUsernameElement,
-  accountMenuWrapper,
-  accountDetailWrapper,
-  accountSectionNameElement,
-  userAccountProfilePictureWrapper,
-  accountChangeDetailSubmitBtn,
-  accountChangePasswordSubmitBtn,
-  currentPasswordInputElem,
-  newPasswordInputElem,
-  accountDisplayPasswordButtons,
-  accountChangeProfilePictureBtn,
   localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,
@@ -209,4 +197,19 @@ export {
   cartCoursesWrapper,
   cartTotalPrice,
   cartPayBtn,
+  accountMenuItemElements,
+  accountSectionWrappers,
+  accountCoursesWrapper,
+  accountUsernameElement,
+  accountMenuWrapper,
+  accountDetailWrapper,
+  accountSectionNameElement,
+  userAccountProfilePictureWrapper,
+  accountChangeDetailSubmitBtn,
+  accountChangePasswordSubmitBtn,
+  currentPasswordInputElem,
+  newPasswordInputElem,
+  accountDisplayPasswordButtons,
+  accountChangeProfilePictureBtn,
+  adminPanelCommentsWrapper,
 };

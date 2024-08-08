@@ -731,6 +731,74 @@ const userAccountProfilePictureTemplate = (imageSrc) => {
   return template;
 };
 
+const adminPanelCommentTemplate = (comment) => {
+  const pageIcon = comment.page_type === 'course' ? 'course' : 'newspaper';
+  const date = formatDate(comment.created_at);
+  const commentDataParentID = comment.comment_id ? `data-comment_parent_id=${comment.comment_id}` : '';
+  let confirmBtnColor = `text-emerald-600`;
+  let confirmBtnIcon = 'check-circle';
+  let confirmText = 'تایید نشده';
+  let confirmTextColor = 'text-yellow-600';
+  let confirmBorderColor = 'border-yellow-600';
+  if (comment.confirmed) {
+    confirmBtnColor = `text-yellow-600`;
+    confirmBtnIcon = 'x-circle';
+    confirmText = 'تایید شده';
+    confirmTextColor = 'text-emerald-600';
+    confirmBorderColor = 'border-emerald-600';
+  }
+  const template = `
+              <!-- Comment -->
+            <div class="flex flex-col gap-2.5 justify-between bg-white dark:bg-slate-800 p-5 rounded-xl border-b-4 ${confirmBorderColor}">
+              <!-- Course Name -->
+              <div class="flex gap-2 text-sm sm:text-base md:hover:theme-text-color transition-colors font-VazirMedium pb-2.5 border-b border-b-slate-200 dark:border-b-slate-600">
+                <svg class="size-5 shrink-0">
+                  <use href="#${pageIcon}"></use>
+                </svg>
+                <a href="./${comment.page_type}.html?${comment.page_type}=${comment.page_slug}">${comment.page_name}</a>
+              </div>
+              <!-- Date And Writer -->
+              <div class="flex items-center justify-between flex-wrap gap-4 text-sm md:text-base">
+                <!-- Writer -->
+                <div class="flex items-center gap-1">
+                  <svg class="size-4">
+                    <use href="#pencil-square"></use>
+                  </svg>
+                  <span>${comment.writer}</span>
+                </div>
+                <!-- Date -->
+                <div class="flex items-center gap-1">
+                  <svg class="size-4">
+                    <use href="#calendar-days"></use>
+                  </svg>
+                  <span>${date}</span>
+                </div>
+              </div>
+              <!-- End of Date And Writer -->
+              <!-- Message -->
+              <p class="p-2 min-h-32 grow border bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl text-sm md:text-base">${comment.message}</p>
+              <!-- End of Message -->
+              <!-- Comment Footer -->
+              <div class="flex items-center justify-between">
+                <span class="text-sm ${confirmTextColor}">${confirmText}</span>
+                <!-- Buttons -->
+                <div class="flex gap-5 md:gap-3 items-center" data-comment_id=${comment.id} ${commentDataParentID}>
+                  <!-- Confirm Btn -->
+                  <svg class="size-7 md:size-6  comment__confirm-btn ${confirmBtnColor} md:hover:scale-105 md:cursor-pointer transition-all">
+                    <use href="#${confirmBtnIcon}"></use>
+                  </svg>
+                  <!-- Delete Btn -->
+                  <svg class="size-6 md:size-5 comment__delete-btn text-rose-600 md:hover:scale-105 md:cursor-pointer transition-all">
+                    <use href="#trash"></use>
+                  </svg>
+                </div>
+                <!-- End of Buttons -->
+              </div>
+              <!-- End Comment Footer -->
+            </div>
+            <!-- End of Comment -->`;
+  return template;
+};
 export {
   loginBtnTemplate,
   courseCardTemplate,
@@ -748,4 +816,5 @@ export {
   cartCourseTemplate,
   accountCourseTemplate,
   userAccountProfilePictureTemplate,
+  adminPanelCommentTemplate,
 };

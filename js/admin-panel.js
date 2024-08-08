@@ -4,9 +4,10 @@ import { displayChosenAccountSection } from './dom-handlers.js';
 import { closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu } from './ui-handlers.js';
 import { removeLoader } from './utils.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
+import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges, fetchAndDisplayAdminPanelComments } from './database-handlers.js';
 
 fetchAndDisplayAccountUserDetail();
+fetchAndDisplayAdminPanelComments();
 
 window.addEventListener('load', removeLoader);
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
