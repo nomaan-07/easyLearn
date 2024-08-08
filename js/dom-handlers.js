@@ -1,7 +1,7 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from './template.js';
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray } from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
-import { submitCommentReply } from './database-handlers.js';
+import { submitCommentReply, adminDeleteComment, fetchAndDisplayAdminPanelComments, adminCommentConfirmation } from './database-handlers.js';
 import {
   topBannerElement,
   headerCartCoursesNumberElements,
@@ -369,7 +369,6 @@ const addAdminPanelCommentsToDOM = (comments) => {
   let commentsTemplate = '';
   const allComments = comments;
 
-  //first
   comments.forEach((comment) => {
     if (comment.replies) {
       comment.replies.forEach((commentReply) => allComments.push(commentReply));
@@ -381,6 +380,18 @@ const addAdminPanelCommentsToDOM = (comments) => {
     commentsTemplate += adminPanelCommentTemplate(comment);
   });
   insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
+};
+
+const adminPanelCommentDeleteAndConfirmHandler = async (event, comments) => {
+  let element = event.target;
+  let commentID = element.closest('.comment__buttons') ? element.closest('.comment__buttons').dataset.comment_id : null;
+  let commentParentID = element.closest('.comment__buttons') ? element.closest('.comment__buttons').dataset.comment_parent_id : null;
+
+  if (element.closest('.comment__delete-btn')) {
+    adminDeleteComment(commentParentID, commentID, comments);
+  } else if (element.closest('.comment__confirm-btn')) {
+    adminCommentConfirmation(commentParentID, commentID, comments);
+  }
 };
 
 export {
@@ -401,4 +412,5 @@ export {
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
   addAdminPanelCommentsToDOM,
+  adminPanelCommentDeleteAndConfirmHandler,
 };

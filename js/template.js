@@ -735,14 +735,17 @@ const adminPanelCommentTemplate = (comment) => {
   const pageIcon = comment.page_type === 'course' ? 'course' : 'newspaper';
   const date = formatDate(comment.created_at);
   const commentDataParentID = comment.comment_id ? `data-comment_parent_id=${comment.comment_id}` : '';
-  let confirmBtnColor = `text-emerald-600`;
-  let confirmBtnIcon = 'check-circle';
+  let confirmBtnColor = `bg-emerald-600`;
+  let confirmBtnHoverColor = 'md:hover:bg-emerald-700';
+  let confirmBtnText = 'تایید';
   let confirmText = 'تایید نشده';
-  let confirmTextColor = 'text-yellow-600';
-  let confirmBorderColor = 'border-yellow-600';
+  let confirmTextColor = 'text-amber-600';
+  let confirmBorderColor = 'border-amber-600';
+
   if (comment.confirmed) {
-    confirmBtnColor = `text-yellow-600`;
-    confirmBtnIcon = 'x-circle';
+    confirmBtnColor = `bg-amber-600`;
+    confirmBtnHoverColor = 'md:hover:bg-amber-700';
+    confirmBtnText = 'عدم تایید';
     confirmText = 'تایید شده';
     confirmTextColor = 'text-emerald-600';
     confirmBorderColor = 'border-emerald-600';
@@ -778,23 +781,19 @@ const adminPanelCommentTemplate = (comment) => {
               <!-- Message -->
               <p class="p-2 min-h-32 grow border bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl text-sm md:text-base">${comment.message}</p>
               <!-- End of Message -->
-              <!-- Comment Footer -->
-              <div class="flex items-center justify-between">
-                <span class="text-sm ${confirmTextColor}">${confirmText}</span>
-                <!-- Buttons -->
-                <div class="flex gap-5 md:gap-3 items-center" data-comment_id=${comment.id} ${commentDataParentID}>
-                  <!-- Confirm Btn -->
-                  <svg class="size-7 md:size-6  comment__confirm-btn ${confirmBtnColor} md:hover:scale-105 md:cursor-pointer transition-all">
-                    <use href="#${confirmBtnIcon}"></use>
-                  </svg>
-                  <!-- Delete Btn -->
-                  <svg class="size-6 md:size-5 comment__delete-btn text-rose-600 md:hover:scale-105 md:cursor-pointer transition-all">
-                    <use href="#trash"></use>
-                  </svg>
-                </div>
-                <!-- End of Buttons -->
+              <!-- Confirm Text -->
+              <span class="text-sm ${confirmTextColor}">${confirmText}</span>
+              <!-- End of Confirm Text -->
+              <!-- Buttons -->
+              <div class="comment__buttons flex justify-between md:gap-3 items-center" data-comment_id=${comment.id} ${commentDataParentID}>
+                <!-- Confirm Btn -->
+                <div class="comment__confirm-btn px-4 rounded-full text-white ${confirmBtnColor} ${confirmBtnHoverColor} md:cursor-pointer transition-colors">${confirmBtnText}</div>
+                <!-- Delete Btn -->
+                <svg class="size-6 md:size-5 comment__delete-btn text-rose-600 md:hover:scale-105 md:cursor-pointer transition-all">
+                  <use href="#trash"></use>
+                </svg>
               </div>
-              <!-- End Comment Footer -->
+              <!-- End of Buttons -->
             </div>
             <!-- End of Comment -->`;
   return template;
