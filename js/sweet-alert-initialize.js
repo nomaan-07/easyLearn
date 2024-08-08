@@ -1,13 +1,6 @@
-const sweetAlert = (message, type, btn = false) => {
+const sweetAlert = (message, type) => {
   let icon = null;
   let iconColorClasses = null;
-
-  let confirmBtn = false;
-  let alertTimer = 4000;
-  let alertPosition = 'top-start';
-  let showAnimation = 'animate__bounceInRight';
-  let hideAnimation = 'animate__bounceOutRight';
-
   if (type === 'success') {
     icon = 'check-badge';
     iconColorClasses = 'text-green-600 dark:text-green-400';
@@ -19,14 +12,6 @@ const sweetAlert = (message, type, btn = false) => {
     iconColorClasses = 'text-yellow-500';
   }
 
-  if (btn) {
-    confirmBtn = true;
-    alertTimer = false;
-    alertPosition = 'center';
-    showAnimation = 'animate__fadeIn';
-    hideAnimation = 'animate__fadeOut';
-  }
-
   Swal.fire({
     html: `
       <div class="notification__container">
@@ -36,15 +21,11 @@ const sweetAlert = (message, type, btn = false) => {
           </svg>
           <span>${message}</span>
         </div>
-        <div class="notification__btn-wrapper">
-          <div class="notification__confirm-btn"></div>
-        </div>
       </div>`,
-    position: alertPosition,
+    position: 'top-start',
     width: 'fit-content',
-    showConfirmButton: confirmBtn,
-    confirmButtonText: 'تایید',
-    timer: alertTimer,
+    showConfirmButton: false,
+    timer: 4000,
     timerProgressBar: true,
     backdrop: false,
     customClass: {
@@ -53,20 +34,18 @@ const sweetAlert = (message, type, btn = false) => {
       popup: 'notification__content',
       icon: 'notification__icon',
       timerProgressBar: 'notification-timer-progress-bar',
-      confirmButton: 'notification__confirm-btn',
-      actions: 'notification__btn-wrapper',
     },
     showClass: {
       popup: `
         animate__animated
-        ${showAnimation}
+        animate__bounceInRight
         animate__faster
       `,
     },
     hideClass: {
       popup: `
         animate__animated
-        ${hideAnimation}
+        animate__bounceOutRight
         `,
     },
     didOpen: (toast) => {
