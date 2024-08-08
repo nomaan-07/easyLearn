@@ -739,6 +739,7 @@ const adminPanelCommentTemplate = (comment) => {
   let confirmBtnHoverColor = 'md:hover:bg-emerald-700';
   let confirmBtnText = 'تایید';
   let confirmText = 'تایید نشده';
+  let confirmIcon = 'x-mark';
   let confirmTextColor = 'text-amber-600';
   let confirmBorderColor = 'border-amber-600';
 
@@ -747,6 +748,7 @@ const adminPanelCommentTemplate = (comment) => {
     confirmBtnHoverColor = 'md:hover:bg-amber-700';
     confirmBtnText = 'عدم تایید';
     confirmText = 'تایید شده';
+    confirmIcon = 'check';
     confirmTextColor = 'text-emerald-600';
     confirmBorderColor = 'border-emerald-600';
   }
@@ -782,7 +784,12 @@ const adminPanelCommentTemplate = (comment) => {
               <p class="p-2 min-h-32 grow border bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl text-sm md:text-base">${comment.message}</p>
               <!-- End of Message -->
               <!-- Confirm Text -->
-              <span class="text-sm ${confirmTextColor}">${confirmText}</span>
+              <div class="flex items-center gap-1 ${confirmTextColor}">
+                <svg class="size-4">
+                  <use href="#${confirmIcon}"></use>
+                </svg>
+                <span class="text-sm">${confirmText}</span>
+              </div>
               <!-- End of Confirm Text -->
               <!-- Buttons -->
               <div class="comment__buttons flex justify-between md:gap-3 items-center" data-comment_id=${comment.id} ${commentDataParentID}>
