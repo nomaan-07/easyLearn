@@ -235,8 +235,19 @@
           <!-- End of Username PlaceHolder -->
         </div>
         <!-- End of Account Username -->
-        <!-- Comments -->
+        <!-- Comments Section-->
         <section class="account__section-wrapper" data-section="comments">
+          <!-- Comments Filter -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden md:flex items-center shadow gap-2 mb-5">
+            <span class="hidden md:block font-VazirMedium border-l border-l-slate-200 dark:border-l-slate-700 py-3 px-5 ml-2">فیلتر</span>
+            <div class="flex justify-between md:justify-start md:gap-2 text-center md:text-right text-sm xs:text-base">
+              <span class="comment-filter-btn w-1/3 md:w-auto py-3 md:px-5 md:flex md:items-center md:gap-3 select-none md:cursor-pointer md:hover:theme-text-color transition-all theme-bg-color-10 theme-text-color" data-filter="all">همه</span>
+              <span class="comment-filter-btn w-1/3 md:w-auto py-3 md:px-5 md:flex md:items-center md:gap-3 select-none md:cursor-pointer md:hover:theme-text-color transition-all" data-filter="confirmed">تایید شده</span>
+              <span class="comment-filter-btn w-1/3 md:w-auto py-3 md:px-5 md:flex md:items-center md:gap-3 select-none md:cursor-pointer md:hover:theme-text-color transition-all pl-2" data-filter="review">تایید نشده</span>
+            </div>
+          </div>
+          <!-- End of Comments Filter -->
+          <!-- Comments -->
           <div class="admin__comments-wrapper grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
             <!-- Comment Placeholder -->
             <div class="flex flex-col gap-3.5 justify-between bg-white dark:bg-slate-800 p-5 rounded-xl border-b-4 border-amber-600">
@@ -617,8 +628,9 @@
             </div>
             <!-- End of Comment Placeholder -->
           </div>
+          <!-- End of Comments -->
         </section>
-        <!-- End of Comments -->
+        <!-- End of Comments Section-->
         <!-- Logins -->
         <section class="account__section-wrapper hidden" data-section="logins"></section>
         <!-- End of Logins -->

@@ -212,6 +212,19 @@ const createCartCourseObject = (dbCourse) => ({
 // dom-handlers.js
 const getLocalCourses = () => localStorage.getItem('courses') && JSON.parse(localStorage.getItem('courses'));
 
+// dom-handlers.js
+const filterComments = (comments, filterType) => {
+  let filteredComments = null;
+  if (filterType === 'all') {
+    filteredComments = comments;
+  } else if (filterType === 'confirmed') {
+    filteredComments = comments.filter((comment) => comment.confirmed);
+  } else if (filterType === 'review') {
+    filteredComments = comments.filter((comment) => !comment.confirmed);
+  }
+  return filteredComments;
+};
+
 export {
   removeLoader,
   generateRandomID,
@@ -232,4 +245,5 @@ export {
   calculateRemainingTime,
   createCartCourseObject,
   getLocalCourses,
+  filterComments,
 };

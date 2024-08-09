@@ -1,7 +1,7 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray } from './utils.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray, filterComments } from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
-import { submitCommentReply, adminDeleteComment, fetchAndDisplayAdminPanelComments, adminCommentConfirmation } from './database-handlers.js';
+import { submitCommentReply } from './database-handlers.js';
 import {
   topBannerElement,
   headerCartCoursesNumberElements,
@@ -365,33 +365,18 @@ const addUserAccountDetailToDOM = (user) => {
 };
 
 //database-handlers.js
-const addAdminPanelCommentsToDOM = (comments) => {
+const addAdminPanelCommentsToDOM = (comments, filterType) => {
   let commentsTemplate = '';
-  const allComments = comments;
 
-  comments.forEach((comment) => {
-    if (comment.replies) {
-      comment.replies.forEach((commentReply) => allComments.push(commentReply));
-    }
-  });
+  const allCommentsWithReplies = comments.flatMap((comment) => [comment, ...(comment.replies || [])]);
 
-  const sortedComments = sortArray(allComments, 'create', true);
+  const filteredComments = filterComments(allCommentsWithReplies, filterType);
+
+  const sortedComments = sortArray(filteredComments, 'create', true);
   sortedComments.forEach((comment) => {
     commentsTemplate += adminPanelCommentTemplate(comment);
   });
   insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
-};
-
-const adminPanelCommentDeleteAndConfirmHandler = (event, comments) => {
-  let element = event.target;
-  let commentID = element.closest('.comment__buttons') ? element.closest('.comment__buttons').dataset.comment_id : null;
-  let commentParentID = element.closest('.comment__buttons') ? element.closest('.comment__buttons').dataset.comment_parent_id : null;
-
-  if (element.closest('.comment__delete-btn')) {
-    adminDeleteComment(commentParentID, commentID, comments);
-  } else if (element.closest('.comment__confirm-btn')) {
-    adminCommentConfirmation(commentParentID, commentID, comments);
-  }
 };
 
 export {
@@ -412,5 +397,4 @@ export {
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
   addAdminPanelCommentsToDOM,
-  adminPanelCommentDeleteAndConfirmHandler,
 };

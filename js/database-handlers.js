@@ -2,8 +2,8 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM, addAdminPanelCommentsToDOM, adminPanelCommentDeleteAndConfirmHandler } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, adminPanelCommentsWrapper } from './dom-elements.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM } from './dom-handlers.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
 // index.js
@@ -264,62 +264,6 @@ const fetchAccountUser = async () => {
   }, 500);
 };
 
-//admin-panel.js
-let adminPanelCommentsEventListenerAdded = false;
-const fetchAndDisplayAdminPanelComments = async () => {
-  const dbComments = await getAllFromDatabase('comments');
-  addAdminPanelCommentsToDOM(dbComments);
-  if (!adminPanelCommentsEventListenerAdded) {
-    adminPanelCommentsWrapper.addEventListener('click', (event) => adminPanelCommentDeleteAndConfirmHandler(event, dbComments));
-    adminPanelCommentsEventListenerAdded = true;
-  }
-};
-
-// dom-handler.js
-const adminDeleteComment = async (commentParentID, commentID, comments) => {
-  try {
-    const response = await confirmSweetAlert('آیا مطمئن هستید؟');
-    if (response) {
-      if (commentParentID) {
-        const commentParent = comments.find((comment) => comment.id === commentParentID);
-        const filteredComments = commentParent.replies.filter((commentReply) => commentReply.id !== commentID);
-        await updateInDatabase('comments', { replies: filteredComments }, commentParentID);
-      } else {
-        await deleteFromDatabase('comments', commentID);
-      }
-      await fetchAndDisplayAdminPanelComments();
-      sweetAlert('کامنت حذف شد.', 'success');
-    }
-  } catch (error) {
-    console.error('Failed to delete comment', error);
-    sweetAlert('حذف کامنت با خطا مواجه شد.', 'failed');
-  }
-};
-
-// dom-handler.js
-const adminCommentConfirmation = async (commentParentID, commentID, comments) => {
-  try {
-    let comment = null;
-    if (commentParentID) {
-      const commentParent = comments.find((comment) => comment.id === commentParentID);
-      comment = commentParent.replies.find((commentReply) => commentReply.id === commentID);
-      comment.confirmed = !comment.confirmed;
-
-      await updateInDatabase('comments', { replies: commentParent.replies }, commentParentID);
-    } else {
-      comment = comments.find((comment) => comment.id === commentID);
-      comment.confirmed = !comment.confirmed;
-
-      await updateInDatabase('comments', { confirmed: comment.confirmed }, commentID);
-    }
-    await fetchAndDisplayAdminPanelComments();
-    sweetAlert('وضعیت کامنت تغییر کرد.', 'success');
-  } catch (error) {
-    console.error('Failed to change comment confirmation', error);
-    sweetAlert('تایید کامنت با خطا مواجه شد.', 'failed');
-  }
-};
-
 export {
   fetchAndDisplayMainPageCourses,
   fetchAndDisplayMainPageBlogs,
@@ -335,7 +279,4 @@ export {
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
   fetchAccountUser,
-  fetchAndDisplayAdminPanelComments,
-  adminDeleteComment,
-  adminCommentConfirmation,
 };

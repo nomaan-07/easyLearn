@@ -117,6 +117,7 @@ const accountChangeProfilePictureBtn = document.querySelector('.change-profile-p
 
 // admin-panel.js
 const adminPanelCommentsWrapper = document.querySelector('.admin__comments-wrapper');
+const adminCommentsFilterButtons = document.querySelectorAll('.comment-filter-btn');
 
 export {
   localStorageTheme,
@@ -212,4 +213,5 @@ export {
   accountDisplayPasswordButtons,
   accountChangeProfilePictureBtn,
   adminPanelCommentsWrapper,
+  adminCommentsFilterButtons,
 };
