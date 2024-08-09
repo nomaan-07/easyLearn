@@ -794,7 +794,7 @@ const adminPanelCommentTemplate = (comment) => {
               <!-- Buttons -->
               <div class="comment__buttons flex justify-between md:gap-3 items-center" data-comment_id=${comment.id} ${commentDataParentID}>
                 <!-- Confirm Btn -->
-                <div class="comment__confirm-btn px-4 rounded-full text-white ${confirmBtnColor} ${confirmBtnHoverColor} md:cursor-pointer transition-colors">${confirmBtnText}</div>
+                <div class="comment__confirm-btn px-4 rounded-full text-white ${confirmBtnColor} ${confirmBtnHoverColor} md:cursor-pointer select-none transition-colors">${confirmBtnText}</div>
                 <!-- Delete Btn -->
                 <svg class="size-6 md:size-5 comment__delete-btn text-rose-600 md:hover:scale-105 md:cursor-pointer transition-all">
                   <use href="#trash"></use>
