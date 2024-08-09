@@ -382,7 +382,7 @@ const addAdminPanelCommentsToDOM = (comments) => {
   insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
 };
 
-const adminPanelCommentDeleteAndConfirmHandler = async (event, comments) => {
+const adminPanelCommentDeleteAndConfirmHandler = (event, comments) => {
   let element = event.target;
   let commentID = element.closest('.comment__buttons') ? element.closest('.comment__buttons').dataset.comment_id : null;
   let commentParentID = element.closest('.comment__buttons') ? element.closest('.comment__buttons').dataset.comment_parent_id : null;

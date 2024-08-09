@@ -297,19 +297,26 @@ const adminDeleteComment = async (commentParentID, commentID, comments) => {
 
 // dom-handler.js
 const adminCommentConfirmation = async (commentParentID, commentID, comments) => {
-  let comment = null;
-  if (commentParentID) {
-    const commentParent = comments.find((comment) => comment.id === commentParentID);
-    comment = commentParent.replies.find((commentReply) => commentReply.id === commentID);
-    comment.confirmed = !comment.confirmed;
+  try {
+    let comment = null;
+    if (commentParentID) {
+      const commentParent = comments.find((comment) => comment.id === commentParentID);
+      comment = commentParent.replies.find((commentReply) => commentReply.id === commentID);
+      comment.confirmed = !comment.confirmed;
 
-    await updateInDatabase('comments', { replies: commentParent.replies }, commentParentID);
-  } else {
-    comment = comments.find((comment) => comment.id === commentID);
-    await updateInDatabase('comments', { confirmed: !comment.confirmed }, commentID);
+      await updateInDatabase('comments', { replies: commentParent.replies }, commentParentID);
+    } else {
+      comment = comments.find((comment) => comment.id === commentID);
+      comment.confirmed = !comment.confirmed;
+
+      await updateInDatabase('comments', { confirmed: comment.confirmed }, commentID);
+    }
+    await fetchAndDisplayAdminPanelComments();
+    sweetAlert('وضعیت کامنت تغییر کرد.', 'success');
+  } catch (error) {
+    console.error('Failed to change comment confirmation', error);
+    sweetAlert('تایید کامنت با خطا مواجه شد.', 'failed');
   }
-  await fetchAndDisplayAdminPanelComments();
-  sweetAlert('وضعیت کامنت تغییر کرد.', 'success');
 };
 
 export {
