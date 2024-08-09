@@ -1,9 +1,9 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, deleteFromDatabase } from './database-api.js';
-import { toggleTextarea } from './ui-handlers.js';
+import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM, addAdminPanelCommentsToDOM, adminPanelCommentDeleteAndConfirmHandler } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, adminPanelCommentsWrapper, overlay } from './dom-elements.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, adminPanelCommentsWrapper } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
 // index.js
@@ -45,6 +45,7 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
         commentsElements += commentSectionTemplateHandler(comment);
       });
       insertToDOM(commentsWrapper, commentsElements);
+      document.querySelectorAll('.reply-comment-textarea').forEach((textarea) => textarea.addEventListener('input', textareaAutoResize));
     } else {
       commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
     }

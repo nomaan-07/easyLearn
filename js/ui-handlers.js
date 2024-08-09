@@ -1,6 +1,5 @@
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { displayPasswordBtn, passwordInput, accountMenuWrapper, overlay } from './dom-elements.js';
-import { insertToDOM } from './dom-handlers.js';
+import { displayPasswordBtn, accountMenuWrapper, overlay } from './dom-elements.js';
 
 // course.js - dom-handlers.js
 const textareaAutoResize = (event) => {
@@ -18,6 +17,7 @@ const toggleTextarea = (wrapper, textarea, user = true, openTextarea = false) =>
     sweetAlert('برای ثبت نظر باید در سایت ثبت نام کنید.', 'info');
   } else {
     textarea.value = '';
+    textarea.style.height = '160px';
     wrapper.classList.add('max-h-0');
     wrapper.classList.add('overflow-hidden');
   }
@@ -115,6 +115,7 @@ const openMobileAccountMenu = () => {
   accountMenuWrapper.classList.add('right-0');
   overlay.classList.remove('hide');
 };
+
 //account.js
 const closeMobileAccountMenu = () => {
   accountMenuWrapper.classList.add('-right-64');
