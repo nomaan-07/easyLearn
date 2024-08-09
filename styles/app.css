@@ -2004,6 +2004,10 @@ video {
   height: 6rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -3010,6 +3014,10 @@ video {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.gap-3\.5 {
+  gap: 0.875rem;
 }
 
 .gap-x-2 {
@@ -5537,6 +5545,10 @@ video {
 
   .sm\:w-48 {
     width: 12rem;
+  }
+
+  .sm\:w-56 {
+    width: 14rem;
   }
 
   .sm\:w-60 {
