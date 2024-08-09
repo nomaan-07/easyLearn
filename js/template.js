@@ -737,17 +737,16 @@ const adminPanelCommentTemplate = (comment) => {
   const commentDataParentID = comment.comment_id ? `data-comment_parent_id=${comment.comment_id}` : '';
   const message = comment.message.replace(/\n/g, '<br>');
 
-  let confirmBtnColor = `bg-emerald-600`;
-  let confirmBtnHoverColor = 'md:hover:bg-emerald-700';
+  let confirmBtnColor = `bg-emerald-600/10`;
+  let confirmBtnHoverColor = 'md:hover:bg-emerald-600';
   let confirmBtnText = 'تایید';
   let confirmText = 'تایید نشده';
   let confirmIcon = 'x-mark';
   let confirmTextColor = 'text-amber-600';
   let confirmBorderColor = 'border-amber-600';
-
   if (comment.confirmed) {
-    confirmBtnColor = `bg-amber-600`;
-    confirmBtnHoverColor = 'md:hover:bg-amber-700';
+    confirmBtnColor = `bg-amber-600/10`;
+    confirmBtnHoverColor = 'md:hover:bg-amber-600';
     confirmBtnText = 'عدم تایید';
     confirmText = 'تایید شده';
     confirmIcon = 'check';
@@ -796,7 +795,7 @@ const adminPanelCommentTemplate = (comment) => {
               <!-- Buttons -->
               <div class="comment__buttons flex justify-between md:gap-3 items-center" data-comment_id=${comment.id} ${commentDataParentID}>
                 <!-- Confirm Btn -->
-                <div class="comment__confirm-btn px-4 rounded-full text-white ${confirmBtnColor} ${confirmBtnHoverColor} md:cursor-pointer select-none transition-colors">${confirmBtnText}</div>
+                <div class="comment__confirm-btn px-4 rounded-full ${confirmBtnColor} ${confirmBtnHoverColor} md:hover:text-white md:cursor-pointer select-none transition-colors">${confirmBtnText}</div>
                 <!-- Delete Btn -->
                 <svg class="size-6 md:size-5 comment__delete-btn text-rose-600 md:hover:scale-105 md:cursor-pointer transition-all">
                   <use href="#trash"></use>
