@@ -1,9 +1,9 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, deleteFromDatabase } from './database-api.js';
 import { toggleTextarea } from './ui-handlers.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
+import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM, addAdminPanelCommentsToDOM, adminPanelCommentDeleteAndConfirmHandler } from './dom-handlers.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, adminPanelCommentsWrapper } from './dom-elements.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, adminPanelCommentsWrapper, overlay } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
 // index.js
@@ -276,15 +276,23 @@ const fetchAndDisplayAdminPanelComments = async () => {
 
 // dom-handler.js
 const adminDeleteComment = async (commentParentID, commentID, comments) => {
-  if (commentParentID) {
-    const commentParent = comments.find((comment) => comment.id === commentParentID);
-    const filteredComments = commentParent.replies.filter((commentReply) => commentReply.id !== commentID);
-    await updateInDatabase('comments', { replies: filteredComments }, commentParentID);
-  } else {
-    await deleteFromDatabase('comments', commentID);
+  try {
+    const response = await confirmSweetAlert('آیا مطمئن هستید؟');
+    if (response) {
+      if (commentParentID) {
+        const commentParent = comments.find((comment) => comment.id === commentParentID);
+        const filteredComments = commentParent.replies.filter((commentReply) => commentReply.id !== commentID);
+        await updateInDatabase('comments', { replies: filteredComments }, commentParentID);
+      } else {
+        await deleteFromDatabase('comments', commentID);
+      }
+      await fetchAndDisplayAdminPanelComments();
+      sweetAlert('کامنت حذف شد.', 'success');
+    }
+  } catch (error) {
+    console.error('Failed to delete comment', error);
+    sweetAlert('حذف کامنت با خطا مواجه شد.', 'failed');
   }
-  await fetchAndDisplayAdminPanelComments();
-  sweetAlert('کامنت حذف شد.', 'success');
 };
 
 // dom-handler.js
@@ -301,7 +309,7 @@ const adminCommentConfirmation = async (commentParentID, commentID, comments) =>
     await updateInDatabase('comments', { confirmed: !comment.confirmed }, commentID);
   }
   await fetchAndDisplayAdminPanelComments();
-  sweetAlert('وضعیت کامنت تغییر کرد', 'success');
+  sweetAlert('وضعیت کامنت تغییر کرد.', 'success');
 };
 
 export {

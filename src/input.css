@@ -252,7 +252,7 @@
 
   /* SweetAlert */
   .swal2-container {
-    margin-top: 20px !important;
+    padding-top: 20px !important;
   }
   .notification {
     width: auto !important;
@@ -261,7 +261,7 @@
   }
   @media (min-width: 475px) {
     .swal2-container {
-      margin-top: 64px !important;
+      padding-top: 64px !important;
     }
     .notification {
       padding: 30px 20px !important;
@@ -280,7 +280,15 @@
   .notification-timer-progress-bar {
     @apply theme-bg-color rounded-full h-1;
   }
+  .confirm__notification.swal2-backdrop-show {
+    background-color: var(--theme-color-10) !important;
+    backdrop-filter: blur(12px);
+  }
+  .dark .confirm__notification.swal2-backdrop-show {
+    background-color: rgb(51 65 85 / 0.5) !important;
+  }
   /* End of SweetAlert */
+
   /* Blog Content */
   .blog__content {
     @apply border-y border-y-slate-200 dark:border-y-slate-600 py-5 text-sm/7 md:text-lg/8 xl:text-xl/9 mt-5 font-VazirLight overflow-hidden;

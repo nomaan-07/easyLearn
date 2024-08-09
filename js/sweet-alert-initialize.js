@@ -55,4 +55,36 @@ const sweetAlert = (message, type) => {
   });
 };
 
-export { sweetAlert };
+const confirmSweetAlert = async (message) => {
+  const response = await swal.fire({
+    text: message,
+    showConfirmButton: true,
+    confirmButtonText: 'حذف',
+    confirmButtonColor: '#e11d48',
+    focusConfirm: false,
+    showDenyButton: true,
+    denyButtonText: 'بازگشت',
+    denyButtonColor: '#059669',
+    backdrop: true,
+    showClass: {
+      popup: `
+            animate__animated
+            animate__bounceInRight
+            animate__faster
+            
+          `,
+    },
+    hideClass: {
+      popup: `
+            animate__animated
+            animate__bounceOutLeft
+            animate__faster
+            `,
+    },
+    customClass: {
+      container: 'confirm__notification',
+    },
+  });
+  return response.isConfirmed;
+};
+export { sweetAlert, confirmSweetAlert };
