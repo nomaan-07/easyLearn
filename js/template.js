@@ -735,6 +735,8 @@ const adminPanelCommentTemplate = (comment) => {
   const pageIcon = comment.page_type === 'course' ? 'course' : 'newspaper';
   const date = formatDate(comment.created_at);
   const commentDataParentID = comment.comment_id ? `data-comment_parent_id=${comment.comment_id}` : '';
+  const message = comment.message.replace(/\n/g, '<br>');
+
   let confirmBtnColor = `bg-emerald-600`;
   let confirmBtnHoverColor = 'md:hover:bg-emerald-700';
   let confirmBtnText = 'تایید';
@@ -781,7 +783,7 @@ const adminPanelCommentTemplate = (comment) => {
               </div>
               <!-- End of Date And Writer -->
               <!-- Message -->
-              <p class="p-2 min-h-32 grow border bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl text-sm md:text-base">${comment.message}</p>
+              <p class="p-2 min-h-32 grow border bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl text-sm md:text-base">${message}</p>
               <!-- End of Message -->
               <!-- Confirm Text -->
               <div class="flex items-center gap-1 ${confirmTextColor}">
