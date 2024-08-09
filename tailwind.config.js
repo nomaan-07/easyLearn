@@ -35,6 +35,8 @@ module.exports = {
         'to-left': 'to-left 1s ease infinite',
         'move-right-up': 'move-right-up 0.75s ease forwards',
         'move-right-down': 'move-right-down 0.75s ease forwards',
+        'dark-brightness': 'dark-brightness 2.5s ease infinite',
+        brightness: 'brightness 2.5s ease infinite',
       },
       keyframes: {
         'open-up': {
@@ -91,6 +93,22 @@ module.exports = {
           },
           '100%': {
             transform: 'translate(0 0)',
+          },
+        },
+        'dark-brightness': {
+          '0%, 100%': {
+            filter: 'brightness(1)',
+          },
+          '50%': {
+            filter: 'brightness(1.2)',
+          },
+        },
+        brightness: {
+          '0%, 100%': {
+            filter: 'brightness(1)',
+          },
+          '50%': {
+            filter: 'brightness(0.95)',
           },
         },
       },

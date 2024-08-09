@@ -2390,6 +2390,20 @@ video {
   transform: none;
 }
 
+@keyframes brightness {
+  0%, 100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(0.95);
+  }
+}
+
+.animate-brightness {
+  animation: brightness 2.5s ease infinite;
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(-7%);
@@ -5063,6 +5077,20 @@ video {
 .child-exc-last\:border-b-slate-300 > *:not(:last-child) {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(203 213 225 / var(--tw-border-opacity));
+}
+
+@keyframes dark-brightness {
+  0%, 100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.2);
+  }
+}
+
+.dark\:animate-dark-brightness:is(.dark *) {
+  animation: dark-brightness 2.5s ease infinite;
 }
 
 .dark\:border:is(.dark *) {
