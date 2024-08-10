@@ -192,7 +192,7 @@
           <svg class="size-6">
             <use href="#user-plus"></use>
           </svg>
-          <span>ثبت نام و ورود</span>
+          <span>آمار ثبت نام و ورود</span>
         </li>
         <li class="account__menu-item" data-section="sale">
           <svg class="size-6">
@@ -632,7 +632,9 @@
         </section>
         <!-- End of Comments Section-->
         <!-- Logins -->
-        <section class="account__section-wrapper hidden" data-section="logins"></section>
+        <section class="account__section-wrapper hidden h-[40vh] xs:h-[50vh] sm:h-[60vh]" data-section="logins">
+          <canvas id="login-signup-chart"></canvas>
+        </section>
         <!-- End of Logins -->
         <!-- Sale -->
         <section class="account__section-wrapper hidden" data-section="sale"></section>
@@ -738,6 +740,7 @@
     </div>
 
     <script src="./vendor/Sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="./vendor/Chart.js/chart.js"></script>
     <script type="module" src="./js/admin-panel.js"></script>
   </body>
 </html>
