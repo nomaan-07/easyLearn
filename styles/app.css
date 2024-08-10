@@ -1367,6 +1367,24 @@ video {
 
 /* End of Account */
 
+/* Admin Panel Charts*/
+
+#profit-lost-chart {
+  display: none !important;
+}
+
+@media (min-width: 475px) {
+  #profit-lost-chart {
+    display: block !important;
+  }
+
+  #mobile-profit-lost-chart {
+    display: none !important;
+  }
+}
+
+/* End of Admin Panel Charts*/
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2052,6 +2070,10 @@ video {
   height: 122px;
 }
 
+.h-\[40vh\] {
+  height: 40vh;
+}
+
 .h-\[450px\] {
   height: 450px;
 }
@@ -2080,14 +2102,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[60vh\] {
-  height: 60vh;
-}
-
-.h-\[40vh\] {
-  height: 40vh;
 }
 
 .max-h-0 {
@@ -2120,18 +2134,6 @@ video {
 
 .min-h-7 {
   min-height: 1.75rem;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.min-h-\[105vh\] {
-  min-height: 105vh;
-}
-
-.min-h-\[101vh\] {
-  min-height: 101vh;
 }
 
 .w-1\/3 {
@@ -5345,10 +5347,6 @@ video {
     height: 480px;
   }
 
-  .xs\:h-\[60vh\] {
-    height: 60vh;
-  }
-
   .xs\:h-\[50vh\] {
     height: 50vh;
   }
@@ -6314,10 +6312,6 @@ video {
 
   .lg\:w-\[482px\] {
     width: 482px;
-  }
-
-  .lg\:w-auto {
-    width: auto;
   }
 
   .lg\:cursor-pointer {

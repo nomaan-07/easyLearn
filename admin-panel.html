@@ -188,12 +188,6 @@
           </svg>
           <span>کامنت‌ها</span>
         </li>
-        <li class="account__menu-item" data-section="logins">
-          <svg class="size-6">
-            <use href="#user-plus"></use>
-          </svg>
-          <span>آمار ثبت نام و ورود</span>
-        </li>
         <li class="account__menu-item" data-section="sale">
           <svg class="size-6">
             <use href="#banknotes"></use>
@@ -632,12 +626,22 @@
         </section>
         <!-- End of Comments Section-->
         <!-- Logins -->
-        <section class="account__section-wrapper hidden h-[40vh] xs:h-[50vh] sm:h-[60vh]" data-section="logins">
-          <canvas id="login-signup-chart"></canvas>
-        </section>
+        <section class="account__section-wrapper hidden" data-section="logins"></section>
         <!-- End of Logins -->
         <!-- Sale -->
-        <section class="account__section-wrapper hidden" data-section="sale"></section>
+        <section class="account__section-wrapper hidden" data-section="sale">
+          <!-- Sale and expense Chart Wrapper -->
+          <div class="h-[40vh] xs:h-[50vh] sm:h-[60vh] p-5 rounded-xl bg-white shadow dark:bg-slate-800">
+            <canvas id="sale-expense-chart"></canvas>
+          </div>
+          <!-- End of Sale and expense Chart Wrapper -->
+          <!-- Profit and Lost Chart Wrapper -->
+          <div class="mt-10 h-[40vh] xs:h-[50vh] sm:h-[60vh] p-5 rounded-xl bg-white shadow dark:bg-slate-800">
+            <canvas id="profit-lost-chart"></canvas>
+            <canvas id="mobile-profit-lost-chart"></canvas>
+          </div>
+          <!-- End of Profit and Lost Chart Wrapper -->
+        </section>
         <!-- End of Sale -->
         <!-- Account Detail -->
         <section class="account__section-wrapper hidden" data-section="account-detail">
