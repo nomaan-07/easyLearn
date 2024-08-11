@@ -1,8 +1,8 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, deleteFromDatabase } from './database-api.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToChart } from './dom-handlers.js';
+import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish } from './utils.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToChart, updateCartPageDetail, updateHederCartDetail } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
@@ -169,6 +169,39 @@ const submitLoginForm = async (event) => {
   }
 };
 
+const addSellDataToDatabase = async (courses) => {
+  const databaseTableName = 'sell_expense';
+
+  // calculate purchase total price
+  let purchaseTotalPrice = 0;
+  courses.forEach((course) => {
+    purchaseTotalPrice += applyDiscountToPrice(course.price, course.discount);
+  });
+
+  if (purchaseTotalPrice === 0) return;
+
+  // this month and year
+  const dateArray = new Date().toLocaleDateString('fa').split('/');
+  const year = convertPersianNumbersToEnglish(dateArray[0]);
+  const monthNumber = convertPersianNumbersToEnglish(dateArray[1]);
+  const month = persianMonths[monthNumber - 1];
+
+  // Check if this month exist in database
+  const dbSellData = await getAllFromDatabase(databaseTableName);
+  const thisMonthData = dbSellData.find((data) => data.month === month && data.year === year);
+
+  // add purchase data to database
+  if (thisMonthData) {
+    let previousSellAmount = thisMonthData.sell;
+    const newSellAmount = previousSellAmount + purchaseTotalPrice;
+    updateInDatabase(databaseTableName, { sell: newSellAmount }, thisMonthData.id);
+  } else {
+    console.log({ year, month, sell: purchaseTotalPrice });
+
+    addToDatabase(databaseTableName, { year, month, sell: purchaseTotalPrice });
+  }
+};
+
 const purchaseCourses = async () => {
   try {
     let courseStudentCount = null;
@@ -187,6 +220,8 @@ const purchaseCourses = async () => {
       await updateInDatabase('courses', { students_id: courseStudentsID, students: courseStudentCount }, course.id);
     }
 
+    await addSellDataToDatabase(filteredCourses);
+
     localStorage.removeItem('courses');
     sweetAlert('خرید با موفقیت انجام شد.', 'success');
     updateCartPageDetail();
@@ -195,7 +230,7 @@ const purchaseCourses = async () => {
       location.href = './index.html';
     }, 3000);
   } catch (error) {
-    console.log('Failed to purchase courses', error);
+    console.error('Failed to purchase courses', error);
     sweetAlert('متاسفانه خرید انجام نشد، لطفا بعدا تلاش کنید.', 'failed');
   }
 };
@@ -268,7 +303,7 @@ const fetchAccountUser = async () => {
 const fetchAndDisplaySellAndExpenseData = async () => {
   try {
     const data = await getAllFromDatabase('sell_expense');
-    const lastSixMonthData = sortArray(data, 'id');
+    const lastSixMonthData = sortArray(data, 'id').splice(-6);
     addSellAndExpenseDataToChart(lastSixMonthData);
   } catch (error) {
     console.error('Failed to fetch chart data', error);

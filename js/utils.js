@@ -1,6 +1,8 @@
 import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './template.js';
 import { getAllFromDatabase } from './database-api.js';
 
+const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+
 const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -228,7 +230,17 @@ const filterComments = (comments, filterType) => {
   return filteredComments;
 };
 
+const convertPersianNumbersToEnglish = (number) => {
+  const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+  return number.replace(/[۰-۹]/g, (match) => {
+    return englishNumbers[persianNumbers.indexOf(match)];
+  });
+};
+
 export {
+  persianMonths,
   removeLoader,
   generateRandomID,
   getQueryParameters,
@@ -249,4 +261,5 @@ export {
   createCartCourseObject,
   getLocalCourses,
   filterComments,
+  convertPersianNumbersToEnglish,
 };
