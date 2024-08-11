@@ -1,8 +1,8 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, deleteFromDatabase } from './database-api.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
-import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
+import { sweetAlert } from './sweet-alert-initialize.js';
 import { generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM } from './dom-handlers.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, updateCartPageDetail, updateHederCartDetail, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToChart } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
@@ -208,13 +208,13 @@ const fetchAndDisplayAccountCourses = async () => {
   addAccountCourseToDOM(filteredCourses);
 };
 
-// account.js
+// account.js - admin-panel.js
 const fetchAndDisplayAccountUserDetail = async () => {
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
   addUserAccountDetailToDOM(user);
 };
 
-// account.js
+// account.js - admin-panel.js
 const submitAccountDetailChanges = async (event) => {
   event.preventDefault();
 
@@ -233,7 +233,7 @@ const submitAccountDetailChanges = async (event) => {
   }
 };
 
-// account.js
+// account.js - admin-panel.js
 const submitAccountUPasswordChanges = async (event) => {
   event.preventDefault();
 
@@ -249,7 +249,7 @@ const submitAccountUPasswordChanges = async (event) => {
   }
 };
 
-// account.js
+// account.js - admin-panel.js
 const fetchAccountUser = async () => {
   if (!localStorageUserID) {
     location.replace('./auth.html?operation=signup');
@@ -262,6 +262,17 @@ const fetchAccountUser = async () => {
   setTimeout(() => {
     removeLoader();
   }, 500);
+};
+
+// admin-panel.js
+const fetchAndDisplaySellAndExpenseData = async () => {
+  try {
+    const data = await getAllFromDatabase('sell_expense');
+    const lastSixMonthData = sortArray(data, 'id');
+    addSellAndExpenseDataToChart(lastSixMonthData);
+  } catch (error) {
+    console.error('Failed to fetch chart data', error);
+  }
 };
 
 export {
@@ -279,4 +290,5 @@ export {
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
   fetchAccountUser,
+  fetchAndDisplaySellAndExpenseData,
 };

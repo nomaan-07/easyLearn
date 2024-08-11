@@ -2,6 +2,9 @@ import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTempl
 import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray, filterComments } from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
+import { sweetAlert } from './sweet-alert-initialize.js';
+import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from './chart-js-initialize.js';
+
 import {
   topBannerElement,
   headerCartCoursesNumberElements,
@@ -25,7 +28,6 @@ import {
   accountSectionWrappers,
   adminPanelCommentsWrapper,
 } from './dom-elements.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -379,6 +381,31 @@ const addAdminPanelCommentsToDOM = (comments, filterType) => {
   insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
 };
 
+// database-handlers.js
+const addSellAndExpenseDataToChart = (lastSixMonthData) => {
+  let months = [];
+  let sells = [];
+  let expenses = [];
+  let profits = [];
+  let losses = [];
+
+  lastSixMonthData.forEach((data) => {
+    months.push(`${data.month} ${data.year}`);
+    sells.push(data.sell);
+    expenses.push(data.expense);
+    if (data.sell - data.expense > 0) {
+      profits.push(data.sell - data.expense);
+      losses.push(0);
+    } else {
+      profits.push(0);
+      losses.push(data.sell - data.expense);
+    }
+  });
+
+  sellAndExpenseStaticsChart(months, sells, expenses);
+  ProfitAndLossStaticsChart(months, profits, losses);
+};
+
 export {
   insertToDOM,
   addLoginBtnToDOM,
@@ -397,4 +424,5 @@ export {
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
   addAdminPanelCommentsToDOM,
+  addSellAndExpenseDataToChart,
 };

@@ -158,6 +158,9 @@ const sortArray = (array, sortField, isAscending = false) => {
     case 'reading_time':
       sortedArray.sort((a, b) => new Date(a.reading_time) - new Date(b.reading_time));
       break;
+    case 'id':
+      sortedArray.sort((a, b) => a.id - b.id);
+      break;
   }
   isAscending && sortedArray.reverse();
   return sortedArray;

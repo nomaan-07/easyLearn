@@ -6,13 +6,14 @@ import { removeLoader } from './utils.js';
 import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
 import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
 import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from './database-api.js';
-import './chart-js-initialize.js';
+import { fetchAndDisplaySellAndExpenseData } from './database-handlers.js';
 
 let commentFilterType = 'all';
 let allComments = null;
 let adminPanelCommentsEventListenerAdded = false;
 
 fetchAndDisplayAccountUserDetail();
+fetchAndDisplaySellAndExpenseData();
 
 const fetchAndDisplayAdminPanelComments = async (filterType) => {
   const dbComments = await getAllFromDatabase('comments');
