@@ -27,6 +27,9 @@ import {
   userAccountProfilePictureWrapper,
   accountSectionWrappers,
   adminPanelCommentsWrapper,
+  overallSellElement,
+  overallExpenseElement,
+  overallProfitElement,
 } from './dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -382,13 +385,36 @@ const addAdminPanelCommentsToDOM = (comments, filterType) => {
 };
 
 // database-handlers.js
-const addSellAndExpenseDataToChart = (lastSixMonthData) => {
+const addSellAndExpenseDataToDOM = (data) => {
+  const lastSixMonthData = sortArray(data, 'id').splice(-6);
+  let overallSell = 0;
+  let overallExpense = 0;
+  let overallProfit = 0;
+
   let months = [];
   let sells = [];
   let expenses = [];
   let profits = [];
   let losses = [];
 
+  // overall data
+  data.forEach((data) => {
+    overallSell += data.sell;
+    overallExpense += data.expense;
+    overallProfit += data.sell - data.expense;
+  });
+
+  overallSellElement.textContent = overallSell.toLocaleString('fa-IR');
+  overallExpenseElement.textContent = overallExpense.toLocaleString('fa-IR');
+  overallProfitElement.textContent = overallProfit.toLocaleString('fa-IR');
+  if (overallProfit <= 0) {
+    overallProfitElement.parentElement.classList.add('bg-rose-500');
+    overallProfitElement.parentElement.classList.remove('bg-emerald-500');
+
+    overallProfitElement.nextElementSibling.classList.add('rotate-180');
+  }
+
+  // last six month data
   lastSixMonthData.forEach((data) => {
     months.push(`${data.month} ${data.year}`);
     sells.push(data.sell);
@@ -424,5 +450,5 @@ export {
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
   addAdminPanelCommentsToDOM,
-  addSellAndExpenseDataToChart,
+  addSellAndExpenseDataToDOM,
 };

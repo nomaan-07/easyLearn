@@ -1,5 +1,5 @@
 const sellAndExpenseStaticsChart = (labels, sellData, expenseData) => {
-  const ctx = document.getElementById('sale-expense-chart').getContext('2d');
+  const ctx = document.getElementById('sell-expense-chart').getContext('2d');
 
   const config = {
     type: 'line',

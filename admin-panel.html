@@ -52,6 +52,10 @@
       <symbol id="check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
       </symbol>
+      <symbol id="chevron-double-up" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+      </symbol>
       <symbol id="course" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 48 48">
         <g data-name="38. book on monitor/computer">
           <path
@@ -188,7 +192,7 @@
           </svg>
           <span>کامنت‌ها</span>
         </li>
-        <li class="account__menu-item" data-section="sale">
+        <li class="account__menu-item" data-section="sell">
           <svg class="size-6">
             <use href="#banknotes"></use>
           </svg>
@@ -628,22 +632,51 @@
         <!-- Logins -->
         <section class="account__section-wrapper hidden" data-section="logins"></section>
         <!-- End of Logins -->
-        <!-- Sale -->
-        <section class="account__section-wrapper hidden space-y-10" data-section="sale">
-          <!-- Sale and expense Chart Wrapper -->
+        <!-- sell -->
+        <section class="account__section-wrapper hidden space-y-10" data-section="sell">
+          <!-- sell and expense Chart Wrapper -->
           <div class="h-[40vh] xs:h-[50vh] sm:h-[60vh] py-5 px-1 sm:px-5 rounded-xl bg-white shadow dark:bg-slate-800">
-            <canvas id="sale-expense-chart"></canvas>
+            <canvas id="sell-expense-chart"></canvas>
           </div>
-          <!-- End of Sale and expense Chart Wrapper -->
+          <!-- End of sell and expense Chart Wrapper -->
           <!-- Profit and loss Chart Wrapper -->
           <div class="h-[40vh] xs:h-[50vh] sm:h-[60vh] py-5 px-1 sm:px-5 rounded-xl bg-white shadow dark:bg-slate-800">
             <canvas id="profit-loss-chart"></canvas>
             <canvas id="mobile-profit-loss-chart"></canvas>
           </div>
           <!-- End of Profit and loss Chart Wrapper -->
-          <!-- Profit, loss -->
+          <!-- Overall Statics -->
+          <div>
+            <!-- Section Header -->
+            <div class="section-title my-5 md:my-14">
+              <div class="size-9 sm:size-10 md:size-11 2xl:size-12 animate-float-fast">
+                <img class="title-icon w-full h-full" src="./images/icons/chart.png" />
+              </div>
+              <!-- Section Title -->
+              <h2 class="category-title">آمار جامع</h2>
+            </div>
+            <!-- End of Section Header -->
+            <div class="flex items-center justify-center sm:justify-start gap-5 md:gap-10 flex-wrap text-center text-white">
+              <div class="p-3 md:p-5 flex flex-col gap-2 bg-emerald-500 shadow dark:shadow-none dark:border-slate-700 rounded-xl">
+                <span class="md:text-lg">فروش</span>
+                <span class="overall-sell font-VazirMedium text-lg md:text-2xl"></span>
+              </div>
+              <div class="p-3 md:p-5 flex flex-col gap-2 bg-rose-500 shadow dark:shadow-none dark:border-slate-700 rounded-xl">
+                <span class="md:text-lg">هزینه</span>
+                <span class="overall-expense font-VazirMedium text-lg md:text-2xl"></span>
+              </div>
+              <div class="p-3 md:p-5 flex flex-col gap-2 bg-emerald-500 shadow dark:shadow-none dark:border-slate-700 rounded-xl relative">
+                <span class="md:text-lg">سود</span>
+                <span class="overall-profit font-VazirMedium text-xl md:text-2xl"></span>
+                <svg class="size-6 absolute top-1 left-1">
+                  <use href="#chevron-double-up"></use>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <!-- End of Overall Statics -->
         </section>
-        <!-- End of Sale -->
+        <!-- End of sell -->
         <!-- Account Detail -->
         <section class="account__section-wrapper hidden" data-section="account-detail">
           <div class="account__detail-wrapper space-y-6 sm:space-y-0 sm:grid grid-cols-12 gap-6 text-lg font-VazirMedium">

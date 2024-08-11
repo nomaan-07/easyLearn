@@ -2,7 +2,7 @@ import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToChart, updateCartPageDetail, updateHederCartDetail } from './dom-handlers.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToDOM, updateCartPageDetail, updateHederCartDetail } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
@@ -303,8 +303,7 @@ const fetchAccountUser = async () => {
 const fetchAndDisplaySellAndExpenseData = async () => {
   try {
     const data = await getAllFromDatabase('sell_expense');
-    const lastSixMonthData = sortArray(data, 'id').splice(-6);
-    addSellAndExpenseDataToChart(lastSixMonthData);
+    addSellAndExpenseDataToDOM(data);
   } catch (error) {
     console.error('Failed to fetch chart data', error);
   }

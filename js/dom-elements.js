@@ -118,6 +118,9 @@ const accountChangeProfilePictureBtn = document.querySelector('.change-profile-p
 // admin-panel.js
 const adminPanelCommentsWrapper = document.querySelector('.admin__comments-wrapper');
 const adminCommentsFilterButtons = document.querySelectorAll('.comment-filter-btn');
+const overallSellElement = document.querySelector('.overall-sell');
+const overallExpenseElement = document.querySelector('.overall-expense');
+const overallProfitElement = document.querySelector('.overall-profit');
 
 export {
   localStorageTheme,
@@ -214,4 +217,7 @@ export {
   accountChangeProfilePictureBtn,
   adminPanelCommentsWrapper,
   adminCommentsFilterButtons,
+  overallSellElement,
+  overallExpenseElement,
+  overallProfitElement,
 };
