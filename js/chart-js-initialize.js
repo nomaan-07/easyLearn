@@ -47,7 +47,7 @@ const sellAndExpenseStaticsChart = (labels, sellData, expenseData) => {
           },
         },
         tooltip: {
-          font: {
+          titleFont: {
             size: 16,
             family: 'Vazir Medium',
           },
@@ -62,7 +62,7 @@ const sellAndExpenseStaticsChart = (labels, sellData, expenseData) => {
         x: {
           ticks: {
             font: {
-              size: 12,
+              size: 10,
               family: 'Vazir Bold',
             },
             color: '#ca8a04',
@@ -157,7 +157,7 @@ const ProfitAndLostStaticsChart = (labels, profitData, lostData) => {
           },
         },
         tooltip: {
-          font: {
+          titleFont: {
             size: 16,
             family: 'Vazir Medium',
           },
@@ -172,7 +172,7 @@ const ProfitAndLostStaticsChart = (labels, profitData, lostData) => {
         x: {
           ticks: {
             font: {
-              size: 12,
+              size: 10,
               family: 'Vazir Bold',
             },
             color: '#ca8a04',
@@ -243,7 +243,7 @@ const ProfitAndLostStaticsChart = (labels, profitData, lostData) => {
           },
         },
         tooltip: {
-          font: {
+          titleFont: {
             size: 16,
             family: 'Vazir Medium',
           },
