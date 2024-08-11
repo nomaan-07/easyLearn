@@ -64,18 +64,9 @@ const sellAndExpenseStaticsChart = (labels, sellData, expenseData) => {
           ticks: {
             font: {
               size: 10,
-              family: 'Vazir Bold',
+              family: 'Vazir Medium',
             },
             color: '#ca8a04',
-          },
-          title: {
-            display: true,
-            text: 'ماه‌ها',
-            font: {
-              size: 18,
-              family: 'Vazir Bold',
-            },
-            color: '#94a3b8',
           },
           grid: {
             display: false,
@@ -187,18 +178,9 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
           ticks: {
             font: {
               size: 10,
-              family: 'Vazir Bold',
+              family: 'Vazir Medium',
             },
             color: '#ca8a04',
-          },
-          title: {
-            display: true,
-            text: 'ماه‌ها',
-            font: {
-              size: 18,
-              family: 'Vazir Bold',
-            },
-            color: '#94a3b8',
           },
           grid: { display: false },
         },
@@ -278,18 +260,9 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
           ticks: {
             font: {
               size: 10,
-              family: 'Vazir Bold',
+              family: 'Vazir Medium',
             },
             color: '#ca8a04',
-          },
-          title: {
-            display: true,
-            text: 'ماه‌ها',
-            font: {
-              size: 18,
-              family: 'Vazir Bold',
-            },
-            color: '#94a3b8',
           },
           grid: {
             display: false,
@@ -298,7 +271,7 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
         y: {
           ticks: {
             font: {
-              size: 8,
+              size: 10,
               family: 'Vazir Bold',
             },
             color: '#38bdf8',
@@ -324,7 +297,7 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
   new Chart(ctxMobile, MobileConfig);
 };
 
-const months = ['اسفند', 'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد'];
+const months = ['اسفند ۱۴۰۲', 'فروردین ۱۴۰۳', 'اردیبهشت ۱۴۰۳', 'خرداد ۱۴۰۳', 'تیر ۱۴۰۳', 'مرداد ۱۴۰۳'];
 const sellData = [207300000, 385000000, 308045000, 673390000, 493000000, 470000000];
 const expenseData = [120900000, 340760000, 210000000, 545370000, 590000000, 440500000];
 const profitData = [86400000, 44240000, 97955000, 130240000, 0, 29500000];
