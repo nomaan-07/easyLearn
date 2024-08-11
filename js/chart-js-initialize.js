@@ -38,12 +38,13 @@ const sellAndExpenseStaticsChart = (labels, sellData, expenseData) => {
         legend: {
           labels: {
             useBorderRadius: true,
-            borderRadius: 6,
+            borderRadius: 4,
             font: {
               size: 14,
               family: 'Vazir Medium',
             },
             color: '#94a3b8',
+            boxWidth: 14,
           },
         },
         tooltip: {
@@ -140,6 +141,18 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
           backgroundColor: 'rgba(225, 29, 72, 0.2)',
           borderSkipped: false,
         },
+        {
+          // Add a line chart dataset
+          type: 'line', // Specify the dataset type as line
+          label: 'روند سود',
+          data: newProfit,
+          borderWidth: 1,
+          borderColor: 'rgba(129, 140, 248, 1)',
+          backgroundColor: 'rgba(129, 140, 248, 0.2)',
+          tension: 0.4,
+          fill: false,
+          pointRadius: 0,
+        },
       ],
     },
     options: {
@@ -148,12 +161,13 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
         legend: {
           labels: {
             useBorderRadius: true,
-            borderRadius: 6,
+            borderRadius: 4,
             font: {
               size: 14,
               family: 'Vazir Medium',
             },
             color: '#94a3b8',
+            boxWidth: 14,
           },
         },
         tooltip: {
@@ -186,6 +200,7 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
             },
             color: '#94a3b8',
           },
+          grid: { display: false },
         },
         y: {
           ticks: {
@@ -204,6 +219,9 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
             },
             color: '#94a3b8',
           },
+          grid: {
+            color: (ctx) => (ctx.tick.value === 0 ? 'rgba(0, 0, 0, 0.1)' : 'transparent'),
+          },
         },
       },
     },
@@ -215,7 +233,7 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
       labels: labels,
       datasets: [
         {
-          label: 'سود',
+          label: 'روند سود',
           data: newProfit,
           borderWidth: 1,
           borderColor: 'rgba(129, 140, 248, 1)',
@@ -234,12 +252,13 @@ const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
         legend: {
           labels: {
             useBorderRadius: true,
-            borderRadius: 6,
+            borderRadius: 4,
             font: {
               size: 12,
               family: 'Vazir Medium',
             },
             color: '#94a3b8',
+            boxWidth: 12,
           },
         },
         tooltip: {
