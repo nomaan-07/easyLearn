@@ -108,14 +108,14 @@ const sellAndExpenseStaticsChart = (labels, sellData, expenseData) => {
   new Chart(ctx, config);
 };
 
-const ProfitAndLostStaticsChart = (labels, profitData, lostData) => {
+const ProfitAndlossStaticsChart = (labels, profitData, lossData) => {
   const newProfit = [...profitData];
   newProfit.forEach((data, index) => {
-    newProfit[index] = data === 0 ? lostData[index] : newProfit[index];
+    newProfit[index] = data === 0 ? lossData[index] : newProfit[index];
   });
 
-  const ctx = document.getElementById('profit-lost-chart').getContext('2d');
-  const ctxMobile = document.getElementById('mobile-profit-lost-chart').getContext('2d');
+  const ctx = document.getElementById('profit-loss-chart').getContext('2d');
+  const ctxMobile = document.getElementById('mobile-profit-loss-chart').getContext('2d');
 
   const config = {
     type: 'bar',
@@ -133,7 +133,7 @@ const ProfitAndLostStaticsChart = (labels, profitData, lostData) => {
         },
         {
           label: 'زیان',
-          data: lostData,
+          data: lossData,
           borderColor: 'rgba(225, 29, 72, 1)',
           borderWidth: 1,
           borderRadius: 12,
@@ -309,9 +309,9 @@ const months = ['اسفند', 'فروردین', 'اردیبهشت', 'خرداد'
 const sellData = [207300000, 385000000, 308045000, 673390000, 493000000, 470000000];
 const expenseData = [120900000, 340760000, 210000000, 545370000, 590000000, 440500000];
 const profitData = [86400000, 44240000, 97955000, 130240000, 0, 29500000];
-const lostData = [0, 0, 0, 0, -97000000, 0];
+const lossData = [0, 0, 0, 0, -97000000, 0];
 
 sellAndExpenseStaticsChart(months, sellData, expenseData);
-ProfitAndLostStaticsChart(months, profitData, lostData);
+ProfitAndlossStaticsChart(months, profitData, lossData);
 
-export { sellAndExpenseStaticsChart, ProfitAndLostStaticsChart };
+export { sellAndExpenseStaticsChart, ProfitAndlossStaticsChart };

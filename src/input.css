@@ -352,14 +352,14 @@
   /* End of Account */
 
   /* Admin Panel Charts*/
-  #profit-lost-chart {
+  #profit-loss-chart {
     display: none !important;
   }
   @media (min-width: 475px) {
-    #profit-lost-chart {
+    #profit-loss-chart {
       display: block !important;
     }
-    #mobile-profit-lost-chart {
+    #mobile-profit-loss-chart {
       display: none !important;
     }
   }
