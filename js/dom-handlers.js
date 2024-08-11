@@ -410,7 +410,7 @@ const addSellAndExpenseDataToDOM = (data) => {
   if (overallProfit <= 0) {
     overallProfitElement.parentElement.classList.add('bg-rose-500');
     overallProfitElement.parentElement.classList.remove('bg-emerald-500');
-
+    overallProfitElement.previousElementSibling.textContent = 'زیان';
     overallProfitElement.nextElementSibling.classList.add('rotate-180');
   }
 
