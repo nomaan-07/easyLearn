@@ -225,11 +225,11 @@ const courseInfoTemplate = (course) => {
     </div>
     <!-- End of Banner -->
     <!-- Course Info -->
-    <div class="bg-white p-5 lg:w-1/2 h-max dark:bg-slate-800 rounded-2xl shadow"  data-course_id="${course.id}">
+    <div class="lg:order-1 flex flex-col bg-white p-5 lg:w-1/2 dark:bg-slate-800 rounded-2xl shadow"  data-course_id="${course.id}">
       <!-- Course name -->
-      <h1 class="lg:order-1 text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
+      <h1 class="text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
       <!-- Course Caption -->
-      <p class="sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
+      <p class="flex-grow sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
       ${course.caption}
       </p>
       <div class="2xl:flex justify-between mt-3 sm:mt-4 md:mt-5 2xl:mt-9">
