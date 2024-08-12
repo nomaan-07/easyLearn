@@ -231,10 +231,10 @@ const courseInfoTemplate = (course) => {
       <!-- Course name -->
       <h1 class="text-[22px] xs:text-2xl md:text-3xl font-VazirBlack">${course.name}</h1>
       <!-- Course Caption -->
-      <p class="flex-grow sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
+      <p class="sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
       ${course.caption}
       </p>
-      <div class="2xl:flex justify-between mt-3 sm:mt-4 md:mt-5 2xl:mt-9">
+      <div class="flex flex-col justify-end 2xl:flex-row 2xl:justify-between flex-grow mt-3 sm:mt-4 md:mt-5 2xl:mt-9">
         <!-- Teacher and Discount -->
         <div class="sm:flex justify-between items-center 2xl:flex-col 2xl:items-start 2xl:gap-4">
           <!-- Teacher -->

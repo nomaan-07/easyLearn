@@ -5574,14 +5574,14 @@ video {
     height: 3rem;
   }
 
-  .sm\:size-8 {
-    width: 2rem;
-    height: 2rem;
-  }
-
   .sm\:size-5 {
     width: 1.25rem;
     height: 1.25rem;
+  }
+
+  .sm\:size-8 {
+    width: 2rem;
+    height: 2rem;
   }
 
   .sm\:h-12 {
@@ -6709,8 +6709,16 @@ video {
     align-items: flex-start;
   }
 
+  .\32xl\:items-end {
+    align-items: flex-end;
+  }
+
   .\32xl\:items-center {
     align-items: center;
+  }
+
+  .\32xl\:justify-between {
+    justify-content: space-between;
   }
 
   .\32xl\:gap-10 {
