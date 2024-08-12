@@ -6717,8 +6717,16 @@ video {
     align-items: center;
   }
 
+  .\32xl\:justify-end {
+    justify-content: flex-end;
+  }
+
   .\32xl\:justify-between {
     justify-content: space-between;
+  }
+
+  .\32xl\:justify-stretch {
+    justify-content: stretch;
   }
 
   .\32xl\:gap-10 {
