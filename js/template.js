@@ -365,7 +365,7 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased) => {
   }
   const template = `
           <!-- Session -->
-        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x-4 w-full p-4 ${sessionClasses}">
+        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x-4 w-full p-4 select-none ${sessionClasses}">
           <div class="flex items-center gap-2">
             <span class="text-center shrink-0 w-8 h-8 pt-1.5 bg-white dark:bg-slate-800 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors">${number}</span>
             <span class="text-lg transition-colors line-clamp-2">${session.name}</span>
