@@ -139,6 +139,7 @@ const submitSignupForm = async (event) => {
     };
     await addToDatabase('users', newUser);
     localStorage.setItem('userID', newUser.id);
+    localStorage.removeItem('isAdmin');
 
     emailInput.value = '';
     usernameInput.value = '';
@@ -160,6 +161,7 @@ const submitLoginForm = async (event) => {
 
   let user = users.find((user) => user.email === emailInputValue);
   if (loginFormValidation(emailInputValue, passwordInputValue, user)) {
+    user.role === 'admin' ? localStorage.setItem('isAdmin', 'true') : localStorage.removeItem('isAdmin');
     localStorage.setItem('userID', user.id);
     emailInput.value = '';
     passwordInput.value = '';
@@ -284,19 +286,18 @@ const submitAccountUPasswordChanges = async (event) => {
   }
 };
 
-// account.js - admin-panel.js
-const fetchAccountUser = async () => {
-  if (!localStorageUserID) {
-    location.replace('./auth.html?operation=signup');
+// admin-panel.js
+const fetchAdmin = async () => {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+  if (!localStorageUserID || !isAdmin) {
+    location.replace('./404.html');
   }
 
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
-  if (user.role === 'admin') {
-    location.replace('./admin-panel.html?role=admin');
+  if (user.role !== 'admin') {
+    location.replace('./404.html');
   }
-  setTimeout(() => {
-    removeLoader();
-  }, 500);
 };
 
 // admin-panel.js
@@ -323,6 +324,6 @@ export {
   fetchAndDisplayAccountUserDetail,
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
-  fetchAccountUser,
+  fetchAdmin,
   fetchAndDisplaySellAndExpenseData,
 };

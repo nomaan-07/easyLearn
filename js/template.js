@@ -2,10 +2,12 @@ import { localStorageUserID } from './dom-elements.js';
 import { applyDiscountToPrice, formatDate } from './utils.js';
 
 const loginBtnTemplate = (userID) => {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
   let template = '';
+  let panelHref = isAdmin ? './admin-panel.html' : './account.html';
   if (userID) {
     template = `
-      <a href="./account.html" class="btn gap-3 theme-bg-color lg:hover:theme-hover-bg-color select-none">
+      <a href="${panelHref}" class="btn gap-3 theme-bg-color lg:hover:theme-hover-bg-color select-none">
         <svg class="size-6">
           <use href="#user"></use>
         </svg>
@@ -806,6 +808,7 @@ const adminPanelCommentTemplate = (comment) => {
             <!-- End of Comment -->`;
   return template;
 };
+
 export {
   loginBtnTemplate,
   courseCardTemplate,

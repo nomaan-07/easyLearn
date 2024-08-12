@@ -1,15 +1,19 @@
 import './change-theme.js';
-import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountMenuItemElements, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay, accountDisplayPasswordButtons, accountChangeProfilePictureBtn } from './dom-elements.js';
+import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountMenuItemElements, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay, accountDisplayPasswordButtons, accountChangeProfilePictureBtn, localStorageUserID } from './dom-elements.js';
 import { displayChosenAccountSection } from './dom-handlers.js';
 import { fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
 import { openMobileAccountMenu, closeMobileAccountMenu, displayPasswordHandler } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { fetchAccountUser } from './database-handlers.js';
+import { removeLoader } from './utils.js';
+
+if (!localStorageUserID) {
+  location.replace('./auth.html?operation=signup');
+}
 
 fetchAndDisplayAccountUserDetail();
 fetchAndDisplayAccountCourses();
 
-window.addEventListener('load', fetchAccountUser);
+window.addEventListener('load', removeLoader);
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
 mobileMenuOpenBtn.addEventListener('click', openMobileAccountMenu);
 mobileMenuCloseBtn.addEventListener('click', closeMobileAccountMenu);

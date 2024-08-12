@@ -4,7 +4,7 @@ import { addAdminPanelCommentsToDOM, displayChosenAccountSection } from './dom-h
 import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from './ui-handlers.js';
 import { removeLoader } from './utils.js';
 import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
-import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
+import { fetchAdmin, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
 import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from './database-api.js';
 import { fetchAndDisplaySellAndExpenseData } from './database-handlers.js';
 
@@ -93,7 +93,12 @@ const filterCommentsHandler = (btn, comments) => {
   addAdminPanelCommentsToDOM(comments, filterType);
 };
 
-window.addEventListener('load', removeLoader);
+window.addEventListener('load', () => {
+  fetchAdmin();
+  setTimeout(() => {
+    removeLoader();
+  }, 500);
+});
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
 mobileMenuOpenBtn.addEventListener('click', openMobileAccountMenu);
 mobileMenuCloseBtn.addEventListener('click', closeMobileAccountMenu);
