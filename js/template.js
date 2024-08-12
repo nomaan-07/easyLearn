@@ -335,10 +335,10 @@ const headlineTemplate = (headline, sessions, number) => {
               <div class="w-full overflow-hidden rounded-2xl">
                   <!-- Headline header -->
                   <div class="headline__title bg-slate-100 dark:bg-slate-700 md:hover:theme-text-color">
-                    <span class="font-VazirBold text-lg line-clamp-2">${headline.title}</span>
-                    <div class="flex items-center justify-end gap-2">
+                    <span class="font-VazirBold sm:text-lg line-clamp-2">${headline.title}</span>
+                    <div class="flex items-center justify-end gap-2 text-sm sm:text-base">
                       <span>${number} جلسه</span>
-                      <svg class="size-5 transition-transform">
+                      <svg class="size-4 sm:size-5 transition-transform">
                         <use href="#chevron-left"></use>
                       </svg>
                     </div>
@@ -365,14 +365,14 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased) => {
   }
   const template = `
           <!-- Session -->
-        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x-4 w-full p-4 select-none ${sessionClasses}">
+        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-1 sm:gap-y-2 gap-x-4 w-full p-4 select-none ${sessionClasses}">
           <div class="flex items-center gap-2">
             <span class="text-center shrink-0 w-8 h-8 pt-1.5 bg-white dark:bg-slate-800 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors">${number}</span>
-            <span class="text-lg transition-colors line-clamp-2">${session.name}</span>
+            <span class="sm:text-lg transition-colors line-clamp-2">${session.name}</span>
           </div>
-          <div class="flex items-center justify-end gap-2 transition-colors">
+          <div class="flex items-center justify-end gap-2 text-sm sm:text-base transition-colors">
             <span>${session.length}</span>
-            <svg class="size-5">
+            <svg class="size-4 sm:size-5">
               <use href="#${sessionIcon}"></use>
             </svg>
           </div>
