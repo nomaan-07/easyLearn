@@ -198,7 +198,7 @@ const courseInfoTemplate = (course) => {
   let discountHiddenClass = `hidden `;
 
   let finalPriceTemplate = null;
-  let purchaseBtnTemplate = `<div class="course__add-to-cart-btn btn w-full sm:w-auto 2xl:w-full theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer" data-course_id="${course.id}">ثبت نام در دوره</div>`;
+  let purchaseBtnTemplate = `<div class="course__add-to-cart-btn btn w-full sm:w-auto theme-bg-color md:hover:theme-hover-bg-color md:cursor-pointer" data-course_id="${course.id}">ثبت نام در دوره</div>`;
 
   if (course.isPurchased) {
     purchaseBtnTemplate = `<p class="theme-text-color font-VazirBold lg:text-lg xl:text-xl">شما دانشجوی دوره اید.</p>`;
@@ -234,9 +234,9 @@ const courseInfoTemplate = (course) => {
       <p class="sm:text-lg xl:text-xl/8 font-VazirLight line-clamp-3 mt-3 sm:mt-4 md:mt-5">
       ${course.caption}
       </p>
-      <div class="flex flex-col justify-end 2xl:flex-row 2xl:justify-between flex-grow mt-3 sm:mt-4 md:mt-5 2xl:mt-9">
+      <div class="flex flex-col justify-end flex-grow mt-3 sm:mt-4 md:mt-5 2xl:mt-9">
         <!-- Teacher and Discount -->
-        <div class="sm:flex justify-between items-center 2xl:flex-col 2xl:items-start 2xl:justify-end 2xl:gap-4">
+        <div class="sm:flex justify-between items-center">
           <!-- Teacher -->
           <a href="./teacher.html" class="font-VazirMedium md:hover:theme-text-color transition-colors flex justify-center items-center sm:justify-start gap-1 bg-slate-100 dark:bg-slate-700 sm:bg-transparent dark:sm:bg-transparent mx-auto sm:mx-0 w-48 sm:w-auto py-2 sm:py-0 rounded-full">
             <svg class="size-5 hidden sm:block shrink-0">
@@ -259,7 +259,7 @@ const courseInfoTemplate = (course) => {
         </div>
         <!-- End of Teacher and Discount -->
         <!-- Purchase and Price -->
-        <div class="flex flex-col-reverse sm:flex-row gap-3 justify-between items-center 2xl:flex-col-reverse 2xl:items-end 2xl:justify-stretch 2xl:gap-4 mt-4 md:mt-6">
+        <div class="flex flex-col-reverse sm:flex-row gap-3 justify-between items-center mt-4 md:mt-6">
           <!-- Purchase Btn -->
           ${purchaseBtnTemplate}
           <!-- Price -->
