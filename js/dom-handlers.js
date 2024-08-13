@@ -30,6 +30,7 @@ import {
   overallSellElement,
   overallExpenseElement,
   overallProfitElement,
+  adminNotConfirmedCommentsNumberBadge,
 } from './dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -369,6 +370,12 @@ const addUserAccountDetailToDOM = (user) => {
   user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
 };
 
+const addAdminNotConfirmedCommentsToDOM = (comments) => {
+  const notConfirmedComments = filterComments(comments, 'review');
+  const notConfirmedCommentsLength = notConfirmedComments.length;
+  adminNotConfirmedCommentsNumberBadge.textContent = notConfirmedCommentsLength;
+};
+
 //database-handlers.js
 const addAdminPanelCommentsToDOM = (comments, filterType) => {
   let commentsTemplate = '';
@@ -376,6 +383,8 @@ const addAdminPanelCommentsToDOM = (comments, filterType) => {
   const allCommentsWithReplies = comments.flatMap((comment) => [comment, ...(comment.replies || [])]);
 
   const filteredComments = filterComments(allCommentsWithReplies, filterType);
+
+  addAdminNotConfirmedCommentsToDOM(allCommentsWithReplies);
 
   const sortedComments = sortArray(filteredComments, 'create', true);
   sortedComments.forEach((comment) => {
