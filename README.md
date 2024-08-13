@@ -1,13 +1,25 @@
-# ![Logo](images/favIcons/fuchsia-favicon-64x64.png) Easy learn
+# 💥 Easy learn
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 
-Welcome to the **Easy Learn** website! This project showcases my web development skills using HTML, JavaScript, and TailwindCSS. It's fully responsive for all devices that designed as part of my resume for showcasing my abilities.
+## Introduction 🙋‍♂️
+
+Hello! I'm Nomaan, a passionate web developer based in Iran. This project, **Easy Learn**, is a culmination of my skills in HTML, CSS, JavaScript, and TailwindCSS. It's designed to be a comprehensive learning platform where users can explore various topics, engage with the community, and even purchase simulated courses.
 
 [![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fnomaan-07%2FeasyLearn&labelColor=%230f172a&countColor=%23059669)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Fnomaan-07%2FeasyLearn)
+
+## Libraries Used 📚
+
+- **Animate.css**
+- **AOS**
+- **Chart.js**
+- **Particles.js**
+- **SweetAlert2**
+- **Swiper**
+- **TypewriterJS**
 
 ## Features ✨
 
@@ -44,14 +56,20 @@ Welcome to the **Easy Learn** website! This project showcases my web development
    - Users can view their purchased courses.
    - Users can change their username, email and password.
 
-8. **Clone this repository**:
+## Getting Started 🚀
+
+1. **Clone this repository**:
 
    ```
    git clone https://github.com/nomaan-07/easyLearn.git
    ```
 
-9. **Open `index.html`** in your preferred web browser.
+2. **Open `index.html`** in your preferred web browser.
 
 ## Live Demos 🌐
 
 [easyLearn (github)](https://nomaan-07.github.io/easyLearn)
+
+## Database 🗄️
+
+- **Supabase:** Used for managing the database and storing user data securely.
