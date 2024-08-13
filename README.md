@@ -73,3 +73,7 @@ Hello! I'm Nomaan, a passionate web developer based in Iran. This project, **Eas
 ## Database 🗄️
 
 - **Supabase:** Used for managing the database and storing user data securely.
+
+## License 📜
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
