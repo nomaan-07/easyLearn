@@ -66,6 +66,7 @@
   .violet:root {
     /* violet-600 */
     --theme-color: #7c3aed;
+    /* --plyr-color-main: #7c3aed; */
     /* violet-700 */
     --theme-hover-bg-color: #6d28d9;
     /* violet-600/100 */
@@ -82,6 +83,7 @@
   .emerald:root {
     /* emerald-600 */
     --theme-color: #059669;
+    /* --plyr-color-main: #059669; */
     /* emerald-700 */
     --theme-hover-bg-color: #047857;
     /* emerald-600/10 */
@@ -98,6 +100,7 @@
   .dark:root {
     /* yellow-500 */
     --theme-color: #eab308;
+    /* --plyr-color-main: #eab308; */
     /* yellow-400 */
     --theme-hover-bg-color: #facc15;
     /* yellow-500/10 */
@@ -388,6 +391,44 @@
   }
 
   /* End of Admin Panel Charts*/
+
+  .plyr {
+    @apply rounded-2xl overflow-hidden relative;
+    --plyr-color-main: var(--theme-color);
+    --plyr-video-controls-background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.75));
+    --plyr-control-radius: 1000px;
+  }
+  .plyr__controls {
+    padding-top: 24px !important;
+  }
+
+  .plyr--full-ui.plyr--video .plyr__control--overlaid {
+    padding: 10px !important;
+  }
+  @media (min-width: 475px) {
+    .plyr__controls {
+      padding-top: 36px !important;
+    }
+
+    .plyr--full-ui.plyr--video .plyr__control--overlaid {
+      @apply p-3 sm:p-4;
+      padding: 16px !important;
+    }
+  }
+
+  .plyr__controls .plyr__control {
+    @apply p-1 md:p-2;
+  }
+  .plyr__progress {
+    @apply absolute bottom-9 xs:bottom-12 left-4 xs:left-6 right-16 md:right-32;
+  }
+  .plyr__time {
+    @apply absolute bottom-9 xs:bottom-12 right-3;
+  }
+  .plyr__time--current {
+    @apply right-2 xs:right-3 md:right-[70px];
+  }
+  /* End of Player */
 }
 
 @layer utilities {

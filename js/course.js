@@ -24,7 +24,6 @@ import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, bre
 import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
 import { insertToDOM, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler } from './dom-handlers.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');

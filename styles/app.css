@@ -523,6 +523,7 @@ video {
 .violet:root {
   /* violet-600 */
   --theme-color: #7c3aed;
+  /* --plyr-color-main: #7c3aed; */
   /* violet-700 */
   --theme-hover-bg-color: #6d28d9;
   /* violet-600/100 */
@@ -541,6 +542,7 @@ video {
 .emerald:root {
   /* emerald-600 */
   --theme-color: #059669;
+  /* --plyr-color-main: #059669; */
   /* emerald-700 */
   --theme-hover-bg-color: #047857;
   /* emerald-600/10 */
@@ -559,6 +561,7 @@ video {
 .dark:root {
   /* yellow-500 */
   --theme-color: #eab308;
+  /* --plyr-color-main: #eab308; */
   /* yellow-400 */
   --theme-hover-bg-color: #facc15;
   /* yellow-500/10 */
@@ -1406,6 +1409,103 @@ video {
 }
 
 /* End of Admin Panel Charts*/
+
+.plyr {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  --plyr-color-main: var(--theme-color);
+  --plyr-video-controls-background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.75));
+  --plyr-control-radius: 1000px;
+}
+
+.plyr__controls {
+  padding-top: 24px !important;
+}
+
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+  padding: 10px !important;
+}
+
+@media (min-width: 475px) {
+  .plyr__controls {
+    padding-top: 36px !important;
+  }
+
+  .plyr--full-ui.plyr--video .plyr__control--overlaid {
+    padding: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .plyr--full-ui.plyr--video .plyr__control--overlaid {
+      padding: 1rem;
+    }
+  }
+
+  .plyr--full-ui.plyr--video .plyr__control--overlaid {
+    padding: 16px !important;
+  }
+}
+
+.plyr__controls .plyr__control {
+  padding: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .plyr__controls .plyr__control {
+    padding: 0.5rem;
+  }
+}
+
+.plyr__progress {
+  position: absolute;
+  bottom: 2.25rem;
+  left: 1rem;
+  right: 4rem;
+}
+
+@media (min-width: 475px) {
+  .plyr__progress {
+    bottom: 3rem;
+    left: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .plyr__progress {
+    right: 8rem;
+  }
+}
+
+.plyr__time {
+  position: absolute;
+  bottom: 2.25rem;
+  right: 0.75rem;
+}
+
+@media (min-width: 475px) {
+  .plyr__time {
+    bottom: 3rem;
+  }
+}
+
+.plyr__time--current {
+  right: 0.5rem;
+}
+
+@media (min-width: 475px) {
+  .plyr__time--current {
+    right: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .plyr__time--current {
+    right: 70px;
+  }
+}
+
+/* End of Player */
 
 .sr-only {
   position: absolute;
