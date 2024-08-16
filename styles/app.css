@@ -1412,11 +1412,11 @@ video {
 
 .plyr {
   position: relative;
-  overflow: hidden;
   border-radius: 1rem;
   --plyr-color-main: var(--theme-color);
   --plyr-video-controls-background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.75));
   --plyr-control-radius: 1000px;
+  overflow: hidden;
 }
 
 .plyr__controls {
@@ -1447,15 +1447,15 @@ video {
   }
 }
 
-.plyr__controls .plyr__control {
-  padding: 0.25rem;
-}
-
-@media (min-width: 768px) {
-  .plyr__controls .plyr__control {
-    padding: 0.5rem;
+/* .plyr__controls .plyr__control {
+    @apply p-1 md:p-2;
   }
-}
+  .plyr__menu__container .plyr__control--forward {
+    padding-right: 28px !important;
+  }
+  .plyr__menu__container .plyr__control--back {
+    padding-left: 28px !important;
+  } */
 
 .plyr__progress {
   position: absolute;
