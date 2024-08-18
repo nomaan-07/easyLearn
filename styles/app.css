@@ -1085,17 +1085,23 @@ video {
 
 /* End of Headline Title */
 
-/* Comment Header */
+/* Comment and Q&A */
 
 .comment-header,
-  .reply-comment-wrapper {
+  .question-header,
+  .reply-comment-wrapper,
+  .answer-wrapper {
   position: relative;
 }
 
 .comment-header::after,
+  .question-header::after,
   .comment-header::before,
+  .question-header::before,
   .reply-comment-wrapper::before,
-  .reply-comment::before {
+  .reply-comment::before,
+  .answer-wrapper::before,
+  .answer::before {
   position: absolute;
   border-radius: 9999px;
   --tw-content: '';
@@ -1103,28 +1109,34 @@ video {
 }
 
 .comment-header::after,
-  .comment-header::before {
+  .question-header::after,
+  .comment-header::before,
+  .question-header::before {
   background-color: var(--theme-color-10);
   top: 50%;
 }
 
-.comment-header::after {
+.comment-header::after,
+  .question-header::after {
   left: -28px;
   width: 30px;
   height: 2px;
 }
 
-.comment-header::before {
+.comment-header::before,
+  .question-header::before {
   left: -29px;
   width: 2px;
   height: 42px;
 }
 
-.comment-header--new::before {
+.comment-header--new::before,
+  .question-header--new::before {
   height: 31px !important;
 }
 
-.reply-comment-wrapper::before {
+.reply-comment-wrapper::before,
+  .answer-wrapper::before {
   background-color: #e2e8f0;
   left: 50%;
   width: 2px;
@@ -1132,11 +1144,13 @@ video {
   top: -36px;
 }
 
-.dark .reply-comment-wrapper::before {
+.dark .reply-comment-wrapper::before,
+  .dark .answer-wrapper::before {
   background-color: #475569;
 }
 
-.reply-comment::before {
+.reply-comment::before,
+  .answer::before {
   background-color: #e2e8f0;
   left: 50%;
   width: 2px;
@@ -1144,15 +1158,17 @@ video {
   top: -21px;
 }
 
-.dark .reply-comment::before {
+.dark .reply-comment::before,
+  .dark .answer::before {
   background-color: #334155;
 }
 
-.reply-comment:first-child::before {
+.reply-comment:first-child::before,
+  .answer:first-child::before {
   background-color: #64748b !important;
 }
 
-/* End of Comment Header */
+/* End of Comment and Q&A */
 
 /* SweetAlert */
 
@@ -1773,6 +1789,14 @@ video {
   z-index: 50;
 }
 
+.order-1 {
+  order: 1;
+}
+
+.order-2 {
+  order: 2;
+}
+
 .col-span-12 {
   grid-column: span 12 / span 12;
 }
@@ -2349,6 +2373,10 @@ video {
 
 .w-24 {
   width: 6rem;
+}
+
+.w-28 {
+  width: 7rem;
 }
 
 .w-32 {
@@ -3674,6 +3702,10 @@ video {
   border-radius: 0.5rem;
 }
 
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
 .rounded-xl {
   border-radius: 0.75rem;
 }
@@ -4360,6 +4392,10 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
 }
 
 .pt-8 {
@@ -5706,6 +5742,10 @@ video {
     margin-bottom: 1rem;
   }
 
+  .sm\:mb-8 {
+    margin-bottom: 2rem;
+  }
+
   .sm\:mt-0 {
     margin-top: 0px;
   }
@@ -5930,6 +5970,10 @@ video {
 
   .sm\:gap-10 {
     gap: 2.5rem;
+  }
+
+  .sm\:gap-4 {
+    gap: 1rem;
   }
 
   .sm\:gap-5 {
