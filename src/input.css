@@ -398,7 +398,7 @@
     --plyr-video-controls-background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.75));
     --plyr-control-radius: 1000px;
     --plyr-video-progress-buffered-background: var(--theme-color-10);
-    overflow: hidden;
+    overflow: hidden !important;
   }
   .plyr__controls {
     padding-top: 24px !important;
@@ -418,7 +418,7 @@
     }
   }
 
-  /* .plyr__controls .plyr__control {
+  .plyr__controls .plyr__control {
     @apply p-1 md:p-2;
   }
   .plyr__menu__container .plyr__control--forward {
@@ -426,7 +426,11 @@
   }
   .plyr__menu__container .plyr__control--back {
     padding-left: 28px !important;
-  } */
+  }
+  .plyr__menu__container .plyr__control[role='menuitemradio'] {
+    @apply py-px sm:py-0.5 md:py-1 lg:py-2;
+  }
+
   .plyr__progress {
     @apply absolute bottom-9 xs:bottom-12 left-4 xs:left-6 right-16 md:right-32;
   }
