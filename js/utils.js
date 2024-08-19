@@ -1,5 +1,6 @@
 import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './template.js';
 import { getAllFromDatabase } from './database-api.js';
+import { localStorageUserID } from './dom-elements.js';
 
 const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
 
@@ -108,12 +109,12 @@ const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, catego
 };
 
 // course.js
-const CourseHeadlineSectionHandler = (headline, isPurchased) => {
+const CourseHeadlineSectionHandler = (headline, isPurchased, courseSlug) => {
   let sessions = headline.sessions;
   let sessionsTemplate = '';
   if (sessions.length) {
     sessions.forEach((session, index) => {
-      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1, isPurchased);
+      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1, isPurchased, courseSlug);
     });
   }
   return headlineTemplate(headline, sessionsTemplate, sessions.length);
@@ -214,6 +215,32 @@ const createCartCourseObject = (dbCourse) => ({
   timestamp: dbCourse.discount_timestamp,
 });
 
+// course.js
+const createCourseObject = (dbCourse) => ({
+  finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
+  id: dbCourse.id,
+  name: dbCourse.name,
+  caption: dbCourse.caption,
+  image_src: dbCourse.image_src,
+  teacher: dbCourse.teacher,
+  students: dbCourse.students.toLocaleString('fa-IR'),
+  ratePercent: Math.floor((dbCourse.rate * 100) / 5),
+  discount: dbCourse.discount,
+  price: dbCourse.price,
+  description: dbCourse.description,
+  category: dbCourse.category[0],
+  categoryName: categoryInPersian(dbCourse.category[0]),
+  slug: dbCourse.slug,
+  headlines: dbCourse.headlines,
+  sessionsCount: dbCourse.sessions_count,
+  videosLength: dbCourse.videos_length,
+  situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
+  timestamp: dbCourse.discount_timestamp,
+  isPurchased: dbCourse.students_id && dbCourse.students_id.includes(localStorageUserID),
+  // FIXME: updated_at instead of created_at
+  date: formatDate(dbCourse.created_at),
+});
+
 // dom-handlers.js
 const getLocalCourses = () => localStorage.getItem('courses') && JSON.parse(localStorage.getItem('courses'));
 
@@ -259,6 +286,7 @@ export {
   calculateFutureTime,
   calculateRemainingTime,
   createCartCourseObject,
+  createCourseObject,
   getLocalCourses,
   filterComments,
   convertPersianNumbersToEnglish,

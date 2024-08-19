@@ -356,8 +356,8 @@ const headlineTemplate = (headline, sessions, number) => {
 };
 
 // utils.js
-const courseHeadlineSessionTemplate = (session, number, isPurchased) => {
-  let sessionHref = `href="lesson.html?lesson=${session.id}"`;
+const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug) => {
+  let sessionHref = `href="session.html?id=${session.id}&course=${courseSlug}"`;
   let sessionIcon = 'eye';
   let sessionClasses = 'md:hover:theme-text-color group';
   if (session.isLocked && !isPurchased) {

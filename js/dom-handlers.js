@@ -1,5 +1,5 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray, filterComments } from './utils.js';
+import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray, filterComments, removeLoader } from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
@@ -441,6 +441,24 @@ const addSellAndExpenseDataToDOM = (data) => {
   ProfitAndLossStaticsChart(months, profits, losses);
 };
 
+// database-handlers.js
+const addSessionToDOM = (course, sessionID) => {
+  // Find session
+  let session = null;
+  course.headlines.find((headline) =>
+    headline.sessions.find((headlineSession) => {
+      session = headlineSession.id === sessionID ? headlineSession : session;
+    })
+  );
+
+  // Check if session is available to user
+  if (session.isLocked && !course.isPurchased) {
+    location.replace('./404.html');
+  }
+
+  removeLoader();
+};
+
 export {
   insertToDOM,
   addLoginBtnToDOM,
@@ -460,4 +478,5 @@ export {
   addUserAccountDetailToDOM,
   addAdminPanelCommentsToDOM,
   addSellAndExpenseDataToDOM,
+  addSessionToDOM,
 };

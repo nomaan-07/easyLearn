@@ -66,6 +66,7 @@
   .violet:root {
     /* violet-600 */
     --theme-color: #7c3aed;
+    /* --plyr-color-main: #7c3aed; */
     /* violet-700 */
     --theme-hover-bg-color: #6d28d9;
     /* violet-600/100 */
@@ -82,6 +83,7 @@
   .emerald:root {
     /* emerald-600 */
     --theme-color: #059669;
+    /* --plyr-color-main: #059669; */
     /* emerald-700 */
     --theme-hover-bg-color: #047857;
     /* emerald-600/10 */
@@ -98,6 +100,7 @@
   .dark:root {
     /* yellow-500 */
     --theme-color: #eab308;
+    /* --plyr-color-main: #eab308; */
     /* yellow-400 */
     --theme-hover-bg-color: #facc15;
     /* yellow-500/10 */
@@ -218,60 +221,76 @@
     @apply flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x-4 w-full p-4 md:py-6 xl:py-4 2xl:py-6  md:cursor-pointer transition-colors;
   }
   /* End of Headline Title */
-  /* Comment Header */
+  /* Comment and Q&A */
   .comment-header,
-  .reply-comment-wrapper {
+  .question-header,
+  .reply-comment-wrapper,
+  .answer-wrapper {
     position: relative;
   }
   .comment-header::after,
+  .question-header::after,
   .comment-header::before,
+  .question-header::before,
   .reply-comment-wrapper::before,
-  .reply-comment::before {
+  .reply-comment::before,
+  .answer-wrapper::before,
+  .answer::before {
     @apply absolute content-[''] rounded-full;
   }
   .comment-header::after,
-  .comment-header::before {
+  .question-header::after,
+  .comment-header::before,
+  .question-header::before {
     @apply theme-bg-color-10 top-1/2;
   }
-  .comment-header::after {
+  .comment-header::after,
+  .question-header::after {
     left: -28px;
     width: 30px;
     height: 2px;
   }
-  .comment-header::before {
+  .comment-header::before,
+  .question-header::before {
     left: -29px;
     width: 2px;
     height: 42px;
   }
-  .comment-header--new::before {
+  .comment-header--new::before,
+  .question-header--new::before {
     height: 31px !important;
   }
 
-  .reply-comment-wrapper::before {
+  .reply-comment-wrapper::before,
+  .answer-wrapper::before {
     background-color: #e2e8f0;
     left: 50%;
     width: 2px;
     height: 36px;
     top: -36px;
   }
-  .dark .reply-comment-wrapper::before {
+  .dark .reply-comment-wrapper::before,
+  .dark .answer-wrapper::before {
     background-color: #475569;
   }
 
-  .reply-comment::before {
+  .reply-comment::before,
+  .answer::before {
     background-color: #e2e8f0;
     left: 50%;
     width: 2px;
     height: 21.5px;
     top: -21px;
   }
-  .dark .reply-comment::before {
+  .dark .reply-comment::before,
+  .dark .answer::before {
     background-color: #334155;
   }
-  .reply-comment:first-child::before {
+  .reply-comment:first-child::before,
+  .answer:first-child::before {
     background-color: #64748b !important;
   }
-  /* End of Comment Header */
+  /* End of Comment and Q&A */
 
   /* SweetAlert */
   .swal2-container {
@@ -388,6 +407,56 @@
   }
 
   /* End of Admin Panel Charts*/
+
+  .plyr {
+    @apply rounded-2xl overflow-hidden relative;
+    --plyr-color-main: var(--theme-color);
+    --plyr-video-controls-background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.75));
+    --plyr-control-radius: 1000px;
+    --plyr-video-progress-buffered-background: var(--theme-color-10);
+    overflow: hidden !important;
+  }
+  .plyr__controls {
+    padding-top: 24px !important;
+  }
+
+  .plyr--full-ui.plyr--video .plyr__control--overlaid {
+    padding: 10px !important;
+  }
+  @media (min-width: 475px) {
+    .plyr__controls {
+      padding-top: 36px !important;
+    }
+
+    .plyr--full-ui.plyr--video .plyr__control--overlaid {
+      @apply p-3 sm:p-4;
+      padding: 16px !important;
+    }
+  }
+
+  .plyr__controls .plyr__control {
+    @apply p-1 md:p-2;
+  }
+  .plyr__menu__container .plyr__control--forward {
+    padding-right: 28px !important;
+  }
+  .plyr__menu__container .plyr__control--back {
+    padding-left: 28px !important;
+  }
+  .plyr__menu__container .plyr__control[role='menuitemradio'] {
+    @apply py-px sm:py-0.5 md:py-1 lg:py-2;
+  }
+
+  .plyr__progress {
+    @apply absolute bottom-9 xs:bottom-12 left-4 xs:left-6 right-16 md:right-32;
+  }
+  .plyr__time {
+    @apply absolute bottom-9 xs:bottom-12 right-3;
+  }
+  .plyr__time--current {
+    @apply right-2 xs:right-3 md:right-[70px];
+  }
+  /* End of Player */
 }
 
 @layer utilities {
