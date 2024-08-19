@@ -358,10 +358,18 @@ const headlineTemplate = (headline, sessions, number, headlineID = false) => {
 
 // utils.js
 const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug, activeSessionID = false) => {
-  let sessionActiveClasses = activeSessionID === session.id ? 'theme-bg-color-10 border-r border-r-2 theme-border-color headline__session--active' : '';
+  let sessionActiveClasses = '';
+  let sessionActiveNumberClasses = 'bg-white dark:bg-slate-800';
+
+  if (activeSessionID === session.id) {
+    sessionActiveClasses = 'border-r border-r-4 theme-border-color';
+    sessionActiveNumberClasses = 'theme-bg-color text-white';
+  }
+
   let sessionHref = `href="session.html?id=${session.id}&course=${courseSlug}&number=${number}"`;
   let sessionIcon = 'eye';
   let sessionLockedClasses = 'md:hover:theme-text-color group';
+
   if (session.isLocked && !isPurchased) {
     sessionHref = '';
     sessionIcon = 'lock-closed';
@@ -372,7 +380,7 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug,
           <!-- Session -->
         <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-1 sm:gap-y-2 gap-x-4 w-full p-4 select-none relative ${sessionLockedClasses} ${sessionActiveClasses}">
           <div class="flex items-center gap-2">
-            <span class="text-center shrink-0 w-8 h-8 pt-1.5 bg-white dark:bg-slate-800 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors">${number}</span>
+            <span class="text-center shrink-0 w-8 h-8 pt-1.5 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors ${sessionActiveNumberClasses}">${number}</span>
             <span class="sm:text-lg transition-colors line-clamp-2">${session.name}</span>
           </div>
           <div class="flex items-center justify-end gap-2 text-sm sm:text-base transition-colors">
@@ -383,6 +391,7 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug,
           </div>
         </a>
         <!-- End of Session -->`;
+
   return template;
 };
 
