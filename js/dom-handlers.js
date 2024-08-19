@@ -485,6 +485,9 @@ const addSessionToDOM = (course, sessionID, sessionNumber) => {
     location.replace('./404.html');
   }
 
+  // Update Title
+  document.title = `${session.name} | ${course.name} | ایزی‌لرن`;
+
   // Add breadcrumb to DOM
   breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, course.categoryName, 'course');
 
