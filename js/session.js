@@ -1,5 +1,11 @@
 import './header.js';
 import './change-theme.js';
-import { removeLoader } from './utils.js';
+import { breadCrumbLinksHandler, categoryInPersian, getQueryParameters, removeLoader } from './utils.js';
 import './plyr-initialize.js';
-window.addEventListener('load', removeLoader);
+import { breadcrumbCourseCategory, breadcrumbCourseName, localStorageUserID } from './dom-elements.js';
+import { getOneFromDatabase } from './database-api.js';
+import { fetchAndDisplaySession } from './database-handlers.js';
+
+fetchAndDisplaySession();
+
+// window.addEventListener('load', removeLoader);

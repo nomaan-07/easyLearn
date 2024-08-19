@@ -356,8 +356,8 @@ const headlineTemplate = (headline, sessions, number) => {
 };
 
 // utils.js
-const courseHeadlineSessionTemplate = (session, number, isPurchased) => {
-  let sessionHref = `href="session.html?id=${session.id}"`;
+const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug) => {
+  let sessionHref = `href="session.html?id=${session.id}&course=${courseSlug}"`;
   let sessionIcon = 'eye';
   let sessionClasses = 'md:hover:theme-text-color group';
   if (session.isLocked && !isPurchased) {
@@ -373,7 +373,7 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased) => {
             <span class="sm:text-lg transition-colors line-clamp-2">${session.name}</span>
           </div>
           <div class="flex items-center justify-end gap-2 text-sm sm:text-base transition-colors">
-            <span>${session.time}</span>
+            <span>${session.length}</span>
             <svg class="size-4 sm:size-5">
               <use href="#${sessionIcon}"></use>
             </svg>

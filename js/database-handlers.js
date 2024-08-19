@@ -1,8 +1,8 @@
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, deleteFromDatabase } from './database-api.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
-import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish } from './utils.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToDOM, updateCartPageDetail, updateHederCartDetail } from './dom-handlers.js';
+import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from './utils.js';
+import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToDOM, updateCartPageDetail, updateHederCartDetail, addSessionToDOM } from './dom-handlers.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from './dom-elements.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from './validation.js';
 
@@ -310,6 +310,18 @@ const fetchAndDisplaySellAndExpenseData = async () => {
   }
 };
 
+// session.js
+const fetchAndDisplaySession = async () => {
+  const sessionID = Number(getQueryParameters('id'));
+  const courseSlug = getQueryParameters('course');
+
+  const dbCourse = await getOneFromDatabase('courses', 'slug', courseSlug);
+
+  const course = createCourseObject(dbCourse);
+
+  addSessionToDOM(course, sessionID);
+};
+
 export {
   fetchAndDisplayMainPageCourses,
   fetchAndDisplayMainPageBlogs,
@@ -326,4 +338,5 @@ export {
   submitAccountUPasswordChanges,
   fetchAdmin,
   fetchAndDisplaySellAndExpenseData,
+  fetchAndDisplaySession,
 };
