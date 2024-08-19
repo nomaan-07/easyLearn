@@ -1071,15 +1071,6 @@ video {
   }
 }
 
-@media (min-width: 1536px) {
-  .headline__title {
-    flex-direction: row;
-    align-items: center;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-}
-
 /* End of Headline Title */
 
 /* Comment and Q&A */
@@ -7011,6 +7002,11 @@ video {
     --tw-space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+  }
+
+  .\32xl\:py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .\32xl\:text-3xl {

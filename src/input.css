@@ -215,7 +215,7 @@
   }
   /* Headline Title */
   .headline__title {
-    @apply flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-2 gap-x-4 w-full p-4 md:py-6 xl:py-4 2xl:py-6  md:cursor-pointer transition-colors;
+    @apply flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch justify-between gap-y-2 gap-x-4 w-full p-4 md:py-6 xl:py-4 md:cursor-pointer transition-colors;
   }
   /* End of Headline Title */
   /* Comment and Q&A */

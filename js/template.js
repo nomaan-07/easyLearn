@@ -331,13 +331,15 @@ const courseDataTemplate = (course) => {
 // utils.js
 const headlineTemplate = (headline, sessions, number, headlineID = false) => {
   let activeSessionHeadlineClasses = headlineID === headline.id ? 'border-y border-y-2 theme-border-color' : '';
+  let sessionPageClasses = headlineID ? '' : '2xl:flex-row 2xl:items-center 2xl:py-6';
+
   if (!sessions) {
     sessions = '<p class ="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
   }
   const template = `
               <div class="w-full overflow-hidden rounded-2xl ${activeSessionHeadlineClasses}">
                   <!-- Headline header -->
-                  <div class="headline__title bg-slate-100 dark:bg-slate-700 md:hover:theme-text-color">
+                  <div class="headline__title ${sessionPageClasses} bg-slate-100 dark:bg-slate-700 md:hover:theme-text-color">
                     <span class="font-VazirBold sm:text-lg line-clamp-2">${headline.title}</span>
                     <div class="flex items-center justify-end gap-2 text-sm sm:text-base">
                       <span>${number} جلسه</span>
@@ -358,6 +360,8 @@ const headlineTemplate = (headline, sessions, number, headlineID = false) => {
 
 // utils.js
 const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug, activeSessionID = false) => {
+  let sessionPageClasses = activeSessionID ? '' : '2xl:flex-row 2xl:items-center';
+
   let sessionActiveClasses = '';
   let sessionActiveNumberClasses = 'bg-white dark:bg-slate-800';
 
@@ -378,7 +382,7 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug,
 
   const template = `
           <!-- Session -->
-        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch 2xl:flex-row 2xl:items-center justify-between gap-y-1 sm:gap-y-2 gap-x-4 w-full p-4 select-none relative ${sessionLockedClasses} ${sessionActiveClasses}">
+        <a ${sessionHref} class="flex flex-col md:flex-row md:items-center xl:flex-col xl:items-stretch ${sessionPageClasses} justify-between gap-y-1 sm:gap-y-2 gap-x-4 w-full p-4 select-none relative ${sessionLockedClasses} ${sessionActiveClasses}">
           <div class="flex items-center gap-2">
             <span class="text-center shrink-0 w-8 h-8 pt-1.5 rounded-lg font-VazirBold md:group-hover:theme-bg-color md:group-hover:text-white transition-colors ${sessionActiveNumberClasses}">${number}</span>
             <span class="sm:text-lg transition-colors line-clamp-2">${session.name}</span>
