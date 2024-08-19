@@ -591,30 +591,38 @@
         <!-- End of Breadcrumb -->
         <!-- Video -->
         <div class="w-full mx-auto mt-5 sm:mt-8 md:mt-10">
-          <video id="player">
-            <source src="https://vqvbwalqiwdeyzuiltqm.supabase.co/storage/v1/object/public/video/session-test-video.mp4?t=2024-08-18T13%3A02%3A38.322Z" type="video/mp4" />
+          <video class="session__video" id="player">
+            <source src="" type="video/mp4" />
           </video>
         </div>
         <!-- End of Video -->
-        <div class="space-y-5 lg:space-y-0 lg:flex gap-5 mt-5">
+        <div class="space-y-5 xl:space-y-0 xl:flex gap-5 mt-5">
           <!-- Headlines and Mobile Version Session Detail  -->
-          <div class="order-1 lg:order-2 space-y-5 lg:w-1/3">
+          <div class="order-1 xl:order-2 space-y-5 xl:space-y-0 xl:w-1/3">
             <!-- Mobile Session Detail  -->
-            <div class="lg:hidden bg-white dark:bg-slate-800 p-5 rounded-2xl shadow">
+            <div class="xl:hidden bg-white dark:bg-slate-800 p-5 space-y-6 sm:space-y-8 rounded-2xl shadow">
               <!-- Course Name -->
-              <div class="flex items-center gap-2 sm:gap-4 text-xl sm:text-2xl font-VazirBold mb-6 sm:mb-8">
+              <div class="flex items-center gap-2 sm:gap-4 text-xl sm:text-2xl font-VazirBold">
                 <svg class="size-6 sm:size-8 theme-text-color shrink-0">
                   <use href="#course"></use>
                 </svg>
-                <span>بهینه نویسی کد ها در پایتون</span>
+                <a class="session__course-name md:hover:theme-text-color transition-colors"></a>
               </div>
               <!-- End of Course Name -->
               <!-- Session Name -->
               <div class="flex gap-2 sm:gap-4">
-                <span class="h-6 text-center theme-text-color theme-bg-color-10 shrink-0 px-1.5 rounded-md font-VazirBold">1</span>
-                <span class="sm:text-lg">بررسی مشکلات فرمت دهی رشته و انتخاب بهینه ترین روش (بخش اول)</span>
+                <span class="session__number h-6 text-center theme-text-color theme-bg-color-10 shrink-0 px-1.5 rounded-md font-VazirBold"></span>
+                <span class="session__name sm:text-lg"></span>
               </div>
               <!-- End of Session Name -->
+              <!-- Session Detail Buttons -->
+              <div class="space-y-3.5 xs:space-y-0 xs:flex justify-between">
+                <!-- Download Btn -->
+                <a class="session__download-btn btn theme-bg-color md:hover:theme-hover-bg-color">دانلود ویدیو</a>
+                <!-- End of Download Btn -->
+                <a href="#Q&A" class="btn text-inherit theme-bg-color-10 md:hover:theme-bg-color md:hover:text-white">پرسش و پاسخ</a>
+              </div>
+              <!-- Session Detail Buttons -->
             </div>
             <!-- End of Mobile Session Detail -->
             <!-- Headlines Section -->
@@ -678,27 +686,35 @@
           </div>
           <!-- End of Headlines and Mobile Version Session Detail  -->
           <!-- Session Detail and Q&A-->
-          <div class="order-2 lg:order-1 space-y-5 lg:w-2/3">
+          <div class="order-2 xl:order-1 space-y-5 xl:w-2/3">
             <!-- Session Detail -->
-            <div class="hidden lg:block bg-white dark:bg-slate-800 p-5 rounded-2xl shadow">
+            <div class="hidden xl:block bg-white dark:bg-slate-800 p-5 space-y-8 rounded-2xl shadow">
               <!-- Course Name -->
-              <div class="flex items-center gap-2 sm:gap-4 text-xl sm:text-2xl font-VazirBold mb-6 sm:mb-8">
-                <svg class="size-6 sm:size-8 theme-text-color shrink-0">
+              <div class="flex items-center gap-4 text-2xl font-VazirBold">
+                <svg class="size-8 theme-text-color shrink-0">
                   <use href="#course"></use>
                 </svg>
-                <a class="md:hover:theme-text-color transition-colors" href="#">بهینه نویسی کد ها در پایتون</a>
+                <a class="session__course-name hover:theme-text-color transition-colors"></a>
               </div>
               <!-- End of Course Name -->
               <!-- Session Name -->
-              <div class="flex gap-2 sm:gap-4">
-                <span class="h-6 text-center theme-text-color theme-bg-color-10 shrink-0 px-1.5 rounded-md font-VazirBold">1</span>
-                <span class="sm:text-lg">بررسی مشکلات فرمت دهی رشته و انتخاب بهینه ترین روش (بخش اول)</span>
+              <div class="flex gap-4">
+                <span class="session__number h-6 text-center theme-text-color theme-bg-color-10 shrink-0 px-1.5 rounded-md font-VazirBold"></span>
+                <span class="session__name text-lg"></span>
               </div>
               <!-- End of Session Name -->
+              <!-- Session Detail Buttons -->
+              <div class="flex justify-between">
+                <!-- Download Btn -->
+                <a class="session__download-btn btn theme-bg-color hover:theme-hover-bg-color">دانلود ویدیو</a>
+                <!-- End of Download Btn -->
+                <a href="#Q&A" class="btn text-inherit theme-bg-color-10 hover:theme-bg-color hover:text-white">پرسش و پاسخ</a>
+              </div>
+              <!-- Session Detail Buttons -->
             </div>
             <!-- End of Session Detail -->
             <!-- Q&A -->
-            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow">
+            <div id="Q&A" class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow">
               <div class="section-title">
                 <div class="size-9 sm:size-10 md:size-11 2xl:size-12 animate-float-fast">
                   <img class="w-full h-full" src="./images/icons/chat-bubble.png" />

@@ -109,15 +109,15 @@ const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, catego
 };
 
 // course.js
-const CourseHeadlineSectionHandler = (headline, isPurchased, courseSlug) => {
+const CourseHeadlineSectionHandler = (headline, isPurchased, courseSlug, headlineID, sessionID) => {
   let sessions = headline.sessions;
   let sessionsTemplate = '';
   if (sessions.length) {
     sessions.forEach((session, index) => {
-      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1, isPurchased, courseSlug);
+      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1, isPurchased, courseSlug, sessionID);
     });
   }
-  return headlineTemplate(headline, sessionsTemplate, sessions.length);
+  return headlineTemplate(headline, sessionsTemplate, sessions.length, headlineID);
 };
 
 // database-handler.js

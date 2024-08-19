@@ -1,5 +1,21 @@
 import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from './template.js';
-import { applyDiscountToPrice, formatDate, emptyDomElemContent, getParentID, getReplyCommentWrapper, getReplyCommentTextarea, calculateRemainingTime, createCartCourseObject, getLocalCourses, categoryInPersian, sortArray, filterComments, removeLoader } from './utils.js';
+import {
+  applyDiscountToPrice,
+  formatDate,
+  emptyDomElemContent,
+  getParentID,
+  getReplyCommentWrapper,
+  getReplyCommentTextarea,
+  calculateRemainingTime,
+  createCartCourseObject,
+  getLocalCourses,
+  categoryInPersian,
+  sortArray,
+  filterComments,
+  removeLoader,
+  CourseHeadlineSectionHandler,
+  breadCrumbLinksHandler,
+} from './utils.js';
 import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
 import { submitCommentReply } from './database-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
@@ -31,6 +47,14 @@ import {
   overallExpenseElement,
   overallProfitElement,
   adminNotConfirmedCommentsNumberBadge,
+  headlinesWrapper,
+  sessionCourseNameElements,
+  sessionNameElements,
+  sessionNumberElements,
+  sessionDownloadButtons,
+  sessionVideoElement,
+  breadcrumbCourseCategory,
+  breadcrumbCourseName,
 } from './dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -442,19 +466,55 @@ const addSellAndExpenseDataToDOM = (data) => {
 };
 
 // database-handlers.js
-const addSessionToDOM = (course, sessionID) => {
+const addSessionToDOM = (course, sessionID, sessionNumber) => {
   // Find session
   let session = null;
+  let headlineID = null;
+
   course.headlines.find((headline) =>
     headline.sessions.find((headlineSession) => {
-      session = headlineSession.id === sessionID ? headlineSession : session;
+      if (headlineSession.id === sessionID) {
+        session = headlineSession;
+        headlineID = headline.id;
+      }
     })
   );
 
   // Check if session is available to user
-  if (session.isLocked && !course.isPurchased) {
+  if (!session || (session.isLocked && !course.isPurchased)) {
     location.replace('./404.html');
   }
+
+  // Add breadcrumb to DOM
+  breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, course.categoryName, 'course');
+
+  // Add session detail to DOM
+
+  insertToDOM(sessionVideoElement, `<source src="${session.videoSrc}" type="video/mp4" />`);
+
+  sessionCourseNameElements.forEach((elem) => {
+    elem.href = `/course.html?course=${course.slug}`;
+    insertToDOM(elem, course.name);
+  });
+
+  sessionNumberElements.forEach((elem) => (elem.textContent = sessionNumber));
+
+  sessionNameElements.forEach((elem) => {
+    insertToDOM(elem, session.name);
+  });
+
+  sessionDownloadButtons.forEach((button) => {
+    button.href = session.videoSrc;
+  });
+
+  // Add headlines to DOM
+  let headlinesTemplate = '';
+
+  course.headlines.forEach((headline) => {
+    headlinesTemplate += CourseHeadlineSectionHandler(headline, course.isPurchased, course.slug, headlineID, session.id);
+  });
+
+  insertToDOM(headlinesWrapper, headlinesTemplate);
 
   removeLoader();
 };

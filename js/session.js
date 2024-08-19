@@ -1,11 +1,11 @@
 import './header.js';
 import './change-theme.js';
-import { breadCrumbLinksHandler, categoryInPersian, getQueryParameters, removeLoader } from './utils.js';
 import './plyr-initialize.js';
-import { breadcrumbCourseCategory, breadcrumbCourseName, localStorageUserID } from './dom-elements.js';
-import { getOneFromDatabase } from './database-api.js';
+import { headlinesWrapper } from './dom-elements.js';
 import { fetchAndDisplaySession } from './database-handlers.js';
+import { headlineLockSessionAlert, toggleHeadLine } from './ui-handlers.js';
 
 fetchAndDisplaySession();
 
-// window.addEventListener('load', removeLoader);
+headlinesWrapper.addEventListener('click', toggleHeadLine);
+headlinesWrapper.addEventListener('click', headlineLockSessionAlert);

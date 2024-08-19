@@ -1,4 +1,4 @@
-import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, deleteFromDatabase } from './database-api.js';
+import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
 import { sweetAlert } from './sweet-alert-initialize.js';
 import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from './utils.js';
@@ -313,13 +313,14 @@ const fetchAndDisplaySellAndExpenseData = async () => {
 // session.js
 const fetchAndDisplaySession = async () => {
   const sessionID = Number(getQueryParameters('id'));
+  const sessionNumber = getQueryParameters('number');
   const courseSlug = getQueryParameters('course');
 
   const dbCourse = await getOneFromDatabase('courses', 'slug', courseSlug);
 
   const course = createCourseObject(dbCourse);
 
-  addSessionToDOM(course, sessionID);
+  addSessionToDOM(course, sessionID, sessionNumber);
 };
 
 export {

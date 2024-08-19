@@ -123,6 +123,13 @@ const overallSellElement = document.querySelector('.overall-sell');
 const overallExpenseElement = document.querySelector('.overall-expense');
 const overallProfitElement = document.querySelector('.overall-profit');
 
+// session.js
+const sessionVideoElement = document.querySelector('.session__video');
+const sessionCourseNameElements = document.querySelectorAll('.session__course-name');
+const sessionNameElements = document.querySelectorAll('.session__name');
+const sessionNumberElements = document.querySelectorAll('.session__number');
+const sessionDownloadButtons = document.querySelectorAll('.session__download-btn');
+
 export {
   localStorageTheme,
   localStorageUserID,
@@ -222,4 +229,9 @@ export {
   overallSellElement,
   overallExpenseElement,
   overallProfitElement,
+  sessionVideoElement,
+  sessionCourseNameElements,
+  sessionNameElements,
+  sessionNumberElements,
+  sessionDownloadButtons,
 };

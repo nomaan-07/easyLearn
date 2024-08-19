@@ -20,8 +20,8 @@ import {
   breadcrumbCourseName,
 } from './dom-elements.js';
 
-import { removeLoader, getQueryParameters, applyDiscountToPrice, formatDate, breadCrumbLinksHandler, CourseHeadlineSectionHandler, categoryInPersian, calculateRemainingTime, createCourseObject } from './utils.js';
-import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert } from './ui-handlers.js';
+import { removeLoader, getQueryParameters, breadCrumbLinksHandler, CourseHeadlineSectionHandler, createCourseObject } from './utils.js';
+import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert, toggleHeadLine } from './ui-handlers.js';
 import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
 import { insertToDOM, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler } from './dom-handlers.js';
 
@@ -78,12 +78,12 @@ const addCourseToDOM = (dbCourse) => {
   }
 
   // Headline section
-  let headlines = '';
+  let headlinesTemplate = '';
   if (course.headlines) {
     course.headlines.forEach((headline) => {
-      headlines += CourseHeadlineSectionHandler(headline, course.isPurchased, course.slug);
+      headlinesTemplate += CourseHeadlineSectionHandler(headline, course.isPurchased, course.slug);
     });
-    insertToDOM(headlinesWrapper, headlines);
+    insertToDOM(headlinesWrapper, headlinesTemplate);
   } else {
     headlinesWrapper.parentElement.classList.add('hidden');
   }
@@ -107,43 +107,13 @@ const toggleDescription = () => {
   descriptionShadow.classList.toggle('hidden');
 };
 
-const toggleHeadLine = (event) => {
-  if (event.target.matches('.headline__title') || event.target.closest('.headline__title')) {
-    let titleElem = event.target;
-    if (!event.target.matches('.headline__title')) {
-      titleElem = event.target.closest('.headline__title');
-    }
-
-    let titleELemToggleClasses = ['theme-bg-color', 'text-white', 'bg-slate-100', 'dark:bg-slate-700', 'md:hover:theme-text-color'];
-    let totalHeadlineBodyHeight = 0;
-
-    const headlineBody = titleElem.nextElementSibling;
-    const headLineChildren = headlineBody.children;
-
-    titleELemToggleClasses.forEach((toggleClass) => titleElem.classList.toggle(toggleClass));
-
-    // Headline Chevron left icon
-    titleElem.children[1].children[1].classList.toggle('-rotate-90');
-
-    for (const child of headLineChildren) {
-      totalHeadlineBodyHeight += child.offsetHeight;
-    }
-
-    if (headlineBody.offsetHeight === 0) {
-      headlineBody.style.maxHeight = `${totalHeadlineBodyHeight}px`;
-    } else {
-      headlineBody.style.maxHeight = '0px';
-    }
-  }
-};
-
 showAllDescriptionBtn.addEventListener('click', toggleDescription);
 headlinesWrapper.addEventListener('click', toggleHeadLine);
-window.addEventListener('load', removeLoader);
+headlinesWrapper.addEventListener('click', headlineLockSessionAlert);
 
 addNewCommentBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea, user, true));
 newCommentCloseBtn.addEventListener('click', () => toggleTextarea(newCommentWrapper, newCommentTextarea));
 newCommentSubmitBtn.addEventListener('click', () => submitNewComment(newCommentWrapper, newCommentTextarea, 'course', course.id, course.name, course.slug, user));
 newCommentTextarea.addEventListener('input', textareaAutoResize);
 commentsWrapper.addEventListener('click', (event) => handleCommentReply(event, 'course', course.name, course.slug, user));
-headlinesWrapper.addEventListener('click', headlineLockSessionAlert);
+window.addEventListener('load', removeLoader);
