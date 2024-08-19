@@ -491,6 +491,7 @@ const addSessionToDOM = (course, sessionID, sessionNumber) => {
   // Add session detail to DOM
 
   insertToDOM(sessionVideoElement, `<source src="${session.videoSrc}" type="video/mp4" />`);
+  sessionVideoElement.poster = course.image_src;
 
   sessionCourseNameElements.forEach((elem) => {
     elem.href = `/course.html?course=${course.slug}`;
