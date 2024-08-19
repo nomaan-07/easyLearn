@@ -316,6 +316,10 @@ const fetchAndDisplaySession = async () => {
   const sessionNumber = getQueryParameters('number');
   const courseSlug = getQueryParameters('course');
 
+  if (!sessionID || !sessionNumber || !courseSlug) {
+    location.replace('./404.html');
+  }
+
   const dbCourse = await getOneFromDatabase('courses', 'slug', courseSlug);
 
   const course = createCourseObject(dbCourse);
