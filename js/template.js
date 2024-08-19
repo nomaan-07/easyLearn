@@ -330,14 +330,15 @@ const courseDataTemplate = (course) => {
 
 // utils.js
 const headlineTemplate = (headline, sessions, number, headlineID = false) => {
-  let activeSessionHeadlineClasses = headlineID === headline.id ? 'border-y border-y-2 theme-border-color' : '';
+  let activeHeadlineTemplate = headlineID === headline.id ? `<div class="absolute top-7 md:top-9 xl:top-7 right-0 w-3 h-1 rounded-2xl theme-bg-color"></div>` : '';
   let sessionPageClasses = headlineID ? '' : '2xl:flex-row 2xl:items-center 2xl:py-6';
 
   if (!sessions) {
     sessions = '<p class ="p-4">هنوز جلسه ای قرار نگرفته است.</p>';
   }
   const template = `
-              <div class="w-full overflow-hidden rounded-2xl ${activeSessionHeadlineClasses}">
+              <div class="w-full overflow-hidden rounded-2xl relative">
+                  ${activeHeadlineTemplate}
                   <!-- Headline header -->
                   <div class="headline__title ${sessionPageClasses} bg-slate-100 dark:bg-slate-700 md:hover:theme-text-color">
                     <span class="font-VazirBold sm:text-lg line-clamp-2">${headline.title}</span>

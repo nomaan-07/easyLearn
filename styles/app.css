@@ -1737,12 +1737,32 @@ video {
   top: 0.75rem;
 }
 
+.top-4 {
+  top: 1rem;
+}
+
 .top-\[402px\] {
   top: 402px;
 }
 
 .top-full {
   top: 100%;
+}
+
+.top-7 {
+  top: 1.75rem;
+}
+
+.right-1 {
+  right: 0.25rem;
+}
+
+.right-0\.5 {
+  right: 0.125rem;
+}
+
+.top-6 {
+  top: 1.5rem;
 }
 
 .isolate {
@@ -2193,6 +2213,10 @@ video {
   height: 0px;
 }
 
+.h-1 {
+  height: 0.25rem;
+}
+
 .h-10 {
   height: 2.5rem;
 }
@@ -2299,6 +2323,14 @@ video {
   height: 100vh;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-2\.5 {
+  height: 0.625rem;
+}
+
 .max-h-0 {
   max-height: 0px;
 }
@@ -2375,6 +2407,10 @@ video {
   width: 9rem;
 }
 
+.w-4 {
+  width: 1rem;
+}
+
 .w-44 {
   width: 11rem;
 }
@@ -2442,6 +2478,18 @@ video {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-3 {
+  width: 0.75rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-2\.5 {
+  width: 0.625rem;
 }
 
 .min-w-4 {
@@ -3809,11 +3857,6 @@ video {
 .border-y {
   border-top-width: 1px;
   border-bottom-width: 1px;
-}
-
-.border-y-2 {
-  border-top-width: 2px;
-  border-bottom-width: 2px;
 }
 
 .border-b {
@@ -6120,6 +6163,14 @@ video {
     top: 5rem;
   }
 
+  .md\:top-9 {
+    top: 2.25rem;
+  }
+
+  .md\:top-8 {
+    top: 2rem;
+  }
+
   .md\:col-span-6 {
     grid-column: span 6 / span 6;
   }
@@ -6775,6 +6826,14 @@ video {
 }
 
 @media (min-width: 1280px) {
+  .xl\:top-7 {
+    top: 1.75rem;
+  }
+
+  .xl\:top-6 {
+    top: 1.5rem;
+  }
+
   .xl\:order-1 {
     order: 1;
   }
