@@ -1,10 +1,10 @@
-import './change-theme.js';
-import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountMenuItemElements, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay, accountDisplayPasswordButtons, accountChangeProfilePictureBtn, localStorageUserID } from './dom-elements.js';
-import { displayChosenAccountSection } from './dom-handlers.js';
-import { fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
-import { openMobileAccountMenu, closeMobileAccountMenu, displayPasswordHandler } from './ui-handlers.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
-import { removeLoader } from './utils.js';
+import '../theme/change-theme.js';
+import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { removeLoader } from '../utils/utils.js';
+import { displayChosenAccountSection } from '../dom/dom-handlers.js';
+import { openMobileAccountMenu, closeMobileAccountMenu, displayPasswordHandler } from '../ui/ui-handlers.js';
+import { fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from '../database/database-handlers.js';
+import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountMenuItemElements, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay, accountDisplayPasswordButtons, accountChangeProfilePictureBtn, localStorageUserID } from '../dom/dom-elements.js';
 
 if (!localStorageUserID) {
   location.replace('./auth.html?operation=signup');

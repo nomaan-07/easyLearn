@@ -1,5 +1,5 @@
-import { sweetAlert } from './sweet-alert-initialize.js';
-import { displayPasswordBtn, accountMenuWrapper, overlay } from './dom-elements.js';
+import { sweetAlert } from './../initializers/sweet-alert-initialize.js';
+import { displayPasswordBtn, accountMenuWrapper, overlay } from './../dom/dom-elements.js';
 
 // course.js - dom-handlers.js
 const textareaAutoResize = (event) => {

@@ -1,7 +1,11 @@
-import { getOneFromDatabase } from './database-api.js';
-import './header.js';
-import './change-theme.js';
-import { courseInfoTemplate, courseDataTemplate } from './template.js';
+import '../shared/header.js';
+import '../theme/change-theme.js';
+import { getOneFromDatabase } from '../database/database-api.js';
+import { courseInfoTemplate, courseDataTemplate } from '../template/template.js';
+import { fetchAndDisplayComments, submitNewComment } from '../database/database-handlers.js';
+import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert, toggleHeadLine } from '../ui/ui-handlers.js';
+import { removeLoader, getQueryParameters, breadCrumbLinksHandler, CourseHeadlineSectionHandler, createCourseObject } from '../utils/utils.js';
+import { insertToDOM, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler } from '../dom/dom-handlers.js';
 import {
   localStorageUserID,
   courseInfoWrapper,
@@ -18,12 +22,7 @@ import {
   newCommentCloseBtn,
   breadcrumbCourseCategory,
   breadcrumbCourseName,
-} from './dom-elements.js';
-
-import { removeLoader, getQueryParameters, breadCrumbLinksHandler, CourseHeadlineSectionHandler, createCourseObject } from './utils.js';
-import { toggleTextarea, textareaAutoResize, headlineLockSessionAlert, toggleHeadLine } from './ui-handlers.js';
-import { fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
-import { insertToDOM, handleCommentReply, courseDiscountRemainingTimeDisplayHandler, addCourseToCartHandler } from './dom-handlers.js';
+} from '../dom/dom-elements.js';
 
 let course = null;
 let courseParam = getQueryParameters('course');

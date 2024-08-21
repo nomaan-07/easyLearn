@@ -1,12 +1,12 @@
-import './change-theme.js';
-import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountChangeProfilePictureBtn, accountDisplayPasswordButtons, accountMenuItemElements, adminCommentsFilterButtons, adminPanelCommentsWrapper, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from './dom-elements.js';
-import { addAdminPanelCommentsToDOM, displayChosenAccountSection } from './dom-handlers.js';
-import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from './ui-handlers.js';
-import { removeLoader } from './utils.js';
-import { confirmSweetAlert, sweetAlert } from './sweet-alert-initialize.js';
-import { fetchAdmin, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from './database-handlers.js';
-import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from './database-api.js';
-import { fetchAndDisplaySellAndExpenseData } from './database-handlers.js';
+import '../theme/change-theme.js';
+import { removeLoader } from '../utils/utils.js';
+import { fetchAndDisplaySellAndExpenseData } from '../database/database-handlers.js';
+import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { addAdminPanelCommentsToDOM, displayChosenAccountSection } from '../dom/dom-handlers.js';
+import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from '../database/database-api.js';
+import { fetchAdmin, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from '../database/database-handlers.js';
+import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from '../ui/ui-handlers.js';
+import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountChangeProfilePictureBtn, accountDisplayPasswordButtons, accountMenuItemElements, adminCommentsFilterButtons, adminPanelCommentsWrapper, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from '../dom/dom-elements.js';
 
 let commentFilterType = 'all';
 let allComments = null;

@@ -1,11 +1,11 @@
-import './aos.initialize.js';
-import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID, passwordInput } from './dom-elements.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
-import { getQueryParameters, removeLoader } from './utils.js';
-import { moveInLabelElement, moveOutLabelElement, displayPasswordHandler } from './ui-handlers.js';
-import { submitLoginForm, submitSignupForm } from './database-handlers.js';
-import { authFormHeaderTemplate } from './template.js';
-import { insertToDOM } from './dom-handlers.js';
+import '../initializers/aos.initialize.js';
+import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { insertToDOM } from '../dom/dom-handlers.js';
+import { authFormHeaderTemplate } from '../template/template.js';
+import { getQueryParameters, removeLoader } from '../utils/utils.js';
+import { submitLoginForm, submitSignupForm } from '../database/database-handlers.js';
+import { moveInLabelElement, moveOutLabelElement, displayPasswordHandler } from '../ui/ui-handlers.js';
+import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID, passwordInput } from '../dom/dom-elements.js';
 
 const operationParam = getQueryParameters('operation');
 

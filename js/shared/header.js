@@ -1,3 +1,4 @@
+import { changeTopBannerBackgroundColor, addLoginBtnToDOM, updateHederCartDetail, removeCourseFromCartHandler } from './../dom/dom-handlers.js';
 import {
   mobileMenuOpenBtn,
   mobileMenuCloseBtn,
@@ -19,8 +20,7 @@ import {
   loginButtons,
   localStorageUserID,
   headerCartCoursesWrappers,
-} from './dom-elements.js';
-import { changeTopBannerBackgroundColor, addLoginBtnToDOM, updateHederCartDetail, removeCourseFromCartHandler } from './dom-handlers.js';
+} from './../dom/dom-elements.js';
 
 changeTopBannerBackgroundColor();
 updateHederCartDetail();

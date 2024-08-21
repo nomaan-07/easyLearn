@@ -1,10 +1,10 @@
-import { getAllFromDatabase } from './database-api.js';
-import { addCourseCardsToDOM, addCourseToCartHandler } from './dom-handlers.js';
-import './header.js';
-import './change-theme.js';
-import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from './dom-elements.js';
-import { removeLoader, getQueryParameters, categoryInPersian, sortArray } from './utils.js';
-import { activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn } from './ui-handlers.js';
+import '../shared/header.js';
+import '../theme/change-theme.js';
+import { getAllFromDatabase } from '../database/database-api.js';
+import { addCourseCardsToDOM, addCourseToCartHandler } from '../dom/dom-handlers.js';
+import { courseFilterButtons, courseSortButtons, coursesWrapperElement, searchCourseInput, categoryTitle, titleIcon, searchResultWrapper } from '../dom/dom-elements.js';
+import { removeLoader, getQueryParameters, categoryInPersian, sortArray } from '../utils/utils.js';
+import { activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn } from '../ui/ui-handlers.js';
 
 let categoryParam = getQueryParameters('category');
 let searchParam = getQueryParameters('search');

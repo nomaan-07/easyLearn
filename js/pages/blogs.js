@@ -1,10 +1,10 @@
-import './header.js';
-import './change-theme.js';
-import { blogsWrapperElement, blogsSortButtons, searchBlogInput, categoryTitle } from './dom-elements.js';
-import { getAllFromDatabase } from './database-api.js';
-import { getQueryParameters, removeLoader, sortArray } from './utils.js';
-import { addBlogCardsToDOM } from './dom-handlers.js';
-import { activeFilterBtn, removeFilterButtonsClasses } from './ui-handlers.js';
+import '../shared/header.js';
+import '../theme/change-theme.js';
+import { getAllFromDatabase } from '../database/database-api.js';
+import { addBlogCardsToDOM } from '../dom/dom-handlers.js';
+import { activeFilterBtn, removeFilterButtonsClasses } from '../ui/ui-handlers.js';
+import { getQueryParameters, removeLoader, sortArray } from '../utils/utils.js';
+import { blogsWrapperElement, blogsSortButtons, searchBlogInput, categoryTitle } from '../dom/dom-elements.js';
 
 let allBlogs = [];
 let sortedBLogs = [];

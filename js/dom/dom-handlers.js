@@ -1,4 +1,8 @@
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from './template.js';
+import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { submitCommentReply } from '../database/database-handlers.js';
+import { closeMobileAccountMenu, toggleTextarea } from '../ui/ui-handlers.js';
+import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from '../template/template.js';
 import {
   applyDiscountToPrice,
   formatDate,
@@ -15,11 +19,7 @@ import {
   removeLoader,
   CourseHeadlineSectionHandler,
   breadCrumbLinksHandler,
-} from './utils.js';
-import { closeMobileAccountMenu, toggleTextarea } from './ui-handlers.js';
-import { submitCommentReply } from './database-handlers.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
-import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from './chart-js-initialize.js';
+} from '../utils/utils.js';
 
 import {
   topBannerElement,
@@ -55,7 +55,7 @@ import {
   sessionVideoElement,
   breadcrumbCourseCategory,
   breadcrumbCourseName,
-} from './dom-elements.js';
+} from '../dom/dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {

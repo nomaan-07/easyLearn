@@ -1,6 +1,6 @@
-import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './template.js';
-import { getAllFromDatabase } from './database-api.js';
-import { localStorageUserID } from './dom-elements.js';
+import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './../template/template.js';
+import { getAllFromDatabase } from './../database/database-api.js';
+import { localStorageUserID } from './../dom/dom-elements.js';
 
 const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
 

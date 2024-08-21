@@ -1,4 +1,4 @@
-import '../vendor/supabase/supabase-js@2.js';
+import '../../vendor/supabase/supabase-js@2.js';
 
 const { createClient } = supabase;
 const supabaseUrl = 'https://vqvbwalqiwdeyzuiltqm.supabase.co';

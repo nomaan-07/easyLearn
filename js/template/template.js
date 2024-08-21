@@ -1,5 +1,4 @@
-import { localStorageUserID } from './dom-elements.js';
-import { applyDiscountToPrice, formatDate } from './utils.js';
+import { formatDate } from './../utils/utils.js';
 
 const loginBtnTemplate = (userID) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';

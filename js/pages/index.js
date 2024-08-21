@@ -1,11 +1,11 @@
-import './change-theme.js';
-import './header.js';
-import './aos.initialize.js';
-import { heroParticlesJS } from './particles-initialize.js';
-import { heroTypewriter } from './typewriter-initialize.js';
-import { removeLoader, deleteUserIDFromLocal } from './utils.js';
-import { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs } from './database-handlers.js';
-import { localStorageUserID } from './dom-elements.js';
+import '../shared/header.js';
+import '../theme/change-theme.js';
+import '../initializers/aos.initialize.js';
+import { heroParticlesJS } from '../initializers/particles-initialize.js';
+import { heroTypewriter } from '../initializers/typewriter-initialize.js';
+import { localStorageUserID } from '../dom/dom-elements.js';
+import { removeLoader, deleteUserIDFromLocal } from '../utils/utils.js';
+import { fetchAndDisplayMainPageCourses, fetchAndDisplayMainPageBlogs } from '../database/database-handlers.js';
 
 deleteUserIDFromLocal(localStorageUserID);
 

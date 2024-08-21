@@ -1,13 +1,13 @@
-import './header.js';
-import './change-theme.js';
-import { localStorageUserID, breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper, commentsWrapper, addNewCommentBtn, newCommentWrapper, newCommentTextarea, newCommentSubmitBtn, newCommentCloseBtn } from './dom-elements.js';
-import { removeLoader, getQueryParameters, breadCrumbLinksHandler, categoryInPersian, formatDate } from './utils.js';
-import { addToDatabase, getOneFromDatabase, updateInDatabase } from './database-api.js';
-import { blogTemplate } from './template.js';
-import { insertToDOM, handleCommentReply } from './dom-handlers.js';
-import { fetchAndDisplayRecantBlogs, fetchAndDisplayComments, submitNewComment } from './database-handlers.js';
-import { textareaAutoResize, toggleTextarea } from './ui-handlers.js';
-import { sweetAlert } from './sweet-alert-initialize.js';
+import '../shared/header.js';
+import '../theme/change-theme.js';
+import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { blogTemplate } from '../template/template.js';
+import { insertToDOM, handleCommentReply } from '../dom/dom-handlers.js';
+import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
+import { getOneFromDatabase, updateInDatabase } from '../database/database-api.js';
+import { fetchAndDisplayRecantBlogs, fetchAndDisplayComments, submitNewComment } from '../database/database-handlers.js';
+import { removeLoader, getQueryParameters, breadCrumbLinksHandler, categoryInPersian, formatDate } from '../utils/utils.js';
+import { localStorageUserID, breadcrumbBlogCategory, breadcrumbBlogName, blogWrapper, commentsWrapper, addNewCommentBtn, newCommentWrapper, newCommentTextarea, newCommentSubmitBtn, newCommentCloseBtn } from '../dom/dom-elements.js';
 
 let blog = null;
 let blogParam = getQueryParameters('blog');

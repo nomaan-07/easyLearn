@@ -1,4 +1,4 @@
-import { localStorageTheme, colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './dom-elements.js';
+import { localStorageTheme, colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './../dom/dom-elements.js';
 
 const getThemeFromLocalStorage = () => {
   localStorageTheme && changeTheme(localStorageTheme);

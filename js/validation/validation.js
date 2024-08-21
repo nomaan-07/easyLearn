@@ -1,4 +1,4 @@
-import { sweetAlert } from './sweet-alert-initialize.js';
+import { sweetAlert } from './../initializers/sweet-alert-initialize.js';
 
 const emptyValueValidation = (value) => {
   if (value !== '') return true;

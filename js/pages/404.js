@@ -1,4 +1,4 @@
-import { favIcon, localStorageTheme } from './dom-elements.js';
+import { favIcon, localStorageTheme } from '../dom/dom-elements.js';
 
 if (localStorageTheme) {
   document.documentElement.className = `scroll-smooth ${localStorageTheme}`;
