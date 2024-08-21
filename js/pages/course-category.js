@@ -31,7 +31,7 @@ if (categoryParam && categoryInPersian(categoryParam)) {
 }
 
 // Add Course to DOM
-async function fetchAndDisplayCategoryCoursesToDOM() {
+const fetchAndDisplayCategoryCoursesToDOM = async () => {
   try {
     const allCourses = await getAllFromDatabase('courses');
     if (categoryParam === 'all-courses') {
@@ -52,7 +52,7 @@ async function fetchAndDisplayCategoryCoursesToDOM() {
   } catch (error) {
     console.error('Failed to fetch courses', error);
   }
-}
+};
 
 fetchAndDisplayCategoryCoursesToDOM();
 

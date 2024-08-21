@@ -28,7 +28,7 @@ let course = null;
 let courseParam = getQueryParameters('course');
 let user = null;
 
-async function fetchUser() {
+const fetchUser = async () => {
   try {
     if (localStorageUserID) {
       const dbUser = await getOneFromDatabase('users', 'id', localStorageUserID);
@@ -37,26 +37,12 @@ async function fetchUser() {
   } catch (error) {
     console.error('Failed to fetch user', error);
   }
-}
+};
 
 fetchUser();
 
 if (!courseParam) {
   location.replace('404.html');
-}
-
-async function fetchAndDisplayCourse() {
-  try {
-    const course = await getOneFromDatabase('courses', 'slug', courseParam);
-    if (course) {
-      addCourseToDOM(course);
-      courseDiscountRemainingTimeDisplayHandler(course.discount_timestamp);
-    } else {
-      location.replace('./404.html');
-    }
-  } catch (error) {
-    console.error('Failed to fetch searched course', error);
-  }
 }
 
 const addCourseToDOM = (dbCourse) => {
@@ -89,6 +75,20 @@ const addCourseToDOM = (dbCourse) => {
 
   // comments section
   fetchAndDisplayComments(commentsWrapper, course.id);
+};
+
+const fetchAndDisplayCourse = async () => {
+  try {
+    const course = await getOneFromDatabase('courses', 'slug', courseParam);
+    if (course) {
+      addCourseToDOM(course);
+      courseDiscountRemainingTimeDisplayHandler(course.discount_timestamp);
+    } else {
+      location.replace('./404.html');
+    }
+  } catch (error) {
+    console.error('Failed to fetch searched course', error);
+  }
 };
 
 fetchAndDisplayCourse();

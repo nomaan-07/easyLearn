@@ -59,7 +59,7 @@ const getCategoryBlogs = (allBlogs) => {
   return categoryBlogs;
 };
 
-async function fetchAndDisplayBlogs() {
+const fetchAndDisplayBlogs = async () => {
   try {
     const blogs = await getAllFromDatabase('blogs');
     allBlogs = getCategoryBlogs(sortArray(blogs, 'create', true));
@@ -69,7 +69,8 @@ async function fetchAndDisplayBlogs() {
   } catch (error) {
     console.error('Failed to fetch blogs', error);
   }
-}
+};
+
 fetchAndDisplayBlogs();
 
 const displaySortedBLogs = (type) => {

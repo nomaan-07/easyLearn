@@ -85,15 +85,15 @@ const headerSearchBarToggle = () => {
   searchBarInput.focus();
 };
 
-mobileMenuItems.forEach((menu) => {
-  menu.addEventListener('click', () => mobileSubmenuMenuToggle(menu));
-});
-
 const overallSearchHandler = (value) => {
   if (value) {
     location.href = `./course-category.html?search=${value}`;
   }
 };
+
+mobileMenuItems.forEach((menu) => {
+  menu.addEventListener('click', () => mobileSubmenuMenuToggle(menu));
+});
 
 searchBarSearchBtn.addEventListener('click', () => {
   let inputValue = searchBarInput.value.trim();

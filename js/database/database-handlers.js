@@ -7,7 +7,7 @@ import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWra
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToDOM, updateCartPageDetail, updateHederCartDetail, addSessionToDOM } from '../dom/dom-handlers.js';
 
 // index.js
-async function fetchAndDisplayMainPageCourses() {
+const fetchAndDisplayMainPageCourses = async () => {
   try {
     const allCourses = await getAllFromDatabase('courses');
     const lastTenCourse = sortArray(allCourses, 'create', true).slice(0, 10);
@@ -19,9 +19,9 @@ async function fetchAndDisplayMainPageCourses() {
   } catch (error) {
     console.error('Failed to Fetch courses', error);
   }
-}
+};
 // index.js
-async function fetchAndDisplayMainPageBlogs() {
+const fetchAndDisplayMainPageBlogs = async () => {
   try {
     const allBlogs = await getAllFromDatabase('blogs');
     const lastFiveBlog = sortArray(allBlogs, 'create', true).slice(0, 5);
@@ -29,10 +29,10 @@ async function fetchAndDisplayMainPageBlogs() {
   } catch (error) {
     console.error('Failed to fetch blogs', error);
   }
-}
+};
 
 // course.js - blog.js
-async function fetchAndDisplayComments(commentsWrapper, pageID) {
+const fetchAndDisplayComments = async (commentsWrapper, pageID) => {
   try {
     const comments = await getAllFromDatabase('comments');
     let commentsElements = '';
@@ -52,7 +52,7 @@ async function fetchAndDisplayComments(commentsWrapper, pageID) {
   } catch (error) {
     console.error('Failed to fetch comments');
   }
-}
+};
 
 // comments section - course.js - blog.js
 const submitNewComment = (newCommentWrapper, newCommentTextarea, pageType, pageID, pageName, pageSlug, user) => {
@@ -110,7 +110,7 @@ const submitCommentReply = (textarea, wrapper, commentID, pageType, pageName, pa
 };
 
 // blog.js
-async function fetchAndDisplayRecantBlogs() {
+const fetchAndDisplayRecantBlogs = async () => {
   try {
     const allBlogs = await getAllFromDatabase('blogs');
     const lastFourBlog = sortArray(allBlogs, 'create', true).slice(0, 4);
@@ -118,7 +118,7 @@ async function fetchAndDisplayRecantBlogs() {
   } catch (error) {
     console.error('Failed to fetch recent blogs', error);
   }
-}
+};
 
 // auth.js
 const submitSignupForm = async (event) => {

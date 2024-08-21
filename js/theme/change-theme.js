@@ -1,17 +1,6 @@
 import { localStorageTheme, colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './../dom/dom-elements.js';
 
-const getThemeFromLocalStorage = () => {
-  localStorageTheme && changeTheme(localStorageTheme);
-};
-getThemeFromLocalStorage();
-
-const toggleColorPlate = () => {
-  colorPlate.classList.toggle('hidden');
-  colorPlate.classList.toggle('flex');
-  colorPlateBtn.classList.toggle('rotate-45');
-};
-
-function changeTheme(theme) {
+const changeTheme = (theme) => {
   document.documentElement.className = `scroll-smooth ${theme}`;
 
   localStorage.setItem('theme', theme);
@@ -35,7 +24,18 @@ function changeTheme(theme) {
       heroDarkSVG.classList.add('hidden');
     }
   }
-}
+};
+
+const getThemeFromLocalStorage = () => {
+  localStorageTheme && changeTheme(localStorageTheme);
+};
+getThemeFromLocalStorage();
+
+const toggleColorPlate = () => {
+  colorPlate.classList.toggle('hidden');
+  colorPlate.classList.toggle('flex');
+  colorPlateBtn.classList.toggle('rotate-45');
+};
 
 changeThemeButtons.forEach((btn) => {
   btn.addEventListener('click', () => {

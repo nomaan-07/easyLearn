@@ -60,13 +60,13 @@ const toggleHeadLine = (event) => {
 };
 
 // course-category.js - blogs.js
-function activeFilterBtn(btn) {
+const activeFilterBtn = (btn) => {
   btn.classList.add('theme-bg-color-10');
   btn.classList.add('theme-text-color');
   btn.children[0].classList.add('theme-bg-color');
   btn.children[0].classList.remove('bg-slate-200');
   btn.children[0].classList.remove('dark:bg-slate-500');
-}
+};
 
 // course-category.js - blogs.js
 const removeFilterButtonsClasses = (buttons) => {

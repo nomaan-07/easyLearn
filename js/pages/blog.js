@@ -13,7 +13,7 @@ let blog = null;
 let blogParam = getQueryParameters('blog');
 let user = null;
 
-async function fetchUser() {
+const fetchUser = async () => {
   try {
     if (localStorageUserID) {
       const dbUser = await getOneFromDatabase('users', 'id', localStorageUserID);
@@ -22,13 +22,13 @@ async function fetchUser() {
   } catch (error) {
     console.error('Failed to fetch user', error);
   }
-}
+};
 
 fetchUser();
 
 fetchAndDisplayRecantBlogs();
 
-async function fetchAndDisplayBlog() {
+const fetchAndDisplayBlog = async () => {
   try {
     const blog = await getOneFromDatabase('blogs', 'slug', blogParam);
     if (blog) {
@@ -40,7 +40,7 @@ async function fetchAndDisplayBlog() {
   } catch (error) {
     console.error('Failed to fetch blog', error);
   }
-}
+};
 
 fetchAndDisplayBlog();
 
@@ -69,7 +69,7 @@ const addBlogToDom = (dbBlog) => {
   fetchAndDisplayComments(commentsWrapper, blog.id);
 };
 
-async function copyBlogLinkToClipboard(event) {
+const copyBlogLinkToClipboard = async (event) => {
   try {
     const element = event.target.closest('.blog__copy-link-btn');
     if (!element) return;
@@ -83,7 +83,7 @@ async function copyBlogLinkToClipboard(event) {
     console.error('Failed to copy link', error);
     sweetAlert('لینک کپی نشد، لطفا بعدا تلاش کنید.', 'failed');
   }
-}
+};
 
 blogWrapper.addEventListener('click', copyBlogLinkToClipboard);
 window.addEventListener('load', removeLoader);

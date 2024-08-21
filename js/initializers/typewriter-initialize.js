@@ -1,10 +1,12 @@
 const heroTypewriter = () => {
   const app = document.getElementById('hero-caption');
+
   const typewriter = new Typewriter(app, {
     loop: true,
     delay: 120,
     deleteSpeed: 100,
   });
+
   typewriter
     .typeString('با بهترین و مجرب ترین اساتید کشور، در کنار شما هستیم')
     .pauseFor(1000)
