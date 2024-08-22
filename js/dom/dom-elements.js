@@ -129,6 +129,8 @@ const sessionCourseNameElements = document.querySelectorAll('.session__course-na
 const sessionNameElements = document.querySelectorAll('.session__name');
 const sessionNumberElements = document.querySelectorAll('.session__number');
 const sessionDownloadButtons = document.querySelectorAll('.session__download-btn');
+const newQuestionTextareaElement = document.querySelector('#new-question-textarea');
+const newQuestionSubmitBtn = document.querySelector('#new-question-submit-btn');
 
 export {
   localStorageTheme,
@@ -234,4 +236,6 @@ export {
   sessionNameElements,
   sessionNumberElements,
   sessionDownloadButtons,
+  newQuestionTextareaElement,
+  newQuestionSubmitBtn,
 };

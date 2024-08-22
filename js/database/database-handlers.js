@@ -3,7 +3,7 @@ import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from '../validation/validation.js';
 import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from '../utils/utils.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem } from '../dom/dom-elements.js';
+import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, newQuestionTextareaElement } from '../dom/dom-elements.js';
 import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToDOM, updateCartPageDetail, updateHederCartDetail, addSessionToDOM } from '../dom/dom-handlers.js';
 
 // index.js
@@ -327,6 +327,44 @@ const fetchAndDisplaySession = async () => {
   addSessionToDOM(course, sessionID, sessionNumber);
 };
 
+const submitSessionNewQuestion = async (event) => {
+  const question = newQuestionTextareaElement.value.trim();
+
+  if (!localStorageUserID) {
+    sweetAlert('برای ارسال پرسش باید در سایت ثبت نام کنید.', 'info');
+    return;
+  }
+
+  if (!question) {
+    sweetAlert('سوال نمی‌تواند خالی باشد.', 'info');
+    return;
+  }
+
+  try {
+    const btn = event.target;
+
+    const newQuestion = {
+      id: generateRandomID(),
+      created_at: new Date(),
+      question,
+      course_id: btn.dataset.course_id,
+      headline_id: btn.dataset.headline_id,
+      session_id: btn.dataset.session_id,
+      user_id: localStorageUserID,
+    };
+
+    await addToDatabase('question_answer', newQuestion);
+    sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
+
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
+  } catch (error) {
+    sweetAlert('ارسال سوال با خطا مواجه شد،‌ لطفا بعدا تلاش کنید.', 'failed');
+    console.error('Failed to submit question', error);
+  }
+};
+
 export {
   fetchAndDisplayMainPageCourses,
   fetchAndDisplayMainPageBlogs,
@@ -344,4 +382,5 @@ export {
   fetchAdmin,
   fetchAndDisplaySellAndExpenseData,
   fetchAndDisplaySession,
+  submitSessionNewQuestion,
 };

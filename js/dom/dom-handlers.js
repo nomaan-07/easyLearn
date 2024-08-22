@@ -55,6 +55,7 @@ import {
   sessionVideoElement,
   breadcrumbCourseCategory,
   breadcrumbCourseName,
+  newQuestionSubmitBtn,
 } from '../dom/dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -519,6 +520,11 @@ const addSessionToDOM = (course, sessionID, sessionNumber) => {
   });
 
   insertToDOM(headlinesWrapper, headlinesTemplate);
+
+  // Q&A Section
+  newQuestionSubmitBtn.dataset.course_id = course.id;
+  newQuestionSubmitBtn.dataset.headline_id = headlineID;
+  newQuestionSubmitBtn.dataset.session_id = sessionID;
 
   removeLoader();
 };
