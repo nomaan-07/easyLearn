@@ -156,4 +156,35 @@ const closeMobileAccountMenu = () => {
   overlay.classList.add('hide');
 };
 
-export { textareaAutoResize, toggleTextarea, headlineLockSessionAlert, activeFilterBtn, removeFilterButtonsClasses, removeSortButtonsClasses, activeSortBtn, toggleHeadLine, moveInLabelElement, moveOutLabelElement, displayPasswordHandler, openMobileAccountMenu, closeMobileAccountMenu };
+const openSessionAnswerTextArea = (btn) => {
+  const questionID = btn.dataset.question_id;
+  const wrapper = document.querySelector(`#wrapper-${questionID}`);
+  const textarea = document.querySelector(`#textarea-${questionID}`);
+  textarea.addEventListener('input', textareaAutoResize);
+  btn.addEventListener('click', () => toggleTextarea(wrapper, textarea, true, true));
+};
+
+const cancelSessionAnswerTextArea = (btn) => {
+  const questionID = btn.parentElement.dataset.question_id;
+  const wrapper = document.querySelector(`#wrapper-${questionID}`);
+  const textarea = document.querySelector(`#textarea-${questionID}`);
+  btn.addEventListener('click', () => toggleTextarea(wrapper, textarea));
+};
+
+export {
+  textareaAutoResize,
+  toggleTextarea,
+  headlineLockSessionAlert,
+  activeFilterBtn,
+  removeFilterButtonsClasses,
+  removeSortButtonsClasses,
+  activeSortBtn,
+  toggleHeadLine,
+  moveInLabelElement,
+  moveOutLabelElement,
+  displayPasswordHandler,
+  openMobileAccountMenu,
+  closeMobileAccountMenu,
+  openSessionAnswerTextArea,
+  cancelSessionAnswerTextArea,
+};

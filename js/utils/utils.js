@@ -54,6 +54,13 @@ const formatDate = (date) => {
   return `${year}/${month}/${day}`;
 };
 
+const formatTime = (date) => {
+  const timeList = new Date(date).toLocaleTimeString('fa-IR').split(':');
+  const hour = timeList[0];
+  const minute = timeList[1];
+  return `${hour}:${minute}`;
+};
+
 // course-category.js - course.js - blog.js
 const categoryInPersian = (category) => {
   let categoryPersian = null;
@@ -274,6 +281,7 @@ export {
   getParentID,
   applyDiscountToPrice,
   formatDate,
+  formatTime,
   categoryInPersian,
   getReplyCommentWrapper,
   getReplyCommentTextarea,

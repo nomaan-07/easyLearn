@@ -1,8 +1,8 @@
 import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { submitCommentReply } from '../database/database-handlers.js';
-import { closeMobileAccountMenu, toggleTextarea } from '../ui/ui-handlers.js';
+import { submitCommentReply, submitSessionNewQuestion, submitSessionUserAnswer } from '../database/database-handlers.js';
+import { closeMobileAccountMenu, toggleTextarea, openSessionAnswerTextArea, cancelSessionAnswerTextArea } from '../ui/ui-handlers.js';
 import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate } from '../template/template.js';
+import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate, sessionQuestionTemplate } from '../template/template.js';
 import {
   applyDiscountToPrice,
   formatDate,
@@ -56,6 +56,8 @@ import {
   breadcrumbCourseCategory,
   breadcrumbCourseName,
   newQuestionSubmitBtn,
+  questionsWrapperElement,
+  questionsSectionWrapper,
 } from '../dom/dom-elements.js';
 
 // course.js - dom-handlers.js - blog.js
@@ -467,14 +469,16 @@ const addSellAndExpenseDataToDOM = (data) => {
 };
 
 // database-handlers.js
-const addSessionToDOM = (course, sessionID, sessionNumber) => {
+const addSessionToDOM = (course, sessionID) => {
   // Find session
   let session = null;
   let headlineID = null;
+  let sessionNumber = null;
 
   course.headlines.find((headline) =>
-    headline.sessions.find((headlineSession) => {
+    headline.sessions.find((headlineSession, index) => {
       if (headlineSession.id === sessionID) {
+        sessionNumber = index + 1;
         session = headlineSession;
         headlineID = headline.id;
       }
@@ -522,11 +526,59 @@ const addSessionToDOM = (course, sessionID, sessionNumber) => {
   insertToDOM(headlinesWrapper, headlinesTemplate);
 
   // Q&A Section
-  newQuestionSubmitBtn.dataset.course_id = course.id;
-  newQuestionSubmitBtn.dataset.headline_id = headlineID;
-  newQuestionSubmitBtn.dataset.session_id = sessionID;
+  if (!localStorageUserID) {
+    insertToDOM(
+      questionsSectionWrapper,
+      `
+      <div class="flex items-center justify-center sm:justify-start gap-1 sm:gap-2 theme-text-color mt-5">
+        <svg class="size-5 sm:size-6 shrink-0">
+          <use href="#information-circle"></use>
+        </svg>
+        <p class="font-VazirMedium sm:text-xl">برای ایجاد پرسش باید در سایت ثبت نام کنید.</p>
+      </div>`
+    );
+  } else {
+    newQuestionSubmitBtn.addEventListener('click', () => submitSessionNewQuestion(course.name, course.slug, sessionID, session.name));
+  }
 
   removeLoader();
+};
+
+const handleSessionAnswer = (questionsID, questions) => {
+  const openAnswerButtons = document.querySelectorAll('.answer__open-btn');
+  const newAnswerCancelButtons = document.querySelectorAll('.new-answer__cancel-btn');
+  const newAnswerSubmitButtons = document.querySelectorAll('.new-answer__submit-btn');
+
+  openAnswerButtons.forEach((btn) => openSessionAnswerTextArea(btn));
+  newAnswerCancelButtons.forEach((btn) => cancelSessionAnswerTextArea(btn));
+  newAnswerSubmitButtons.forEach((btn) => submitSessionUserAnswer(btn, questionsID, questions));
+};
+
+const addSessionQuestionsToDOM = (questionsID, questions) => {
+  if (!questionsID) {
+    insertToDOM(
+      questionsWrapperElement,
+      `
+      <div class="flex items-center justify-center sm:justify-start gap-1 sm:gap-2 theme-text-color">
+        <svg class="size-5 sm:size-6 shrink-0">
+          <use href="#information-circle"></use>
+        </svg>
+        <p class="font-VazirMedium sm:text-xl">هنوز پرسشی برای این جلسه مطرح نکرده‌اید.</p>
+      </div>
+      `
+    );
+    return;
+  }
+
+  let allQuestionsTemplate = '';
+
+  questions.forEach((question, index) => {
+    allQuestionsTemplate += sessionQuestionTemplate(question, index + 1);
+  });
+
+  insertToDOM(questionsWrapperElement, allQuestionsTemplate);
+
+  handleSessionAnswer(questionsID, questions);
 };
 
 export {
@@ -549,4 +601,5 @@ export {
   addAdminPanelCommentsToDOM,
   addSellAndExpenseDataToDOM,
   addSessionToDOM,
+  addSessionQuestionsToDOM,
 };

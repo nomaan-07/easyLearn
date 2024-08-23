@@ -2,9 +2,22 @@ import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from '../validation/validation.js';
-import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, removeLoader, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from '../utils/utils.js';
+import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from '../utils/utils.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, newQuestionTextareaElement } from '../dom/dom-elements.js';
-import { insertToDOM, addCourseCardsToDOM, addBlogCardsToDOM, addRecentBlogsToDom, addCourseToCartHandler, addAccountCourseToDOM, addUserAccountDetailToDOM, addSellAndExpenseDataToDOM, updateCartPageDetail, updateHederCartDetail, addSessionToDOM } from '../dom/dom-handlers.js';
+import {
+  insertToDOM,
+  addCourseCardsToDOM,
+  addBlogCardsToDOM,
+  addRecentBlogsToDom,
+  addCourseToCartHandler,
+  addAccountCourseToDOM,
+  addUserAccountDetailToDOM,
+  addSellAndExpenseDataToDOM,
+  updateCartPageDetail,
+  updateHederCartDetail,
+  addSessionToDOM,
+  addSessionQuestionsToDOM,
+} from '../dom/dom-handlers.js';
 
 // index.js
 const fetchAndDisplayMainPageCourses = async () => {
@@ -313,10 +326,9 @@ const fetchAndDisplaySellAndExpenseData = async () => {
 // session.js
 const fetchAndDisplaySession = async () => {
   const sessionID = Number(getQueryParameters('id'));
-  const sessionNumber = getQueryParameters('number');
   const courseSlug = getQueryParameters('course');
 
-  if (!sessionID || !sessionNumber || !courseSlug) {
+  if (!sessionID || !courseSlug) {
     location.replace('./404.html');
   }
 
@@ -324,45 +336,109 @@ const fetchAndDisplaySession = async () => {
 
   const course = createCourseObject(dbCourse);
 
-  addSessionToDOM(course, sessionID, sessionNumber);
+  addSessionToDOM(course, sessionID);
 };
 
-const submitSessionNewQuestion = async (event) => {
-  const question = newQuestionTextareaElement.value.trim();
+// session.js
+const fetchAndDisplaySessionQuestions = async () => {
+  const questionsID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
 
-  if (!localStorageUserID) {
-    sweetAlert('برای ارسال پرسش باید در سایت ثبت نام کنید.', 'info');
-    return;
+  const response = await getOneFromDatabase('question_answer', 'id', questionsID);
+
+  if (!response) {
+    addSessionQuestionsToDOM(false);
+  } else {
+    const questions = response.questions;
+
+    addSessionQuestionsToDOM(questionsID, questions);
   }
+};
 
-  if (!question) {
+// session.js
+const submitSessionNewQuestion = async (course_name, course_slug, session_id, session_name) => {
+  const questionContent = newQuestionTextareaElement.value.trim();
+
+  if (!questionContent) {
     sweetAlert('سوال نمی‌تواند خالی باشد.', 'info');
     return;
   }
 
   try {
-    const btn = event.target;
+    const tableName = 'question_answer';
 
     const newQuestion = {
       id: generateRandomID(),
-      created_at: new Date(),
-      question,
-      course_id: btn.dataset.course_id,
-      headline_id: btn.dataset.headline_id,
-      session_id: btn.dataset.session_id,
-      user_id: localStorageUserID,
+      createdAt: new Date(),
+      content: questionContent,
+      isAnswered: false,
+      isClosed: false,
+      answers: [],
     };
 
-    await addToDatabase('question_answer', newQuestion);
-    sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
+    const userQuestionsID = `${course_slug}_${session_id}_${localStorageUserID}`;
 
-    setTimeout(() => {
-      location.reload();
-    }, 2000);
+    // get current session user questions
+    let userSessionQuestions = await getOneFromDatabase(tableName, 'id', userQuestionsID);
+
+    if (userSessionQuestions) {
+      let userPreviousQuestions = userSessionQuestions.questions;
+      userPreviousQuestions.push(newQuestion);
+      await updateInDatabase(tableName, { questions: userPreviousQuestions }, userQuestionsID);
+    } else {
+      userSessionQuestions = {
+        id: userQuestionsID,
+        course_name,
+        course_slug,
+        session_name,
+        session_id,
+        user_id: localStorageUserID,
+        questions: [newQuestion],
+      };
+
+      await addToDatabase(tableName, userSessionQuestions);
+    }
+
+    sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
+    newQuestionTextareaElement.value = '';
+    addSessionQuestionsToDOM(userQuestionsID, userSessionQuestions.questions);
   } catch (error) {
     sweetAlert('ارسال سوال با خطا مواجه شد،‌ لطفا بعدا تلاش کنید.', 'failed');
     console.error('Failed to submit question', error);
   }
+};
+
+const submitSessionUserAnswer = (btn, questionsID, questions) => {
+  const questionID = btn.parentElement.dataset.question_id;
+  const wrapper = document.querySelector(`#wrapper-${questionID}`);
+  const textarea = document.querySelector(`#textarea-${questionID}`);
+
+  btn.addEventListener('click', async () => {
+    const content = textarea.value.trim();
+    if (!content) {
+      sweetAlert('پاسخ نمی‌تواند خالی باشد.', 'info');
+      textarea.focus();
+      return;
+    }
+
+    const question = questions.find((question) => question.id === questionID);
+    const answers = question.answers;
+
+    const newAnswer = {
+      id: answers.length + 1,
+      createdAt: new Date(),
+      content,
+      writerName: null,
+      writerID: localStorageUserID,
+      writerRole: 'user',
+    };
+
+    answers.push(newAnswer);
+    question.isAnswered = false;
+
+    await updateInDatabase('question_answer', { questions }, questionsID);
+    sweetAlert('پاسخ شما با موفقیت ارسال شد.', 'success');
+    addSessionQuestionsToDOM(questionsID, questions);
+  });
 };
 
 export {
@@ -382,5 +458,7 @@ export {
   fetchAdmin,
   fetchAndDisplaySellAndExpenseData,
   fetchAndDisplaySession,
+  fetchAndDisplaySessionQuestions,
   submitSessionNewQuestion,
+  submitSessionUserAnswer,
 };

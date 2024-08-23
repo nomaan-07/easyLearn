@@ -715,89 +715,29 @@
             </div>
             <!-- End of Session Detail -->
             <!-- Q&A -->
-            <div id="Q&A" class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow">
-              <div class="section-title">
+            <div id="Q&A" class="bg-white dark:bg-slate-800 py-5 px-2.5 rounded-2xl shadow">
+              <div class="section-title px-2.5">
                 <div class="size-9 sm:size-10 md:size-11 2xl:size-12 animate-float-fast">
                   <img class="w-full h-full" src="./images/icons/chat-bubble.png" />
                 </div>
                 <h2>پرسش و پاسخ</h2>
               </div>
-              <!-- New Question -->
-              <div class="w-full mt-5 pt-5 mb-5 border-t border-t-slate-200 dark:border-slate-700">
-                <span class="question-header question-header--new block mb-4 w-28 text-center text-xl font-VazirMedium theme-bg-color-10 py-px rounded-full">پرسش جدید</span>
-                <textarea class="w-full h-40 bg-slate-100 dark:bg-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="new-question-textarea" placeholder="پرسش خود را مطرح کنید ..."></textarea>
-                <div class="flex justify-end select-none">
-                  <div class="btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer" role="button" id="new-question-submit-btn">ارسال</div>
+              <!-- Questions Section Wrapper -->
+              <div id="questions-section-wrapper">
+                <!-- New Question -->
+                <div class="mt-5 mb-5 pt-5 mx-2.5 border-t border-t-slate-200 dark:border-slate-700">
+                  <span class="question-header question-header--new block mb-4 w-28 text-center text-xl font-VazirMedium theme-bg-color-10 py-px rounded-full">پرسش جدید</span>
+                  <textarea class="w-full h-40 bg-slate-100 dark:bg-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="new-question-textarea" placeholder="پرسش خود را مطرح کنید ..."></textarea>
+                  <div class="flex justify-end select-none">
+                    <div class="btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer" role="button" id="new-question-submit-btn">ارسال</div>
+                  </div>
                 </div>
+                <!-- End of New Question -->
+                <!-- Questions and Answers -->
+                <div id="questions__wrapper" class="mt-5 pt-5 border-t border-t-slate-200 dark:border-slate-700 space-y-5 text-sm sm:text-base"></div>
+                <!-- End of Questions and Answers -->
               </div>
-              <!-- End of New Question -->
-              <!-- Questions and Answers -->
-              <div class="child:border-t child:border-t-slate-200 dark:child:border-t-slate-700 space-y-4 text-sm sm:text-base">
-                <!-- Question and Answer -->
-                <div class="pt-4">
-                  <div class="question-header sm:text-xl flex items-center gap-2 w-fit font-VazirMedium theme-bg-color-10 py-px pl-4 rounded-full">
-                    <div class="flex items-center justify-center size-12 rounded-full overflow-hidden">
-                      <div class="flex items-center justify-center size-11 rounded-full bg-slate-500">
-                        <svg class="size-6 text-slate-100">
-                          <use href="#user"></use>
-                        </svg>
-                      </div>
-                    </div>
-                    <span>nomaan</span>
-                  </div>
-                  <!-- Question Content -->
-                  <div class="w-full text-white bg-slate-500 rounded-2xl px-4 pt-4 pb-1 resize-none overflow-hidden mt-4 relative z-20">
-                    <p>سوال تستی</p>
-                    <!-- Question Info -->
-                    <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
-                      <span>۱۴۰۳/۰۵/۱۱</span>
-                      <!-- reply Question Btn -->
-                      <div class="open-reply-btn bg-slate-300 py-px px-1 flex items-center gap-1 self-start select-none rounded-lg theme-text-color md:text-slate-900 md:cursor-pointer md:hover:theme-text-color transition-colors">
-                        <svg class="size-5">
-                          <use href="#chat-bubble-left-ellipsis"></use>
-                        </svg>
-                        <span>پاسخ</span>
-                      </div>
-                    </div>
-                    <!-- End of Question Info -->
-                  </div>
-                  <!-- End of Comment Content -->
-                  <!-- Answers -->
-                  <div class="px-2">
-                    <div class="answer mt-5 bg-slate-200 dark:bg-slate-700 rounded-2xl pt-2 pb-4 px-4 relative z-20">
-                      <div class="flex items-start gap-2 font-VazirMedium border-b border-b-slate-300 dark:border-b-slate-600">
-                        <div class="size-12 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
-                          <img
-                            class="w-full h-full object-cover"
-                            src="https://vqvbwalqiwdeyzuiltqm.supabase.co/storage/v1/object/sign/avatars/my-avatar.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL215LWF2YXRhci5wbmciLCJpYXQiOjE3MjI5OTg4NzUsImV4cCI6MTc1NDUzNDg3NX0.0742sM2jEwsEmFqQcv3zXLPyi7m6daBxSZ3liHGgrQc&amp;t=2024-08-07T02%3A47%3A55.924Z"
-                            alt="nomann"
-                          />
-                        </div>
-                        <div>
-                          <p class="sm:text-lg">nomann</p>
-                          <span>۱۴۰۳/۰۵/۱۹</span>
-                        </div>
-                      </div>
-                      <!-- Reply Comment Content -->
-                      <div class="w-full resize-none overflow-hidden mt-4 z-20">
-                        <p>خیلی موافقم</p>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End of Answers -->
-                  <!-- New Answer -->
-                  <div class="answer-wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden">
-                    <textarea class="answer-textarea w-full h-40 border bg-transparent border-slate-200 dark:border-slate-700 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="" placeholder="پاسخ..."></textarea>
-                    <div class="flex items-center justify-end gap-2 select-none">
-                      <div class="answer-cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
-                      <div class="answer-submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
-                    </div>
-                  </div>
-                  <!-- End of New Answer -->
-                </div>
-                <!-- Question and Answer -->
-              </div>
-              <!-- End of Questions and Answers -->
+              <!-- End of Questions Section Wrapper -->
             </div>
             <!-- End of Q&A -->
           </div>

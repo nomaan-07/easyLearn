@@ -1,4 +1,4 @@
-import { formatDate } from './../utils/utils.js';
+import { formatDate, formatTime } from './../utils/utils.js';
 
 const loginBtnTemplate = (userID) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
@@ -370,7 +370,7 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug,
     sessionActiveNumberClasses = 'theme-bg-color text-white';
   }
 
-  let sessionHref = `href="session.html?id=${session.id}&course=${courseSlug}&number=${number}"`;
+  let sessionHref = `href="session.html?id=${session.id}&course=${courseSlug}"`;
   let sessionIcon = 'eye';
   let sessionLockedClasses = 'md:hover:theme-text-color group';
 
@@ -825,6 +825,131 @@ const adminPanelCommentTemplate = (comment) => {
   return template;
 };
 
+const sessionAnswersTemplate = (answers) => {
+  if (!answers.length) return '';
+
+  let template = '';
+
+  answers.forEach((answer) => {
+    const content = answer.content.replace(/\n/g, '<br>');
+    const date = formatDate(answer.createdAt);
+    const time = formatTime(answer.createdAt);
+
+    if (answer.writerRole === 'teacher') {
+      template += `
+            <div class="xs:w-2/3 2xl:w-7/12 xs:mr-auto mt-5 theme-bg-color text-white rounded-2xl pt-2 pb-4 px-4 relative z-20">
+              <div class="flex items-start justify-between gap-2 border-b border-b-slate-200">
+                <div>
+                  <p class="sm:text-lg">${answer.writerName}</p>
+                  <span>مدرس</span>
+                </div>
+                <div class="flex flex-col items-end">
+                  <span>${date}</span>
+                  <span>${time}</span>
+                </div>
+              </div>
+              <!-- Answer Content -->
+              <div class="w-full resize-none overflow-hidden mt-4 z-20">
+                <p>${content}</p>
+              </div>
+            </div>`;
+    } else {
+      template += `
+            <div class="xs:w-2/3 2xl:w-7/12 mt-5 theme-bg-color-10 dark:bg-sky-950  rounded-2xl pt-2 pb-4 px-4 relative z-20">
+              <div class="flex items-start justify-between gap-2 border-b border-b-slate-400">
+                <p class="sm:text-lg my-auto">شما</p>
+                <div class="flex flex-col items-end">
+                  <span>${date}</span>
+                  <span>${time}</span>
+                </div>
+              </div>
+              <!-- Answer Content -->
+              <div class="w-full resize-none overflow-hidden mt-4 z-20">
+                <p>${content}</p>
+              </div>
+            </div>`;
+    }
+  });
+
+  return template;
+};
+
+const sessionQuestionTemplate = (question, number) => {
+  const content = question.content.replace(/\n/g, '<br>');
+  const date = `${formatDate(question.createdAt)} - ${formatTime(question.createdAt)}`;
+
+  let questionSituationText = 'در انتظار پاسخ';
+  let questionSituationColor = 'bg-amber-600';
+
+  if (question.isClosed) {
+    questionSituationText = 'بسته شده';
+    questionSituationColor = 'bg-rose-600';
+  } else if (question.isAnswered) {
+    questionSituationText = 'پاسخ داده شده';
+    questionSituationColor = 'bg-emerald-600';
+  }
+
+  const template = `   
+      <div class="py-5 my-5 border-x theme-border-color px-2.5 rounded-2xl bg-slate-100 dark:bg-slate-700">
+        <div class="question-header flex items-center gap-4 text-sm sm:text-base w-fit theme-bg-color-10 rounded-full">
+          <span class="pr-2">سوال ${number}</span>
+          <div class=" h-full rounded-l-full px-2 ${questionSituationColor}">
+            <span class="text-white">${questionSituationText}</span>
+          </div>
+         </div>
+         <!-- Question Content -->
+         <div class="w-full text-white bg-slate-500 rounded-2xl px-4 pt-4 pb-1 resize-none overflow-hidden mt-4 relative z-20">
+           <p>${content}</p>
+           <!-- Question Info -->
+           <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
+             <span>${date}</span>      
+                   
+             ${
+               question.isClosed
+                 ? ''
+                 : `
+                    <!-- Answer Btn -->
+                    <div class="answer__open-btn bg-slate-300 py-px px-1 flex items-center gap-1 select-none rounded-lg text-slate-950 md:cursor-pointer md:hover:theme-text-color transition-colors" data-question_id="${question.id}">
+                      <svg class="size-5">
+                        <use href="#chat-bubble-left-ellipsis"></use>
+                      </svg>
+                      <span>پاسخ</span>
+                    </div>`
+             }
+
+           </div>
+           <!-- End of Question Info -->
+         </div>
+         <!-- End of Question Content -->
+
+         <!-- Answers -->
+         <div class="px-2">
+          ${sessionAnswersTemplate(question.answers)}
+         </div>
+
+         <!-- End of Answers -->
+         
+        ${
+          question.isClosed
+            ? '<div class="border border-rose-500 text-rose-500 text-center font-VazirMedium mt-6 rounded-xl p-4">این پرسش بسته شده است.</div>'
+            : `
+                <!-- New Answer -->
+                <div class="new-answer__wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden" id="wrapper-${question.id}">
+                  <textarea class="new-answer__textarea w-full h-40 bg-slate-200 dark:bg-slate-600 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="textarea-${question.id}" placeholder="پاسخ..."></textarea>
+                  <div class="flex items-center justify-end gap-2 select-none" data-question_id="${question.id}">
+                    <div class="new-answer__cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
+                    <div class="new-answer__submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
+                  </div>
+                </div>
+                <!-- End of New Answer --> `
+        }
+         
+         
+       </div>`;
+
+  return template;
+};
+
 export {
   loginBtnTemplate,
   courseCardTemplate,
@@ -843,4 +968,5 @@ export {
   accountCourseTemplate,
   userAccountProfilePictureTemplate,
   adminPanelCommentTemplate,
+  sessionQuestionTemplate,
 };

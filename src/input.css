@@ -221,8 +221,7 @@
   /* Comment and Q&A */
   .comment-header,
   .question-header,
-  .reply-comment-wrapper,
-  .answer-wrapper {
+  .reply-comment-wrapper {
     position: relative;
   }
   .comment-header::after,
@@ -231,7 +230,6 @@
   .question-header::before,
   .reply-comment-wrapper::before,
   .reply-comment::before,
-  .answer-wrapper::before,
   .answer::before {
     @apply absolute content-[''] rounded-full;
   }
@@ -258,16 +256,15 @@
     height: 31px !important;
   }
 
-  .reply-comment-wrapper::before,
-  .answer-wrapper::before {
+  .reply-comment-wrapper::before {
     background-color: #e2e8f0;
     left: 50%;
     width: 2px;
     height: 36px;
     top: -36px;
   }
-  .dark .reply-comment-wrapper::before,
-  .dark .answer-wrapper::before {
+
+  .dark .reply-comment-wrapper::before {
     background-color: #475569;
   }
 
