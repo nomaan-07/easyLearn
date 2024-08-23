@@ -161,14 +161,22 @@ const openSessionAnswerTextArea = (btn) => {
   const wrapper = document.querySelector(`#wrapper-${questionID}`);
   const textarea = document.querySelector(`#textarea-${questionID}`);
   textarea.addEventListener('input', textareaAutoResize);
-  btn.addEventListener('click', () => toggleTextarea(wrapper, textarea, true, true));
+  btn.addEventListener('click', () => {
+    btn.parentElement.classList.add('hidden');
+    toggleTextarea(wrapper, textarea, true, true);
+  });
 };
 
 const cancelSessionAnswerTextArea = (btn) => {
   const questionID = btn.parentElement.dataset.question_id;
   const wrapper = document.querySelector(`#wrapper-${questionID}`);
   const textarea = document.querySelector(`#textarea-${questionID}`);
-  btn.addEventListener('click', () => toggleTextarea(wrapper, textarea));
+  btn.addEventListener('click', () => {
+    toggleTextarea(wrapper, textarea);
+    console.log(btn.closest('.new-answer__wrapper').children);
+
+    btn.closest('.new-answer__wrapper').children[0].classList.remove('hidden');
+  });
 };
 
 export {

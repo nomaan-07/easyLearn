@@ -876,7 +876,8 @@ const sessionAnswersTemplate = (answers) => {
 
 const sessionQuestionTemplate = (question, number) => {
   const content = question.content.replace(/\n/g, '<br>');
-  const date = `${formatDate(question.createdAt)} - ${formatTime(question.createdAt)}`;
+  const date = formatDate(question.createdAt);
+  const time = formatTime(question.createdAt);
 
   let questionSituationText = 'در انتظار پاسخ';
   let questionSituationColor = 'bg-amber-600';
@@ -900,25 +901,12 @@ const sessionQuestionTemplate = (question, number) => {
          <!-- Question Content -->
          <div class="w-full text-white bg-slate-500 rounded-2xl px-4 pt-4 pb-1 resize-none overflow-hidden mt-4 relative z-20">
            <p>${content}</p>
-           <!-- Question Info -->
+           <!-- Question Footer -->
            <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
-             <span>${date}</span>      
-                   
-             ${
-               question.isClosed
-                 ? ''
-                 : `
-                    <!-- Answer Btn -->
-                    <div class="answer__open-btn bg-slate-300 py-px px-1 flex items-center gap-1 select-none rounded-lg text-slate-950 md:cursor-pointer md:hover:theme-text-color transition-colors" data-question_id="${question.id}">
-                      <svg class="size-5">
-                        <use href="#chat-bubble-left-ellipsis"></use>
-                      </svg>
-                      <span>پاسخ</span>
-                    </div>`
-             }
-
+            <span>${time}</span>    
+             <span>${date}</span>  
            </div>
-           <!-- End of Question Info -->
+           <!-- End of Question Footer -->
          </div>
          <!-- End of Question Content -->
 
@@ -933,18 +921,33 @@ const sessionQuestionTemplate = (question, number) => {
           question.isClosed
             ? '<div class="border border-rose-500 text-rose-500 text-center font-VazirMedium mt-6 rounded-xl p-4">این پرسش بسته شده است.</div>'
             : `
-                <!-- New Answer -->
-                <div class="new-answer__wrapper mb-2 mt-6 px-2 max-h-0 overflow-hidden" id="wrapper-${question.id}">
-                  <textarea class="new-answer__textarea w-full h-40 bg-slate-200 dark:bg-slate-600 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="textarea-${question.id}" placeholder="پاسخ..."></textarea>
-                  <div class="flex items-center justify-end gap-2 select-none" data-question_id="${question.id}">
-                    <div class="new-answer__cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
-                    <div class="new-answer__submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
+              <!-- New Answer Wrapper -->
+                <div class="new-answer__wrapper mt-6">
+                  <!-- Answer Btn -->
+                  <div class="flex justify-end">
+                    <div class="answer__open-btn bg-slate-300 py-px px-1 flex items-center gap-1 select-none rounded-lg text-slate-950 md:cursor-pointer md:hover:theme-text-color transition-colors" data-question_id="${question.id}">
+                      <svg class="size-5">
+                        <use href="#chat-bubble-left-ellipsis"></use>
+                      </svg>
+                      <span>پاسخ</span>
+                    </div>
                   </div>
-                </div>
-                <!-- End of New Answer --> `
+                  <!-- End of Answer Btn -->
+                  <!-- New Answer -->
+                  <div class="px-2 max-h-0 overflow-hidden" id="wrapper-${question.id}">
+                    <textarea class="new-answer__textarea w-full h-40 bg-slate-200 dark:bg-slate-600 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="textarea-${question.id}" placeholder="پاسخ..."></textarea>
+                    <div class="flex items-center justify-end gap-2 select-none" data-question_id="${question.id}">
+                      <div class="new-answer__cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
+                      <div class="new-answer__submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
+                    </div>
+                  </div>
+                  <!-- End of New Answer -->
+                </div> 
+              <!-- End of New Answer Wrapper -->
+
+                `
         }
-         
-         
+
        </div>`;
 
   return template;

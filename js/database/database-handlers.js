@@ -427,8 +427,6 @@ const submitSessionUserAnswer = (btn, questionsID, questions) => {
       id: answers.length + 1,
       createdAt: new Date(),
       content,
-      writerName: null,
-      writerID: localStorageUserID,
       writerRole: 'user',
     };
 
