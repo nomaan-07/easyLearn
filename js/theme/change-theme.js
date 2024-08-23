@@ -1,18 +1,18 @@
 import { colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './../dom/dom-elements.js';
 import { getThemeFromLocalStorage } from '../utils/utils.js';
 
-const theme = getThemeFromLocalStorage();
-let mainTheme = theme ? theme.mainTheme : 'light';
-let colorTheme = theme ? theme.colorTheme : 'fuchsia';
+const themes = getThemeFromLocalStorage();
+let mainTheme = themes ? themes.mainTheme : 'light';
+let colorTheme = themes ? themes.colorTheme : 'fuchsia';
 
-if (!theme) {
+if (!themes) {
   setThemeToLocalStorage();
 } else {
   changeTheme();
 }
 
 function setThemeToLocalStorage() {
-  localStorage.setItem('theme', JSON.stringify({ mainTheme, colorTheme }));
+  localStorage.setItem('themes', JSON.stringify({ mainTheme, colorTheme }));
 }
 
 function changeTheme() {

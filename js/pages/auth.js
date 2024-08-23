@@ -9,11 +9,11 @@ import { favIcon, form, inputElements, formSubmitBtn, usernameInput, authFormHea
 
 const operationParam = getQueryParameters('operation');
 
-const theme = getThemeFromLocalStorage();
+const themes = getThemeFromLocalStorage();
 
-if (theme) {
-  document.documentElement.className = `scroll-smooth ${theme.mainTheme} ${theme.colorTheme}`;
-  favIcon.href = `images/favIcons/${theme.colorTheme}-favicon-64x64.png`;
+if (themes) {
+  document.documentElement.className = `scroll-smooth ${themes.mainTheme} ${themes.colorTheme}`;
+  favIcon.href = `images/favIcons/${themes.colorTheme}-favicon-64x64.png`;
 }
 
 if (localStorageUserID) location.replace('./index.html');
