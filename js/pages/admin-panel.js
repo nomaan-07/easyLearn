@@ -99,6 +99,7 @@ window.addEventListener('load', () => {
     removeLoader();
   }, 500);
 });
+
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
 mobileMenuOpenBtn.addEventListener('click', openMobileAccountMenu);
 mobileMenuCloseBtn.addEventListener('click', closeMobileAccountMenu);

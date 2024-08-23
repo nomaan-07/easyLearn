@@ -47,7 +47,17 @@
     /* fuchsia-600/10 */
     --theme-color-10: rgba(192, 38, 211, 0.1);
   }
-  .amber:root {
+  .dark.fuchsia:root {
+    /* fuchsia-500 */
+    --theme-color: #d946ef;
+    /* fuchsia-600 */
+    --theme-hover-bg-color: #c026d3;
+    /* fuchsia-500/10 */
+    --theme-color-10: rgba(217, 70, 239, 0.1);
+  }
+
+  .amber:root,
+  .dark.amber:root {
     /* amber-600 */
     --theme-color: #d97706;
     /* amber-700 */
@@ -55,6 +65,8 @@
     /* amber-600/10 */
     --theme-color-10: rgba(217, 119, 6, 0.1);
   }
+
+  .dark.rose:root,
   .rose:root {
     /* rose-600 */
     --theme-color: #e11d48;
@@ -63,6 +75,7 @@
     /* rose-600/10 */
     --theme-color-10: rgba(225, 29, 72, 0.1);
   }
+
   .violet:root {
     /* violet-600 */
     --theme-color: #7c3aed;
@@ -71,6 +84,15 @@
     /* violet-600/100 */
     --theme-color-10: rgba(124, 58, 237, 0.1);
   }
+  .dark.violet:root {
+    /* violet-500 */
+    --theme-color: #8b5cf6;
+    /* violet-600 */
+    --theme-hover-bg-color: #7c3aed;
+    /* violet-500/100 */
+    --theme-color-10: rgba(139, 92, 246, 0.1);
+  }
+
   .sky:root {
     /* sky-600 */
     --theme-color: #0284c7;
@@ -79,6 +101,15 @@
     /* sky-600/10 */
     --theme-color-10: rgba(2, 132, 199, 0.1);
   }
+  .dark.sky:root {
+    /* sky-500 */
+    --theme-color: #0ea5e9;
+    /* sky-600 */
+    --theme-hover-bg-color: #0284c7;
+    /* sky-500/10 */
+    --theme-color-10: rgba(14, 165, 233, 0.1);
+  }
+
   .emerald:root {
     /* emerald-600 */
     --theme-color: #059669;
@@ -87,21 +118,23 @@
     /* emerald-600/10 */
     --theme-color-10: rgba(5, 150, 105, 0.1);
   }
-  .lime:root {
+  .dark.emerald:root {
+    /* emerald-500 */
+    --theme-color: #10b981;
+    /* emerald-600 */
+    --theme-hover-bg-color: #059669;
+    /* emerald-500/10 */
+    --theme-color-10: rgba(16, 185, 129, 0.1);
+  }
+
+  .lime:root,
+  .dark.lime:root {
     /* lime-600 */
     --theme-color: #65a30d;
     /* lime-700 */
     --theme-hover-bg-color: #4d7c0f;
     /* lime-600/10 */
     --theme-color-10: rgba(101, 163, 13, 0.1);
-  }
-  .dark:root {
-    /* yellow-500 */
-    --theme-color: #eab308;
-    /* yellow-400 */
-    --theme-hover-bg-color: #facc15;
-    /* yellow-500/10 */
-    --theme-color-10: rgba(234, 179, 8, 0.2);
   }
 
   .theme-bg-color {

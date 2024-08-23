@@ -1,13 +1,28 @@
-import { localStorageTheme, colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './../dom/dom-elements.js';
+import { colorPlateBtn, colorPlate, changeThemeButtons, darkThemeBtn, favIcon, heroLightSVG, heroDarkSVG } from './../dom/dom-elements.js';
+import { getThemeFromLocalStorage } from '../utils/utils.js';
 
-const changeTheme = (theme) => {
-  document.documentElement.className = `scroll-smooth ${theme}`;
+const theme = getThemeFromLocalStorage();
+let mainTheme = theme ? theme.mainTheme : 'light';
+let colorTheme = theme ? theme.colorTheme : 'fuchsia';
 
-  localStorage.setItem('theme', theme);
+if (!theme) {
+  setThemeToLocalStorage();
+} else {
+  changeTheme();
+}
 
-  favIcon.href = `images/favIcons/${theme}-favicon-64x64.png`;
+function setThemeToLocalStorage() {
+  localStorage.setItem('theme', JSON.stringify({ mainTheme, colorTheme }));
+}
 
-  if (theme === 'dark') {
+function changeTheme() {
+  document.documentElement.className = `scroll-smooth ${mainTheme} ${colorTheme}`;
+
+  setThemeToLocalStorage();
+
+  favIcon.href = `images/favIcons/${colorTheme}-favicon-64x64.png`;
+
+  if (mainTheme === 'dark') {
     darkThemeBtn.dataset.theme = 'light';
     darkThemeBtn.classList.remove('bg-slate-900');
     darkThemeBtn.classList.add('bg-white');
@@ -24,12 +39,7 @@ const changeTheme = (theme) => {
       heroDarkSVG.classList.add('hidden');
     }
   }
-};
-
-const getThemeFromLocalStorage = () => {
-  localStorageTheme && changeTheme(localStorageTheme);
-};
-getThemeFromLocalStorage();
+}
 
 const toggleColorPlate = () => {
   colorPlate.classList.toggle('hidden');
@@ -39,12 +49,19 @@ const toggleColorPlate = () => {
 
 changeThemeButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
-    const theme = btn.dataset.theme;
-    changeTheme(theme);
+    const btnTheme = btn.dataset.theme;
+
+    if (btnTheme === 'dark') {
+      mainTheme = 'dark';
+    } else if (btnTheme === 'light') {
+      mainTheme = 'light';
+    } else {
+      colorTheme = btnTheme;
+    }
+
+    changeTheme();
     toggleColorPlate();
   });
 });
 
 colorPlateBtn.addEventListener('click', toggleColorPlate);
-
-export { getThemeFromLocalStorage };

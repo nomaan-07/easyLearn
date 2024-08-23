@@ -4,6 +4,12 @@ import { localStorageUserID } from './../dom/dom-elements.js';
 
 const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
 
+const getThemeFromLocalStorage = () => {
+  const localStorageTheme = localStorage.getItem('theme');
+  const theme = localStorageTheme && JSON.parse(localStorageTheme);
+  return theme;
+};
+
 const generateRandomID = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -275,6 +281,7 @@ const convertPersianNumbersToEnglish = (number) => {
 
 export {
   persianMonths,
+  getThemeFromLocalStorage,
   removeLoader,
   generateRandomID,
   getQueryParameters,

@@ -1,4 +1,3 @@
-const localStorageTheme = localStorage.getItem('theme');
 const localStorageUserID = localStorage.getItem('userID');
 
 // course-category.js - blogs.js
@@ -135,7 +134,6 @@ const newQuestionSubmitBtn = document.querySelector('#new-question-submit-btn');
 const questionsWrapperElement = document.querySelector('#questions__wrapper');
 
 export {
-  localStorageTheme,
   localStorageUserID,
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,

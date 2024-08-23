@@ -2,16 +2,18 @@ import '../initializers/aos.initialize.js';
 import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { insertToDOM } from '../dom/dom-handlers.js';
 import { authFormHeaderTemplate } from '../template/template.js';
-import { getQueryParameters, removeLoader } from '../utils/utils.js';
 import { submitLoginForm, submitSignupForm } from '../database/database-handlers.js';
+import { getQueryParameters, getThemeFromLocalStorage, removeLoader } from '../utils/utils.js';
 import { moveInLabelElement, moveOutLabelElement, displayPasswordHandler } from '../ui/ui-handlers.js';
-import { favIcon, localStorageTheme, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID, passwordInput } from '../dom/dom-elements.js';
+import { favIcon, form, inputElements, formSubmitBtn, usernameInput, authFormHeader, displayPasswordBtn, localStorageUserID, passwordInput } from '../dom/dom-elements.js';
 
 const operationParam = getQueryParameters('operation');
 
-if (localStorageTheme) {
-  document.documentElement.className = `scroll-smooth ${localStorageTheme}`;
-  favIcon.href = `images/favIcons/${localStorageTheme}-favicon-64x64.png`;
+const theme = getThemeFromLocalStorage();
+
+if (theme) {
+  document.documentElement.className = `scroll-smooth ${theme.mainTheme} ${theme.colorTheme}`;
+  favIcon.href = `images/favIcons/${theme.colorTheme}-favicon-64x64.png`;
 }
 
 if (localStorageUserID) location.replace('./index.html');
