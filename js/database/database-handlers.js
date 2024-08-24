@@ -259,10 +259,27 @@ const fetchAndDisplayAccountCourses = async () => {
 };
 
 // account.js - admin-panel.js
-const fetchAndDisplayAccountUserDetail = async () => {
+const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
+  if (isAdmin) {
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+    if (!localStorageUserID || !isAdmin) {
+      location.replace('./404.html');
+    }
+
+    const admin = await getOneFromDatabase('users', 'id', localStorageUserID);
+    if (admin.role !== 'admin') {
+      location.replace('./404.html');
+    }
+
+    addUserAccountDetailToDOM(admin);
+    localStorage.setItem('admin-name', admin.username);
+
+    return admin;
+  }
+
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
   addUserAccountDetailToDOM(user);
-  return user;
 };
 
 // account.js - admin-panel.js
@@ -301,23 +318,12 @@ const submitAccountUPasswordChanges = async (event) => {
 };
 
 // admin-panel.js
-const fetchAdmin = async () => {
-  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+const fetchAdmin = async () => {};
 
-  if (!localStorageUserID || !isAdmin) {
-    location.replace('./404.html');
-  }
-
-  const user = await getOneFromDatabase('users', 'id', localStorageUserID);
-  if (user.role !== 'admin') {
-    location.replace('./404.html');
-  }
-};
-
-const fetchAndDisplayAdminQuestions = async (adminName) => {
+const fetchAndDisplayAdminQuestions = async () => {
   try {
     const data = await getAllFromDatabase('question_answer');
-    addAdminPanelQuestionToDOM(data, adminName);
+    addAdminPanelQuestionToDOM(data);
   } catch (error) {
     console.error('Failed to fetch questions', error);
   }

@@ -92,11 +92,10 @@ const filterCommentsHandler = (btn, comments) => {
 };
 
 window.addEventListener('load', async () => {
-  fetchAdmin();
+  user = await fetchAndDisplayAccountUserDetail(true);
   setTimeout(() => {
     removeLoader();
   }, 500);
-  user = await fetchAndDisplayAccountUserDetail();
   fetchAndDisplayAdminQuestions(user.username);
   fetchAndDisplaySellAndExpenseData();
 });

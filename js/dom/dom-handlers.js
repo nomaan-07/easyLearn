@@ -437,7 +437,9 @@ const addAdminPanelCommentsToDOM = (comments, filterType) => {
   insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
 };
 
-const addAdminPanelQuestionToDOM = (data, adminName) => {
+const addAdminPanelQuestionToDOM = (data) => {
+  const adminName = localStorage.getItem('admin-name');
+
   let questions = [];
 
   data.forEach((session) => {
@@ -448,18 +450,11 @@ const addAdminPanelQuestionToDOM = (data, adminName) => {
 
   questions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-  const closedQuestions = questions.filter((question, index) => {
-    const closedQuestion = question.isClosed;
-    if (closedQuestion) {
-      questions.splice(index, 1);
-    }
+  const closedQuestions = questions.filter((question, index) => question.isClosed);
+  const answeredQuestions = questions.filter((question) => question.isAnswered && !question.isClosed);
+  const notAnsweredQuestions = questions.filter((question) => !question.isAnswered && !question.isClosed);
 
-    return closedQuestion;
-  });
-
-  const answeredQuestions = questions.filter((question) => question.isAnswered);
-  const notAnsweredQuestions = questions.filter((question) => !question.isAnswered);
-
+  // Sort Questions
   answeredQuestions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   notAnsweredQuestions.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
 
@@ -500,6 +495,7 @@ const addAdminPanelViewedQuestionToDOM = async (data, page, question, adminName)
   answerOpenBtn && openAnswerTextArea(answerOpenBtn);
   answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
   answerSubmitBtn && submitQuestionAnswer(answerSubmitBtn, page.id, page.questions, adminName, data, page);
+
   closeQuestionBtn && closeQuestion(closeQuestionBtn, page.id, page.questions, adminName, data, page);
 };
 
