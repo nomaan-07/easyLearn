@@ -448,14 +448,12 @@ const addAdminPanelQuestionToDOM = (data) => {
     });
   });
 
-  questions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  questions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
-  const closedQuestions = questions.filter((question, index) => question.isClosed);
+  const closedQuestions = questions.filter((question) => question.isClosed);
   const answeredQuestions = questions.filter((question) => question.isAnswered && !question.isClosed);
   const notAnsweredQuestions = questions.filter((question) => !question.isAnswered && !question.isClosed);
 
-  // Sort Questions
-  answeredQuestions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   notAnsweredQuestions.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
 
   const filteredQuestions = notAnsweredQuestions.concat(answeredQuestions).concat(closedQuestions);
