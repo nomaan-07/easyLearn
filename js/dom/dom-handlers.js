@@ -632,7 +632,7 @@ const handleSessionAnswer = (pageID, questions) => {
   newAnswerSubmitButtons.forEach((btn) => submitQuestionAnswer(btn, pageID, questions));
 };
 
-const addSessionQuestionsToDOM = (pageID, questions, questionID = null) => {
+const addSessionQuestionsToDOM = (pageID = null, questions, questionID = null) => {
   if (!pageID) {
     insertToDOM(
       questionsWrapperElement,

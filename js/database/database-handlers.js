@@ -372,7 +372,7 @@ const fetchAndDisplaySessionQuestions = async () => {
   const response = await getOneFromDatabase('question_answer', 'id', pageID);
 
   if (!response) {
-    addSessionQuestionsToDOM(false);
+    addSessionQuestionsToDOM();
   } else {
     const questions = response.questions;
     addSessionQuestionsToDOM(pageID, questions, questionID);
@@ -399,6 +399,8 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
       isClosed: false,
       answers: [],
     };
+
+    newQuestionTextareaElement.value = '';
 
     const pageID = `${course_slug}_${session_id}_${localStorageUserID}`;
 
@@ -432,7 +434,7 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
   }
 };
 
-const submitQuestionAnswer = (btn, pageID, questions, adminName = false, data = false, page = false) => {
+const submitQuestionAnswer = (btn, pageID, questions, adminName = null, data = null, page = null) => {
   const questionID = btn.parentElement.dataset.question_id;
   const textarea = document.querySelector(`#textarea-${questionID}`);
 
@@ -457,6 +459,8 @@ const submitQuestionAnswer = (btn, pageID, questions, adminName = false, data = 
 
     answers.push(newAnswer);
     question.isAnswered = adminName ? true : false;
+
+    textarea.value = '';
 
     await updateInDatabase('question_answer', { questions }, pageID);
     sweetAlert('پاسخ شما با موفقیت ارسال شد.', 'success');
