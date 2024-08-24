@@ -209,13 +209,13 @@
       <!-- End of Menu Header -->
       <!-- Menu -->
       <ul class="text-lg sm:text-xl font-VazirMedium border-t border-t-slate-200 dark:border-slate-700">
-        <li class="account__menu-item" data-section="comments">
+        <li class="account__menu-item account__menu-item--active" data-section="comments">
           <svg class="size-6">
             <use href="#chat-bubble-bottom-center-text"></use>
           </svg>
           <span>کامنت‌ها</span>
         </li>
-        <li class="account__menu-item account__menu-item--active" data-section="questions">
+        <li class="account__menu-item" data-section="questions">
           <svg class="size-6">
             <use href="#chat-bubble-left-right"></use>
           </svg>
@@ -263,7 +263,7 @@
         </div>
         <!-- End of Account Username -->
         <!-- Comments Section-->
-        <section class="account__section-wrapper hidden" data-section="comments">
+        <section class="account__section-wrapper" data-section="comments">
           <!-- Comments Filter -->
           <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden md:flex items-center shadow gap-2 mb-5">
             <span class="hidden md:block font-VazirMedium border-l border-l-slate-200 dark:border-l-slate-700 py-3 px-5 ml-2">فیلتر</span>
@@ -662,7 +662,7 @@
         </section>
         <!-- End of Comments Section-->
         <!-- Questions Section -->
-        <section class="account__section-wrapper admin__questions-wrapper space-y-3" data-section="questions"></section>
+        <section class="account__section-wrapper admin__questions-wrapper space-y-3 hidden" data-section="questions"></section>
         <!-- End of Questions Section -->
         <!-- Logins -->
         <section class="account__section-wrapper hidden" data-section="logins"></section>

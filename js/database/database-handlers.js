@@ -1,4 +1,4 @@
-import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from '../validation/validation.js';
@@ -452,6 +452,9 @@ const submitQuestionAnswer = (btn, pageID, questions, adminName = false, data = 
 
 const closeQuestion = (btn, pageID, questions, adminName, data, page) => {
   btn.addEventListener('click', async () => {
+    const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بله');
+    if (!isConfirmed) return;
+
     const questionID = btn.dataset.question_id;
     const question = questions.find((question) => question.id === questionID);
     question.isClosed = true;

@@ -55,11 +55,11 @@ const sweetAlert = (message, type) => {
   });
 };
 
-const confirmSweetAlert = async (message) => {
+const confirmSweetAlert = async (message, confirmButtonText = 'حذف') => {
   const response = await swal.fire({
     text: message,
     showConfirmButton: true,
-    confirmButtonText: 'حذف',
+    confirmButtonText,
     confirmButtonColor: '#e11d48',
     focusConfirm: false,
     showDenyButton: true,
