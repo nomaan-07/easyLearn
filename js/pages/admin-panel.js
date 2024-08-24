@@ -5,10 +5,9 @@ import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initi
 import { addAdminPanelCommentsToDOM, displayChosenAccountSection } from '../dom/dom-handlers.js';
 import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from '../database/database-api.js';
 import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from '../ui/ui-handlers.js';
-import { fetchAdmin, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges, fetchAndDisplayAdminQuestions } from '../database/database-handlers.js';
+import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges, fetchAndDisplayAdminQuestions } from '../database/database-handlers.js';
 import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountChangeProfilePictureBtn, accountDisplayPasswordButtons, accountMenuItemElements, adminCommentsFilterButtons, adminPanelCommentsWrapper, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from '../dom/dom-elements.js';
 
-let user = null;
 let commentFilterType = 'all';
 let allComments = null;
 let adminPanelCommentsEventListenerAdded = false;
@@ -92,11 +91,11 @@ const filterCommentsHandler = (btn, comments) => {
 };
 
 window.addEventListener('load', async () => {
-  user = await fetchAndDisplayAccountUserDetail(true);
+  await fetchAndDisplayAccountUserDetail(true);
   setTimeout(() => {
     removeLoader();
   }, 500);
-  fetchAndDisplayAdminQuestions(user.username);
+  fetchAndDisplayAdminQuestions();
   fetchAndDisplaySellAndExpenseData();
 });
 

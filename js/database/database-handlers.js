@@ -317,9 +317,6 @@ const submitAccountUPasswordChanges = async (event) => {
   }
 };
 
-// admin-panel.js
-const fetchAdmin = async () => {};
-
 const fetchAndDisplayAdminQuestions = async () => {
   try {
     const data = await getAllFromDatabase('question_answer');
@@ -483,7 +480,6 @@ export {
   fetchAndDisplayAccountUserDetail,
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
-  fetchAdmin,
   fetchAndDisplayAdminQuestions,
   fetchAndDisplaySellAndExpenseData,
   fetchAndDisplaySession,
