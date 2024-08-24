@@ -756,7 +756,7 @@ const adminPanelCommentTemplate = (comment) => {
   const message = comment.message.replace(/\n/g, '<br>');
 
   let confirmBtnColor = `bg-emerald-600/10`;
-  let confirmBtnHoverColor = 'md:hover:bg-emerald-600';
+  let confirmBtnHoverColor = 'md:hover:bg-emerald-600 dark:hover:bg-emerald-500';
   let confirmBtnText = 'تایید';
   let confirmText = 'تایید نشده';
   let confirmIcon = 'x-mark';
@@ -768,8 +768,8 @@ const adminPanelCommentTemplate = (comment) => {
     confirmBtnText = 'عدم تایید';
     confirmText = 'تایید شده';
     confirmIcon = 'check';
-    confirmTextColor = 'text-emerald-600';
-    confirmBorderColor = 'border-emerald-600';
+    confirmTextColor = 'text-emerald-600 dark:text-emerald-500';
+    confirmBorderColor = 'border-emerald-600 dark:border-emerald-500';
   }
   const template = `
               <!-- Comment -->
@@ -782,16 +782,16 @@ const adminPanelCommentTemplate = (comment) => {
                 <a href="./${comment.page_type}.html?${comment.page_type}=${comment.page_slug}">${comment.page_name}</a>
               </div>
               <!-- Date And Writer -->
-              <div class="flex items-center justify-between flex-wrap gap-4 text-sm md:text-base">
+              <div class="flex items-center justify-between flex-wrap gap-x-4 gap-y-2 text-sm md:text-base">
                 <!-- Writer -->
-                <div class="flex items-center gap-1">
+                <div class="flex gap-1">
                   <svg class="size-4">
                     <use href="#pencil-square"></use>
                   </svg>
                   <span>${comment.writer}</span>
                 </div>
                 <!-- Date -->
-                <div class="flex items-center gap-1">
+                <div class="flex gap-1">
                   <svg class="size-4">
                     <use href="#calendar-days"></use>
                   </svg>
@@ -825,7 +825,105 @@ const adminPanelCommentTemplate = (comment) => {
   return template;
 };
 
-const sessionAnswersTemplate = (answers) => {
+const adminPanelQuestionTemplate = (question) => {
+  let questionOverlay = `<div class="absolute inset-0 bg-amber-600/5"></div>`;
+  let questionSituationTemplate = `<i class="text-amber-600">! در انتظار پاسخ</i>`;
+  let questionBorderColor = 'border-amber-600';
+  let viewBtnColors = 'bg-amber-600/10 text-amber-600 md:hover:bg-amber-600';
+
+  if (question.isClosed) {
+    questionOverlay = `<div class="absolute inset-0 bg-rose-600/5"></div>`;
+    questionSituationTemplate = `
+    <div class="flex items-center gap-1 text-rose-600">
+    <svg class="size-4">
+    <use href="#x-mark"></use>
+    </svg>
+    <i class="text-sm">بسته شده</i>
+    </div>`;
+    questionBorderColor = 'border-rose-600';
+    viewBtnColors = 'bg-rose-600/10 text-rose-600 md:hover:bg-rose-600';
+  } else if (question.isAnswered) {
+    questionOverlay = `<div class="absolute inset-0 bg-emerald-600/5"></div>`;
+    questionSituationTemplate = `
+        <div class="flex items-center gap-1 text-emerald-600 dark:text-emerald-500">
+          <svg class="size-4">
+            <use href="#check"></use>
+          </svg>
+          <i class="text-sm">پاسخ داده شده</i>
+        </div>`;
+    questionBorderColor = 'border-emerald-600 dark:border-emerald-500';
+    viewBtnColors = 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-500 md:hover:bg-emerald-600 dark:md:hover:bg-emerald-500';
+  }
+
+  const template = `
+          <div class="flex flex-col md:flex-row md:justify-between gap-5 border-x-2 ${questionBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow relative">
+            ${questionOverlay}
+            <!-- Course Name -->
+            <a href="./course.html?course=${question.courseSlug}" class="flex gap-2 text-sm sm:text-base md:hover:theme-text-color transition-colors font-VazirMedium z-10">
+              <svg class="size-5 shrink-0">
+                <use href="#course"></use>
+              </svg>
+              <span>${question.courseName}</span>
+            </a>
+            <!-- End of Course Name -->
+            <!-- Situation, Date and View Btn -->
+            <div class="flex justify-between xs:justify-end flex-wrap gap-x-4 gap-y-2 text-sm sm:text-base">
+              <span>${formatTime(question.updatedAt)} - ${formatDate(question.updatedAt)}</span>
+              <!-- Situation -->
+                ${questionSituationTemplate}
+              <!-- End of Situation -->
+              <!-- View Btn -->
+              <div class="question__view-btn px-1 ${viewBtnColors} md:hover:text-white transition-colors rounded-md md:cursor-pointer select-none z-10" data-page_id="${question.pageID}" data-question_id="${question.id}">مشاهده</div>
+              <!-- End of View Btn -->
+            </div>
+            <!-- End of Situation, Date and View Btn -->
+          </div>`;
+
+  return template;
+};
+
+const adminPanelViewedQuestionTemplate = (page, question, user) => {
+  const template = `
+  <div class="back-btn flex justify-end pb-5">
+    <div class="theme-bg-color text-white rounded-full p-2 md:cursor-pointer">
+      <svg class="size-6">
+        <use href="#arrow-left"></use>
+      </svg>
+    </div>
+  </div>
+  <!-- Question Detail -->
+  <div class="bg-white dark:bg-slate-800 space-y-3 py-3 px-2.5 rounded-2xl">
+    <!-- Course Name -->
+    <a href="course.html?course=${page.course_slug}" class="flex w-fit gap-2 text-sm sm:text-base md:hover:theme-text-color transition-colors">
+      <svg class="size-5 shrink-0">
+        <use href="#course"></use>
+      </svg>
+      <span>${page.course_name}</span>
+    </a>
+    <!-- End of Course Name -->
+    <!-- Session Name -->
+    <a href="session.html?id=${page.session_id}&course=${page.course_slug}" class="flex w-fit gap-2 text-sm sm:text-base md:hover:theme-text-color transition-colors">
+      <svg class="size-5 shrink-0">
+        <use href="#window"></use>
+      </svg>
+      <span>${page.session_name}</span>
+    </a>
+    <!-- End of Session Name -->
+    <!-- Username -->
+    <div class="flex w-fit gap-2 text-sm sm:text-base transition-colors">
+      <svg class="size-5 shrink-0">
+        <use href="#user"></use>
+      </svg>
+      <span>${user.username}</span>
+    </div>
+    <!-- End of Username -->
+  </div>
+  ${sessionQuestionTemplate(question, null, user.username)}
+`;
+  return template;
+};
+
+const sessionAnswersTemplate = (answers, sessionPage, username) => {
   if (!answers.length) return '';
 
   let template = '';
@@ -837,12 +935,17 @@ const sessionAnswersTemplate = (answers) => {
 
     if (answer.writerRole === 'teacher') {
       template += `
-            <div class="xs:w-2/3 2xl:w-7/12 xs:mr-auto mt-5 theme-bg-color text-white rounded-2xl pt-2 pb-4 px-4 relative z-20">
-              <div class="flex items-start justify-between gap-2 border-b border-b-slate-200">
-                <div>
-                  <p class="sm:text-lg">${answer.writerName}</p>
-                  <span>مدرس</span>
-                </div>
+            <div class="xs:w-2/3 2xl:w-7/12 ${sessionPage ? 'xs:mr-auto theme-bg-color text-white' : 'theme-bg-color-10 dark:bg-sky-950'} mt-5 rounded-2xl pt-2 pb-4 px-4 relative z-20">
+              <div class="flex items-start justify-between gap-2 border-b ${sessionPage ? 'border-b-slate-200' : 'border-b-slate-400'}">
+                ${
+                  sessionPage
+                    ? `
+                      <div>
+                        <p class="sm:text-lg">${answer.writerName}</p>
+                        <span>مدرس</span>
+                      </div>`
+                    : '<p class="sm:text-lg my-auto">شما</p>'
+                }
                 <div class="flex flex-col items-end">
                   <span>${date}</span>
                   <span>${time}</span>
@@ -855,9 +958,17 @@ const sessionAnswersTemplate = (answers) => {
             </div>`;
     } else {
       template += `
-            <div class="xs:w-2/3 2xl:w-7/12 mt-5 theme-bg-color-10 dark:bg-sky-950  rounded-2xl pt-2 pb-4 px-4 relative z-20">
-              <div class="flex items-start justify-between gap-2 border-b border-b-slate-400">
-                <p class="sm:text-lg my-auto">شما</p>
+            <div class="xs:w-2/3 2xl:w-7/12 ${sessionPage ? 'theme-bg-color-10 dark:bg-sky-950' : 'xs:mr-auto theme-bg-color text-white'} mt-5 rounded-2xl pt-2 pb-4 px-4 relative z-20">
+              <div class="flex items-start justify-between gap-2 border-b ${sessionPage ? 'border-b-slate-400' : 'border-b-slate-200'}">
+                 ${
+                   sessionPage
+                     ? '<p class="sm:text-lg my-auto">شما</p>'
+                     : `
+                        <div>
+                          <p class="sm:text-lg">${username}</p>
+                          <span>کاربر</span>
+                        </div>`
+                 }
                 <div class="flex flex-col items-end">
                   <span>${date}</span>
                   <span>${time}</span>
@@ -874,7 +985,7 @@ const sessionAnswersTemplate = (answers) => {
   return template;
 };
 
-const sessionQuestionTemplate = (question, number) => {
+const sessionQuestionTemplate = (question, number = null, username = null) => {
   const content = question.content.replace(/\n/g, '<br>');
   const date = formatDate(question.createdAt);
   const time = formatTime(question.createdAt);
@@ -891,10 +1002,10 @@ const sessionQuestionTemplate = (question, number) => {
   }
 
   const template = `   
-      <div class="py-5 my-5 border-x theme-border-color px-2.5 rounded-2xl bg-slate-100 dark:bg-slate-700">
+      <div class="py-5 my-5 ${number ? 'border-x theme-border-color bg-slate-100 dark:bg-slate-700' : 'bg-white dark:bg-slate-800'} px-2.5 rounded-2xl">
         <div class="question-header flex items-center gap-4 text-sm sm:text-base w-fit theme-bg-color-10 rounded-full">
-          <span class="pr-2">سوال ${number}</span>
-          <div class=" h-full rounded-l-full px-2 ${questionSituationColor}">
+          ${number ? `<span class="pr-2">سوال ${number}</span>` : ''}
+          <div class=" h-full ${number ? 'rounded-l-full' : 'rounded-full'} px-2 ${questionSituationColor}">
             <span class="text-white">${questionSituationText}</span>
           </div>
          </div>
@@ -912,7 +1023,7 @@ const sessionQuestionTemplate = (question, number) => {
 
          <!-- Answers -->
          <div class="px-2">
-          ${sessionAnswersTemplate(question.answers)}
+          ${sessionAnswersTemplate(question.answers, number, username)}
          </div>
 
          <!-- End of Answers -->
@@ -924,7 +1035,19 @@ const sessionQuestionTemplate = (question, number) => {
               <!-- New Answer Wrapper -->
                 <div class="new-answer__wrapper mt-6">
                   <!-- Answer Btn -->
-                  <div class="flex justify-end">
+                  <div class="flex ${number ? 'justify-end' : 'justify-between'}">
+                    ${
+                      number
+                        ? ''
+                        : `
+                          <div class="close-question-btn bg-rose-600 md:hover:bg-rose-700 text-white py-px px-1 flex items-center gap-1 select-none rounded-lg md:cursor-pointer transition-colors" data-question_id="${question.id}">
+                            <svg class="size-5">
+                              <use href="#lock-closed"></use>
+                            </svg>
+                            <span>بستن</span>
+                          </div>
+                        `
+                    }
                     <div class="answer__open-btn bg-slate-300 py-px px-1 flex items-center gap-1 select-none rounded-lg text-slate-950 md:cursor-pointer md:hover:theme-text-color transition-colors" data-question_id="${question.id}">
                       <svg class="size-5">
                         <use href="#chat-bubble-left-ellipsis"></use>
@@ -971,5 +1094,7 @@ export {
   accountCourseTemplate,
   userAccountProfilePictureTemplate,
   adminPanelCommentTemplate,
+  adminPanelQuestionTemplate,
+  adminPanelViewedQuestionTemplate,
   sessionQuestionTemplate,
 };

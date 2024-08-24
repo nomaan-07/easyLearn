@@ -17,6 +17,8 @@ import {
   updateHederCartDetail,
   addSessionToDOM,
   addSessionQuestionsToDOM,
+  addAdminPanelQuestionToDOM,
+  addAdminPanelViewedQuestionToDOM,
 } from '../dom/dom-handlers.js';
 
 // index.js
@@ -211,8 +213,6 @@ const addSellDataToDatabase = async (courses) => {
     const newSellAmount = previousSellAmount + purchaseTotalPrice;
     updateInDatabase(databaseTableName, { sell: newSellAmount }, thisMonthData.id);
   } else {
-    console.log({ year, month, sell: purchaseTotalPrice });
-
     addToDatabase(databaseTableName, { year, month, sell: purchaseTotalPrice });
   }
 };
@@ -262,6 +262,7 @@ const fetchAndDisplayAccountCourses = async () => {
 const fetchAndDisplayAccountUserDetail = async () => {
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
   addUserAccountDetailToDOM(user);
+  return user;
 };
 
 // account.js - admin-panel.js
@@ -313,6 +314,15 @@ const fetchAdmin = async () => {
   }
 };
 
+const fetchAndDisplayAdminQuestions = async (adminName) => {
+  try {
+    const data = await getAllFromDatabase('question_answer');
+    addAdminPanelQuestionToDOM(data, adminName);
+  } catch (error) {
+    console.error('Failed to fetch questions', error);
+  }
+};
+
 // admin-panel.js
 const fetchAndDisplaySellAndExpenseData = async () => {
   try {
@@ -341,16 +351,16 @@ const fetchAndDisplaySession = async () => {
 
 // session.js
 const fetchAndDisplaySessionQuestions = async () => {
-  const questionsID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
+  const pageID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
 
-  const response = await getOneFromDatabase('question_answer', 'id', questionsID);
+  const response = await getOneFromDatabase('question_answer', 'id', pageID);
 
   if (!response) {
     addSessionQuestionsToDOM(false);
   } else {
     const questions = response.questions;
 
-    addSessionQuestionsToDOM(questionsID, questions);
+    addSessionQuestionsToDOM(pageID, questions);
   }
 };
 
@@ -375,18 +385,18 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
       answers: [],
     };
 
-    const userQuestionsID = `${course_slug}_${session_id}_${localStorageUserID}`;
+    const pageID = `${course_slug}_${session_id}_${localStorageUserID}`;
 
     // get current session user questions
-    let userSessionQuestions = await getOneFromDatabase(tableName, 'id', userQuestionsID);
+    let userSessionQuestions = await getOneFromDatabase(tableName, 'id', pageID);
 
     if (userSessionQuestions) {
       let userPreviousQuestions = userSessionQuestions.questions;
       userPreviousQuestions.push(newQuestion);
-      await updateInDatabase(tableName, { questions: userPreviousQuestions }, userQuestionsID);
+      await updateInDatabase(tableName, { questions: userPreviousQuestions }, pageID);
     } else {
       userSessionQuestions = {
-        id: userQuestionsID,
+        id: pageID,
         course_name,
         course_slug,
         session_name,
@@ -400,16 +410,15 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
 
     sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
     newQuestionTextareaElement.value = '';
-    addSessionQuestionsToDOM(userQuestionsID, userSessionQuestions.questions);
+    addSessionQuestionsToDOM(pageID, userSessionQuestions.questions);
   } catch (error) {
     sweetAlert('ارسال سوال با خطا مواجه شد،‌ لطفا بعدا تلاش کنید.', 'failed');
     console.error('Failed to submit question', error);
   }
 };
 
-const submitSessionUserAnswer = (btn, questionsID, questions) => {
+const submitQuestionAnswer = (btn, pageID, questions, adminName = false, data = false, page = false) => {
   const questionID = btn.parentElement.dataset.question_id;
-  const wrapper = document.querySelector(`#wrapper-${questionID}`);
   const textarea = document.querySelector(`#textarea-${questionID}`);
 
   btn.addEventListener('click', async () => {
@@ -427,15 +436,27 @@ const submitSessionUserAnswer = (btn, questionsID, questions) => {
       id: answers.length + 1,
       createdAt: new Date(),
       content,
-      writerRole: 'user',
+      writerRole: adminName ? 'teacher' : 'user',
+      writerName: adminName ? adminName : 'null',
     };
 
     answers.push(newAnswer);
-    question.isAnswered = false;
+    question.isAnswered = adminName ? true : false;
 
-    await updateInDatabase('question_answer', { questions }, questionsID);
+    await updateInDatabase('question_answer', { questions }, pageID);
     sweetAlert('پاسخ شما با موفقیت ارسال شد.', 'success');
-    addSessionQuestionsToDOM(questionsID, questions);
+
+    adminName ? addAdminPanelViewedQuestionToDOM(data, page, question, adminName) : addSessionQuestionsToDOM(pageID, questions);
+  });
+};
+
+const closeQuestion = (btn, pageID, questions, adminName, data, page) => {
+  btn.addEventListener('click', async () => {
+    const questionID = btn.dataset.question_id;
+    const question = questions.find((question) => question.id === questionID);
+    question.isClosed = true;
+    await updateInDatabase('question_answer', { questions }, pageID);
+    addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
   });
 };
 
@@ -454,9 +475,11 @@ export {
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,
   fetchAdmin,
+  fetchAndDisplayAdminQuestions,
   fetchAndDisplaySellAndExpenseData,
   fetchAndDisplaySession,
   fetchAndDisplaySessionQuestions,
   submitSessionNewQuestion,
-  submitSessionUserAnswer,
+  submitQuestionAnswer,
+  closeQuestion,
 };

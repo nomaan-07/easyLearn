@@ -1,8 +1,21 @@
 import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { submitCommentReply, submitSessionNewQuestion, submitSessionUserAnswer } from '../database/database-handlers.js';
-import { closeMobileAccountMenu, toggleTextarea, openSessionAnswerTextArea, cancelSessionAnswerTextArea } from '../ui/ui-handlers.js';
+import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion } from '../database/database-handlers.js';
+import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea } from '../ui/ui-handlers.js';
 import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
-import { courseCardTemplate, blogCardTemplate, recentBlogTemplate, loginBtnTemplate, headerCartCourseTemplate, cartCourseTemplate, accountCourseTemplate, userAccountProfilePictureTemplate, adminPanelCommentTemplate, sessionQuestionTemplate } from '../template/template.js';
+import {
+  courseCardTemplate,
+  blogCardTemplate,
+  recentBlogTemplate,
+  loginBtnTemplate,
+  headerCartCourseTemplate,
+  cartCourseTemplate,
+  accountCourseTemplate,
+  userAccountProfilePictureTemplate,
+  adminPanelCommentTemplate,
+  sessionQuestionTemplate,
+  adminPanelQuestionTemplate,
+  adminPanelViewedQuestionTemplate,
+} from '../template/template.js';
 import {
   applyDiscountToPrice,
   formatDate,
@@ -19,6 +32,8 @@ import {
   removeLoader,
   CourseHeadlineSectionHandler,
   breadCrumbLinksHandler,
+  createAdminPanelQuestionObject,
+  formatTime,
 } from '../utils/utils.js';
 
 import {
@@ -58,7 +73,9 @@ import {
   newQuestionSubmitBtn,
   questionsWrapperElement,
   questionsSectionWrapper,
+  adminPanelQuestionsWrapper,
 } from '../dom/dom-elements.js';
+import { getOneFromDatabase } from '../database/database-api.js';
 
 // course.js - dom-handlers.js - blog.js
 const insertToDOM = (domElem, content) => {
@@ -420,6 +437,72 @@ const addAdminPanelCommentsToDOM = (comments, filterType) => {
   insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
 };
 
+const addAdminPanelQuestionToDOM = (data, adminName) => {
+  let questions = [];
+
+  data.forEach((session) => {
+    session.questions.forEach((question) => {
+      questions.push(createAdminPanelQuestionObject(session, question));
+    });
+  });
+
+  questions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const closedQuestions = questions.filter((question, index) => {
+    const closedQuestion = question.isClosed;
+    if (closedQuestion) {
+      questions.splice(index, 1);
+    }
+
+    return closedQuestion;
+  });
+
+  const answeredQuestions = questions.filter((question) => question.isAnswered);
+  const notAnsweredQuestions = questions.filter((question) => !question.isAnswered);
+
+  answeredQuestions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  notAnsweredQuestions.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
+
+  const filteredQuestions = notAnsweredQuestions.concat(answeredQuestions).concat(closedQuestions);
+
+  let questionsTemplate = '';
+
+  filteredQuestions.forEach((question) => {
+    questionsTemplate += adminPanelQuestionTemplate(question);
+  });
+
+  insertToDOM(adminPanelQuestionsWrapper, questionsTemplate);
+
+  const viewButtons = document.querySelectorAll('.question__view-btn');
+  viewButtons.forEach((btn) => btn.addEventListener('click', () => handleAdminPanelQuestionView(btn, data, adminName)));
+};
+
+const handleAdminPanelQuestionView = async (btn, data, adminName) => {
+  const pageID = btn.dataset.page_id;
+  const questionID = btn.dataset.question_id;
+  const page = data.find((page) => page.id === pageID);
+  const question = page.questions.find((question) => question.id === questionID);
+
+  await addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
+};
+
+const addAdminPanelViewedQuestionToDOM = async (data, page, question, adminName) => {
+  const user = await getOneFromDatabase('users', 'id', page.user_id);
+  insertToDOM(adminPanelQuestionsWrapper, adminPanelViewedQuestionTemplate(page, question, user));
+
+  document.querySelector('.back-btn').addEventListener('click', () => addAdminPanelQuestionToDOM(data));
+
+  const answerOpenBtn = document.querySelector('.answer__open-btn');
+  const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
+  const answerSubmitBtn = document.querySelector('.new-answer__submit-btn');
+  const closeQuestionBtn = document.querySelector('.close-question-btn');
+
+  answerOpenBtn && openAnswerTextArea(answerOpenBtn);
+  answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
+  answerSubmitBtn && submitQuestionAnswer(answerSubmitBtn, page.id, page.questions, adminName, data, page);
+  closeQuestionBtn && closeQuestion(closeQuestionBtn, page.id, page.questions, adminName, data, page);
+};
+
 // database-handlers.js
 const addSellAndExpenseDataToDOM = (data) => {
   const lastSixMonthData = sortArray(data, 'id').splice(-6);
@@ -544,18 +627,18 @@ const addSessionToDOM = (course, sessionID) => {
   removeLoader();
 };
 
-const handleSessionAnswer = (questionsID, questions) => {
+const handleSessionAnswer = (pageID, questions) => {
   const openAnswerButtons = document.querySelectorAll('.answer__open-btn');
   const newAnswerCancelButtons = document.querySelectorAll('.new-answer__cancel-btn');
   const newAnswerSubmitButtons = document.querySelectorAll('.new-answer__submit-btn');
 
-  openAnswerButtons.forEach((btn) => openSessionAnswerTextArea(btn));
-  newAnswerCancelButtons.forEach((btn) => cancelSessionAnswerTextArea(btn));
-  newAnswerSubmitButtons.forEach((btn) => submitSessionUserAnswer(btn, questionsID, questions));
+  openAnswerButtons.forEach((btn) => openAnswerTextArea(btn));
+  newAnswerCancelButtons.forEach((btn) => cancelAnswerTextArea(btn));
+  newAnswerSubmitButtons.forEach((btn) => submitQuestionAnswer(btn, pageID, questions));
 };
 
-const addSessionQuestionsToDOM = (questionsID, questions) => {
-  if (!questionsID) {
+const addSessionQuestionsToDOM = (pageID, questions) => {
+  if (!pageID) {
     insertToDOM(
       questionsWrapperElement,
       `
@@ -578,7 +661,7 @@ const addSessionQuestionsToDOM = (questionsID, questions) => {
 
   insertToDOM(questionsWrapperElement, allQuestionsTemplate);
 
-  handleSessionAnswer(questionsID, questions);
+  handleSessionAnswer(pageID, questions);
 };
 
 export {
@@ -599,6 +682,8 @@ export {
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
   addAdminPanelCommentsToDOM,
+  addAdminPanelQuestionToDOM,
+  addAdminPanelViewedQuestionToDOM,
   addSellAndExpenseDataToDOM,
   addSessionToDOM,
   addSessionQuestionsToDOM,

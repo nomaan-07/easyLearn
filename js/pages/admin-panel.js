@@ -4,16 +4,14 @@ import { fetchAndDisplaySellAndExpenseData } from '../database/database-handlers
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { addAdminPanelCommentsToDOM, displayChosenAccountSection } from '../dom/dom-handlers.js';
 import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from '../database/database-api.js';
-import { fetchAdmin, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from '../database/database-handlers.js';
 import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from '../ui/ui-handlers.js';
+import { fetchAdmin, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges, fetchAndDisplayAdminQuestions } from '../database/database-handlers.js';
 import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountChangeProfilePictureBtn, accountDisplayPasswordButtons, accountMenuItemElements, adminCommentsFilterButtons, adminPanelCommentsWrapper, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from '../dom/dom-elements.js';
 
+let user = null;
 let commentFilterType = 'all';
 let allComments = null;
 let adminPanelCommentsEventListenerAdded = false;
-
-fetchAndDisplayAccountUserDetail();
-fetchAndDisplaySellAndExpenseData();
 
 const fetchAndDisplayAdminPanelComments = async (filterType) => {
   const dbComments = await getAllFromDatabase('comments');
@@ -93,11 +91,14 @@ const filterCommentsHandler = (btn, comments) => {
   addAdminPanelCommentsToDOM(comments, filterType);
 };
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   fetchAdmin();
   setTimeout(() => {
     removeLoader();
   }, 500);
+  user = await fetchAndDisplayAccountUserDetail();
+  fetchAndDisplayAdminQuestions(user.username);
+  fetchAndDisplaySellAndExpenseData();
 });
 
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));

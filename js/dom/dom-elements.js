@@ -121,6 +121,7 @@ const adminNotConfirmedCommentsNumberBadge = document.querySelector('.admin-not-
 const overallSellElement = document.querySelector('.overall-sell');
 const overallExpenseElement = document.querySelector('.overall-expense');
 const overallProfitElement = document.querySelector('.overall-profit');
+const adminPanelQuestionsWrapper = document.querySelector('.admin__questions-wrapper');
 
 // session.js
 const sessionVideoElement = document.querySelector('.session__video');
@@ -231,6 +232,7 @@ export {
   overallSellElement,
   overallExpenseElement,
   overallProfitElement,
+  adminPanelQuestionsWrapper,
   sessionVideoElement,
   sessionCourseNameElements,
   sessionNameElements,

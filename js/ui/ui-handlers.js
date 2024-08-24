@@ -156,7 +156,7 @@ const closeMobileAccountMenu = () => {
   overlay.classList.add('hide');
 };
 
-const openSessionAnswerTextArea = (btn) => {
+const openAnswerTextArea = (btn) => {
   const questionID = btn.dataset.question_id;
   const wrapper = document.querySelector(`#wrapper-${questionID}`);
   const textarea = document.querySelector(`#textarea-${questionID}`);
@@ -167,14 +167,12 @@ const openSessionAnswerTextArea = (btn) => {
   });
 };
 
-const cancelSessionAnswerTextArea = (btn) => {
+const cancelAnswerTextArea = (btn) => {
   const questionID = btn.parentElement.dataset.question_id;
   const wrapper = document.querySelector(`#wrapper-${questionID}`);
   const textarea = document.querySelector(`#textarea-${questionID}`);
   btn.addEventListener('click', () => {
     toggleTextarea(wrapper, textarea);
-    console.log(btn.closest('.new-answer__wrapper').children);
-
     btn.closest('.new-answer__wrapper').children[0].classList.remove('hidden');
   });
 };
@@ -193,6 +191,6 @@ export {
   displayPasswordHandler,
   openMobileAccountMenu,
   closeMobileAccountMenu,
-  openSessionAnswerTextArea,
-  cancelSessionAnswerTextArea,
+  openAnswerTextArea,
+  cancelAnswerTextArea,
 };

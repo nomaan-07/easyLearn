@@ -279,6 +279,22 @@ const convertPersianNumbersToEnglish = (number) => {
   });
 };
 
+const createAdminPanelQuestionObject = (session, question) => ({
+  pageID: session.id,
+  courseName: session.course_name,
+  courseSlug: session.course_slug,
+  sessionID: session.session_id,
+  sessionName: session.session_name,
+  userID: session.user_id,
+  id: question.id,
+  content: question.content,
+  answers: question.answers,
+  createdAt: question.createdAt,
+  isAnswered: question.isAnswered,
+  isClosed: question.isClosed,
+  updatedAt: question.answers.length ? question.answers[question.answers.length - 1].createdAt : question.createdAt,
+});
+
 export {
   persianMonths,
   getThemeFromLocalStorage,
@@ -305,4 +321,5 @@ export {
   getLocalCourses,
   filterComments,
   convertPersianNumbersToEnglish,
+  createAdminPanelQuestionObject,
 };
