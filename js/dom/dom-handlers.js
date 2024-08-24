@@ -15,6 +15,7 @@ import {
   sessionQuestionTemplate,
   adminPanelQuestionTemplate,
   adminPanelViewedQuestionTemplate,
+  accountQuestionTemplate,
 } from '../template/template.js';
 import {
   applyDiscountToPrice,
@@ -32,8 +33,9 @@ import {
   removeLoader,
   CourseHeadlineSectionHandler,
   breadCrumbLinksHandler,
-  createAdminPanelQuestionObject,
-  formatTime,
+  filterPanelsQuestions,
+  scrollToAboveOfElement,
+  getQueryParameters,
 } from '../utils/utils.js';
 
 import {
@@ -74,6 +76,7 @@ import {
   questionsWrapperElement,
   questionsSectionWrapper,
   adminPanelQuestionsWrapper,
+  accountQuestionsWrapper,
 } from '../dom/dom-elements.js';
 import { getOneFromDatabase } from '../database/database-api.js';
 
@@ -414,6 +417,20 @@ const addUserAccountDetailToDOM = (user) => {
   user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
 };
 
+const addUserAccountQuestionToDOM = (data) => {
+  const questions = filterPanelsQuestions(data);
+
+  if (!questions.length) {
+    insertToDOM(accountQuestionsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ پرسشی مطرح نکرده‌اید.</p>`);
+    return;
+  }
+
+  let questionsTemplate = '';
+  questions.forEach((question) => (questionsTemplate += accountQuestionTemplate(question)));
+
+  insertToDOM(accountQuestionsWrapper, questionsTemplate);
+};
+
 const addAdminNotConfirmedCommentsToDOM = (comments) => {
   const notConfirmedComments = filterComments(comments, 'review');
   const notConfirmedCommentsLength = notConfirmedComments.length;
@@ -440,27 +457,11 @@ const addAdminPanelCommentsToDOM = (comments, filterType) => {
 const addAdminPanelQuestionToDOM = (data) => {
   const adminName = localStorage.getItem('admin-name');
 
-  let questions = [];
-
-  data.forEach((session) => {
-    session.questions.forEach((question) => {
-      questions.push(createAdminPanelQuestionObject(session, question));
-    });
-  });
-
-  questions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-
-  const closedQuestions = questions.filter((question) => question.isClosed);
-  const answeredQuestions = questions.filter((question) => question.isAnswered && !question.isClosed);
-  const notAnsweredQuestions = questions.filter((question) => !question.isAnswered && !question.isClosed);
-
-  notAnsweredQuestions.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
-
-  const filteredQuestions = notAnsweredQuestions.concat(answeredQuestions).concat(closedQuestions);
+  const questions = filterPanelsQuestions(data);
 
   let questionsTemplate = '';
 
-  filteredQuestions.forEach((question) => {
+  questions.forEach((question) => {
     questionsTemplate += adminPanelQuestionTemplate(question);
   });
 
@@ -631,7 +632,7 @@ const handleSessionAnswer = (pageID, questions) => {
   newAnswerSubmitButtons.forEach((btn) => submitQuestionAnswer(btn, pageID, questions));
 };
 
-const addSessionQuestionsToDOM = (pageID, questions) => {
+const addSessionQuestionsToDOM = (pageID, questions, questionID = null) => {
   if (!pageID) {
     insertToDOM(
       questionsWrapperElement,
@@ -655,6 +656,10 @@ const addSessionQuestionsToDOM = (pageID, questions) => {
 
   insertToDOM(questionsWrapperElement, allQuestionsTemplate);
 
+  if (questionID) {
+    scrollToAboveOfElement(document?.getElementById(questionID), 100);
+  }
+
   handleSessionAnswer(pageID, questions);
 };
 
@@ -675,6 +680,7 @@ export {
   displayChosenAccountSection,
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
+  addUserAccountQuestionToDOM,
   addAdminPanelCommentsToDOM,
   addAdminPanelQuestionToDOM,
   addAdminPanelViewedQuestionToDOM,

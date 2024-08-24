@@ -4488,10 +4488,6 @@ video {
   padding-top: 2rem;
 }
 
-.pb-10 {
-  padding-bottom: 2.5rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -6190,10 +6186,6 @@ video {
     padding-top: 12rem;
   }
 
-  .sm\:pb-10 {
-    padding-bottom: 2.5rem;
-  }
-
   .sm\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -6615,14 +6607,14 @@ video {
     background-color: rgb(225 29 72 / 0.6);
   }
 
-  .md\:hover\:bg-slate-200:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-  }
-
   .md\:hover\:bg-rose-700:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(190 18 60 / var(--tw-bg-opacity));
+  }
+
+  .md\:hover\:bg-slate-200:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(226 232 240 / var(--tw-bg-opacity));
   }
 
   .md\:hover\:text-\[\#0A66C2\]:hover {
@@ -7069,6 +7061,10 @@ video {
 
   .xl\:pl-3 {
     padding-left: 0.75rem;
+  }
+
+  .xl\:text-right {
+    text-align: right;
   }
 
   .xl\:text-2xl {

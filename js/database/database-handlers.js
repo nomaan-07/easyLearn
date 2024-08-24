@@ -1,6 +1,6 @@
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
-import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase } from './database-api.js';
+import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, getSomeFromDatabase } from './database-api.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from '../validation/validation.js';
 import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from '../utils/utils.js';
 import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, newQuestionTextareaElement } from '../dom/dom-elements.js';
@@ -19,6 +19,7 @@ import {
   addSessionQuestionsToDOM,
   addAdminPanelQuestionToDOM,
   addAdminPanelViewedQuestionToDOM,
+  addUserAccountQuestionToDOM,
 } from '../dom/dom-handlers.js';
 
 // index.js
@@ -258,6 +259,16 @@ const fetchAndDisplayAccountCourses = async () => {
   addAccountCourseToDOM(filteredCourses);
 };
 
+// account.js
+const fetchAndDisplayAccountQuestions = async () => {
+  try {
+    const data = await getSomeFromDatabase('question_answer', 'user_id', localStorageUserID);
+    addUserAccountQuestionToDOM(data);
+  } catch (error) {
+    console.error('Failed to fetch questions', error);
+  }
+};
+
 // account.js - admin-panel.js
 const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
   if (isAdmin) {
@@ -317,6 +328,7 @@ const submitAccountUPasswordChanges = async (event) => {
   }
 };
 
+// admin-panel.js
 const fetchAndDisplayAdminQuestions = async () => {
   try {
     const data = await getAllFromDatabase('question_answer');
@@ -355,6 +367,7 @@ const fetchAndDisplaySession = async () => {
 // session.js
 const fetchAndDisplaySessionQuestions = async () => {
   const pageID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
+  const questionID = getQueryParameters('question');
 
   const response = await getOneFromDatabase('question_answer', 'id', pageID);
 
@@ -362,8 +375,7 @@ const fetchAndDisplaySessionQuestions = async () => {
     addSessionQuestionsToDOM(false);
   } else {
     const questions = response.questions;
-
-    addSessionQuestionsToDOM(pageID, questions);
+    addSessionQuestionsToDOM(pageID, questions, questionID);
   }
 };
 
@@ -477,6 +489,7 @@ export {
   submitLoginForm,
   purchaseCourses,
   fetchAndDisplayAccountCourses,
+  fetchAndDisplayAccountQuestions,
   fetchAndDisplayAccountUserDetail,
   submitAccountDetailChanges,
   submitAccountUPasswordChanges,

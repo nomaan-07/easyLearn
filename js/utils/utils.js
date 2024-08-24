@@ -279,7 +279,7 @@ const convertPersianNumbersToEnglish = (number) => {
   });
 };
 
-const createAdminPanelQuestionObject = (session, question) => ({
+const createPanelQuestionObject = (session, question) => ({
   pageID: session.id,
   courseName: session.course_name,
   courseSlug: session.course_slug,
@@ -294,6 +294,25 @@ const createAdminPanelQuestionObject = (session, question) => ({
   isClosed: question.isClosed,
   updatedAt: question.answers.length ? question.answers[question.answers.length - 1].createdAt : question.createdAt,
 });
+
+const filterPanelsQuestions = (data) => {
+  const questions = data.flatMap((session) => session.questions.map((question) => createPanelQuestionObject(session, question)));
+
+  questions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+  const closedQuestions = questions.filter((question) => question.isClosed);
+  const answeredQuestions = questions.filter((question) => question.isAnswered && !question.isClosed);
+  const notAnsweredQuestions = questions.filter((question) => !question.isAnswered && !question.isClosed);
+
+  notAnsweredQuestions.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
+
+  return [...notAnsweredQuestions, ...answeredQuestions, ...closedQuestions];
+};
+
+const scrollToAboveOfElement = (element, margin) => {
+  const rect = element.getBoundingClientRect();
+  window.scrollTo(window.scrollX, rect.top - margin);
+};
 
 export {
   persianMonths,
@@ -321,5 +340,7 @@ export {
   getLocalCourses,
   filterComments,
   convertPersianNumbersToEnglish,
-  createAdminPanelQuestionObject,
+  createPanelQuestionObject,
+  filterPanelsQuestions,
+  scrollToAboveOfElement,
 };

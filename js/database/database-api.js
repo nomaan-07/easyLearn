@@ -15,6 +15,16 @@ const getAllFromDatabase = async (tableName) => {
   }
 };
 
+const getSomeFromDatabase = async (tableName, key, value) => {
+  try {
+    const result = await client.from(tableName).select().eq(key, value);
+    return result.data;
+  } catch (error) {
+    console.error('Error getting data', error);
+    throw error;
+  }
+};
+
 const getOneFromDatabase = async (tableName, key, value) => {
   try {
     const result = await client.from(tableName).select().eq(key, value).single();
@@ -52,4 +62,4 @@ const deleteFromDatabase = async (tableName, ID) => {
   }
 };
 
-export { getAllFromDatabase, getOneFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase };
+export { getAllFromDatabase, getSomeFromDatabase, getOneFromDatabase, addToDatabase, updateInDatabase, deleteFromDatabase };

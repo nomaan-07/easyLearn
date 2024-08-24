@@ -113,6 +113,7 @@ const currentPasswordInputElem = document.querySelector('#current-password-input
 const newPasswordInputElem = document.querySelector('#new-password-input');
 const accountDisplayPasswordButtons = document.querySelectorAll('.account__display-password-btn');
 const accountChangeProfilePictureBtn = document.querySelector('.change-profile-picture-btn');
+const accountQuestionsWrapper = document.querySelector('.account__questions-wrapper');
 
 // admin-panel.js
 const adminPanelCommentsWrapper = document.querySelector('.admin__comments-wrapper');
@@ -226,6 +227,7 @@ export {
   newPasswordInputElem,
   accountDisplayPasswordButtons,
   accountChangeProfilePictureBtn,
+  accountQuestionsWrapper,
   adminPanelCommentsWrapper,
   adminCommentsFilterButtons,
   adminNotConfirmedCommentsNumberBadge,

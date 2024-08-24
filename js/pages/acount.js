@@ -3,7 +3,7 @@ import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { removeLoader } from '../utils/utils.js';
 import { displayChosenAccountSection } from '../dom/dom-handlers.js';
 import { openMobileAccountMenu, closeMobileAccountMenu, displayPasswordHandler } from '../ui/ui-handlers.js';
-import { fetchAndDisplayAccountCourses, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from '../database/database-handlers.js';
+import { fetchAndDisplayAccountCourses, fetchAndDisplayAccountQuestions, fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges } from '../database/database-handlers.js';
 import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountMenuItemElements, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay, accountDisplayPasswordButtons, accountChangeProfilePictureBtn, localStorageUserID } from '../dom/dom-elements.js';
 
 if (!localStorageUserID) {
@@ -12,6 +12,7 @@ if (!localStorageUserID) {
 
 fetchAndDisplayAccountUserDetail();
 fetchAndDisplayAccountCourses();
+fetchAndDisplayAccountQuestions();
 
 window.addEventListener('load', removeLoader);
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
