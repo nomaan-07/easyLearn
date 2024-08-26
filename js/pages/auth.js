@@ -25,10 +25,12 @@ const switchForms = () => {
     usernameInput.parentElement.classList.remove('hidden');
     document.title = 'ایزی‌لرن | ثبت نام';
     sweetAlert('لطفا از نام کاربری و رمز عبور واقعی خود استفاده نکنید.', 'info');
+    formSubmitBtn.textContent = 'ثبت نام';
     formSubmitBtn.addEventListener('click', submitSignupForm);
   } else if (operationParam === 'login') {
     document.title = 'ایزی‌لرن |  ورود';
     usernameInput.parentElement.classList.add('hidden');
+    formSubmitBtn.textContent = 'ورود';
     formSubmitBtn.addEventListener('click', submitLoginForm);
   } else {
     location.replace('./404.html');

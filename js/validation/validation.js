@@ -143,4 +143,28 @@ const accountChangePasswordFormValidation = (currentPassword, newPassword, user)
   return false;
 };
 
-export { emptyValueValidation, emailValidation, passwordValidation, signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation };
+const newTicketValidation = (department, subject, content) => {
+  const isSubjectEmpty = !emptyValueValidation(subject);
+  const isContentEmpty = !emptyValueValidation(content);
+
+  if (department === 'none' && isSubjectEmpty && isContentEmpty) {
+    sweetAlert('لطفا دپارتمان، موضوع و متن تیکت را وارد کنید.', 'failed');
+  } else if (department === 'none' && isSubjectEmpty) {
+    sweetAlert('لطفا دپارتمان و موضوع را وارد کنید.', 'failed');
+  } else if (department === 'none' && isContentEmpty) {
+    sweetAlert('لطفا دپارتمان و متن تیکت را وارد کنید.', 'failed');
+  } else if (isSubjectEmpty && isContentEmpty) {
+    sweetAlert('لطفا موضوع و متن تیکت را وارد کنید.', 'failed');
+  } else if (department === 'none') {
+    sweetAlert('لطفا دپارتمان را انتخاب کنید.', 'failed');
+  } else if (isSubjectEmpty) {
+    sweetAlert('لطفا موضوع تیکت را بنویسید.', 'failed');
+  } else if (isContentEmpty) {
+    sweetAlert('لطفا متن تیکت را بنویسید.', 'failed');
+  } else {
+    return true;
+  }
+  return false;
+};
+
+export { emptyValueValidation, emailValidation, passwordValidation, signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation, newTicketValidation };

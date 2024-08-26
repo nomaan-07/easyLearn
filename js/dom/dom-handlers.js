@@ -1,6 +1,6 @@
 import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion } from '../database/database-handlers.js';
-import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea } from '../ui/ui-handlers.js';
+import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion, submitTicketAnswer, closeTicket } from '../database/database-handlers.js';
+import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea, toggleNewTicketOptionsWrapper } from '../ui/ui-handlers.js';
 import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
 import {
   courseCardTemplate,
@@ -13,9 +13,10 @@ import {
   userAccountProfilePictureTemplate,
   adminPanelCommentTemplate,
   sessionQuestionTemplate,
-  adminPanelQuestionTemplate,
   adminPanelViewedQuestionTemplate,
-  accountQuestionTemplate,
+  panelQuestionTemplate,
+  ticketTemplate,
+  viewedTicketTemplate,
 } from '../template/template.js';
 import {
   applyDiscountToPrice,
@@ -77,6 +78,15 @@ import {
   questionsSectionWrapper,
   adminPanelQuestionsWrapper,
   accountQuestionsWrapper,
+  newTicketWrapper,
+  ticketsWrapper,
+  newTicketChosenDepartmentElement,
+  newTicketDepartmentIconElement,
+  newTicketDepartmentOptionsWrapper,
+  subjectInputElement,
+  ticketTextareaElement,
+  viewedTicketWrapper,
+  ticketBtn,
 } from '../dom/dom-elements.js';
 import { getOneFromDatabase } from '../database/database-api.js';
 
@@ -426,9 +436,122 @@ const addUserAccountQuestionToDOM = (data) => {
   }
 
   let questionsTemplate = '';
-  questions.forEach((question) => (questionsTemplate += accountQuestionTemplate(question)));
+  questions.forEach((question) => (questionsTemplate += panelQuestionTemplate(question)));
 
   insertToDOM(accountQuestionsWrapper, questionsTemplate);
+};
+
+const resetNewTicketElementsValues = () => {
+  newTicketChosenDepartmentElement.dataset.department = 'none';
+  newTicketChosenDepartmentElement.textContent = 'دپارتمان را انتخاب کنید';
+  newTicketDepartmentIconElement.classList.remove('rotate-180');
+  newTicketDepartmentOptionsWrapper.classList.add('hidden');
+  subjectInputElement.value = '';
+  ticketTextareaElement.value = '';
+  ticketTextareaElement.style.height = `160px`;
+};
+
+const toggleNewTicketWrapper = (btn, isViewedTicket = false) => {
+  const operation = btn.dataset.operation;
+
+  if (isViewedTicket) {
+    btn.dataset.operation = 'close';
+    insertToDOM(
+      btn,
+      `
+      <span class="hidden xs:block">بازگشت</span>
+      <svg class="size-6">
+        <use href="#arrow-left"></use>
+      </svg>`
+    );
+    return;
+  }
+
+  if (operation === 'open') {
+    btn.dataset.operation = 'close';
+    newTicketWrapper.classList.remove('hidden');
+    ticketsWrapper.classList.add('hidden');
+    insertToDOM(
+      btn,
+      `
+      <span class="hidden xs:block">بازگشت</span>
+      <svg class="size-6">
+        <use href="#arrow-left"></use>
+      </svg>`
+    );
+  } else {
+    btn.dataset.operation = 'open';
+    newTicketWrapper.classList.add('hidden');
+    viewedTicketWrapper.classList.add('hidden');
+    ticketsWrapper.classList.remove('hidden');
+    resetNewTicketElementsValues();
+    insertToDOM(
+      btn,
+      `
+      <span class="hidden xs:block">تیکت جدید</span>
+      <svg class="size-6">
+      <use href="#plus"></use>
+      </svg>`
+    );
+  }
+};
+
+const departmentSelectionHandler = (event) => {
+  const departmentValue = event.target.dataset.department;
+  const departmentName = event.target.textContent;
+
+  newTicketChosenDepartmentElement.dataset.department = departmentValue;
+  newTicketChosenDepartmentElement.textContent = departmentName;
+
+  toggleNewTicketOptionsWrapper();
+};
+
+const addViewedTicketToDOM = (ticketID, tickets, isUserPanel) => {
+  const ticket = tickets.find((ticket) => ticket.id === ticketID);
+
+  ticketsWrapper.classList.add('hidden');
+  viewedTicketWrapper.classList.remove('hidden');
+
+  if (isUserPanel) {
+    toggleNewTicketWrapper(ticketBtn, true);
+  } else {
+    ticketBtn.parentElement.classList.remove('hidden');
+    ticketBtn.parentElement.classList.add('flex');
+  }
+
+  insertToDOM(viewedTicketWrapper, viewedTicketTemplate(ticket, isUserPanel));
+
+  const answerOpenBtn = document.querySelector('.answer__open-btn');
+  const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
+  const answerSubmitBtn = document.querySelector('.new-answer__submit-btn');
+  const closeQuestionBtn = document.querySelector('.close-question-btn');
+
+  answerOpenBtn && openAnswerTextArea(answerOpenBtn);
+  answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
+  answerSubmitBtn && submitTicketAnswer(answerSubmitBtn, ticket, tickets, isUserPanel);
+
+  closeQuestionBtn && closeTicket(closeQuestionBtn, ticket, tickets);
+};
+
+const addTicketsToDOM = (tickets, isUserPanel = false) => {
+  let ticketsTemplate = '';
+
+  const filteredTickets = filterPanelsQuestions(tickets, true);
+  filteredTickets.forEach((ticket) => {
+    ticketsTemplate += ticketTemplate(ticket);
+  });
+
+  insertToDOM(ticketsWrapper, ticketsTemplate);
+
+  const ticketElements = document.querySelectorAll('.ticket-wrapper');
+  ticketElements.forEach((element) => element.addEventListener('click', () => addViewedTicketToDOM(element.id, tickets, isUserPanel)));
+};
+
+const returnFromViewedTicket = () => {
+  ticketBtn.parentElement.classList.add('hidden');
+  ticketBtn.parentElement.classList.remove('flex');
+  ticketsWrapper.classList.remove('hidden');
+  viewedTicketWrapper.classList.add('hidden');
 };
 
 const addAdminNotConfirmedCommentsToDOM = (comments) => {
@@ -462,27 +585,26 @@ const addAdminPanelQuestionToDOM = (data) => {
   let questionsTemplate = '';
 
   questions.forEach((question) => {
-    questionsTemplate += adminPanelQuestionTemplate(question);
+    questionsTemplate += panelQuestionTemplate(question, true);
   });
 
   insertToDOM(adminPanelQuestionsWrapper, questionsTemplate);
 
-  const viewButtons = document.querySelectorAll('.question__view-btn');
-  viewButtons.forEach((btn) => btn.addEventListener('click', () => handleAdminPanelQuestionView(btn, data, adminName)));
+  const questionWrapper = document.querySelectorAll('.question__wrapper');
+  questionWrapper.forEach((element) => element.addEventListener('click', () => handleAdminPanelQuestionView(element, data, adminName)));
 };
 
-const handleAdminPanelQuestionView = async (btn, data, adminName) => {
-  const pageID = btn.dataset.page_id;
-  const questionID = btn.dataset.question_id;
+const handleAdminPanelQuestionView = (element, data, adminName) => {
+  const pageID = element.dataset.page_id;
+  const questionID = element.dataset.question_id;
   const page = data.find((page) => page.id === pageID);
   const question = page.questions.find((question) => question.id === questionID);
 
-  await addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
+  addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
 };
 
-const addAdminPanelViewedQuestionToDOM = async (data, page, question, adminName) => {
-  const user = await getOneFromDatabase('users', 'id', page.user_id);
-  insertToDOM(adminPanelQuestionsWrapper, adminPanelViewedQuestionTemplate(page, question, user));
+const addAdminPanelViewedQuestionToDOM = (data, page, question, adminName) => {
+  insertToDOM(adminPanelQuestionsWrapper, adminPanelViewedQuestionTemplate(page, question));
 
   document.querySelector('.back-btn').addEventListener('click', () => addAdminPanelQuestionToDOM(data));
 
@@ -681,6 +803,11 @@ export {
   addAccountCourseToDOM,
   addUserAccountDetailToDOM,
   addUserAccountQuestionToDOM,
+  toggleNewTicketWrapper,
+  departmentSelectionHandler,
+  addTicketsToDOM,
+  addViewedTicketToDOM,
+  returnFromViewedTicket,
   addAdminPanelCommentsToDOM,
   addAdminPanelQuestionToDOM,
   addAdminPanelViewedQuestionToDOM,

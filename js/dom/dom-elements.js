@@ -1,4 +1,5 @@
 const localStorageUserID = localStorage.getItem('userID');
+const localStorageUsername = localStorage.getItem('username');
 
 // course-category.js - blogs.js
 const categoryTitle = document.querySelector('.category-title');
@@ -114,6 +115,18 @@ const newPasswordInputElem = document.querySelector('#new-password-input');
 const accountDisplayPasswordButtons = document.querySelectorAll('.account__display-password-btn');
 const accountChangeProfilePictureBtn = document.querySelector('.change-profile-picture-btn');
 const accountQuestionsWrapper = document.querySelector('.account__questions-wrapper');
+const ticketBtn = document.querySelector('#ticket-btn');
+const ticketsWrapper = document.querySelector('.tickets__wrapper');
+const newTicketWrapper = document.querySelector('.new-ticket__wrapper');
+const newTicketChosenDepartmentWrapper = document.querySelector('.new-ticket__chosen-department-wrapper');
+const newTicketChosenDepartmentElement = document.querySelector('.new-ticket__chosen-department');
+const newTicketDepartmentIconElement = document.querySelector('.new-ticket__department-icon');
+const newTicketDepartmentOptionsWrapper = document.querySelector('.new-ticket__department-options-wrapper');
+const newTicketDepartmentOptionElements = document.querySelectorAll('.new-ticket__department-option');
+const subjectInputElement = document.querySelector('#subject-input');
+const ticketTextareaElement = document.querySelector('#ticket-textarea');
+const newTicketSubmitBtn = document.querySelector('.new-ticket__submit-btn');
+const viewedTicketWrapper = document.querySelector('.viewed-ticket__wrapper');
 
 // admin-panel.js
 const adminPanelCommentsWrapper = document.querySelector('.admin__comments-wrapper');
@@ -137,6 +150,7 @@ const questionsWrapperElement = document.querySelector('#questions__wrapper');
 
 export {
   localStorageUserID,
+  localStorageUsername,
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
   lastBlogsWrapperElement,
@@ -228,6 +242,18 @@ export {
   accountDisplayPasswordButtons,
   accountChangeProfilePictureBtn,
   accountQuestionsWrapper,
+  ticketBtn,
+  ticketsWrapper,
+  newTicketWrapper,
+  newTicketChosenDepartmentWrapper,
+  newTicketChosenDepartmentElement,
+  newTicketDepartmentIconElement,
+  newTicketDepartmentOptionsWrapper,
+  newTicketDepartmentOptionElements,
+  subjectInputElement,
+  ticketTextareaElement,
+  newTicketSubmitBtn,
+  viewedTicketWrapper,
   adminPanelCommentsWrapper,
   adminCommentsFilterButtons,
   adminNotConfirmedCommentsNumberBadge,

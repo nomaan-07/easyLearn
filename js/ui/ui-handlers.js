@@ -1,5 +1,5 @@
 import { sweetAlert } from './../initializers/sweet-alert-initialize.js';
-import { displayPasswordBtn, accountMenuWrapper, overlay } from './../dom/dom-elements.js';
+import { displayPasswordBtn, accountMenuWrapper, overlay, newTicketDepartmentOptionsWrapper, newTicketDepartmentIconElement } from './../dom/dom-elements.js';
 
 // course.js - dom-handlers.js
 const textareaAutoResize = (event) => {
@@ -177,6 +177,19 @@ const cancelAnswerTextArea = (btn) => {
   });
 };
 
+let departmentOptionsClosed = true;
+const toggleNewTicketOptionsWrapper = () => {
+  if (departmentOptionsClosed) {
+    newTicketDepartmentOptionsWrapper.classList.remove('hidden');
+    newTicketDepartmentIconElement.classList.add('rotate-180');
+    departmentOptionsClosed = false;
+  } else {
+    newTicketDepartmentOptionsWrapper.classList.add('hidden');
+    newTicketDepartmentIconElement.classList.remove('rotate-180');
+    departmentOptionsClosed = true;
+  }
+};
+
 export {
   textareaAutoResize,
   toggleTextarea,
@@ -193,4 +206,5 @@ export {
   closeMobileAccountMenu,
   openAnswerTextArea,
   cancelAnswerTextArea,
+  toggleNewTicketOptionsWrapper,
 };

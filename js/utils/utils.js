@@ -62,7 +62,7 @@ const formatDate = (date) => {
 
 const formatTime = (date) => {
   const timeList = new Date(date).toLocaleTimeString('fa-IR').split(':');
-  const hour = timeList[0];
+  const hour = timeList[0].padStart(2, '۰');
   const minute = timeList[1];
   return `${hour}:${minute}`;
 };
@@ -91,6 +91,16 @@ const categoryInPersian = (category) => {
       break;
     case 'programming-basics':
       categoryPersian = 'مبانی برنامه نویسی';
+      break;
+    case 'management':
+      categoryPersian = 'مدیریت';
+      break;
+    case 'support':
+      categoryPersian = 'پشتیبانی';
+      break;
+    case 'finance':
+      categoryPersian = 'مالی';
+      break;
   }
   return categoryPersian;
 };
@@ -289,22 +299,26 @@ const createPanelQuestionObject = (session, question) => ({
   id: question.id,
   content: question.content,
   answers: question.answers,
-  createdAt: question.createdAt,
-  isAnswered: question.isAnswered,
-  isClosed: question.isClosed,
-  updatedAt: question.answers.length ? question.answers[question.answers.length - 1].createdAt : question.createdAt,
+  created_at: question.created_at,
+  is_answered: question.is_answered,
+  is_closed: question.is_closed,
+  updated_at: question.answers.length ? question.answers[question.answers.length - 1].created_at : question.created_at,
 });
 
-const filterPanelsQuestions = (data) => {
+const questionsExtraction = (data) => {
   const questions = data.flatMap((session) => session.questions.map((question) => createPanelQuestionObject(session, question)));
+  questions.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  return questions;
+};
 
-  questions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+const filterPanelsQuestions = (data, isTicket = false) => {
+  const questions = isTicket ? data : questionsExtraction(data);
 
-  const closedQuestions = questions.filter((question) => question.isClosed);
-  const answeredQuestions = questions.filter((question) => question.isAnswered && !question.isClosed);
-  const notAnsweredQuestions = questions.filter((question) => !question.isAnswered && !question.isClosed);
+  const closedQuestions = questions.filter((question) => question.is_closed);
+  const answeredQuestions = questions.filter((question) => question.is_answered && !question.is_closed);
+  const notAnsweredQuestions = questions.filter((question) => !question.is_answered && !question.is_closed);
 
-  notAnsweredQuestions.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
+  notAnsweredQuestions.sort((a, b) => new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime());
 
   return [...notAnsweredQuestions, ...answeredQuestions, ...closedQuestions];
 };

@@ -1,9 +1,27 @@
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, getSomeFromDatabase } from './database-api.js';
-import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation } from '../validation/validation.js';
+import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation, newTicketValidation } from '../validation/validation.js';
 import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from '../utils/utils.js';
-import { latestCoursesWrapperElement, popularCoursesWrapperElement, lastBlogsWrapperElement, recentBlogsWrapper, usernameInput, emailInput, passwordInput, localStorageUserID, currentPasswordInputElem, newPasswordInputElem, newQuestionTextareaElement } from '../dom/dom-elements.js';
+import {
+  latestCoursesWrapperElement,
+  popularCoursesWrapperElement,
+  lastBlogsWrapperElement,
+  recentBlogsWrapper,
+  usernameInput,
+  emailInput,
+  passwordInput,
+  localStorageUserID,
+  currentPasswordInputElem,
+  newPasswordInputElem,
+  newQuestionTextareaElement,
+  newTicketSubmitBtn,
+  newTicketChosenDepartmentElement,
+  subjectInputElement,
+  ticketTextareaElement,
+  ticketBtn,
+  localStorageUsername,
+} from '../dom/dom-elements.js';
 import {
   insertToDOM,
   addCourseCardsToDOM,
@@ -20,6 +38,9 @@ import {
   addAdminPanelQuestionToDOM,
   addAdminPanelViewedQuestionToDOM,
   addUserAccountQuestionToDOM,
+  toggleNewTicketWrapper,
+  addTicketsToDOM,
+  addViewedTicketToDOM,
 } from '../dom/dom-handlers.js';
 
 // index.js
@@ -155,6 +176,7 @@ const submitSignupForm = async (event) => {
     };
     await addToDatabase('users', newUser);
     localStorage.setItem('userID', newUser.id);
+    localStorage.setItem('username', user.username);
     localStorage.removeItem('isAdmin');
 
     emailInput.value = '';
@@ -179,6 +201,7 @@ const submitLoginForm = async (event) => {
   if (loginFormValidation(emailInputValue, passwordInputValue, user)) {
     user.role === 'admin' ? localStorage.setItem('isAdmin', 'true') : localStorage.removeItem('isAdmin');
     localStorage.setItem('userID', user.id);
+    localStorage.setItem('username', user.username);
     emailInput.value = '';
     passwordInput.value = '';
     setTimeout(() => {
@@ -269,6 +292,92 @@ const fetchAndDisplayAccountQuestions = async () => {
   }
 };
 
+const submitNewTicket = async (tickets) => {
+  const department = newTicketChosenDepartmentElement.dataset.department;
+  const subject = subjectInputElement.value.trim();
+  const content = ticketTextareaElement.value.trim();
+
+  if (!newTicketValidation(department, subject, content)) return;
+
+  const newTicket = {
+    id: generateRandomID(),
+    created_at: new Date(),
+    updated_at: new Date(),
+    user_id: localStorageUserID,
+    writer_name: localStorageUsername,
+    department,
+    subject,
+    content,
+  };
+
+  try {
+    await addToDatabase('tickets', newTicket);
+    sweetAlert('تیکت با موفقیت ارسال شد.', 'success');
+    toggleNewTicketWrapper(ticketBtn);
+    tickets.push(newTicket);
+    addTicketsToDOM(tickets, true);
+  } catch (error) {
+    console.error('Failed to submit ticket', error);
+    sweetAlert('ارسال تیکت با خطا مواجه شد، لطفا بعدا تلاش کنید.', 'failed');
+  }
+};
+
+// account.js
+const fetchAndDisplayUserTickets = async () => {
+  try {
+    const tickets = await getSomeFromDatabase('tickets', 'user_id', localStorageUserID);
+
+    addTicketsToDOM(tickets, true);
+
+    newTicketSubmitBtn.addEventListener('click', () => submitNewTicket(tickets));
+  } catch (error) {
+    console.error('Failed to fetch tickets', error);
+  }
+};
+
+const submitTicketAnswer = (btn, ticket, tickets, isUserPanel) => {
+  const textarea = document.querySelector(`#textarea-${ticket.id}`);
+
+  btn.addEventListener('click', async () => {
+    const content = textarea.value.trim();
+    if (!content) {
+      sweetAlert('پاسخ نمی‌تواند خالی باشد.', 'info');
+      textarea.focus();
+      return;
+    }
+
+    const answers = ticket.answers;
+
+    const newAnswer = {
+      id: answers.length + 1,
+      created_at: new Date(),
+      content,
+      writer_role: isUserPanel ? 'user' : 'admin',
+      writer_name: isUserPanel ? localStorageUsername : localStorage.getItem('admin-name'),
+    };
+
+    const updatedTicketInfo = {
+      answers,
+      is_answered: isUserPanel ? false : true,
+      updated_at: new Date(),
+    };
+
+    ticket.updated_at = new Date();
+    ticket.is_answered = isUserPanel ? false : true;
+
+    answers.push(newAnswer);
+
+    textarea.value = '';
+
+    await updateInDatabase('tickets', updatedTicketInfo, ticket.id);
+
+    sweetAlert('پاسخ شما با موفقیت ارسال شد.', 'success');
+
+    addTicketsToDOM(tickets, isUserPanel);
+    addViewedTicketToDOM(ticket.id, tickets, isUserPanel);
+  });
+};
+
 // account.js - admin-panel.js
 const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
   if (isAdmin) {
@@ -313,7 +422,7 @@ const submitAccountDetailChanges = async (event) => {
 };
 
 // account.js - admin-panel.js
-const submitAccountUPasswordChanges = async (event) => {
+const submitAccountPasswordChanges = async (event) => {
   event.preventDefault();
 
   const currentPasswordInputValue = currentPasswordInputElem.value.trim();
@@ -335,6 +444,52 @@ const fetchAndDisplayAdminQuestions = async () => {
     addAdminPanelQuestionToDOM(data);
   } catch (error) {
     console.error('Failed to fetch questions', error);
+  }
+};
+
+const closeQuestion = (btn, pageID, questions, adminName, data, page) => {
+  try {
+    btn.addEventListener('click', async () => {
+      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بله');
+      if (!isConfirmed) return;
+
+      const questionID = btn.dataset.question_id;
+      const question = questions.find((question) => question.id === questionID);
+      question.is_closed = true;
+      await updateInDatabase('question_answer', { questions }, pageID);
+      addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
+    });
+  } catch (error) {
+    console.error('Failed to close question', error);
+    sweetAlert('بستن سوال با خطا مواجه شد.', 'failed');
+  }
+};
+
+// admin-panel.js
+const fetchAndDisplayAllTickets = async () => {
+  try {
+    const tickets = await getAllFromDatabase('tickets');
+
+    addTicketsToDOM(tickets);
+  } catch (error) {
+    console.error('Failed to fetch tickets', error);
+  }
+};
+
+const closeTicket = (btn, ticket, tickets) => {
+  try {
+    btn.addEventListener('click', async () => {
+      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بله');
+      if (!isConfirmed) return;
+      ticket.is_closed = true;
+      await updateInDatabase('tickets', { is_closed: true }, ticket.id);
+      addTicketsToDOM(tickets);
+      addViewedTicketToDOM(ticket.id, tickets, false);
+      sweetAlert('تیکت با موفقیت بسته شد.', 'success');
+    });
+  } catch (error) {
+    console.error('Failed to close ticket', error);
+    sweetAlert('بستن تیکت با خطا مواجه شد.', 'failed');
   }
 };
 
@@ -393,11 +548,12 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
 
     const newQuestion = {
       id: generateRandomID(),
-      createdAt: new Date(),
+      created_at: new Date(),
       content: questionContent,
-      isAnswered: false,
-      isClosed: false,
+      is_answered: false,
+      is_closed: false,
       answers: [],
+      writer_name: localStorageUsername,
     };
 
     newQuestionTextareaElement.value = '';
@@ -451,14 +607,14 @@ const submitQuestionAnswer = (btn, pageID, questions, adminName = null, data = n
 
     const newAnswer = {
       id: answers.length + 1,
-      createdAt: new Date(),
+      created_at: new Date(),
       content,
-      writerRole: adminName ? 'teacher' : 'user',
-      writerName: adminName ? adminName : 'null',
+      writer_role: adminName ? 'teacher' : 'user',
+      writer_name: adminName ? adminName : localStorageUsername,
     };
 
     answers.push(newAnswer);
-    question.isAnswered = adminName ? true : false;
+    question.is_answered = adminName ? true : false;
 
     textarea.value = '';
 
@@ -466,19 +622,6 @@ const submitQuestionAnswer = (btn, pageID, questions, adminName = null, data = n
     sweetAlert('پاسخ شما با موفقیت ارسال شد.', 'success');
 
     adminName ? addAdminPanelViewedQuestionToDOM(data, page, question, adminName) : addSessionQuestionsToDOM(pageID, questions);
-  });
-};
-
-const closeQuestion = (btn, pageID, questions, adminName, data, page) => {
-  btn.addEventListener('click', async () => {
-    const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بله');
-    if (!isConfirmed) return;
-
-    const questionID = btn.dataset.question_id;
-    const question = questions.find((question) => question.id === questionID);
-    question.isClosed = true;
-    await updateInDatabase('question_answer', { questions }, pageID);
-    addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
   });
 };
 
@@ -494,14 +637,19 @@ export {
   purchaseCourses,
   fetchAndDisplayAccountCourses,
   fetchAndDisplayAccountQuestions,
+  submitNewTicket,
+  fetchAndDisplayUserTickets,
+  submitTicketAnswer,
   fetchAndDisplayAccountUserDetail,
   submitAccountDetailChanges,
-  submitAccountUPasswordChanges,
+  submitAccountPasswordChanges,
   fetchAndDisplayAdminQuestions,
+  closeQuestion,
+  fetchAndDisplayAllTickets,
+  closeTicket,
   fetchAndDisplaySellAndExpenseData,
   fetchAndDisplaySession,
   fetchAndDisplaySessionQuestions,
   submitSessionNewQuestion,
   submitQuestionAnswer,
-  closeQuestion,
 };

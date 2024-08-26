@@ -1,4 +1,4 @@
-import { formatDate, formatTime } from './../utils/utils.js';
+import { categoryInPersian, formatDate, formatTime } from './../utils/utils.js';
 
 const loginBtnTemplate = (userID) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
@@ -735,12 +735,12 @@ const accountCourseTemplate = (course) => {
   return template;
 };
 
-const accountQuestionTemplate = (question) => {
+const panelQuestionTemplate = (question, isAdminPanel = false) => {
   let questionOverlay = `<div class="absolute inset-0 bg-amber-600/5"></div>`;
   let questionSituationTemplate = `<i class="text-amber-600">! در انتظار پاسخ</i>`;
   let questionBorderColor = 'border-amber-600';
 
-  if (question.isClosed) {
+  if (question.is_closed) {
     questionOverlay = `<div class="absolute inset-0 bg-rose-600/5"></div>`;
     questionSituationTemplate = `
     <div class="flex items-center gap-1 text-rose-600">
@@ -750,7 +750,7 @@ const accountQuestionTemplate = (question) => {
     <i class="text-sm">بسته شده</i>
     </div>`;
     questionBorderColor = 'border-rose-600';
-  } else if (question.isAnswered) {
+  } else if (question.is_answered) {
     questionOverlay = `<div class="absolute inset-0 bg-emerald-600/5"></div>`;
     questionSituationTemplate = `
         <div class="flex items-center gap-1 text-emerald-600 dark:text-emerald-500">
@@ -763,7 +763,10 @@ const accountQuestionTemplate = (question) => {
   }
 
   const template = `
-          <a href="./session.html?id=${question.sessionID}&course=${question.courseSlug}&question=${question.id}" class="flex flex-col md:flex-row md:justify-between gap-5 border-x-2 ${questionBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow relative group">
+          <a ${isAdminPanel ? '' : `href="./session.html?id=${question.sessionID}&course=${question.courseSlug}&question=${question.id}"`} 
+            class="question__wrapper flex flex-col md:flex-row md:justify-between gap-5 border-x-2 ${questionBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow cursor-pointer relative group" 
+            ${isAdminPanel ? `data-page_id="${question.pageID}" data-question_id="${question.id}"` : ''}
+          >
             ${questionOverlay}
             <!-- Course Name and Session Name -->
             <div class="flex flex-wrap gap-3 text-sm sm:text-base md:group-hover:theme-text-color transition-colors z-10">
@@ -781,10 +784,9 @@ const accountQuestionTemplate = (question) => {
               </div>
             </div>
             <!-- End of Course Name and Session Name -->
-
             <!-- Situation and Date -->
             <div class="flex justify-between xs:justify-end flex-wrap gap-x-4 gap-y-2 text-sm sm:text-base">
-              <span>${formatTime(question.updatedAt)} - ${formatDate(question.updatedAt)}</span>
+              <span>${formatTime(question.updated_at)} - ${formatDate(question.updated_at)}</span>
               <!-- Situation -->
                 ${questionSituationTemplate}
               <!-- End of Situation -->
@@ -806,6 +808,258 @@ const userAccountProfilePictureTemplate = (imageSrc) => {
   if (imageSrc) {
     template = `<img class="size-full" src="${imageSrc}" alt="تصویر پروفایل">`;
   }
+  return template;
+};
+
+const ticketTemplate = (ticket) => {
+  let departmentIcon = 'user-circle';
+
+  if (ticket.department === 'support') {
+    departmentIcon = 'user-group';
+  } else if (ticket.department === 'finance') {
+    departmentIcon = 'currency-dollar';
+  }
+
+  let ticketOverlay = `<div class="absolute inset-0 bg-amber-600/5"></div>`;
+  let ticketSituationTemplate = `<i class="text-amber-600">! در انتظار پاسخ</i>`;
+  let ticketBorderColor = 'border-amber-600';
+
+  if (ticket.is_closed) {
+    ticketOverlay = `<div class="absolute inset-0 bg-rose-600/5"></div>`;
+    ticketSituationTemplate = `
+    <div class="flex items-center gap-1 text-rose-600">
+    <svg class="size-4">
+    <use href="#x-mark"></use>
+    </svg>
+    <i class="text-sm">بسته شده</i>
+    </div>`;
+    ticketBorderColor = 'border-rose-600';
+  } else if (ticket.is_answered) {
+    ticketOverlay = `<div class="absolute inset-0 bg-emerald-600/5"></div>`;
+    ticketSituationTemplate = `
+        <div class="flex items-center gap-1 text-emerald-600 dark:text-emerald-500">
+          <svg class="size-4">
+            <use href="#check"></use>
+          </svg>
+          <i class="text-sm">پاسخ داده شده</i>
+        </div>`;
+    ticketBorderColor = 'border-emerald-600 dark:border-emerald-500';
+  }
+
+  const template = `
+          <div class="ticket-wrapper flex flex-col md:flex-row md:justify-between gap-5 border-x-2 ${ticketBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow cursor-pointer relative group" id="${ticket.id}">
+            ${ticketOverlay}
+            <!-- Department and Subject -->
+            <div class="flex flex-wrap gap-3 text-sm sm:text-base md:group-hover:theme-text-color transition-colors z-10">
+              <div class="flex gap-2">
+                <svg class="size-5 shrink-0">
+                  <use href="#${departmentIcon}"></use>
+                </svg>
+                <span class="font-VazirMedium">${categoryInPersian(ticket.department)}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <svg class="size-4 shrink-0">
+                  <use href="#ticket"></use>
+                </svg>
+                <span>${ticket.subject}</span>
+              </div>
+            </div>
+            <!-- End of Department and Subject -->
+
+            <!-- Situation and Date -->
+            <div class="flex justify-between xs:justify-end flex-wrap gap-x-4 gap-y-2 text-sm sm:text-base">
+              <span>${formatTime(ticket.updated_at)} - ${formatDate(ticket.updated_at)}</span>
+              <!-- Situation -->
+                ${ticketSituationTemplate}
+              <!-- End of Situation -->
+            </div>
+            <!-- End of Situation and Date -->
+          </div>`;
+  return template;
+};
+
+const questionAnswersTemplate = (answers, userPage = false) => {
+  if (!answers.length) return '';
+
+  let template = '';
+
+  answers.forEach((answer) => {
+    const content = answer.content.replace(/\n/g, '<br>');
+    const date = formatDate(answer.created_at);
+    const time = formatTime(answer.created_at);
+
+    if (answer.writer_role === 'teacher' || answer.writer_role === 'admin') {
+      template += `
+            <div class="xs:w-2/3 2xl:w-7/12 ${userPage ? 'xs:mr-auto theme-bg-color text-white rounded-br-2xl' : 'theme-bg-color-10 dark:bg-sky-950 rounded-bl-2xl'} rounded-t-2xl mt-5 pt-2 pb-4 px-4 relative">
+              <div class="flex items-start justify-between gap-2 border-b ${userPage ? 'border-b-slate-200' : 'border-b-slate-400'}">              
+                ${
+                  userPage
+                    ? `
+                      <div>
+                        <p class="sm:text-lg">${answer.writer_name}</p>
+                        <span>مدرس</span>
+                      </div>`
+                    : '<p class="sm:text-lg my-auto">شما</p>'
+                }
+                <div class="flex flex-col items-end">
+                  <span>${date}</span>
+                  <span>${time}</span>
+                </div>
+              </div>
+              <!-- Answer Content -->
+              <div class="w-full resize-none overflow-hidden mt-4 z-20">
+                <p>${content}</p>
+              </div>
+            </div>`;
+    } else {
+      template += `
+            <div class="xs:w-2/3 2xl:w-7/12 ${userPage ? 'theme-bg-color-10 dark:bg-sky-950 rounded-bl-2xl' : 'xs:mr-auto theme-bg-color text-white rounded-br-2xl'} rounded-t-2xl mt-5 pt-2 pb-4 px-4 relative">
+              <div class="flex items-start justify-between gap-2 border-b ${userPage ? 'border-b-slate-400' : 'border-b-slate-200'}">
+                 ${
+                   userPage
+                     ? '<p class="sm:text-lg my-auto">شما</p>'
+                     : `
+                        <div>
+                          <p class="sm:text-lg">${answer.writer_name}</p>
+                          <span>کاربر</span>
+                        </div>`
+                 }
+                <div class="flex flex-col items-end">
+                  <span>${date}</span>
+                  <span>${time}</span>
+                </div>
+              </div>
+              <!-- Answer Content -->
+              <div class="w-full resize-none overflow-hidden mt-4 z-20">
+                <p>${content}</p>
+              </div>
+            </div>`;
+    }
+  });
+
+  return template;
+};
+
+const viewedTicketTemplate = (ticket, isUserPanel = false) => {
+  const content = ticket.content.replace(/\n/g, '<br>');
+  const date = formatDate(ticket.created_at);
+  const time = formatTime(ticket.created_at);
+
+  let departmentIcon = 'user-circle';
+  if (ticket.department === 'support') {
+    departmentIcon = 'user-group';
+  } else if (ticket.department === 'finance') {
+    departmentIcon = 'currency-dollar';
+  }
+
+  let ticketSituationText = 'در انتظار پاسخ';
+  let ticketSituationColor = 'bg-amber-600';
+
+  if (ticket.is_closed) {
+    ticketSituationText = 'بسته شده';
+    ticketSituationColor = 'bg-rose-600';
+  } else if (ticket.is_answered) {
+    ticketSituationText = 'پاسخ داده شده';
+    ticketSituationColor = 'bg-emerald-600';
+  }
+
+  const template = `  
+      <!-- Ticket Detail --> 
+      <div class="bg-white dark:bg-slate-800 space-y-3 py-3 px-2.5 rounded-2xl">
+        <!-- Ticket Department -->
+        <div class="flex w-fit gap-2 text-sm sm:text-base">
+          <svg class="size-5 shrink-0">
+            <use href="#${departmentIcon}"></use>
+          </svg>
+          <span>${categoryInPersian(ticket.department)}</span>
+        </div>
+        <!-- End of Ticket Department -->
+        <!--Ticket SUbject -->
+        <div class="flex w-fit gap-2 text-sm sm:text-base">
+          <svg class="size-5 shrink-0">
+            <use href="#ticket"></use>
+          </svg>
+          <span>${ticket.subject}</span>
+        </div>
+        <!-- End ofTicket SUbject -->
+        <!-- Writer Name -->
+        <div class="${isUserPanel ? 'hidden' : 'flex'} w-fit gap-2 text-sm sm:text-base">
+          <svg class="size-5 shrink-0">
+            <use href="#user"></use>
+          </svg>
+          <span>${ticket.writer_name}</span>
+        </div>
+        <!-- End of Username -->
+      </div>
+      <!-- End of Ticket Detail --> 
+
+      <div class="py-5 my-5 bg-white dark:bg-slate-800' px-2.5 rounded-2xl" id="${ticket.id}">
+        <div class="question-header flex items-center px-2 gap-4 text-sm sm:text-base w-fit ${ticketSituationColor} rounded-full">
+          <span class="text-white">${ticketSituationText}</span>
+        </div>
+         <!-- Ticket Content -->
+         <div class="w-full text-white bg-slate-500 rounded-2xl px-4 pt-4 pb-1 resize-none overflow-hidden mt-4 relative z-20">
+           <p>${content}</p>
+           <!-- Ticket Footer -->
+           <div class="flex items-end border-t border-t-slate-200 dark:border-slate-600 justify-between flex-wrap gap-2 mt-2 pt-1">
+            <span>${time}</span>    
+             <span>${date}</span>  
+           </div>
+           <!-- End of Ticket Footer -->
+         </div>
+         <!-- End of Ticket Content -->
+
+         <!-- Answers -->
+         <div class="px-2">
+          ${questionAnswersTemplate(ticket.answers, isUserPanel)}
+         </div>
+
+         <!-- End of Answers -->
+         
+        ${
+          ticket.is_closed
+            ? '<div class="border border-rose-500 text-rose-500 text-center font-VazirMedium mt-6 rounded-xl p-4">این پرسش بسته شده است.</div>'
+            : `
+              <!-- New Answer Wrapper -->
+                <div class="new-answer__wrapper mt-6">
+                  <!-- Answer Btn -->
+                  <div class="flex ${isUserPanel ? 'justify-end' : 'justify-between'}">
+                    ${
+                      isUserPanel
+                        ? ''
+                        : `
+                          <div class="close-question-btn bg-rose-600 md:hover:bg-rose-700 text-white py-px px-1 flex items-center gap-1 select-none rounded-lg md:cursor-pointer transition-colors" data-question_id="${ticket.id}">
+                            <svg class="size-5">
+                              <use href="#lock-closed"></use>
+                            </svg>
+                            <span>بستن</span>
+                          </div>
+                        `
+                    }
+                    <div class="answer__open-btn bg-slate-300 py-px px-1 flex items-center gap-1 select-none rounded-lg text-slate-950 md:cursor-pointer md:hover:theme-text-color transition-colors" data-question_id="${ticket.id}">
+                      <svg class="size-5">
+                        <use href="#chat-bubble-left-ellipsis"></use>
+                      </svg>
+                      <span>پاسخ</span>
+                    </div>
+                  </div>
+                  <!-- End of Answer Btn -->
+                  <!-- New Answer -->
+                  <div class="px-2 max-h-0 overflow-hidden" id="wrapper-${ticket.id}">
+                    <textarea class="new-answer__textarea w-full h-40 bg-slate-200 dark:bg-slate-600 dark:placeholder:text-slate-300 placeholder:text-slate-500 rounded-2xl outline-none p-4 resize-none overflow-hidden" id="textarea-${ticket.id}" placeholder="پاسخ..."></textarea>
+                    <div class="flex items-center justify-end gap-2 select-none" data-question_id="${ticket.id}">
+                      <div class="new-answer__cancel-btn btn border theme-border-color md:hover:theme-bg-color-10 text-inherit md:cursor-pointer">لغو</div>
+                      <div class="new-answer__submit-btn btn theme-bg-color border theme-border-color md:hover:theme-hover-bg-color md:cursor-pointer">ثبت</div>
+                    </div>
+                  </div>
+                  <!-- End of New Answer -->
+                </div> 
+              <!-- End of New Answer Wrapper -->
+                `
+        }
+
+       </div>`;
+
   return template;
 };
 
@@ -885,72 +1139,17 @@ const adminPanelCommentTemplate = (comment) => {
   return template;
 };
 
-const adminPanelQuestionTemplate = (question) => {
-  let questionOverlay = `<div class="absolute inset-0 bg-amber-600/5"></div>`;
-  let questionSituationTemplate = `<i class="text-amber-600">! در انتظار پاسخ</i>`;
-  let questionBorderColor = 'border-amber-600';
-  let viewBtnColors = 'bg-amber-600/10 text-amber-600 md:hover:bg-amber-600';
-
-  if (question.isClosed) {
-    questionOverlay = `<div class="absolute inset-0 bg-rose-600/5"></div>`;
-    questionSituationTemplate = `
-    <div class="flex items-center gap-1 text-rose-600">
-    <svg class="size-4">
-    <use href="#x-mark"></use>
-    </svg>
-    <i class="text-sm">بسته شده</i>
-    </div>`;
-    questionBorderColor = 'border-rose-600';
-    viewBtnColors = 'bg-rose-600/10 text-rose-600 md:hover:bg-rose-600';
-  } else if (question.isAnswered) {
-    questionOverlay = `<div class="absolute inset-0 bg-emerald-600/5"></div>`;
-    questionSituationTemplate = `
-        <div class="flex items-center gap-1 text-emerald-600 dark:text-emerald-500">
-          <svg class="size-4">
-            <use href="#check"></use>
-          </svg>
-          <i class="text-sm">پاسخ داده شده</i>
-        </div>`;
-    questionBorderColor = 'border-emerald-600 dark:border-emerald-500';
-    viewBtnColors = 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-500 md:hover:bg-emerald-600 dark:md:hover:bg-emerald-500';
-  }
-
+const adminPanelViewedQuestionTemplate = (page, question) => {
   const template = `
-          <div class="flex flex-col md:flex-row md:justify-between gap-5 border-x-2 ${questionBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow relative">
-            ${questionOverlay}
-            <!-- Course Name -->
-            <a href="./course.html?course=${question.courseSlug}" class="flex gap-2 text-sm sm:text-base md:hover:theme-text-color transition-colors font-VazirMedium z-10">
-              <svg class="size-5 shrink-0">
-                <use href="#course"></use>
-              </svg>
-              <span>${question.courseName}</span>
-            </a>
-            <!-- End of Course Name -->
-            <!-- Situation, Date and View Btn -->
-            <div class="flex justify-between xs:justify-end flex-wrap gap-x-4 gap-y-2 text-sm sm:text-base">
-              <span>${formatTime(question.updatedAt)} - ${formatDate(question.updatedAt)}</span>
-              <!-- Situation -->
-                ${questionSituationTemplate}
-              <!-- End of Situation -->
-              <!-- View Btn -->
-              <div class="question__view-btn px-1 ${viewBtnColors} md:hover:text-white transition-colors rounded-md md:cursor-pointer select-none z-10" data-page_id="${question.pageID}" data-question_id="${question.id}">مشاهده</div>
-              <!-- End of View Btn -->
-            </div>
-            <!-- End of Situation, Date and View Btn -->
-          </div>`;
-
-  return template;
-};
-
-const adminPanelViewedQuestionTemplate = (page, question, user) => {
-  const template = `
-  <div class="back-btn flex justify-end pb-5">
-    <div class="theme-bg-color text-white rounded-full p-2 md:cursor-pointer">
+  <div class="back-btn flex justify-end pb-2">
+    <div class="flex gap-2 theme-bg-color hover:theme-hover-bg-color text-white rounded-full p-2 md:cursor-pointer transition-colors">
+      <span class="hidden xs:block">بازگشت</span>
       <svg class="size-6">
         <use href="#arrow-left"></use>
       </svg>
     </div>
   </div>
+
   <!-- Question Detail -->
   <div class="bg-white dark:bg-slate-800 space-y-3 py-3 px-2.5 rounded-2xl">
     <!-- Course Name -->
@@ -974,89 +1173,27 @@ const adminPanelViewedQuestionTemplate = (page, question, user) => {
       <svg class="size-5 shrink-0">
         <use href="#user"></use>
       </svg>
-      <span>${user.username}</span>
+      <span>${question.writer_name}</span>
     </div>
     <!-- End of Username -->
   </div>
-  ${sessionQuestionTemplate(question, null, user.username)}
+  ${sessionQuestionTemplate(question)}
 `;
   return template;
 };
 
-const sessionAnswersTemplate = (answers, sessionPage, username) => {
-  if (!answers.length) return '';
-
-  let template = '';
-
-  answers.forEach((answer) => {
-    const content = answer.content.replace(/\n/g, '<br>');
-    const date = formatDate(answer.createdAt);
-    const time = formatTime(answer.createdAt);
-
-    if (answer.writerRole === 'teacher') {
-      template += `
-            <div class="xs:w-2/3 2xl:w-7/12 ${sessionPage ? 'xs:mr-auto theme-bg-color text-white' : 'theme-bg-color-10 dark:bg-sky-950'} mt-5 rounded-2xl pt-2 pb-4 px-4 relative z-20">
-              <div class="flex items-start justify-between gap-2 border-b ${sessionPage ? 'border-b-slate-200' : 'border-b-slate-400'}">
-                ${
-                  sessionPage
-                    ? `
-                      <div>
-                        <p class="sm:text-lg">${answer.writerName}</p>
-                        <span>مدرس</span>
-                      </div>`
-                    : '<p class="sm:text-lg my-auto">شما</p>'
-                }
-                <div class="flex flex-col items-end">
-                  <span>${date}</span>
-                  <span>${time}</span>
-                </div>
-              </div>
-              <!-- Answer Content -->
-              <div class="w-full resize-none overflow-hidden mt-4 z-20">
-                <p>${content}</p>
-              </div>
-            </div>`;
-    } else {
-      template += `
-            <div class="xs:w-2/3 2xl:w-7/12 ${sessionPage ? 'theme-bg-color-10 dark:bg-sky-950' : 'xs:mr-auto theme-bg-color text-white'} mt-5 rounded-2xl pt-2 pb-4 px-4 relative z-20">
-              <div class="flex items-start justify-between gap-2 border-b ${sessionPage ? 'border-b-slate-400' : 'border-b-slate-200'}">
-                 ${
-                   sessionPage
-                     ? '<p class="sm:text-lg my-auto">شما</p>'
-                     : `
-                        <div>
-                          <p class="sm:text-lg">${username}</p>
-                          <span>کاربر</span>
-                        </div>`
-                 }
-                <div class="flex flex-col items-end">
-                  <span>${date}</span>
-                  <span>${time}</span>
-                </div>
-              </div>
-              <!-- Answer Content -->
-              <div class="w-full resize-none overflow-hidden mt-4 z-20">
-                <p>${content}</p>
-              </div>
-            </div>`;
-    }
-  });
-
-  return template;
-};
-
-const sessionQuestionTemplate = (question, number = null, username = null) => {
+const sessionQuestionTemplate = (question, number = null) => {
   const content = question.content.replace(/\n/g, '<br>');
-  const date = formatDate(question.createdAt);
-  const time = formatTime(question.createdAt);
+  const date = formatDate(question.created_at);
+  const time = formatTime(question.created_at);
 
   let questionSituationText = 'در انتظار پاسخ';
   let questionSituationColor = 'bg-amber-600';
 
-  if (question.isClosed) {
+  if (question.is_closed) {
     questionSituationText = 'بسته شده';
     questionSituationColor = 'bg-rose-600';
-  } else if (question.isAnswered) {
+  } else if (question.is_answered) {
     questionSituationText = 'پاسخ داده شده';
     questionSituationColor = 'bg-emerald-600';
   }
@@ -1083,13 +1220,13 @@ const sessionQuestionTemplate = (question, number = null, username = null) => {
 
          <!-- Answers -->
          <div class="px-2">
-          ${sessionAnswersTemplate(question.answers, number, username)}
+          ${questionAnswersTemplate(question.answers, number)}
          </div>
 
          <!-- End of Answers -->
          
         ${
-          question.isClosed
+          question.is_closed
             ? '<div class="border border-rose-500 text-rose-500 text-center font-VazirMedium mt-6 rounded-xl p-4">این پرسش بسته شده است.</div>'
             : `
               <!-- New Answer Wrapper -->
@@ -1152,10 +1289,11 @@ export {
   headerCartCourseTemplate,
   cartCourseTemplate,
   accountCourseTemplate,
-  accountQuestionTemplate,
+  panelQuestionTemplate,
   userAccountProfilePictureTemplate,
+  ticketTemplate,
+  viewedTicketTemplate,
   adminPanelCommentTemplate,
-  adminPanelQuestionTemplate,
   adminPanelViewedQuestionTemplate,
   sessionQuestionTemplate,
 };

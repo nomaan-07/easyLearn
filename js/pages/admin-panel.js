@@ -1,12 +1,24 @@
 import '../theme/change-theme.js';
 import { removeLoader } from '../utils/utils.js';
-import { fetchAndDisplaySellAndExpenseData } from '../database/database-handlers.js';
+import { fetchAndDisplayAllTickets, fetchAndDisplaySellAndExpenseData } from '../database/database-handlers.js';
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { addAdminPanelCommentsToDOM, displayChosenAccountSection } from '../dom/dom-handlers.js';
+import { addAdminPanelCommentsToDOM, displayChosenAccountSection, returnFromViewedTicket } from '../dom/dom-handlers.js';
 import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from '../database/database-api.js';
 import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from '../ui/ui-handlers.js';
-import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountUPasswordChanges, fetchAndDisplayAdminQuestions } from '../database/database-handlers.js';
-import { accountChangeDetailSubmitBtn, accountChangePasswordSubmitBtn, accountChangeProfilePictureBtn, accountDisplayPasswordButtons, accountMenuItemElements, adminCommentsFilterButtons, adminPanelCommentsWrapper, mobileMenuCloseBtn, mobileMenuOpenBtn, overlay } from '../dom/dom-elements.js';
+import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountPasswordChanges, fetchAndDisplayAdminQuestions } from '../database/database-handlers.js';
+import {
+  accountChangeDetailSubmitBtn,
+  accountChangePasswordSubmitBtn,
+  accountChangeProfilePictureBtn,
+  accountDisplayPasswordButtons,
+  accountMenuItemElements,
+  adminCommentsFilterButtons,
+  adminPanelCommentsWrapper,
+  mobileMenuCloseBtn,
+  mobileMenuOpenBtn,
+  overlay,
+  ticketBtn,
+} from '../dom/dom-elements.js';
 
 let commentFilterType = 'all';
 let allComments = null;
@@ -97,6 +109,7 @@ window.addEventListener('load', async () => {
   }, 500);
   fetchAndDisplayAdminQuestions();
   fetchAndDisplaySellAndExpenseData();
+  fetchAndDisplayAllTickets();
 });
 
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
@@ -104,9 +117,10 @@ mobileMenuOpenBtn.addEventListener('click', openMobileAccountMenu);
 mobileMenuCloseBtn.addEventListener('click', closeMobileAccountMenu);
 overlay.addEventListener('click', closeMobileAccountMenu);
 accountChangeDetailSubmitBtn.addEventListener('click', submitAccountDetailChanges);
-accountChangePasswordSubmitBtn.addEventListener('click', submitAccountUPasswordChanges);
+accountChangePasswordSubmitBtn.addEventListener('click', submitAccountPasswordChanges);
 accountDisplayPasswordButtons.forEach((btn) => btn.addEventListener('click', () => displayPasswordHandler(btn, btn.previousElementSibling)));
 accountChangeProfilePictureBtn.addEventListener('click', () => sweetAlert('در حال حاضر امکان تغییر تصویر پروفایل وجود ندارد.', 'info'));
 adminCommentsFilterButtons.forEach((btn) => {
   btn.addEventListener('click', () => filterCommentsHandler(btn, allComments));
 });
+ticketBtn.addEventListener('click', returnFromViewedTicket);
