@@ -36,7 +36,6 @@ import {
   breadCrumbLinksHandler,
   filterPanelsQuestions,
   scrollToAboveOfElement,
-  getQueryParameters,
 } from '../utils/utils.js';
 
 import {
@@ -542,6 +541,7 @@ const addTicketsToDOM = (tickets, isUserPanel = false) => {
   let ticketsTemplate = '';
 
   const filteredTickets = filterPanelsQuestions(tickets, true);
+
   filteredTickets.forEach((ticket) => {
     ticketsTemplate += ticketTemplate(ticket);
   });

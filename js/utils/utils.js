@@ -314,6 +314,8 @@ const questionsExtraction = (data) => {
 const filterPanelsQuestions = (data, isTicket = false) => {
   const questions = isTicket ? data : questionsExtraction(data);
 
+  questions.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+
   const closedQuestions = questions.filter((question) => question.is_closed);
   const answeredQuestions = questions.filter((question) => question.is_answered && !question.is_closed);
   const notAnsweredQuestions = questions.filter((question) => !question.is_answered && !question.is_closed);
