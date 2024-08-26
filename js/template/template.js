@@ -77,7 +77,7 @@ const courseCardTemplate = (course) => {
                   <!-- Students -->
                   <div class="flex gap-1 mb-0.5">
                     <svg class="size-5 theme-text-color">
-                      <use href="#user-group"></use>
+                      <use href="#users"></use>
                     </svg>
                     <span>${course.students}</span>
                   </div>
@@ -312,7 +312,7 @@ const courseDataTemplate = (course) => {
           </div>
           <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
             <svg class="size-8 sm:size-10 theme-text-color">
-              <use href="#user-group"></use>
+              <use href="#users"></use>
             </svg>
             <span class="font-VazirLight mt-2 mb-1.5">دانشجو</span>
             <span class="font-VazirBold">${course.students}</span>
@@ -815,7 +815,7 @@ const ticketTemplate = (ticket) => {
   let departmentIcon = 'user-circle';
 
   if (ticket.department === 'support') {
-    departmentIcon = 'user-group';
+    departmentIcon = 'users';
   } else if (ticket.department === 'finance') {
     departmentIcon = 'currency-dollar';
   }
@@ -947,7 +947,7 @@ const viewedTicketTemplate = (ticket, isUserPanel = false) => {
 
   let departmentIcon = 'user-circle';
   if (ticket.department === 'support') {
-    departmentIcon = 'user-group';
+    departmentIcon = 'users';
   } else if (ticket.department === 'finance') {
     departmentIcon = 'currency-dollar';
   }
