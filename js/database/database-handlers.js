@@ -2,7 +2,7 @@ import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initi
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
 import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, getSomeFromDatabase } from './database-api.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation, newTicketValidation } from '../validation/validation.js';
-import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject } from '../utils/utils.js';
+import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject, removeLoader } from '../utils/utils.js';
 import {
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
@@ -174,9 +174,10 @@ const submitSignupForm = async (event) => {
       email: emailInputValue,
       password: passwordInputValue,
     };
+
     await addToDatabase('users', newUser);
     localStorage.setItem('userID', newUser.id);
-    localStorage.setItem('username', user.username);
+    localStorage.setItem('username', newUser.username);
     localStorage.removeItem('isAdmin');
 
     emailInput.value = '';
@@ -308,6 +309,7 @@ const submitNewTicket = async (tickets) => {
     department,
     subject,
     content,
+    answers: [],
   };
 
   try {
@@ -384,12 +386,13 @@ const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
     const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
     if (!localStorageUserID || !isAdmin) {
-      location.replace('./404.html');
+      location.replace('./account.html');
     }
 
     const admin = await getOneFromDatabase('users', 'id', localStorageUserID);
+
     if (admin.role !== 'admin') {
-      location.replace('./404.html');
+      location.replace('./account.html');
     }
 
     addUserAccountDetailToDOM(admin);
@@ -399,7 +402,13 @@ const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
   }
 
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
-  addUserAccountDetailToDOM(user);
+
+  if (user.role === 'admin') {
+    location.replace('./admin-panel.html');
+  } else {
+    addUserAccountDetailToDOM(user);
+    removeLoader();
+  }
 };
 
 // account.js - admin-panel.js

@@ -534,6 +534,11 @@ const addViewedTicketToDOM = (ticketID, tickets, isUserPanel) => {
 };
 
 const addTicketsToDOM = (tickets, isUserPanel = false) => {
+  if (!tickets.length && isUserPanel) {
+    insertToDOM(ticketsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ تیکتی ثبت نکرده‌اید.</p>`);
+    return;
+  }
+
   let ticketsTemplate = '';
 
   const filteredTickets = filterPanelsQuestions(tickets, true);

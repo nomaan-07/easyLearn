@@ -24,12 +24,13 @@ if (!localStorageUserID) {
   location.replace('./auth.html?operation=signup');
 }
 
-fetchAndDisplayAccountUserDetail();
-fetchAndDisplayAccountCourses();
-fetchAndDisplayAccountQuestions();
-fetchAndDisplayUserTickets();
+window.addEventListener('load', async () => {
+  await fetchAndDisplayAccountUserDetail();
+  fetchAndDisplayAccountCourses();
+  fetchAndDisplayAccountQuestions();
+  fetchAndDisplayUserTickets();
+});
 
-window.addEventListener('load', removeLoader);
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
 mobileMenuOpenBtn.addEventListener('click', openMobileAccountMenu);
 mobileMenuCloseBtn.addEventListener('click', closeMobileAccountMenu);
