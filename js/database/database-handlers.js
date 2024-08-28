@@ -1,8 +1,8 @@
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
-import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, getSomeFromDatabase } from './database-api.js';
+import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, getSomeFromDatabase, deleteFromDatabase } from './database-api.js';
 import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation, newTicketValidation } from '../validation/validation.js';
-import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject, removeLoader } from '../utils/utils.js';
+import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject, removeLoader, scrollToAboveOfElement } from '../utils/utils.js';
 import {
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
@@ -41,6 +41,10 @@ import {
   toggleNewTicketWrapper,
   addTicketsToDOM,
   addViewedTicketToDOM,
+  addAllUsersToDOM,
+  returnFromViewedUser,
+  addAdminViewedUserCoursesToDOM,
+  addAdminViewedUserStatsToDOM,
 } from '../dom/dom-handlers.js';
 
 // index.js
@@ -70,7 +74,9 @@ const fetchAndDisplayMainPageBlogs = async () => {
 
 // course.js - blog.js
 const fetchAndDisplayComments = async (commentsWrapper, pageID) => {
+  // FIXME: refactor and make a new function for adding to DOM
   try {
+    // const commentID = getQueryParameters
     const comments = await getAllFromDatabase('comments');
     let commentsElements = '';
     let FilteredComments = comments.filter((comment) => {
@@ -83,6 +89,10 @@ const fetchAndDisplayComments = async (commentsWrapper, pageID) => {
       });
       insertToDOM(commentsWrapper, commentsElements);
       document.querySelectorAll('.reply-comment-textarea').forEach((textarea) => textarea.addEventListener('input', textareaAutoResize));
+
+      const commentElementID = getQueryParameters('comment');
+      const commentElement = document.getElementById(commentElementID);
+      commentElement && scrollToAboveOfElement(commentElement, 110);
     } else {
       commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
     }
@@ -92,35 +102,48 @@ const fetchAndDisplayComments = async (commentsWrapper, pageID) => {
 };
 
 // comments section - course.js - blog.js
-const submitNewComment = (newCommentWrapper, newCommentTextarea, pageType, pageID, pageName, pageSlug, user) => {
-  const message = newCommentTextarea.value.trim();
-  let newComment = {
-    id: generateRandomID(),
-    message,
-    page_id: pageID,
-    page_name: pageName,
-    writer: user.username,
-    image_src: user.image_src,
-    page_slug: pageSlug,
-    page_type: pageType,
-  };
+const submitNewComment = async (newCommentWrapper, newCommentTextarea, pageType, pageID, pageName, pageSlug, user) => {
+  try {
+    const message = newCommentTextarea.value.trim();
+    let newComment = {
+      id: generateRandomID(),
+      message,
+      page_id: pageID,
+      page_name: pageName,
+      writer: user.username,
+      image_src: user.image_src,
+      page_slug: pageSlug,
+      page_type: pageType,
+    };
 
-  if (message) {
-    addToDatabase('comments', newComment);
-    sweetAlert('نظر شما ثبت شد و پس از بازبینی منتشر می‌شود.', 'success');
-    toggleTextarea(newCommentWrapper, newCommentTextarea);
-  } else {
-    sweetAlert();
-    sweetAlert('نظر نمی‌تواند خالی باشد.', 'info');
+    if (message) {
+      const user = await getOneFromDatabase('users', 'id', localStorageUserID);
+
+      await addToDatabase('comments', newComment);
+      await updateInDatabase('users', { comments_count: user.comments_count + 1 }, localStorageUserID);
+
+      sweetAlert('نظر شما ثبت شد و پس از بازبینی منتشر می‌شود.', 'success');
+      toggleTextarea(newCommentWrapper, newCommentTextarea);
+    } else {
+      sweetAlert();
+      sweetAlert('نظر نمی‌تواند خالی باشد.', 'info');
+    }
+  } catch (error) {
+    console.error('Failed to submit new comment', error);
+
+    sweetAlert('کامنت ثبت نشد، لطفا بعدا تلاش کنید.', 'failed');
   }
 };
 
 // comments section - course.js - blog.js
-const submitCommentReply = (textarea, wrapper, commentID, pageType, pageName, pageSlug, user) => {
-  const message = textarea.value.trim();
-  let dbReplies = null;
-  let newReply = null;
-  getOneFromDatabase('comments', 'id', commentID).then((comment) => {
+const submitCommentReply = async (textarea, wrapper, commentID, pageType, pageName, pageSlug, user) => {
+  try {
+    const message = textarea.value.trim();
+    let dbReplies = null;
+    let newReply = null;
+
+    const comment = await getOneFromDatabase('comments', 'id', commentID);
+
     newReply = {
       id: generateRandomID(),
       created_at: new Date(),
@@ -137,13 +160,21 @@ const submitCommentReply = (textarea, wrapper, commentID, pageType, pageName, pa
     dbReplies.push(newReply);
 
     if (message) {
-      updateInDatabase('comments', { replies: dbReplies }, commentID);
+      const user = await getOneFromDatabase('users', 'id', localStorageUserID);
+
+      await updateInDatabase('comments', { replies: dbReplies }, commentID);
+      await updateInDatabase('users', { comments_count: user.comments_count + 1 }, localStorageUserID);
+
       sweetAlert('نظر شما ثبت شد و پس از بازبینی منتشر می‌شود.', 'success');
       toggleTextarea(wrapper, textarea);
     } else {
       sweetAlert('نظر نمی‌تواند خالی باشد.', 'info');
     }
-  });
+  } catch (error) {
+    console.error('Failed to submit comment reply', error);
+
+    sweetAlert('کامنت ثبت نشد، لطفا بعدا تلاش کنید.', 'failed');
+  }
 };
 
 // blog.js
@@ -200,7 +231,8 @@ const submitLoginForm = async (event) => {
 
   let user = users.find((user) => user.email === emailInputValue);
   if (loginFormValidation(emailInputValue, passwordInputValue, user)) {
-    user.role === 'admin' ? localStorage.setItem('isAdmin', 'true') : localStorage.removeItem('isAdmin');
+    await updateInDatabase('users', { login_at: new Date() }, user.id);
+
     localStorage.setItem('userID', user.id);
     localStorage.setItem('username', user.username);
     emailInput.value = '';
@@ -211,16 +243,43 @@ const submitLoginForm = async (event) => {
   }
 };
 
-const addSellDataToDatabase = async (courses) => {
-  const databaseTableName = 'sell_expense';
+const addCourseDetailToUserInDatabase = async (courses) => {
+  const user = await getOneFromDatabase('users', 'id', localStorageUserID);
 
-  // calculate purchase total price
-  let purchaseTotalPrice = 0;
+  let coursesTotalPrice = 0;
+  let freeCoursesCount = 0;
+  let cashCoursesCount = 0;
+
   courses.forEach((course) => {
-    purchaseTotalPrice += applyDiscountToPrice(course.price, course.discount);
+    coursesTotalPrice += applyDiscountToPrice(course.price, course.discount);
+    freeCoursesCount += course.discount === 100 ? 1 : 0;
+    cashCoursesCount += course.discount !== 100 ? 1 : 0;
+    user.courses.push({
+      id: course.id,
+      name: course.name,
+      is_free: course.discount === 100,
+      slug: course.slug,
+      image_src: course.image_src,
+    });
   });
 
-  if (purchaseTotalPrice === 0) return;
+  const userNewPurchaseData = {
+    cash_courses_count: user.cash_courses_count + cashCoursesCount,
+    free_courses_count: user.free_courses_count + freeCoursesCount,
+    expense: user.expense + coursesTotalPrice,
+    last_expense_date: new Date(),
+    courses: user.courses,
+  };
+
+  await updateInDatabase('users', userNewPurchaseData, localStorageUserID);
+
+  return coursesTotalPrice;
+};
+
+const addSellDataToDatabase = async (coursesTotalPrice) => {
+  if (coursesTotalPrice === 0) return;
+
+  const databaseTableName = 'sell_expense';
 
   // this month and year
   const dateArray = new Date().toLocaleDateString('fa').split('/');
@@ -235,10 +294,11 @@ const addSellDataToDatabase = async (courses) => {
   // add purchase data to database
   if (thisMonthData) {
     let previousSellAmount = thisMonthData.sell;
-    const newSellAmount = previousSellAmount + purchaseTotalPrice;
-    updateInDatabase(databaseTableName, { sell: newSellAmount }, thisMonthData.id);
+    const newSellAmount = previousSellAmount + coursesTotalPrice;
+
+    await updateInDatabase(databaseTableName, { sell: newSellAmount }, thisMonthData.id);
   } else {
-    addToDatabase(databaseTableName, { year, month, sell: purchaseTotalPrice });
+    addToDatabase(databaseTableName, { year, month, sell: coursesTotalPrice });
   }
 };
 
@@ -260,7 +320,9 @@ const purchaseCourses = async () => {
       await updateInDatabase('courses', { students_id: courseStudentsID, students: courseStudentCount }, course.id);
     }
 
-    await addSellDataToDatabase(filteredCourses);
+    // Add courses info to database
+    const coursesTotalPrice = await addCourseDetailToUserInDatabase(filteredCourses);
+    await addSellDataToDatabase(coursesTotalPrice);
 
     localStorage.removeItem('courses');
     sweetAlert('خرید با موفقیت انجام شد.', 'success');
@@ -272,6 +334,96 @@ const purchaseCourses = async () => {
   } catch (error) {
     console.error('Failed to purchase courses', error);
     sweetAlert('متاسفانه خرید انجام نشد، لطفا بعدا تلاش کنید.', 'failed');
+  }
+};
+
+// session.js
+const fetchAndDisplaySession = async () => {
+  const sessionID = Number(getQueryParameters('id'));
+  const courseSlug = getQueryParameters('course');
+
+  if (!sessionID || !courseSlug) {
+    location.replace('./404.html');
+  }
+
+  const dbCourse = await getOneFromDatabase('courses', 'slug', courseSlug);
+
+  const course = createCourseObject(dbCourse);
+
+  addSessionToDOM(course, sessionID);
+};
+
+// session.js
+const fetchAndDisplaySessionQuestions = async () => {
+  const pageID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
+  const questionID = getQueryParameters('question');
+
+  const response = await getOneFromDatabase('question_answer', 'id', pageID);
+
+  if (!response) {
+    addSessionQuestionsToDOM();
+  } else {
+    const questions = response.questions;
+    addSessionQuestionsToDOM(pageID, questions, questionID);
+  }
+};
+
+// session.js
+const submitSessionNewQuestion = async (course_name, course_slug, session_id, session_name) => {
+  try {
+    const questionContent = newQuestionTextareaElement.value.trim();
+
+    if (!questionContent) {
+      sweetAlert('سوال نمی‌تواند خالی باشد.', 'info');
+      return;
+    }
+    const tableName = 'question_answer';
+
+    const newQuestion = {
+      id: generateRandomID(),
+      created_at: new Date(),
+      content: questionContent,
+      is_answered: false,
+      is_closed: false,
+      answers: [],
+      writer_name: localStorageUsername,
+    };
+
+    newQuestionTextareaElement.value = '';
+
+    const pageID = `${course_slug}_${session_id}_${localStorageUserID}`;
+
+    // get current session user questions
+    let userSessionQuestions = await getOneFromDatabase(tableName, 'id', pageID);
+
+    if (userSessionQuestions) {
+      let userPreviousQuestions = userSessionQuestions.questions;
+      userPreviousQuestions.push(newQuestion);
+      await updateInDatabase(tableName, { questions: userPreviousQuestions }, pageID);
+    } else {
+      userSessionQuestions = {
+        id: pageID,
+        course_name,
+        course_slug,
+        session_name,
+        session_id,
+        user_id: localStorageUserID,
+        questions: [newQuestion],
+      };
+
+      await addToDatabase(tableName, userSessionQuestions);
+    }
+
+    // add question to user stats
+    const user = await getOneFromDatabase('users', 'id', localStorageUserID);
+    await updateInDatabase('users', { questions_count: user.questions_count + 1 }, localStorageUserID);
+
+    sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
+    newQuestionTextareaElement.value = '';
+    addSessionQuestionsToDOM(pageID, userSessionQuestions.questions);
+  } catch (error) {
+    sweetAlert('ارسال سوال با خطا مواجه شد،‌ لطفا بعدا تلاش کنید.', 'failed');
+    console.error('Failed to submit question', error);
   }
 };
 
@@ -294,26 +446,30 @@ const fetchAndDisplayAccountQuestions = async () => {
 };
 
 const submitNewTicket = async (tickets) => {
-  const department = newTicketChosenDepartmentElement.dataset.department;
-  const subject = subjectInputElement.value.trim();
-  const content = ticketTextareaElement.value.trim();
-
-  if (!newTicketValidation(department, subject, content)) return;
-
-  const newTicket = {
-    id: generateRandomID(),
-    created_at: new Date(),
-    updated_at: new Date(),
-    user_id: localStorageUserID,
-    writer_name: localStorageUsername,
-    department,
-    subject,
-    content,
-    answers: [],
-  };
-
   try {
+    const department = newTicketChosenDepartmentElement.dataset.department;
+    const subject = subjectInputElement.value.trim();
+    const content = ticketTextareaElement.value.trim();
+
+    if (!newTicketValidation(department, subject, content)) return;
+
+    const newTicket = {
+      id: generateRandomID(),
+      created_at: new Date(),
+      updated_at: new Date(),
+      user_id: localStorageUserID,
+      writer_name: localStorageUsername,
+      department,
+      subject,
+      content,
+      answers: [],
+    };
+
+    const user = await getOneFromDatabase('users', 'id', localStorageUserID);
+
     await addToDatabase('tickets', newTicket);
+    await updateInDatabase('users', { tickets_count: user.tickets_count + 1 }, localStorageUserID);
+
     sweetAlert('تیکت با موفقیت ارسال شد.', 'success');
     toggleNewTicketWrapper(ticketBtn);
     tickets.push(newTicket);
@@ -381,17 +537,15 @@ const submitTicketAnswer = (btn, ticket, tickets, isUserPanel) => {
 };
 
 // account.js - admin-panel.js
-const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
+const fetchAndDisplayAccountUserDetail = async (isAdmin) => {
+  if (!localStorageUserID) {
+    location.replace('./auth.html?operation=login');
+    return;
+  }
   if (isAdmin) {
-    const isAdmin = localStorage.getItem('isAdmin') === 'true';
-
-    if (!localStorageUserID || !isAdmin) {
-      location.replace('./account.html');
-    }
-
     const admin = await getOneFromDatabase('users', 'id', localStorageUserID);
 
-    if (admin.role !== 'admin') {
+    if (admin.role !== 'admin' && admin.role !== 'manager') {
       location.replace('./account.html');
     }
 
@@ -403,7 +557,11 @@ const fetchAndDisplayAccountUserDetail = async (isAdmin = false) => {
 
   const user = await getOneFromDatabase('users', 'id', localStorageUserID);
 
-  if (user.role === 'admin') {
+  if (!user) {
+    location.replace('./auth.html?operation=signup');
+  }
+
+  if (user.role === 'admin' || user.role === 'manager') {
     location.replace('./admin-panel.html');
   } else {
     addUserAccountDetailToDOM(user);
@@ -459,7 +617,7 @@ const fetchAndDisplayAdminQuestions = async () => {
 const closeQuestion = (btn, pageID, questions, adminName, data, page) => {
   try {
     btn.addEventListener('click', async () => {
-      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بله');
+      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بستن پرسش');
       if (!isConfirmed) return;
 
       const questionID = btn.dataset.question_id;
@@ -488,7 +646,7 @@ const fetchAndDisplayAllTickets = async () => {
 const closeTicket = (btn, ticket, tickets) => {
   try {
     btn.addEventListener('click', async () => {
-      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بله');
+      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بستن تیکت');
       if (!isConfirmed) return;
       ticket.is_closed = true;
       await updateInDatabase('tickets', { is_closed: true }, ticket.id);
@@ -503,6 +661,16 @@ const closeTicket = (btn, ticket, tickets) => {
 };
 
 // admin-panel.js
+const fetchAndDisplayAllUsers = async () => {
+  try {
+    const users = await getAllFromDatabase('users');
+    addAllUsersToDOM(users);
+  } catch (error) {
+    console.error('Failed to fetch users');
+  }
+};
+
+// admin-panel.js
 const fetchAndDisplaySellAndExpenseData = async () => {
   try {
     const data = await getAllFromDatabase('sell_expense');
@@ -512,94 +680,7 @@ const fetchAndDisplaySellAndExpenseData = async () => {
   }
 };
 
-// session.js
-const fetchAndDisplaySession = async () => {
-  const sessionID = Number(getQueryParameters('id'));
-  const courseSlug = getQueryParameters('course');
-
-  if (!sessionID || !courseSlug) {
-    location.replace('./404.html');
-  }
-
-  const dbCourse = await getOneFromDatabase('courses', 'slug', courseSlug);
-
-  const course = createCourseObject(dbCourse);
-
-  addSessionToDOM(course, sessionID);
-};
-
-// session.js
-const fetchAndDisplaySessionQuestions = async () => {
-  const pageID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
-  const questionID = getQueryParameters('question');
-
-  const response = await getOneFromDatabase('question_answer', 'id', pageID);
-
-  if (!response) {
-    addSessionQuestionsToDOM();
-  } else {
-    const questions = response.questions;
-    addSessionQuestionsToDOM(pageID, questions, questionID);
-  }
-};
-
-// session.js
-const submitSessionNewQuestion = async (course_name, course_slug, session_id, session_name) => {
-  const questionContent = newQuestionTextareaElement.value.trim();
-
-  if (!questionContent) {
-    sweetAlert('سوال نمی‌تواند خالی باشد.', 'info');
-    return;
-  }
-
-  try {
-    const tableName = 'question_answer';
-
-    const newQuestion = {
-      id: generateRandomID(),
-      created_at: new Date(),
-      content: questionContent,
-      is_answered: false,
-      is_closed: false,
-      answers: [],
-      writer_name: localStorageUsername,
-    };
-
-    newQuestionTextareaElement.value = '';
-
-    const pageID = `${course_slug}_${session_id}_${localStorageUserID}`;
-
-    // get current session user questions
-    let userSessionQuestions = await getOneFromDatabase(tableName, 'id', pageID);
-
-    if (userSessionQuestions) {
-      let userPreviousQuestions = userSessionQuestions.questions;
-      userPreviousQuestions.push(newQuestion);
-      await updateInDatabase(tableName, { questions: userPreviousQuestions }, pageID);
-    } else {
-      userSessionQuestions = {
-        id: pageID,
-        course_name,
-        course_slug,
-        session_name,
-        session_id,
-        user_id: localStorageUserID,
-        questions: [newQuestion],
-      };
-
-      await addToDatabase(tableName, userSessionQuestions);
-    }
-
-    sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
-    newQuestionTextareaElement.value = '';
-    addSessionQuestionsToDOM(pageID, userSessionQuestions.questions);
-  } catch (error) {
-    sweetAlert('ارسال سوال با خطا مواجه شد،‌ لطفا بعدا تلاش کنید.', 'failed');
-    console.error('Failed to submit question', error);
-  }
-};
-
-const submitQuestionAnswer = (btn, pageID, questions, adminName = null, data = null, page = null) => {
+const submitQuestionAnswer = (btn, pageID, questions, adminName, data, page) => {
   const questionID = btn.parentElement.dataset.question_id;
   const textarea = document.querySelector(`#textarea-${questionID}`);
 
@@ -634,6 +715,82 @@ const submitQuestionAnswer = (btn, pageID, questions, adminName = null, data = n
   });
 };
 
+const changeUserRole = async (user, users) => {
+  try {
+    if ((user.role === 'admin' || user.role === 'manager') && user.id === localStorageUserID) {
+      sweetAlert('شما نمی توانید نقش خود را تغییر دهید.', 'info');
+      return;
+    }
+
+    const role = user.role === 'admin' ? 'کاربر' : 'پشتیبان';
+    const isConfirmed = await confirmSweetAlert(`آیا می‌ خواهید نقش ${user.username} به ${role} تغییر پیدا کند؟`, 'تغییر نقش', '#059669');
+    if (!isConfirmed) return;
+
+    user.role = user.role === 'admin' ? 'user' : 'admin';
+
+    await updateInDatabase('users', { role: user.role }, user.id);
+    addAllUsersToDOM(users);
+    sweetAlert('نقش  کاربر با موفقیت تغییر کرد.', 'success');
+    returnFromViewedUser(true);
+  } catch (error) {
+    sweetAlert('خطا در تغییر نقش کاربر', 'failed');
+    console.error('Failed to change user role', error);
+  }
+};
+
+const deleteUser = async (user, users) => {
+  try {
+    if ((user.role === 'admin' || user.role === 'manager') && user.id === localStorageUserID) {
+      sweetAlert('شما نمی توانید حساب کاربری خود را حذف کنید.', 'info');
+      return;
+    }
+
+    const isConfirmed = await confirmSweetAlert(`آیا مطمئن هستید؟`, `حذف ${user.username}`);
+    if (!isConfirmed) return;
+
+    await deleteFromDatabase('users', user.id);
+    const filteredUsers = users.filter((filteredUser) => filteredUser.id !== user.id);
+    addAllUsersToDOM(filteredUsers);
+    sweetAlert('کاربر با موفقیت حذف شد.', 'success');
+    returnFromViewedUser(true);
+  } catch (error) {
+    sweetAlert('خطا در حذف کاربر', 'failed');
+    console.error('Failed to delete user', error);
+  }
+};
+
+const deleteUserCourse = async (deleteUserCourseBtn, user, users) => {
+  try {
+    const isConfirmed = await confirmSweetAlert(`آیا مطمئن هستید؟`, `حذف دوره`);
+    if (!isConfirmed) return;
+
+    const deletedCourseID = deleteUserCourseBtn.dataset.course_id;
+    const deletedCourse = await getOneFromDatabase('courses', 'id', deletedCourseID);
+
+    const filteredCourses = user.courses.filter((course) => course.id !== deletedCourseID);
+    const filteredStudentsID = deletedCourse.students_id.filter((id) => id !== user.id);
+
+    if (deletedCourse.discount === 100) {
+      user.free_courses_count -= 1;
+      await updateInDatabase('users', { courses: filteredCourses, free_courses_count: user.free_courses_count - 1 }, user.id);
+    } else {
+      user.cash_courses_count -= 1;
+      await updateInDatabase('users', { courses: filteredCourses, cash_courses_count: user.cash_courses_count - 1 }, user.id);
+    }
+    await updateInDatabase('courses', { students_id: filteredStudentsID }, deletedCourseID);
+
+    user.courses = user.courses.filter((course) => course.id !== deletedCourseID);
+
+    addAllUsersToDOM(users);
+    addAdminViewedUserCoursesToDOM(user, users);
+    addAdminViewedUserStatsToDOM(user, users);
+    sweetAlert('دسترسی کاربر به دوره با موفقیت حذف شد.', 'success');
+  } catch (error) {
+    sweetAlert('خطا در حذف دوره', 'failed');
+    console.error('Failed to delete course', 'error');
+  }
+};
+
 export {
   fetchAndDisplayMainPageCourses,
   fetchAndDisplayMainPageBlogs,
@@ -644,6 +801,10 @@ export {
   submitSignupForm,
   submitLoginForm,
   purchaseCourses,
+  fetchAndDisplaySession,
+  fetchAndDisplaySessionQuestions,
+  submitSessionNewQuestion,
+  submitQuestionAnswer,
   fetchAndDisplayAccountCourses,
   fetchAndDisplayAccountQuestions,
   submitNewTicket,
@@ -656,9 +817,9 @@ export {
   closeQuestion,
   fetchAndDisplayAllTickets,
   closeTicket,
+  fetchAndDisplayAllUsers,
   fetchAndDisplaySellAndExpenseData,
-  fetchAndDisplaySession,
-  fetchAndDisplaySessionQuestions,
-  submitSessionNewQuestion,
-  submitQuestionAnswer,
+  changeUserRole,
+  deleteUser,
+  deleteUserCourse,
 };

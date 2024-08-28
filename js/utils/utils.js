@@ -330,6 +330,8 @@ const scrollToAboveOfElement = (element, margin) => {
   window.scrollTo(window.scrollX, rect.top - margin);
 };
 
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' });
+
 export {
   persianMonths,
   getThemeFromLocalStorage,
@@ -359,4 +361,5 @@ export {
   createPanelQuestionObject,
   filterPanelsQuestions,
   scrollToAboveOfElement,
+  scrollToTop,
 };

@@ -1,5 +1,5 @@
-import { sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion, submitTicketAnswer, closeTicket } from '../database/database-handlers.js';
+import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion, submitTicketAnswer, closeTicket, changeUserRole, deleteUser, deleteUserCourse } from '../database/database-handlers.js';
 import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea, toggleNewTicketOptionsWrapper } from '../ui/ui-handlers.js';
 import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
 import {
@@ -17,6 +17,10 @@ import {
   panelQuestionTemplate,
   ticketTemplate,
   viewedTicketTemplate,
+  adminPanelUserTemplate,
+  adminPanelUserInfoTemplate,
+  adminPanelUserStatsTemplate,
+  adminPanelUserCoursesTemplate,
 } from '../template/template.js';
 import {
   applyDiscountToPrice,
@@ -36,6 +40,7 @@ import {
   breadCrumbLinksHandler,
   filterPanelsQuestions,
   scrollToAboveOfElement,
+  scrollToTop,
 } from '../utils/utils.js';
 
 import {
@@ -86,6 +91,12 @@ import {
   ticketTextareaElement,
   viewedTicketWrapper,
   ticketBtn,
+  allUsersWrapper,
+  userWrapper,
+  adminPanelUsersBackBtn,
+  adminPanelUserInfoWrapper,
+  adminPanelUserStatsWrapper,
+  adminPanelUserCoursesWrapper,
 } from '../dom/dom-elements.js';
 import { getOneFromDatabase } from '../database/database-api.js';
 
@@ -114,7 +125,7 @@ const addLoginBtnToDOM = (loginButtons, userID) => {
 };
 
 // index.html - course-category.html
-const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper = false) => {
+const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper) => {
   let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
   let newCourse = null;
   let finalPrice = null;
@@ -374,305 +385,6 @@ const updateCartPageDetail = () => {
   }
 };
 
-// header.js
-const changeTopBannerBackgroundColor = () => {
-  const colors = ['bg-fuchsia-600', 'bg-rose-600', 'bg-violet-600', 'bg-emerald-600', 'bg-lime-600', 'bg-amber-600', 'bg-sky-600'];
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  topBannerElement.classList.add(colors[randomIndex]);
-};
-
-// account.js
-const addAccountCourseToDOM = (courses) => {
-  let coursesTemplate = '';
-
-  if (courses.length) {
-    courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));
-  } else {
-    coursesTemplate = `
-    <p class="text-center text-xl font-VazirMedium">شما در هیچ دوره‌ای شرکت نکرده‌اید.</p>
-    <a href="./course-category.html?category=all-courses" class="btn theme-bg-color md:hover:theme-hover-bg-color">همه‌ی دوره‌ها</a>`;
-  }
-  insertToDOM(accountCoursesWrapper, coursesTemplate);
-};
-
-// database-handler.js
-const displayChosenAccountSection = (element) => {
-  accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
-  element.classList.add('account__menu-item--active');
-  closeMobileAccountMenu();
-  accountSectionNameElement.textContent = element.children[1].textContent;
-
-  if (element.dataset.section === 'logout') {
-    localStorage.removeItem('userID');
-    location.replace('./index.html');
-  } else {
-    accountSectionWrappers.forEach((wrapper) => {
-      if (wrapper.dataset.section === element.dataset.section) {
-        wrapper.classList.remove('hidden');
-      } else {
-        wrapper.classList.add('hidden');
-      }
-    });
-  }
-};
-
-// database-handler.js
-const addUserAccountDetailToDOM = (user) => {
-  insertToDOM(accountUsernameElement, `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`);
-
-  usernameInput.placeholder = user.username;
-  emailInput.placeholder = user.email;
-
-  user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
-};
-
-const addUserAccountQuestionToDOM = (data) => {
-  const questions = filterPanelsQuestions(data);
-
-  if (!questions.length) {
-    insertToDOM(accountQuestionsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ پرسشی مطرح نکرده‌اید.</p>`);
-    return;
-  }
-
-  let questionsTemplate = '';
-  questions.forEach((question) => (questionsTemplate += panelQuestionTemplate(question)));
-
-  insertToDOM(accountQuestionsWrapper, questionsTemplate);
-};
-
-const resetNewTicketElementsValues = () => {
-  newTicketChosenDepartmentElement.dataset.department = 'none';
-  newTicketChosenDepartmentElement.textContent = 'دپارتمان را انتخاب کنید';
-  newTicketDepartmentIconElement.classList.remove('rotate-180');
-  newTicketDepartmentOptionsWrapper.classList.add('hidden');
-  subjectInputElement.value = '';
-  ticketTextareaElement.value = '';
-  ticketTextareaElement.style.height = `160px`;
-};
-
-const toggleNewTicketWrapper = (btn, isViewedTicket = false) => {
-  const operation = btn.dataset.operation;
-
-  if (isViewedTicket) {
-    btn.dataset.operation = 'close';
-    insertToDOM(
-      btn,
-      `
-      <span class="hidden xs:block">بازگشت</span>
-      <svg class="size-6">
-        <use href="#arrow-left"></use>
-      </svg>`
-    );
-    return;
-  }
-
-  if (operation === 'open') {
-    btn.dataset.operation = 'close';
-    newTicketWrapper.classList.remove('hidden');
-    ticketsWrapper.classList.add('hidden');
-    insertToDOM(
-      btn,
-      `
-      <span class="hidden xs:block">بازگشت</span>
-      <svg class="size-6">
-        <use href="#arrow-left"></use>
-      </svg>`
-    );
-  } else {
-    btn.dataset.operation = 'open';
-    newTicketWrapper.classList.add('hidden');
-    viewedTicketWrapper.classList.add('hidden');
-    ticketsWrapper.classList.remove('hidden');
-    resetNewTicketElementsValues();
-    insertToDOM(
-      btn,
-      `
-      <span class="hidden xs:block">تیکت جدید</span>
-      <svg class="size-6">
-      <use href="#plus"></use>
-      </svg>`
-    );
-  }
-};
-
-const departmentSelectionHandler = (event) => {
-  const departmentValue = event.target.dataset.department;
-  const departmentName = event.target.textContent;
-
-  newTicketChosenDepartmentElement.dataset.department = departmentValue;
-  newTicketChosenDepartmentElement.textContent = departmentName;
-
-  toggleNewTicketOptionsWrapper();
-};
-
-const addViewedTicketToDOM = (ticketID, tickets, isUserPanel) => {
-  const ticket = tickets.find((ticket) => ticket.id === ticketID);
-
-  ticketsWrapper.classList.add('hidden');
-  viewedTicketWrapper.classList.remove('hidden');
-
-  if (isUserPanel) {
-    toggleNewTicketWrapper(ticketBtn, true);
-  } else {
-    ticketBtn.parentElement.classList.remove('hidden');
-    ticketBtn.parentElement.classList.add('flex');
-  }
-
-  insertToDOM(viewedTicketWrapper, viewedTicketTemplate(ticket, isUserPanel));
-
-  const answerOpenBtn = document.querySelector('.answer__open-btn');
-  const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
-  const answerSubmitBtn = document.querySelector('.new-answer__submit-btn');
-  const closeQuestionBtn = document.querySelector('.close-question-btn');
-
-  answerOpenBtn && openAnswerTextArea(answerOpenBtn);
-  answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
-  answerSubmitBtn && submitTicketAnswer(answerSubmitBtn, ticket, tickets, isUserPanel);
-
-  closeQuestionBtn && closeTicket(closeQuestionBtn, ticket, tickets);
-};
-
-const addTicketsToDOM = (tickets, isUserPanel = false) => {
-  if (!tickets.length && isUserPanel) {
-    insertToDOM(ticketsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ تیکتی ثبت نکرده‌اید.</p>`);
-    return;
-  }
-
-  let ticketsTemplate = '';
-
-  const filteredTickets = filterPanelsQuestions(tickets, true);
-
-  filteredTickets.forEach((ticket) => {
-    ticketsTemplate += ticketTemplate(ticket);
-  });
-
-  insertToDOM(ticketsWrapper, ticketsTemplate);
-
-  const ticketElements = document.querySelectorAll('.ticket-wrapper');
-  ticketElements.forEach((element) => element.addEventListener('click', () => addViewedTicketToDOM(element.id, tickets, isUserPanel)));
-};
-
-const returnFromViewedTicket = () => {
-  ticketBtn.parentElement.classList.add('hidden');
-  ticketBtn.parentElement.classList.remove('flex');
-  ticketsWrapper.classList.remove('hidden');
-  viewedTicketWrapper.classList.add('hidden');
-};
-
-const addAdminNotConfirmedCommentsToDOM = (comments) => {
-  const notConfirmedComments = filterComments(comments, 'review');
-  const notConfirmedCommentsLength = notConfirmedComments.length;
-  adminNotConfirmedCommentsNumberBadge.textContent = notConfirmedCommentsLength;
-};
-
-//database-handlers.js
-const addAdminPanelCommentsToDOM = (comments, filterType) => {
-  let commentsTemplate = '';
-
-  const allCommentsWithReplies = comments.flatMap((comment) => [comment, ...(comment.replies || [])]);
-
-  const filteredComments = filterComments(allCommentsWithReplies, filterType);
-
-  addAdminNotConfirmedCommentsToDOM(allCommentsWithReplies);
-
-  const sortedComments = sortArray(filteredComments, 'create', true);
-  sortedComments.forEach((comment) => {
-    commentsTemplate += adminPanelCommentTemplate(comment);
-  });
-  insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
-};
-
-const addAdminPanelQuestionToDOM = (data) => {
-  const adminName = localStorage.getItem('admin-name');
-
-  const questions = filterPanelsQuestions(data);
-
-  let questionsTemplate = '';
-
-  questions.forEach((question) => {
-    questionsTemplate += panelQuestionTemplate(question, true);
-  });
-
-  insertToDOM(adminPanelQuestionsWrapper, questionsTemplate);
-
-  const questionWrapper = document.querySelectorAll('.question__wrapper');
-  questionWrapper.forEach((element) => element.addEventListener('click', () => handleAdminPanelQuestionView(element, data, adminName)));
-};
-
-const handleAdminPanelQuestionView = (element, data, adminName) => {
-  const pageID = element.dataset.page_id;
-  const questionID = element.dataset.question_id;
-  const page = data.find((page) => page.id === pageID);
-  const question = page.questions.find((question) => question.id === questionID);
-
-  addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
-};
-
-const addAdminPanelViewedQuestionToDOM = (data, page, question, adminName) => {
-  insertToDOM(adminPanelQuestionsWrapper, adminPanelViewedQuestionTemplate(page, question));
-
-  document.querySelector('.back-btn').addEventListener('click', () => addAdminPanelQuestionToDOM(data));
-
-  const answerOpenBtn = document.querySelector('.answer__open-btn');
-  const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
-  const answerSubmitBtn = document.querySelector('.new-answer__submit-btn');
-  const closeQuestionBtn = document.querySelector('.close-question-btn');
-
-  answerOpenBtn && openAnswerTextArea(answerOpenBtn);
-  answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
-  answerSubmitBtn && submitQuestionAnswer(answerSubmitBtn, page.id, page.questions, adminName, data, page);
-
-  closeQuestionBtn && closeQuestion(closeQuestionBtn, page.id, page.questions, adminName, data, page);
-};
-
-// database-handlers.js
-const addSellAndExpenseDataToDOM = (data) => {
-  const lastSixMonthData = sortArray(data, 'id').splice(-6);
-  let overallSell = 0;
-  let overallExpense = 0;
-  let overallProfit = 0;
-
-  let months = [];
-  let sells = [];
-  let expenses = [];
-  let profits = [];
-  let losses = [];
-
-  // overall data
-  data.forEach((data) => {
-    overallSell += data.sell;
-    overallExpense += data.expense;
-    overallProfit += data.sell - data.expense;
-  });
-
-  overallSellElement.textContent = overallSell.toLocaleString('fa-IR');
-  overallExpenseElement.textContent = overallExpense.toLocaleString('fa-IR');
-  overallProfitElement.textContent = overallProfit.toLocaleString('fa-IR');
-  if (overallProfit <= 0) {
-    overallProfitElement.parentElement.classList.add('bg-rose-500');
-    overallProfitElement.parentElement.classList.remove('bg-emerald-500');
-    overallProfitElement.previousElementSibling.textContent = 'زیان';
-    overallProfitElement.nextElementSibling.classList.add('rotate-180');
-  }
-
-  // last six month data
-  lastSixMonthData.forEach((data) => {
-    months.push(`${data.month} ${data.year}`);
-    sells.push(data.sell);
-    expenses.push(data.expense);
-    if (data.sell - data.expense > 0) {
-      profits.push(data.sell - data.expense);
-      losses.push(0);
-    } else {
-      profits.push(0);
-      losses.push(data.sell - data.expense);
-    }
-  });
-
-  sellAndExpenseStaticsChart(months, sells, expenses);
-  ProfitAndLossStaticsChart(months, profits, losses);
-};
-
 // database-handlers.js
 const addSessionToDOM = (course, sessionID) => {
   // Find session
@@ -759,7 +471,7 @@ const handleSessionAnswer = (pageID, questions) => {
   newAnswerSubmitButtons.forEach((btn) => submitQuestionAnswer(btn, pageID, questions));
 };
 
-const addSessionQuestionsToDOM = (pageID = null, questions, questionID = null) => {
+const addSessionQuestionsToDOM = (pageID, questions, questionID) => {
   if (!pageID) {
     insertToDOM(
       questionsWrapperElement,
@@ -790,6 +502,386 @@ const addSessionQuestionsToDOM = (pageID = null, questions, questionID = null) =
   handleSessionAnswer(pageID, questions);
 };
 
+// header.js
+const changeTopBannerBackgroundColor = () => {
+  const colors = ['bg-fuchsia-600', 'bg-rose-600', 'bg-violet-600', 'bg-emerald-600', 'bg-lime-600', 'bg-amber-600', 'bg-sky-600'];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  topBannerElement.classList.add(colors[randomIndex]);
+};
+
+// account.js
+const addAccountCourseToDOM = (courses) => {
+  let coursesTemplate = '';
+
+  if (courses.length) {
+    courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));
+  } else {
+    coursesTemplate = `
+    <p class="text-center text-xl font-VazirMedium">شما در هیچ دوره‌ای شرکت نکرده‌اید.</p>
+    <a href="./course-category.html?category=all-courses" class="btn theme-bg-color md:hover:theme-hover-bg-color">همه‌ی دوره‌ها</a>`;
+  }
+  insertToDOM(accountCoursesWrapper, coursesTemplate);
+};
+
+// database-handler.js
+const displayChosenAccountSection = async (element) => {
+  if (element.dataset.section === 'logout') {
+    const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'خروج از حساب کاربری');
+    if (!isConfirmed) return;
+    localStorage.removeItem('userID');
+    location.replace('./index.html');
+    return;
+  }
+
+  accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
+  element.classList.add('account__menu-item--active');
+  closeMobileAccountMenu();
+  accountSectionNameElement.textContent = element.children[1].textContent;
+
+  scrollToTop();
+
+  accountSectionWrappers.forEach((wrapper) => {
+    if (wrapper.dataset.section === element.dataset.section) {
+      wrapper.classList.remove('hidden');
+    } else {
+      wrapper.classList.add('hidden');
+    }
+  });
+};
+
+// database-handler.js
+const addUserAccountDetailToDOM = (user) => {
+  insertToDOM(accountUsernameElement, `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`);
+
+  usernameInput.placeholder = user.username;
+  emailInput.placeholder = user.email;
+
+  user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
+};
+
+const addUserAccountQuestionToDOM = (data) => {
+  const questions = filterPanelsQuestions(data);
+
+  if (!questions.length) {
+    insertToDOM(accountQuestionsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ پرسشی مطرح نکرده‌اید.</p>`);
+    return;
+  }
+
+  let questionsTemplate = '';
+  questions.forEach((question) => (questionsTemplate += panelQuestionTemplate(question)));
+
+  insertToDOM(accountQuestionsWrapper, questionsTemplate);
+};
+
+const resetNewTicketElementsValues = () => {
+  newTicketChosenDepartmentElement.dataset.department = 'none';
+  newTicketChosenDepartmentElement.textContent = 'دپارتمان را انتخاب کنید';
+  newTicketDepartmentIconElement.classList.remove('rotate-180');
+  newTicketDepartmentOptionsWrapper.classList.add('hidden');
+  subjectInputElement.value = '';
+  ticketTextareaElement.value = '';
+  ticketTextareaElement.style.height = `160px`;
+};
+
+const toggleNewTicketWrapper = (btn, isViewedTicket) => {
+  const operation = btn.dataset.operation;
+
+  if (isViewedTicket) {
+    btn.dataset.operation = 'close';
+    insertToDOM(
+      btn,
+      `
+      <span class="hidden xs:block">بازگشت</span>
+      <svg class="size-6">
+        <use href="#arrow-left"></use>
+      </svg>`
+    );
+    return;
+  }
+
+  if (operation === 'open') {
+    btn.dataset.operation = 'close';
+    newTicketWrapper.classList.remove('hidden');
+    ticketsWrapper.classList.add('hidden');
+    insertToDOM(
+      btn,
+      `
+      <span class="hidden xs:block">بازگشت</span>
+      <svg class="size-6">
+        <use href="#arrow-left"></use>
+      </svg>`
+    );
+  } else {
+    btn.dataset.operation = 'open';
+    newTicketWrapper.classList.add('hidden');
+    viewedTicketWrapper.classList.add('hidden');
+    ticketsWrapper.classList.remove('hidden');
+    resetNewTicketElementsValues();
+    insertToDOM(
+      btn,
+      `
+      <span class="hidden xs:block">تیکت جدید</span>
+      <svg class="size-6">
+      <use href="#plus"></use>
+      </svg>`
+    );
+  }
+};
+
+const departmentSelectionHandler = (event) => {
+  const departmentValue = event.target.dataset.department;
+  const departmentName = event.target.textContent;
+
+  newTicketChosenDepartmentElement.dataset.department = departmentValue;
+  newTicketChosenDepartmentElement.textContent = departmentName;
+
+  toggleNewTicketOptionsWrapper();
+};
+
+const addViewedTicketToDOM = (ticketID, tickets, isUserPanel) => {
+  const ticket = tickets.find((ticket) => ticket.id === ticketID);
+
+  ticketsWrapper.classList.add('hidden');
+  viewedTicketWrapper.classList.remove('hidden');
+
+  if (isUserPanel) {
+    toggleNewTicketWrapper(ticketBtn, true);
+  } else {
+    ticketBtn.parentElement.classList.remove('hidden');
+    ticketBtn.parentElement.classList.add('flex');
+  }
+
+  insertToDOM(viewedTicketWrapper, viewedTicketTemplate(ticket, isUserPanel));
+
+  const answerOpenBtn = document.querySelector('.answer__open-btn');
+  const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
+  const answerSubmitBtn = document.querySelector('.new-answer__submit-btn');
+  const closeQuestionBtn = document.querySelector('.close-question-btn');
+
+  answerOpenBtn && openAnswerTextArea(answerOpenBtn);
+  answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
+  answerSubmitBtn && submitTicketAnswer(answerSubmitBtn, ticket, tickets, isUserPanel);
+
+  closeQuestionBtn && closeTicket(closeQuestionBtn, ticket, tickets);
+};
+
+const addTicketsToDOM = (tickets, isUserPanel) => {
+  if (!tickets.length && isUserPanel) {
+    insertToDOM(ticketsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ تیکتی ثبت نکرده‌اید.</p>`);
+    return;
+  }
+
+  let ticketsTemplate = '';
+
+  const filteredTickets = filterPanelsQuestions(tickets, true);
+
+  filteredTickets.forEach((ticket) => {
+    ticketsTemplate += ticketTemplate(ticket);
+  });
+
+  insertToDOM(ticketsWrapper, ticketsTemplate);
+
+  const ticketElements = document.querySelectorAll('.ticket-wrapper');
+  ticketElements.forEach((element) => element.addEventListener('click', () => addViewedTicketToDOM(element.id, tickets, isUserPanel)));
+};
+
+const returnFromViewedTicket = () => {
+  scrollToTop();
+  ticketBtn.parentElement.classList.add('hidden');
+  ticketBtn.parentElement.classList.remove('flex');
+  ticketsWrapper.classList.remove('hidden');
+  viewedTicketWrapper.classList.add('hidden');
+};
+
+const addAdminNotConfirmedCommentsToDOM = (comments) => {
+  const notConfirmedComments = filterComments(comments, 'review');
+  const notConfirmedCommentsLength = notConfirmedComments.length;
+  adminNotConfirmedCommentsNumberBadge.textContent = notConfirmedCommentsLength;
+};
+
+//database-handlers.js
+const addAdminPanelCommentsToDOM = (comments, filterType) => {
+  let commentsTemplate = '';
+
+  const allCommentsWithReplies = comments.flatMap((comment) => [comment, ...(comment.replies || [])]);
+
+  const filteredComments = filterComments(allCommentsWithReplies, filterType);
+
+  addAdminNotConfirmedCommentsToDOM(allCommentsWithReplies);
+
+  const sortedComments = sortArray(filteredComments, 'create', true);
+  sortedComments.forEach((comment) => {
+    commentsTemplate += adminPanelCommentTemplate(comment);
+  });
+  insertToDOM(adminPanelCommentsWrapper, commentsTemplate);
+};
+
+const addAdminPanelQuestionToDOM = (data) => {
+  const adminName = localStorage.getItem('admin-name');
+
+  const questions = filterPanelsQuestions(data);
+
+  let questionsTemplate = '';
+
+  questions.forEach((question) => {
+    questionsTemplate += panelQuestionTemplate(question, true);
+  });
+
+  insertToDOM(adminPanelQuestionsWrapper, questionsTemplate);
+  scrollToTop();
+
+  const questionWrapper = document.querySelectorAll('.question__wrapper');
+  questionWrapper.forEach((element) => element.addEventListener('click', () => handleAdminPanelQuestionView(element, data, adminName)));
+};
+
+const handleAdminPanelQuestionView = (element, data, adminName) => {
+  const pageID = element.dataset.page_id;
+  const questionID = element.dataset.question_id;
+  const page = data.find((page) => page.id === pageID);
+  const question = page.questions.find((question) => question.id === questionID);
+
+  addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
+};
+
+const addAdminPanelViewedQuestionToDOM = (data, page, question, adminName) => {
+  insertToDOM(adminPanelQuestionsWrapper, adminPanelViewedQuestionTemplate(page, question));
+  scrollToTop();
+
+  document.querySelector('.back-btn').addEventListener('click', () => addAdminPanelQuestionToDOM(data));
+
+  const answerOpenBtn = document.querySelector('.answer__open-btn');
+  const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
+  const answerSubmitBtn = document.querySelector('.new-answer__submit-btn');
+  const closeQuestionBtn = document.querySelector('.close-question-btn');
+
+  answerOpenBtn && openAnswerTextArea(answerOpenBtn);
+  answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
+  answerSubmitBtn && submitQuestionAnswer(answerSubmitBtn, page.id, page.questions, adminName, data, page);
+
+  closeQuestionBtn && closeQuestion(closeQuestionBtn, page.id, page.questions, adminName, data, page);
+};
+
+const returnFromViewedUser = (back) => {
+  scrollToTop();
+  if (back) {
+    allUsersWrapper.classList.remove('hidden');
+    userWrapper.classList.add('hidden');
+    adminPanelUsersBackBtn.parentElement.classList.add('hidden');
+    adminPanelUsersBackBtn.parentElement.classList.remove('flex');
+  } else {
+    allUsersWrapper.classList.add('hidden');
+    userWrapper.classList.remove('hidden');
+    adminPanelUsersBackBtn.parentElement.classList.remove('hidden');
+    adminPanelUsersBackBtn.parentElement.classList.add('flex');
+  }
+};
+
+const addAdminViewedUserInfoToDOM = (user, userNumber, users) => {
+  insertToDOM(adminPanelUserInfoWrapper, adminPanelUserInfoTemplate(user, userNumber));
+
+  const changeUserRoleBtn = document.querySelector('.user__change-role-btn');
+
+  changeUserRoleBtn.addEventListener('click', () => changeUserRole(user, userNumber, users));
+};
+
+const addAdminViewedUserStatsToDOM = (user, users) => {
+  insertToDOM(adminPanelUserStatsWrapper, adminPanelUserStatsTemplate(user));
+  const deleteUserBtn = document.querySelector('.user__delete-btn');
+  deleteUserBtn.addEventListener('click', () => deleteUser(user, users));
+};
+
+const addAdminViewedUserCoursesToDOM = (user, users) => {
+  insertToDOM(adminPanelUserCoursesWrapper, adminPanelUserCoursesTemplate(user));
+  const deleteUserCourseButtons = document.querySelectorAll('.user__course-delete-btn');
+
+  deleteUserCourseButtons.forEach((btn) => {
+    btn.addEventListener('click', () => deleteUserCourse(btn, user, users));
+  });
+};
+
+const addViewedUserToDOM = (btn, users) => {
+  const user = users.find((user) => user.id === btn.dataset.user_id);
+  if (user.role === 'manager' && user.id !== localStorageUserID) {
+    sweetAlert('شما دسترسی لازم را ندارید.', 'failed');
+    return;
+  }
+
+  const userNumber = btn.dataset.user_number;
+
+  addAdminViewedUserInfoToDOM(user, userNumber, users);
+  addAdminViewedUserStatsToDOM(user, users);
+  addAdminViewedUserCoursesToDOM(user, users);
+
+  returnFromViewedUser(false);
+};
+
+const addAllUsersToDOM = (allUsers) => {
+  let usersTemplate = '';
+
+  const managers = allUsers.filter((user) => user.role === 'manager');
+  const admins = allUsers.filter((user) => user.role === 'admin');
+  const users = allUsers.filter((user) => user.role === 'user');
+  admins.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+  users.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+  managers.forEach((user, index) => (usersTemplate += adminPanelUserTemplate(user, index + 1)));
+  admins.forEach((user, index) => (usersTemplate += adminPanelUserTemplate(user, index + 1)));
+  users.forEach((user, index) => (usersTemplate += adminPanelUserTemplate(user, users.length - index)));
+
+  insertToDOM(allUsersWrapper, usersTemplate);
+
+  const userViewButtons = document.querySelectorAll('.user__view-btn');
+  userViewButtons.forEach((btn) => btn.addEventListener('click', () => addViewedUserToDOM(btn, allUsers)));
+};
+
+// database-handlers.js
+const addSellAndExpenseDataToDOM = (data) => {
+  const lastSixMonthData = sortArray(data, 'id').splice(-6);
+  let overallSell = 0;
+  let overallExpense = 0;
+  let overallProfit = 0;
+
+  let months = [];
+  let sells = [];
+  let expenses = [];
+  let profits = [];
+  let losses = [];
+
+  // overall data
+  data.forEach((data) => {
+    overallSell += data.sell;
+    overallExpense += data.expense;
+    overallProfit += data.sell - data.expense;
+  });
+
+  overallSellElement.textContent = overallSell.toLocaleString('fa-IR');
+  overallExpenseElement.textContent = overallExpense.toLocaleString('fa-IR');
+  overallProfitElement.textContent = overallProfit.toLocaleString('fa-IR');
+  if (overallProfit <= 0) {
+    overallProfitElement.parentElement.classList.add('bg-rose-500');
+    overallProfitElement.parentElement.classList.remove('bg-emerald-500');
+    overallProfitElement.previousElementSibling.textContent = 'زیان';
+    overallProfitElement.nextElementSibling.classList.add('rotate-180');
+  }
+
+  // last six month data
+  lastSixMonthData.forEach((data) => {
+    months.push(`${data.month} ${data.year}`);
+    sells.push(data.sell);
+    expenses.push(data.expense);
+    if (data.sell - data.expense > 0) {
+      profits.push(data.sell - data.expense);
+      losses.push(0);
+    } else {
+      profits.push(0);
+      losses.push(data.sell - data.expense);
+    }
+  });
+
+  sellAndExpenseStaticsChart(months, sells, expenses);
+  ProfitAndLossStaticsChart(months, profits, losses);
+};
+
 export {
   insertToDOM,
   addLoginBtnToDOM,
@@ -803,6 +895,8 @@ export {
   updateHederCartDetail,
   removeCourseFromCartHandler,
   updateCartPageDetail,
+  addSessionToDOM,
+  addSessionQuestionsToDOM,
   changeTopBannerBackgroundColor,
   displayChosenAccountSection,
   addAccountCourseToDOM,
@@ -815,8 +909,10 @@ export {
   returnFromViewedTicket,
   addAdminPanelCommentsToDOM,
   addAdminPanelQuestionToDOM,
+  returnFromViewedUser,
   addAdminPanelViewedQuestionToDOM,
+  addAdminViewedUserStatsToDOM,
+  addAdminViewedUserCoursesToDOM,
+  addAllUsersToDOM,
   addSellAndExpenseDataToDOM,
-  addSessionToDOM,
-  addSessionQuestionsToDOM,
 };

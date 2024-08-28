@@ -55,16 +55,16 @@ const sweetAlert = (message, type) => {
   });
 };
 
-const confirmSweetAlert = async (message, confirmButtonText = 'حذف') => {
+const confirmSweetAlert = async (message, confirmButtonText = 'بله', confirmButtonColor = '#e11d48') => {
   const response = await swal.fire({
     text: message,
     showConfirmButton: true,
     confirmButtonText,
-    confirmButtonColor: '#e11d48',
+    confirmButtonColor,
     focusConfirm: false,
     showDenyButton: true,
     denyButtonText: 'بازگشت',
-    denyButtonColor: '#059669',
+    denyButtonColor: '#64748b',
     backdrop: true,
     showClass: {
       popup: `

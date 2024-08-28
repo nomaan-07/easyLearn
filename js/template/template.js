@@ -1,3 +1,4 @@
+import { localStorageUserID } from '../dom/dom-elements.js';
 import { categoryInPersian, formatDate, formatTime } from './../utils/utils.js';
 
 const loginBtnTemplate = (userID) => {
@@ -312,7 +313,7 @@ const courseDataTemplate = (course) => {
           </div>
           <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
             <svg class="size-8 sm:size-10 theme-text-color">
-              <use href="#users"></use>
+              <use href="#user-group"></use>
             </svg>
             <span class="font-VazirLight mt-2 mb-1.5">دانشجو</span>
             <span class="font-VazirBold">${course.students}</span>
@@ -851,7 +852,7 @@ const ticketTemplate = (ticket) => {
             ${ticketOverlay}
             <!-- Department and Subject -->
             <div class="flex flex-wrap gap-3 text-sm sm:text-base md:group-hover:theme-text-color transition-colors z-10">
-              <div class="flex gap-2">
+              <div class="flex items-center gap-2">
                 <svg class="size-5 shrink-0">
                   <use href="#${departmentIcon}"></use>
                 </svg>
@@ -1093,7 +1094,7 @@ const adminPanelCommentTemplate = (comment) => {
                 <svg class="size-5 shrink-0">
                   <use href="#${pageIcon}"></use>
                 </svg>
-                <a href="./${comment.page_type}.html?${comment.page_type}=${comment.page_slug}">${comment.page_name}</a>
+                <a href="./${comment.page_type}.html?${comment.page_type}=${comment.page_slug}&comment=${comment.comment_id || comment.id}">${comment.page_name}</a>
               </div>
               <!-- Date And Writer -->
               <div class="flex items-center justify-between flex-wrap gap-x-4 gap-y-2 text-sm md:text-base">
@@ -1273,6 +1274,305 @@ const sessionQuestionTemplate = (question, number = null) => {
   return template;
 };
 
+const adminPanelUserTemplate = (user, index) => {
+  let adminTag = user.id === localStorageUserID ? '<span class="absolute top-1 left-1 text-xs px-1 py-px rounded-full theme-bg-color-10 theme-text-color">شما</span>' : '';
+
+  let userBgHoverColor = 'md:hover:bg-emerald-600/5';
+  let userType = 'کاربر';
+  let tagColors = 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-500';
+  let adminBorder = '';
+
+  if (user.role === 'manager') {
+    userBgHoverColor = 'md:hover:bg-fuchsia-600/5';
+    userType = 'مدیر';
+    tagColors = 'bg-slate-900 text-white';
+  } else if (user.role === 'admin') {
+    userBgHoverColor = 'md:hover:bg-rose-600/5';
+    userType = 'پشتیبان';
+    tagColors = 'bg-rose-600/10 text-rose-600';
+    adminBorder = 'border-x-2 border-slate-900';
+  }
+
+  if (user.role === 'manager' && user.id === localStorageUserID) {
+    adminBorder = 'border-x border-slate-900';
+  } else if (user.role === 'admin' && user.id === localStorageUserID) {
+    adminBorder = 'border-x border-rose-900';
+  } else {
+    adminBorder = '';
+  }
+
+  const template = `
+        <!-- User -->
+        <div class="user-wrapper ${adminBorder} ${userBgHoverColor} space-y-3 xs:space-y-0 xs:grid grid-rows-2 md:grid-rows-1 grid-cols-12 gap-y-3 gap-x-2 lg:gap-x-5 px-3 py-5 cursor-pointer relative group transition-colors">
+          ${adminTag}
+          <!-- User Number Btn -->
+          <div class="order-2 md:order-1 col-span-4 sm:col-span-3 md:col-span-2 w-fit h-fit text-center ${tagColors} px-2">${userType} #${index}</div>
+          <!-- End of User Number Btn -->
+          <div class="order-1 md:order-2 col-span-8 sm:col-span-9 md:col-span-3 xl:col-span-4 flex flex-wrap gap-1 text-sm xs:text-base">
+            <svg class="size-4 xs:size-5 shrink-0">
+              <use href="#user"></use>
+            </svg>
+            <span>${user.username}</span>
+          </div>
+          <div class="order-3 col-span-8 sm:col-span-9 md:col-span-5 xl:col-span-4 flex flex-wrap gap-1 text-sm xs:text-base">
+            <svg class="size-4 xs:size-5 shrink-0">
+              <use href="#envelope"></use>
+            </svg>
+            <span>${user.email}</span>
+          </div>
+          <!-- User View Btn -->
+          <div class="order-4 col-span-4 sm:col-span-3 md:col-span-2 md:text-left">
+            <span class="user__view-btn md:hover:theme-text-color underline md:no-underline md:hover:underline underline-offset-2 transition-all" data-user_id="${user.id}" data-user_number="${index}">نمایش جزئیات</span>
+          </div>
+          <!-- End of User View Btn -->
+        </div>
+        <!-- End of User -->`;
+
+  return template;
+};
+
+const adminPanelUserInfoTemplate = (user, number) => {
+  let adminTag = user.id === localStorageUserID ? '<span class="absolute top-1 left-1 px-1 py-px rounded-full theme-bg-color-10 theme-text-color">شما</span>' : '';
+
+  let userType = 'کاربر';
+  let tagColors = 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-500';
+  let userChangeRoleBtnColors = 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-500 md:hover:bg-emerald-600 dark:md:hover:bg-emerald-500';
+  let changeRoleBtnText = 'تغییر نقش کاربر به پشتیبان';
+
+  if (user.role === 'manager') {
+    userType = 'مدیر';
+    tagColors = 'bg-slate-900 text-white';
+    userChangeRoleBtnColors = 'bg-slate-600/10 text-slate-600 md:hover:bg-slate-600';
+    changeRoleBtnText = 'تغییر نقش مدیر به پشتیبان';
+  } else if (user.role === 'admin') {
+    userChangeRoleBtnColors = 'bg-amber-600/10 text-amber-600 md:hover:bg-amber-600';
+    userType = 'پشتیبان';
+    tagColors = 'bg-rose-600/10 text-rose-600';
+    changeRoleBtnText = 'تغییر نقش پشتیبان به کاربر';
+  }
+
+  const template = `
+            <div class="w-fit mr-3 ${tagColors} px-2">${userType} #${number}</div>
+            <div class="md:w-max space-y-5 sm:space-y-0 sm:flex items-center justify-between gap-5 bg-white dark:bg-slate-800 shadow relative rounded-2xl p-5">
+              ${adminTag}
+              <!-- Profile Picture -->
+              <div class="size-36 mx-auto xs:mx-0 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
+                ${userAccountProfilePictureTemplate(user.image_src)}
+              </div>
+              <!-- End of Profile Picture -->
+              <!-- Username, Email and Buttons -->
+              <div class="flex flex-col justify-center gap-5 text-sm xs:text-base font-VazirMedium">
+                <!-- Username -->
+                <div class="flex flex-wrap gap-1">
+                  <svg class="size-4 xs:size-5 shrink-0">
+                    <use href="#user"></use>
+                  </svg>
+                  <span>${user.username}</span>
+                </div>
+                <!-- End of Username -->
+                <!-- Email -->
+                <div class="flex flex-wrap gap-1">
+                  <svg class="size-4 xs:size-5 shrink-0">
+                    <use href="#envelope"></use>
+                  </svg>
+                  <span>${user.email}</span>
+                </div>
+                <!-- End of Email -->
+                <!-- User Info Buttons -->
+                <div class="flex flex-col xs:flex-row gap-5">
+                  <!-- Change Role Btn -->
+                  <div class="user__change-role-btn btn xs:w-fit xs:items-start gap-1 ${userChangeRoleBtnColors} md:hover:text-white md:cursor-pointer">
+                    <svg class="hidden sm:block size-5 shrink-0">
+                      <use href="#users"></use>
+                    </svg>
+                    <span>${changeRoleBtnText}</span>
+                  </div>
+                  <!-- User Change Role Btn -->
+                  <!-- Delete Btn -->
+                  <div class="user__delete-btn btn xs:w-fit xs:items-start gap-1 bg-rose-600/10 text-rose-600 md:hover:bg-red-600 md:hover:text-white md:cursor-pointer">
+                    <svg class="hidden sm:block size-5">
+                      <use href="#trash"></use>
+                    </svg>
+                    <span>حذف کاربر</span>
+                  </div>
+                  <!-- End of Delete Btn -->
+                </div>
+                <!-- User Info Buttons -->
+              </div>
+              <!-- End of Username, Email and Buttons -->
+            </div>`;
+
+  return template;
+};
+
+const adminPanelUserStatsTemplate = (user) => {
+  let isAdmin = false;
+  let userType = 'کاربر';
+  let totalCourses = +user.free_courses_count + user.cash_courses_count;
+
+  if (user.role === 'manager') {
+    isAdmin = true;
+    userType = 'مدیر';
+  } else if (user.role === 'admin') {
+    isAdmin = true;
+    userType = 'پشتیبان';
+  }
+
+  const template = `              
+            <div class="section-title mt-10 mb-5 md:mt-14 md:mb-8">
+              <div class="size-9 sm:size-10 md:size-11 2xl:size-12 animate-float-fast">
+                <img class="title-icon w-full h-full" src="./images/icons/chart.png" />
+              </div>
+              <!-- Section Title -->
+              <h2 class="category-title">آمار ${userType}</h2>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 xs:gap-6 md:gap-4 lg:gap-6 text-center">
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                <svg class="size-8 sm:size-10 theme-text-color">
+                  <use href="#pencil-square"></use>
+                </svg>
+                <span class="font-VazirLight mt-2 mb-1.5">تاریخ ثبت نام</span>
+                <span class="font-VazirBold">${formatDate(user.created_at)} - ${formatTime(user.created_at)}</span>
+              </div>
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                <svg class="size-8 sm:size-10 theme-text-color">
+                  <use href="#arrow-left-end-on-rectangle"></use>
+                </svg>
+                <span class="font-VazirLight mt-2 mb-1.5">آخرین ورود</span>
+                <span class="font-VazirBold">${user.login_at ? `${formatDate(user.login_at)} - ${formatTime(user.login_at)}` : '...'}</span>
+              </div>
+              ${
+                isAdmin
+                  ? ''
+                  : `
+                    <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                      <svg class="size-8 sm:size-10 theme-text-color">
+                        <use href="#course"></use>
+                      </svg>
+                      <span class="font-VazirLight mt-2 mb-1.5">تعداد دوره ها</span>
+                      <span class="font-VazirBold">${totalCourses}</span>
+                    </div>
+                    <div class="${totalCourses ? 'flex' : 'hidden'} flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                      <svg class="size-8 sm:size-10 theme-text-color">
+                        <use href="#tv"></use>
+                      </svg>
+                      <span class="font-VazirLight mt-2 mb-1.5">دوره های رایگان</span>
+                      <span class="font-VazirBold">${user.free_courses_count}</span>
+                    </div>
+                    <div class="${totalCourses ? 'flex' : 'hidden'} flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                      <div class="relative">
+                        <svg class="absolute top-1.5 sm:top-2 left-2 sm:left-2.5 size-4 sm:size-5 shrink-0 theme-text-color">
+                          <use href="#currency-dollar"></use>
+                        </svg>
+                        <svg class="size-8 sm:size-10 theme-text-color">
+                          <use href="#tv"></use>
+                        </svg>
+                      </div>
+                      <span class="font-VazirLight mt-2 mb-1.5">دوره های نقدی</span>
+                      <span class="font-VazirBold">${user.cash_courses_count}</span>
+                    </div>
+                    <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                      <svg class="size-8 sm:size-10 theme-text-color">
+                        <use href="#credit-card"></use>
+                      </svg>
+                      <span class="font-VazirLight mt-2 mb-1.5">مجموع پرداخت ها</span>
+                      <div class="flex">
+                        <span class="font-VazirBold ${user.expense ? 'text-emerald-600 dark:text-emerald-500' : 'text-rose-600'}">${user.expense ? user.expense.toLocaleString('fa') : 'صـــفر'}</span>
+                        <svg class="size-6 mr-[-3px] -translate-y-1.5">
+                          <use href="#toman"></use>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="${user.last_expense_date ? 'flex' : 'hidden'} flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                      <svg class="size-8 sm:size-10 theme-text-color">
+                        <use href="#calendar-days"></use>
+                      </svg>
+                      <span class="font-VazirLight mt-2 mb-1.5">تاریخ آخرین پرداخت</span>
+                      <span class="font-VazirBold">${user.last_expense_date ? `${formatDate(user.last_expense_date)} - ${formatTime(user.last_expense_date)}` : '...'}</span>
+                    </div>`
+              }
+
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                <svg class="size-8 sm:size-10 theme-text-color">
+                  <use href="#ticket"></use>
+                </svg>
+                <span class="font-VazirLight mt-2 mb-1.5">${isAdmin ? 'بررسی تیکت' : 'تعداد تیکت ها'}</span>
+                <span class="font-VazirBold">${isAdmin ? `${user.admin_stats[0].tickets_count}` : `${user.tickets_count}`}</span>
+              </div>
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                <svg class="size-8 sm:size-10 theme-text-color">
+                  <use href="#chat-bubble-left-right"></use>
+                </svg>
+                <span class="font-VazirLight mt-2 mb-1.5">${isAdmin ? 'بررسی پرسش' : 'تعداد پرسش ها'}</span>
+                <span class="font-VazirBold">${isAdmin ? `${user.admin_stats[0].questions_count}` : `${user.questions_count}`}</span>
+              </div>
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                <svg class="size-8 sm:size-10 theme-text-color">
+                  <use href="#chat-bubble-bottom-center-text"></use>
+                </svg>
+                <span class="font-VazirLight mt-2 mb-1.5">${isAdmin ? 'بررسی کامنت' : 'تعداد کامنت ها'}</span>
+                <span class="font-VazirBold">${isAdmin ? `${user.admin_stats[0].comments_count}` : `${user.comments_count}`}</span>
+              </div>
+            </div>`;
+
+  return template;
+};
+
+const adminPanelUserCoursesTemplate = (user) => {
+  if (user.role === 'admin' || user.role === 'manager') {
+    return '';
+  }
+
+  let coursesTemplate = '';
+
+  if (!user.courses.length) {
+    coursesTemplate = `<p class="sm:text-lg text-center font-VazirMedium text-rose-600 p-5 bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-800 rounded-2xl">کاربر در هیچ دوره ای شرکت نکرده است.</p>`;
+  } else {
+    user.courses.forEach((course) => {
+      coursesTemplate += `                
+            <!-- Course -->
+            <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-800 rounded-2xl pb-5 relative">
+              <!-- Course Type -->
+              <span class="absolute top-3 right-0 px-2 py-px text-sm ${course.is_free ? 'bg-emerald-600' : 'bg-rose-600'} text-white rounded-l-full">${course.is_free ? 'رایگان' : 'نقدی'}</span>
+              <!-- End of Course Type -->
+              <!-- Course Banner -->
+              <a class="block h-40 rounded-2xl overflow-hidden border-b border-b-slate-200 dark:border-b-slate-700" href="./course.html?course=${course.slug}">
+                <img class="size-full object-cover" loading="lazy" src="${course.image_src}" alt="${course.name}" />
+              </a>
+              <!-- End of Course Banner -->
+              <!-- Course Name -->
+              <a class="block mt-4 px-4 font-VazirBold text-lg sm:h-14 hover:theme-text-color transition-all sm:line-clamp-2" href="./course.html?course=${course.slug}">${course.name}</a>
+              <!-- End of Course Name -->
+              <!-- User Delete Course Btn -->
+              <div class="user__course-delete-btn btn mt-4 mx-4 gap-1 bg-rose-600/10 text-rose-600 md:hover:bg-red-600 md:hover:text-white md:cursor-pointer" data-course_id="${course.id}">
+                <svg class="size-4 sm:size-5">
+                  <use href="#trash"></use>
+                </svg>
+                <span>حذف دسترسی کاربر</span>
+              </div>
+              <!-- End of User Delete Course Btn -->
+            </div>
+            <!-- End of Course -->`;
+    });
+  }
+
+  let template = `
+      <div class="section-title mt-10 mb-5 md:mt-14 md:mb-8">
+        <div class="size-9 sm:size-10 md:size-11 2xl:size-12 animate-float-fast">
+          <img class="title-icon w-full h-full" src="./images/icons/computer.png" />
+        </div>
+        <!-- Section Title -->
+        <h2 class="category-title">دوره های کاربر</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+        ${coursesTemplate}
+      </div>
+      
+      `;
+
+  return template;
+};
+
 export {
   loginBtnTemplate,
   courseCardTemplate,
@@ -1296,4 +1596,8 @@ export {
   adminPanelCommentTemplate,
   adminPanelViewedQuestionTemplate,
   sessionQuestionTemplate,
+  adminPanelUserTemplate,
+  adminPanelUserInfoTemplate,
+  adminPanelUserStatsTemplate,
+  adminPanelUserCoursesTemplate,
 };

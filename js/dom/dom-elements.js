@@ -136,6 +136,12 @@ const overallSellElement = document.querySelector('.overall-sell');
 const overallExpenseElement = document.querySelector('.overall-expense');
 const overallProfitElement = document.querySelector('.overall-profit');
 const adminPanelQuestionsWrapper = document.querySelector('.admin__questions-wrapper');
+const allUsersWrapper = document.querySelector('.users__wrapper');
+const userWrapper = document.querySelector('.user__wrapper');
+const adminPanelUsersBackBtn = document.querySelector('.users__back-btn');
+const adminPanelUserInfoWrapper = document.querySelector('.user__info-wrapper');
+const adminPanelUserStatsWrapper = document.querySelector('.user__stats-wrapper');
+const adminPanelUserCoursesWrapper = document.querySelector('.user__courses-wrapper');
 
 // session.js
 const sessionVideoElement = document.querySelector('.session__video');
@@ -261,6 +267,12 @@ export {
   overallExpenseElement,
   overallProfitElement,
   adminPanelQuestionsWrapper,
+  allUsersWrapper,
+  userWrapper,
+  adminPanelUsersBackBtn,
+  adminPanelUserInfoWrapper,
+  adminPanelUserStatsWrapper,
+  adminPanelUserCoursesWrapper,
   sessionVideoElement,
   sessionCourseNameElements,
   sessionNameElements,

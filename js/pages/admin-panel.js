@@ -1,8 +1,8 @@
 import '../theme/change-theme.js';
-import { removeLoader } from '../utils/utils.js';
-import { fetchAndDisplayAllTickets, fetchAndDisplaySellAndExpenseData } from '../database/database-handlers.js';
+import { applyDiscountToPrice, removeLoader } from '../utils/utils.js';
+import { fetchAndDisplayAllTickets, fetchAndDisplayAllUsers, fetchAndDisplaySellAndExpenseData } from '../database/database-handlers.js';
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { addAdminPanelCommentsToDOM, displayChosenAccountSection, returnFromViewedTicket } from '../dom/dom-handlers.js';
+import { addAdminPanelCommentsToDOM, displayChosenAccountSection, returnFromViewedTicket, returnFromViewedUser } from '../dom/dom-handlers.js';
 import { deleteFromDatabase, getAllFromDatabase, updateInDatabase } from '../database/database-api.js';
 import { activeSortBtn, closeMobileAccountMenu, displayPasswordHandler, openMobileAccountMenu, removeSortButtonsClasses } from '../ui/ui-handlers.js';
 import { fetchAndDisplayAccountUserDetail, submitAccountDetailChanges, submitAccountPasswordChanges, fetchAndDisplayAdminQuestions } from '../database/database-handlers.js';
@@ -14,6 +14,8 @@ import {
   accountMenuItemElements,
   adminCommentsFilterButtons,
   adminPanelCommentsWrapper,
+  adminPanelUsersBackBtn,
+  localStorageUserID,
   mobileMenuCloseBtn,
   mobileMenuOpenBtn,
   overlay,
@@ -39,7 +41,7 @@ fetchAndDisplayAdminPanelComments(commentFilterType);
 
 const adminDeleteComment = async (commentParentID, commentID, comments) => {
   try {
-    const response = await confirmSweetAlert('آیا مطمئن هستید؟');
+    const response = await confirmSweetAlert('آیا مطمئن هستید؟', 'حذف کامنت');
     if (response) {
       if (commentParentID) {
         const commentParent = comments.find((comment) => comment.id === commentParentID);
@@ -110,6 +112,7 @@ window.addEventListener('load', async () => {
   fetchAndDisplayAdminQuestions();
   fetchAndDisplaySellAndExpenseData();
   fetchAndDisplayAllTickets();
+  fetchAndDisplayAllUsers();
 });
 
 accountMenuItemElements.forEach((element) => element.addEventListener('click', () => displayChosenAccountSection(element)));
@@ -124,3 +127,4 @@ adminCommentsFilterButtons.forEach((btn) => {
   btn.addEventListener('click', () => filterCommentsHandler(btn, allComments));
 });
 ticketBtn.addEventListener('click', returnFromViewedTicket);
+adminPanelUsersBackBtn.addEventListener('click', () => returnFromViewedUser(true));
