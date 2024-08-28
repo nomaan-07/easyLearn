@@ -754,10 +754,10 @@ const deleteUserCourse = async (deleteUserCourseBtn, user, users) => {
 
     if (deletedCourse.discount === 100) {
       user.free_courses_count -= 1;
-      await updateInDatabase('users', { courses: filteredCourses, free_courses_count: user.free_courses_count - 1 }, user.id);
+      await updateInDatabase('users', { courses: filteredCourses, free_courses_count: user.free_courses_count }, user.id);
     } else {
       user.cash_courses_count -= 1;
-      await updateInDatabase('users', { courses: filteredCourses, cash_courses_count: user.cash_courses_count - 1 }, user.id);
+      await updateInDatabase('users', { courses: filteredCourses, cash_courses_count: user.cash_courses_count }, user.id);
     }
     await updateInDatabase('courses', { students_id: filteredStudentsID }, deletedCourseID);
 

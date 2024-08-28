@@ -1411,7 +1411,7 @@ const adminPanelUserInfoTemplate = (user, number) => {
 const adminPanelUserStatsTemplate = (user) => {
   let isAdmin = false;
   let userType = 'کاربر';
-  let totalCourses = +user.free_courses_count + user.cash_courses_count;
+  let totalCourses = user.free_courses_count + user.cash_courses_count;
 
   if (user.role === 'manager') {
     isAdmin = true;
