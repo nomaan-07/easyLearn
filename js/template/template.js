@@ -768,7 +768,7 @@ const panelQuestionTemplate = (question, isAdminPanel = false) => {
 
   const template = `
           <a ${isAdminPanel ? '' : `href="./session.html?id=${question.sessionID}&course=${question.courseSlug}&question=${question.id}"`} 
-            class="question__wrapper flex flex-col md:flex-row md:justify-between gap-5 border-x-2 ${questionBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow cursor-pointer relative group" 
+            class="question__wrapper flex flex-col md:flex-row md:justify-between gap-5 mb-3 border-x-2 ${questionBorderColor} bg-white dark:bg-slate-800 rounded-2xl overflow-hidden p-3 shadow cursor-pointer relative group" 
             ${isAdminPanel ? `data-page_id="${question.pageID}" data-question_id="${question.id}"` : ''}
           >
             ${questionOverlay}
@@ -997,7 +997,7 @@ const viewedTicketTemplate = (ticket, isUserPanel = false) => {
       </div>
       <!-- End of Ticket Detail --> 
 
-      <div class="py-5 my-5 bg-white dark:bg-slate-800' px-2.5 rounded-2xl" id="${ticket.id}">
+      <div class="py-5 my-5 bg-white dark:bg-slate-800 px-2.5 rounded-2xl" id="${ticket.id}">
         <div class="question-header flex items-center px-2 gap-4 text-sm sm:text-base w-fit ${ticketSituationColor} rounded-full">
           <span class="text-white">${ticketSituationText}</span>
         </div>
@@ -1145,7 +1145,7 @@ const adminPanelCommentTemplate = (comment) => {
 
 const adminPanelViewedQuestionTemplate = (page, question) => {
   const template = `
-  <div class="back-btn flex justify-end pb-2">
+  <div class="back-btn flex justify-end pb-5 lg:pt-5 sticky top-3 lg:top-0 lg:left-0 z-40 lg:bg-slate-100 lg:dark:bg-slate-900">
     <div class="flex gap-2 theme-bg-color hover:theme-hover-bg-color text-white rounded-full p-2 md:cursor-pointer transition-colors">
       <span class="hidden xs:block">بازگشت</span>
       <svg class="size-6">
@@ -1155,7 +1155,7 @@ const adminPanelViewedQuestionTemplate = (page, question) => {
   </div>
 
   <!-- Question Detail -->
-  <div class="bg-white dark:bg-slate-800 space-y-3 py-3 px-2.5 rounded-2xl">
+  <div class="bg-white dark:bg-slate-800 mb-3 space-y-3 py-3 px-2.5 rounded-2xl">
     <!-- Course Name -->
     <a href="course.html?course=${page.course_slug}" class="flex w-fit gap-2 text-sm sm:text-base md:hover:theme-text-color transition-colors">
       <svg class="size-5 shrink-0">
@@ -1356,7 +1356,7 @@ const adminPanelUserInfoTemplate = (user, number) => {
 
   const template = `
             <div class="w-fit mr-3 ${tagColors} px-2">${userType} #${number}</div>
-            <div class="md:w-max space-y-5 sm:space-y-0 sm:flex items-center justify-between gap-5 bg-white dark:bg-slate-800 shadow relative rounded-2xl p-5">
+            <div class="md:w-max space-y-5 sm:space-y-0 sm:flex items-center justify-between gap-5 bg-white dark:bg-slate-800 relative rounded-2xl p-5">
               ${adminTag}
               <!-- Profile Picture -->
               <div class="size-36 mx-auto xs:mx-0 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
@@ -1430,14 +1430,14 @@ const adminPanelUserStatsTemplate = (user) => {
               <h2 class="category-title">آمار ${userType}</h2>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 xs:gap-6 md:gap-4 lg:gap-6 text-center">
-              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                 <svg class="size-8 sm:size-10 theme-text-color">
                   <use href="#pencil-square"></use>
                 </svg>
                 <span class="font-VazirLight mt-2 mb-1.5">تاریخ ثبت نام</span>
                 <span class="font-VazirBold">${formatDate(user.created_at)} - ${formatTime(user.created_at)}</span>
               </div>
-              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                 <svg class="size-8 sm:size-10 theme-text-color">
                   <use href="#arrow-left-end-on-rectangle"></use>
                 </svg>
@@ -1448,21 +1448,21 @@ const adminPanelUserStatsTemplate = (user) => {
                 isAdmin
                   ? ''
                   : `
-                    <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                    <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                       <svg class="size-8 sm:size-10 theme-text-color">
                         <use href="#course"></use>
                       </svg>
                       <span class="font-VazirLight mt-2 mb-1.5">تعداد دوره ها</span>
                       <span class="font-VazirBold">${totalCourses}</span>
                     </div>
-                    <div class="${totalCourses ? 'flex' : 'hidden'} flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                    <div class="${totalCourses ? 'flex' : 'hidden'} flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                       <svg class="size-8 sm:size-10 theme-text-color">
                         <use href="#tv"></use>
                       </svg>
                       <span class="font-VazirLight mt-2 mb-1.5">دوره های رایگان</span>
                       <span class="font-VazirBold">${user.free_courses_count}</span>
                     </div>
-                    <div class="${totalCourses ? 'flex' : 'hidden'} flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                    <div class="${totalCourses ? 'flex' : 'hidden'} flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                       <div class="relative">
                         <svg class="absolute top-1.5 sm:top-2 left-2 sm:left-2.5 size-4 sm:size-5 shrink-0 theme-text-color">
                           <use href="#currency-dollar"></use>
@@ -1474,7 +1474,7 @@ const adminPanelUserStatsTemplate = (user) => {
                       <span class="font-VazirLight mt-2 mb-1.5">دوره های نقدی</span>
                       <span class="font-VazirBold">${user.cash_courses_count}</span>
                     </div>
-                    <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                    <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                       <svg class="size-8 sm:size-10 theme-text-color">
                         <use href="#credit-card"></use>
                       </svg>
@@ -1486,7 +1486,7 @@ const adminPanelUserStatsTemplate = (user) => {
                         </svg>
                       </div>
                     </div>
-                    <div class="${user.last_expense_date ? 'flex' : 'hidden'} flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+                    <div class="${user.last_expense_date ? 'flex' : 'hidden'} flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                       <svg class="size-8 sm:size-10 theme-text-color">
                         <use href="#calendar-days"></use>
                       </svg>
@@ -1495,21 +1495,21 @@ const adminPanelUserStatsTemplate = (user) => {
                     </div>`
               }
 
-              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                 <svg class="size-8 sm:size-10 theme-text-color">
                   <use href="#ticket"></use>
                 </svg>
                 <span class="font-VazirLight mt-2 mb-1.5">${isAdmin ? 'بررسی تیکت' : 'تعداد تیکت ها'}</span>
                 <span class="font-VazirBold">${isAdmin ? `${user.admin_stats[0].tickets_count}` : `${user.tickets_count}`}</span>
               </div>
-              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                 <svg class="size-8 sm:size-10 theme-text-color">
                   <use href="#chat-bubble-left-right"></use>
                 </svg>
                 <span class="font-VazirLight mt-2 mb-1.5">${isAdmin ? 'بررسی پرسش' : 'تعداد پرسش ها'}</span>
                 <span class="font-VazirBold">${isAdmin ? `${user.admin_stats[0].questions_count}` : `${user.questions_count}`}</span>
               </div>
-              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm shadow">
+              <div class="flex flex-col items-center bg-white dark:bg-slate-800 rounded-2xl p-1 sm:p-2 text-sm">
                 <svg class="size-8 sm:size-10 theme-text-color">
                   <use href="#chat-bubble-bottom-center-text"></use>
                 </svg>
@@ -1534,7 +1534,7 @@ const adminPanelUserCoursesTemplate = (user) => {
     user.courses.forEach((course) => {
       coursesTemplate += `                
             <!-- Course -->
-            <div class="bg-white dark:bg-slate-800 shadow dark:shadow-none dark:border dark:border-slate-800 rounded-2xl pb-5 relative">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl pb-5 relative">
               <!-- Course Type -->
               <span class="absolute top-3 right-0 px-2 py-px text-sm ${course.is_free ? 'bg-emerald-600' : 'bg-rose-600'} text-white rounded-l-full">${course.is_free ? 'رایگان' : 'نقدی'}</span>
               <!-- End of Course Type -->
