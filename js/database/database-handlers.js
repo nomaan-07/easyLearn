@@ -45,6 +45,7 @@ import {
   returnFromViewedUser,
   addAdminViewedUserCoursesToDOM,
   addAdminViewedUserStatsToDOM,
+  addCommentsOfPageToDom,
 } from '../dom/dom-handlers.js';
 
 // index.js
@@ -74,30 +75,11 @@ const fetchAndDisplayMainPageBlogs = async () => {
 
 // course.js - blog.js
 const fetchAndDisplayComments = async (commentsWrapper, pageID) => {
-  // FIXME: refactor and make a new function for adding to DOM
   try {
-    // const commentID = getQueryParameters
     const comments = await getAllFromDatabase('comments');
-    let commentsElements = '';
-    let FilteredComments = comments.filter((comment) => {
-      return comment.page_id === pageID && comment.confirmed;
-    });
-    if (FilteredComments.length) {
-      FilteredComments = sortArray(FilteredComments, 'create', true);
-      FilteredComments.forEach((comment) => {
-        commentsElements += commentSectionTemplateHandler(comment);
-      });
-      insertToDOM(commentsWrapper, commentsElements);
-      document.querySelectorAll('.reply-comment-textarea').forEach((textarea) => textarea.addEventListener('input', textareaAutoResize));
-
-      const commentElementID = getQueryParameters('comment');
-      const commentElement = document.getElementById(commentElementID);
-      commentElement && scrollToAboveOfElement(commentElement, 110);
-    } else {
-      commentsWrapper.innerHTML = `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`;
-    }
+    addCommentsOfPageToDom(comments, commentsWrapper, pageID);
   } catch (error) {
-    console.error('Failed to fetch comments');
+    console.error('Failed to fetch comments', error);
   }
 };
 

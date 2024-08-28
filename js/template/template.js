@@ -403,8 +403,10 @@ const courseHeadlineSessionTemplate = (session, number, isPurchased, courseSlug,
 // utils.js
 const commentTemplate = (comment, replies) => {
   const message = comment.message.replace(/\n/g, '<br>');
-  let date = formatDate(comment.created_at);
+  const date = `${formatDate(comment.created_at)} - ${formatTime(comment.created_at)}`;
+
   let userAvatar = '';
+
   if (comment.image_src) {
     userAvatar = `<img class="w-full h-full object-cover" src="${comment.image_src}" alt="${comment.writer}">`;
   } else {
@@ -462,7 +464,8 @@ const commentTemplate = (comment, replies) => {
 // utils.js
 const commentReplyTemplate = (reply) => {
   const message = reply.message.replace(/\n/g, '<br>');
-  const date = formatDate(reply.created_at);
+  const date = `${formatDate(reply.created_at)} - ${formatTime(reply.created_at)}`;
+
   let userAvatar = '';
   if (reply.image_src) {
     userAvatar = `<img class="w-full h-full object-cover" src="${reply.image_src}" alt="${reply.writer}">`;

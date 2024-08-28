@@ -1,6 +1,6 @@
 import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
 import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion, submitTicketAnswer, closeTicket, changeUserRole, deleteUser, deleteUserCourse } from '../database/database-handlers.js';
-import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea, toggleNewTicketOptionsWrapper } from '../ui/ui-handlers.js';
+import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea, toggleNewTicketOptionsWrapper, textareaAutoResize } from '../ui/ui-handlers.js';
 import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
 import {
   courseCardTemplate,
@@ -41,6 +41,8 @@ import {
   filterPanelsQuestions,
   scrollToAboveOfElement,
   scrollToTop,
+  commentSectionTemplateHandler,
+  getQueryParameters,
 } from '../utils/utils.js';
 
 import {
@@ -188,6 +190,31 @@ const addRecentBlogsToDom = (blogs, blogsWrapper) => {
     blogsTemplate += recentBlogTemplate(newBlog);
   });
   insertToDOM(blogsWrapper, blogsTemplate);
+};
+
+const addCommentsOfPageToDom = (comments, commentsWrapper, pageID) => {
+  let commentTemplate = '';
+
+  let FilteredComments = comments.filter((comment) => {
+    return comment.page_id === pageID && comment.confirmed;
+  });
+
+  if (FilteredComments.length) {
+    FilteredComments = sortArray(FilteredComments, 'create', true);
+    FilteredComments.forEach((comment) => {
+      commentTemplate += commentSectionTemplateHandler(comment);
+    });
+
+    insertToDOM(commentsWrapper, commentTemplate);
+    const textareaElement = document.querySelectorAll('.reply-comment-textarea');
+    textareaElement.forEach((textarea) => textarea.addEventListener('input', textareaAutoResize));
+
+    const commentElementID = getQueryParameters('comment');
+    const commentElement = document.getElementById(commentElementID);
+    commentElement && scrollToAboveOfElement(commentElement, 110);
+  } else {
+    insertToDOM(commentsWrapper, `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`);
+  }
 };
 
 // comments section - course.js - blog.js
@@ -889,6 +916,7 @@ export {
   addBlogCardsToDOM,
   toggleTextarea,
   addRecentBlogsToDom,
+  addCommentsOfPageToDom,
   handleCommentReply,
   courseDiscountRemainingTimeDisplayHandler,
   addCourseToCartHandler,
