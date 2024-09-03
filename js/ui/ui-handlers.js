@@ -10,7 +10,7 @@ import {
 const changeDir = (value, el) => {
   if (value.length > 1) return;
 
-  if (/[a-zA-Z0-9]/.test(value)) el.dir = 'ltr';
+  if (/[a-zA-Z0-9۰-۹]/.test(value)) el.dir = 'ltr';
   else el.dir = 'rtl';
 };
 
