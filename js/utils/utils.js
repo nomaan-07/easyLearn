@@ -1,8 +1,26 @@
-import { courseHeadlineSessionTemplate, headlineTemplate, commentReplyTemplate, commentTemplate } from './../template/template.js';
+import {
+  courseHeadlineSessionTemplate,
+  headlineTemplate,
+  commentReplyTemplate,
+  commentTemplate,
+} from './../template/template.js';
 import { getAllFromDatabase } from './../database/database-api.js';
 import { localStorageUserID } from './../dom/dom-elements.js';
 
-const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+const persianMonths = [
+  'فروردین',
+  'اردیبهشت',
+  'خرداد',
+  'تیر',
+  'مرداد',
+  'شهریور',
+  'مهر',
+  'آبان',
+  'آذر',
+  'دی',
+  'بهمن',
+  'اسفند',
+];
 
 const getThemeFromLocalStorage = () => {
   const localStorageTheme = localStorage.getItem('themes');
@@ -11,7 +29,8 @@ const getThemeFromLocalStorage = () => {
 };
 
 const generateRandomID = () => {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
   const randomStringLength = Math.floor(Math.random() * (78 - 7)) + 6;
   const timestamp = new Date().getTime();
@@ -119,7 +138,15 @@ const emptyDomElemContent = (domElem) => {
 };
 
 // course.js - blog.js
-const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, category, categoryName, page) => {
+const breadCrumbLinksHandler = (
+  categoryElement,
+  nameElement,
+  name,
+  slug,
+  category,
+  categoryName,
+  page
+) => {
   if (page === 'blog') {
     categoryElement.href = `./${page}s.html?category=${category}`;
   } else if (page === 'course') {
@@ -132,15 +159,32 @@ const breadCrumbLinksHandler = (categoryElement, nameElement, name, slug, catego
 };
 
 // course.js
-const CourseHeadlineSectionHandler = (headline, isPurchased, courseSlug, headlineID, sessionID) => {
+const CourseHeadlineSectionHandler = (
+  headline,
+  isPurchased,
+  courseSlug,
+  headlineID,
+  sessionID
+) => {
   let sessions = headline.sessions;
   let sessionsTemplate = '';
   if (sessions.length) {
     sessions.forEach((session, index) => {
-      sessionsTemplate += courseHeadlineSessionTemplate(session, index + 1, isPurchased, courseSlug, sessionID);
+      sessionsTemplate += courseHeadlineSessionTemplate(
+        session,
+        index + 1,
+        isPurchased,
+        courseSlug,
+        sessionID
+      );
     });
   }
-  return headlineTemplate(headline, sessionsTemplate, sessions.length, headlineID);
+  return headlineTemplate(
+    headline,
+    sessionsTemplate,
+    sessions.length,
+    headlineID
+  );
 };
 
 // database-handler.js
@@ -164,10 +208,14 @@ const sortArray = (array, sortField, isAscending = false) => {
 
   switch (sortField) {
     case 'create':
-      sortedArray.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      sortedArray.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
       break;
     case 'update':
-      sortedArray.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
+      sortedArray.sort(
+        (a, b) => new Date(a.updated_at) - new Date(b.updated_at)
+      );
       break;
     case 'students':
       sortedArray.sort((a, b) => new Date(a.students) - new Date(b.students));
@@ -176,13 +224,19 @@ const sortArray = (array, sortField, isAscending = false) => {
       sortedArray.sort((a, b) => new Date(a.seen) - new Date(b.seen));
       break;
     case 'price':
-      sortedArray.sort((a, b) => applyDiscountToPrice(a.price, a.discount) - applyDiscountToPrice(b.price, b.discount));
+      sortedArray.sort(
+        (a, b) =>
+          applyDiscountToPrice(a.price, a.discount) -
+          applyDiscountToPrice(b.price, b.discount)
+      );
       break;
     case 'comments':
       sortedArray.sort((a, b) => new Date(a.comments) - new Date(b.comments));
       break;
     case 'reading_time':
-      sortedArray.sort((a, b) => new Date(a.reading_time) - new Date(b.reading_time));
+      sortedArray.sort(
+        (a, b) => new Date(a.reading_time) - new Date(b.reading_time)
+      );
       break;
     case 'id':
       sortedArray.sort((a, b) => a.id - b.id);
@@ -217,8 +271,12 @@ const calculateRemainingTime = (timestamp) => {
   let differenceInMilliseconds = futureTime - now;
 
   let days = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((differenceInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((differenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  let hours = Math.floor(
+    (differenceInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  let minutes = Math.floor(
+    (differenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+  );
   let seconds = Math.floor((differenceInMilliseconds % (1000 * 60)) / 1000);
 
   return { days, hours, minutes, seconds };
@@ -228,8 +286,16 @@ const calculateRemainingTime = (timestamp) => {
 const createCartCourseObject = (dbCourse) => ({
   id: dbCourse.id,
   name: dbCourse.name,
-  finalPriceInt: dbCourse.discount != 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount) : 0,
-  finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایــــــگان!',
+  finalPriceInt:
+    dbCourse.discount != 100
+      ? applyDiscountToPrice(dbCourse.price, dbCourse.discount)
+      : 0,
+  finalPrice:
+    dbCourse.discount !== 100
+      ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString(
+          'fa-IR'
+        )
+      : 'رایــــــگان!',
   discount: dbCourse.discount,
   imageSrc: dbCourse.image_src,
   slug: dbCourse.slug,
@@ -240,7 +306,12 @@ const createCartCourseObject = (dbCourse) => ({
 
 // course.js
 const createCourseObject = (dbCourse) => ({
-  finalPrice: dbCourse.discount !== 100 ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString('fa-IR') : 'رایگان!',
+  finalPrice:
+    dbCourse.discount !== 100
+      ? applyDiscountToPrice(dbCourse.price, dbCourse.discount).toLocaleString(
+          'fa-IR'
+        )
+      : 'رایگان!',
   id: dbCourse.id,
   name: dbCourse.name,
   caption: dbCourse.caption,
@@ -259,13 +330,16 @@ const createCourseObject = (dbCourse) => ({
   videosLength: dbCourse.videos_length,
   situation: dbCourse.complete ? 'تکمیل' : 'درحال برگزاری',
   timestamp: dbCourse.discount_timestamp,
-  isPurchased: dbCourse.students_id && dbCourse.students_id.includes(localStorageUserID),
+  isPurchased:
+    dbCourse.students_id && dbCourse.students_id.includes(localStorageUserID),
   // FIXME: updated_at instead of created_at
   date: formatDate(dbCourse.created_at),
 });
 
 // dom-handlers.js
-const getLocalCourses = () => localStorage.getItem('courses') && JSON.parse(localStorage.getItem('courses'));
+const getLocalCourses = () =>
+  localStorage.getItem('courses') &&
+  JSON.parse(localStorage.getItem('courses'));
 
 // dom-handlers.js
 const filterComments = (comments, filterType) => {
@@ -302,25 +376,44 @@ const createPanelQuestionObject = (session, question) => ({
   created_at: question.created_at,
   is_answered: question.is_answered,
   is_closed: question.is_closed,
-  updated_at: question.answers.length ? question.answers[question.answers.length - 1].created_at : question.created_at,
+  updated_at: question.answers.length
+    ? question.answers[question.answers.length - 1].created_at
+    : question.created_at,
 });
 
 const questionsExtraction = (data) => {
-  const questions = data.flatMap((session) => session.questions.map((question) => createPanelQuestionObject(session, question)));
-  questions.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  const questions = data.flatMap((session) =>
+    session.questions.map((question) =>
+      createPanelQuestionObject(session, question)
+    )
+  );
+  questions.sort(
+    (a, b) =>
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+  );
   return questions;
 };
 
 const filterPanelsQuestions = (data, isTicket = false) => {
   const questions = isTicket ? data : questionsExtraction(data);
 
-  questions.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  questions.sort(
+    (a, b) =>
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+  );
 
   const closedQuestions = questions.filter((question) => question.is_closed);
-  const answeredQuestions = questions.filter((question) => question.is_answered && !question.is_closed);
-  const notAnsweredQuestions = questions.filter((question) => !question.is_answered && !question.is_closed);
+  const answeredQuestions = questions.filter(
+    (question) => question.is_answered && !question.is_closed
+  );
+  const notAnsweredQuestions = questions.filter(
+    (question) => !question.is_answered && !question.is_closed
+  );
 
-  notAnsweredQuestions.sort((a, b) => new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime());
+  notAnsweredQuestions.sort(
+    (a, b) =>
+      new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+  );
 
   return [...notAnsweredQuestions, ...answeredQuestions, ...closedQuestions];
 };

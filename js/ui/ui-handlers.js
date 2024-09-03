@@ -1,14 +1,33 @@
 import { sweetAlert } from './../initializers/sweet-alert-initialize.js';
-import { displayPasswordBtn, accountMenuWrapper, overlay, newTicketDepartmentOptionsWrapper, newTicketDepartmentIconElement } from './../dom/dom-elements.js';
+import {
+  displayPasswordBtn,
+  accountMenuWrapper,
+  overlay,
+  newTicketDepartmentOptionsWrapper,
+  newTicketDepartmentIconElement,
+} from './../dom/dom-elements.js';
+
+const changeDir = (value, el) => {
+  if (value.length > 1) return;
+
+  if (/[a-zA-Z0-9]/.test(value)) el.dir = 'ltr';
+  else el.dir = 'rtl';
+};
 
 // course.js - dom-handlers.js
 const textareaAutoResize = (event) => {
   event.target.style.height = '160px';
   event.target.style.height = `${event.target.scrollHeight}px`;
+  changeDir(event.target.value, event.target);
 };
 
 // course.js - domHandler.js
-const toggleTextarea = (wrapper, textarea, user = true, openTextarea = false) => {
+const toggleTextarea = (
+  wrapper,
+  textarea,
+  user = true,
+  openTextarea = false
+) => {
   if (user && openTextarea) {
     wrapper.classList.remove('max-h-0');
     wrapper.classList.remove('overflow-hidden');
@@ -25,24 +44,36 @@ const toggleTextarea = (wrapper, textarea, user = true, openTextarea = false) =>
 
 // course.js - session.js
 const headlineLockSessionAlert = (event) => {
-  event.target.closest('.headline__lock-session') && sweetAlert('برای مشاهده‌ی این قسمت باید دوره را تهیه کنید.', 'info');
+  event.target.closest('.headline__lock-session') &&
+    sweetAlert('برای مشاهده‌ی این قسمت باید دوره را تهیه کنید.', 'info');
 };
 
 // course.js - session.js
 const toggleHeadLine = (event) => {
-  if (event.target.matches('.headline__title') || event.target.closest('.headline__title')) {
+  if (
+    event.target.matches('.headline__title') ||
+    event.target.closest('.headline__title')
+  ) {
     let titleElem = event.target;
     if (!event.target.matches('.headline__title')) {
       titleElem = event.target.closest('.headline__title');
     }
 
-    let titleELemToggleClasses = ['theme-bg-color', 'text-white', 'bg-slate-100', 'dark:bg-slate-700', 'md:hover:theme-text-color'];
+    let titleELemToggleClasses = [
+      'theme-bg-color',
+      'text-white',
+      'bg-slate-100',
+      'dark:bg-slate-700',
+      'md:hover:theme-text-color',
+    ];
     let totalHeadlineBodyHeight = 0;
 
     const headlineBody = titleElem.nextElementSibling;
     const headLineChildren = headlineBody.children;
 
-    titleELemToggleClasses.forEach((toggleClass) => titleElem.classList.toggle(toggleClass));
+    titleELemToggleClasses.forEach((toggleClass) =>
+      titleElem.classList.toggle(toggleClass)
+    );
 
     // Headline Chevron left icon
     titleElem.children[1].children[1].classList.toggle('-rotate-90');
@@ -97,7 +128,9 @@ const activeSortBtn = (btn) => {
 const moveOutLabelElement = (event) => {
   if (event.target.matches('input')) {
     event.target.previousElementSibling.classList.add('animate-move-right-up');
-    event.target.previousElementSibling.classList.remove('animate-move-right-down');
+    event.target.previousElementSibling.classList.remove(
+      'animate-move-right-down'
+    );
 
     if (event.target.id === 'password-input') {
       setTimeout(() => {

@@ -1,4 +1,9 @@
-import { changeTopBannerBackgroundColor, addLoginBtnToDOM, updateHederCartDetail, removeCourseFromCartHandler } from './../dom/dom-handlers.js';
+import {
+  changeTopBannerBackgroundColor,
+  addLoginBtnToDOM,
+  updateHederCartDetail,
+  removeCourseFromCartHandler,
+} from './../dom/dom-handlers.js';
 import {
   mobileMenuOpenBtn,
   mobileMenuCloseBtn,
@@ -117,11 +122,17 @@ mobileSearchInput.addEventListener('keypress', (event) => {
   }
 });
 
-mobileMenuOpenBtn.addEventListener('click', () => openMobileMenu(mobileMenu, 'right'));
-mobileCartOpenBtn.addEventListener('click', () => openMobileMenu(mobileCart, 'left'));
+mobileMenuOpenBtn.addEventListener('click', () =>
+  openMobileMenu(mobileMenu, 'right')
+);
+mobileCartOpenBtn.addEventListener('click', () =>
+  openMobileMenu(mobileCart, 'left')
+);
 mobileMenuCloseBtn.addEventListener('click', closeMobileHeaderMenus);
 mobileCartCloseBtn.addEventListener('click', closeMobileHeaderMenus);
 overlay.addEventListener('click', closeMobileHeaderMenus);
 window.addEventListener('scroll', headerScrollHandler);
 headerSearchToggleBtn.addEventListener('click', headerSearchBarToggle);
-headerCartCoursesWrappers.forEach((wrapper) => wrapper.addEventListener('click', removeCourseFromCartHandler));
+headerCartCoursesWrappers.forEach((wrapper) =>
+  wrapper.addEventListener('click', removeCourseFromCartHandler)
+);
