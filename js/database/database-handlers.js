@@ -1,8 +1,36 @@
-import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
+import {
+  confirmSweetAlert,
+  sweetAlert,
+} from '../initializers/sweet-alert-initialize.js';
 import { textareaAutoResize, toggleTextarea } from '../ui/ui-handlers.js';
-import { getAllFromDatabase, getOneFromDatabase, updateInDatabase, addToDatabase, getSomeFromDatabase, deleteFromDatabase } from './database-api.js';
-import { signupFormValidation, loginFormValidation, accountChangeDetailFormValidation, accountChangePasswordFormValidation, newTicketValidation } from '../validation/validation.js';
-import { persianMonths, generateRandomID, sortArray, commentSectionTemplateHandler, getLocalCourses, applyDiscountToPrice, convertPersianNumbersToEnglish, getQueryParameters, createCourseObject, removeLoader, scrollToAboveOfElement } from '../utils/utils.js';
+import {
+  getAllFromDatabase,
+  getOneFromDatabase,
+  updateInDatabase,
+  addToDatabase,
+  getSomeFromDatabase,
+  deleteFromDatabase,
+} from './database-api.js';
+import {
+  signupFormValidation,
+  loginFormValidation,
+  accountChangeDetailFormValidation,
+  accountChangePasswordFormValidation,
+  newTicketValidation,
+} from '../validation/validation.js';
+import {
+  persianMonths,
+  generateRandomID,
+  sortArray,
+  commentSectionTemplateHandler,
+  getLocalCourses,
+  applyDiscountToPrice,
+  convertPersianNumbersToEnglish,
+  getQueryParameters,
+  createCourseObject,
+  removeLoader,
+  scrollToAboveOfElement,
+} from '../utils/utils.js';
 import {
   latestCoursesWrapperElement,
   popularCoursesWrapperElement,
@@ -53,11 +81,23 @@ const fetchAndDisplayMainPageCourses = async () => {
   try {
     const allCourses = await getAllFromDatabase('courses');
     const lastTenCourse = sortArray(allCourses, 'create', true).slice(0, 10);
-    const twelveMostPopularCourse = sortArray(allCourses, 'students', true).slice(0, 12);
+    const twelveMostPopularCourse = sortArray(
+      allCourses,
+      'students',
+      true
+    ).slice(0, 12);
     addCourseCardsToDOM(lastTenCourse, latestCoursesWrapperElement);
-    addCourseCardsToDOM(twelveMostPopularCourse, popularCoursesWrapperElement, true);
-    latestCoursesWrapperElement.addEventListener('click', (event) => addCourseToCartHandler(event, lastTenCourse));
-    popularCoursesWrapperElement.addEventListener('click', (event) => addCourseToCartHandler(event, twelveMostPopularCourse));
+    addCourseCardsToDOM(
+      twelveMostPopularCourse,
+      popularCoursesWrapperElement,
+      true
+    );
+    latestCoursesWrapperElement.addEventListener('click', (event) =>
+      addCourseToCartHandler(event, lastTenCourse)
+    );
+    popularCoursesWrapperElement.addEventListener('click', (event) =>
+      addCourseToCartHandler(event, twelveMostPopularCourse)
+    );
   } catch (error) {
     console.error('Failed to Fetch courses', error);
   }
@@ -84,7 +124,15 @@ const fetchAndDisplayComments = async (commentsWrapper, pageID) => {
 };
 
 // comments section - course.js - blog.js
-const submitNewComment = async (newCommentWrapper, newCommentTextarea, pageType, pageID, pageName, pageSlug, user) => {
+const submitNewComment = async (
+  newCommentWrapper,
+  newCommentTextarea,
+  pageType,
+  pageID,
+  pageName,
+  pageSlug,
+  user
+) => {
   try {
     const message = newCommentTextarea.value.trim();
     let newComment = {
@@ -102,7 +150,11 @@ const submitNewComment = async (newCommentWrapper, newCommentTextarea, pageType,
       const user = await getOneFromDatabase('users', 'id', localStorageUserID);
 
       await addToDatabase('comments', newComment);
-      await updateInDatabase('users', { comments_count: user.comments_count + 1 }, localStorageUserID);
+      await updateInDatabase(
+        'users',
+        { comments_count: user.comments_count + 1 },
+        localStorageUserID
+      );
 
       sweetAlert('نظر شما ثبت شد و پس از بازبینی منتشر می‌شود.', 'success');
       toggleTextarea(newCommentWrapper, newCommentTextarea);
@@ -118,7 +170,15 @@ const submitNewComment = async (newCommentWrapper, newCommentTextarea, pageType,
 };
 
 // comments section - course.js - blog.js
-const submitCommentReply = async (textarea, wrapper, commentID, pageType, pageName, pageSlug, user) => {
+const submitCommentReply = async (
+  textarea,
+  wrapper,
+  commentID,
+  pageType,
+  pageName,
+  pageSlug,
+  user
+) => {
   try {
     const message = textarea.value.trim();
     let dbReplies = null;
@@ -145,7 +205,11 @@ const submitCommentReply = async (textarea, wrapper, commentID, pageType, pageNa
       const user = await getOneFromDatabase('users', 'id', localStorageUserID);
 
       await updateInDatabase('comments', { replies: dbReplies }, commentID);
-      await updateInDatabase('users', { comments_count: user.comments_count + 1 }, localStorageUserID);
+      await updateInDatabase(
+        'users',
+        { comments_count: user.comments_count + 1 },
+        localStorageUserID
+      );
 
       sweetAlert('نظر شما ثبت شد و پس از بازبینی منتشر می‌شود.', 'success');
       toggleTextarea(wrapper, textarea);
@@ -179,7 +243,14 @@ const submitSignupForm = async (event) => {
 
   const allUsers = await getAllFromDatabase('users');
 
-  if (signupFormValidation(usernameInputValue, emailInputValue, passwordInputValue, allUsers)) {
+  if (
+    signupFormValidation(
+      usernameInputValue,
+      emailInputValue,
+      passwordInputValue,
+      allUsers
+    )
+  ) {
     let newUser = {
       id: generateRandomID(),
       created_at: new Date(),
@@ -271,14 +342,20 @@ const addSellDataToDatabase = async (coursesTotalPrice) => {
 
   // Check if this month exist in database
   const dbSellData = await getAllFromDatabase(databaseTableName);
-  const thisMonthData = dbSellData.find((data) => data.month === month && data.year === year);
+  const thisMonthData = dbSellData.find(
+    (data) => data.month === month && data.year === year
+  );
 
   // add purchase data to database
   if (thisMonthData) {
     let previousSellAmount = thisMonthData.sell;
     const newSellAmount = previousSellAmount + coursesTotalPrice;
 
-    await updateInDatabase(databaseTableName, { sell: newSellAmount }, thisMonthData.id);
+    await updateInDatabase(
+      databaseTableName,
+      { sell: newSellAmount },
+      thisMonthData.id
+    );
   } else {
     addToDatabase(databaseTableName, { year, month, sell: coursesTotalPrice });
   }
@@ -291,7 +368,11 @@ const purchaseCourses = async () => {
     const userPurchasedCourses = getLocalCourses();
     const dbCourses = await getAllFromDatabase('courses');
 
-    let filteredCourses = dbCourses.filter((course) => userPurchasedCourses.some((purchasedCourse) => purchasedCourse.id === course.id));
+    let filteredCourses = dbCourses.filter((course) =>
+      userPurchasedCourses.some(
+        (purchasedCourse) => purchasedCourse.id === course.id
+      )
+    );
 
     for (let course of filteredCourses) {
       const courseStudentsID = course.students_id || [];
@@ -299,11 +380,17 @@ const purchaseCourses = async () => {
 
       courseStudentsID.push(localStorageUserID);
       courseStudentCount++;
-      await updateInDatabase('courses', { students_id: courseStudentsID, students: courseStudentCount }, course.id);
+      await updateInDatabase(
+        'courses',
+        { students_id: courseStudentsID, students: courseStudentCount },
+        course.id
+      );
     }
 
     // Add courses info to database
-    const coursesTotalPrice = await addCourseDetailToUserInDatabase(filteredCourses);
+    const coursesTotalPrice = await addCourseDetailToUserInDatabase(
+      filteredCourses
+    );
     await addSellDataToDatabase(coursesTotalPrice);
 
     localStorage.removeItem('courses');
@@ -337,7 +424,9 @@ const fetchAndDisplaySession = async () => {
 
 // session.js
 const fetchAndDisplaySessionQuestions = async () => {
-  const pageID = `${getQueryParameters('course')}_${getQueryParameters('id')}_${localStorageUserID}`;
+  const pageID = `${getQueryParameters('course')}_${getQueryParameters(
+    'id'
+  )}_${localStorageUserID}`;
   const questionID = getQueryParameters('question');
 
   const response = await getOneFromDatabase('question_answer', 'id', pageID);
@@ -351,7 +440,12 @@ const fetchAndDisplaySessionQuestions = async () => {
 };
 
 // session.js
-const submitSessionNewQuestion = async (course_name, course_slug, session_id, session_name) => {
+const submitSessionNewQuestion = async (
+  course_name,
+  course_slug,
+  session_id,
+  session_name
+) => {
   try {
     const questionContent = newQuestionTextareaElement.value.trim();
 
@@ -376,12 +470,20 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
     const pageID = `${course_slug}_${session_id}_${localStorageUserID}`;
 
     // get current session user questions
-    let userSessionQuestions = await getOneFromDatabase(tableName, 'id', pageID);
+    let userSessionQuestions = await getOneFromDatabase(
+      tableName,
+      'id',
+      pageID
+    );
 
     if (userSessionQuestions) {
       let userPreviousQuestions = userSessionQuestions.questions;
       userPreviousQuestions.push(newQuestion);
-      await updateInDatabase(tableName, { questions: userPreviousQuestions }, pageID);
+      await updateInDatabase(
+        tableName,
+        { questions: userPreviousQuestions },
+        pageID
+      );
     } else {
       userSessionQuestions = {
         id: pageID,
@@ -398,7 +500,11 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
 
     // add question to user stats
     const user = await getOneFromDatabase('users', 'id', localStorageUserID);
-    await updateInDatabase('users', { questions_count: user.questions_count + 1 }, localStorageUserID);
+    await updateInDatabase(
+      'users',
+      { questions_count: user.questions_count + 1 },
+      localStorageUserID
+    );
 
     sweetAlert('سوال شما با موفقیت ارسال شد.', 'success');
     newQuestionTextareaElement.value = '';
@@ -413,14 +519,22 @@ const submitSessionNewQuestion = async (course_name, course_slug, session_id, se
 const fetchAndDisplayAccountCourses = async () => {
   const dbCourses = await getAllFromDatabase('courses');
 
-  let filteredCourses = dbCourses.filter((course) => course.students_id && course.students_id.some((id) => id === localStorageUserID));
+  let filteredCourses = dbCourses.filter(
+    (course) =>
+      course.students_id &&
+      course.students_id.some((id) => id === localStorageUserID)
+  );
   addAccountCourseToDOM(filteredCourses);
 };
 
 // account.js
 const fetchAndDisplayAccountQuestions = async () => {
   try {
-    const data = await getSomeFromDatabase('question_answer', 'user_id', localStorageUserID);
+    const data = await getSomeFromDatabase(
+      'question_answer',
+      'user_id',
+      localStorageUserID
+    );
     addUserAccountQuestionToDOM(data);
   } catch (error) {
     console.error('Failed to fetch questions', error);
@@ -450,7 +564,11 @@ const submitNewTicket = async (tickets) => {
     const user = await getOneFromDatabase('users', 'id', localStorageUserID);
 
     await addToDatabase('tickets', newTicket);
-    await updateInDatabase('users', { tickets_count: user.tickets_count + 1 }, localStorageUserID);
+    await updateInDatabase(
+      'users',
+      { tickets_count: user.tickets_count + 1 },
+      localStorageUserID
+    );
 
     sweetAlert('تیکت با موفقیت ارسال شد.', 'success');
     toggleNewTicketWrapper(ticketBtn);
@@ -465,11 +583,17 @@ const submitNewTicket = async (tickets) => {
 // account.js
 const fetchAndDisplayUserTickets = async () => {
   try {
-    const tickets = await getSomeFromDatabase('tickets', 'user_id', localStorageUserID);
+    const tickets = await getSomeFromDatabase(
+      'tickets',
+      'user_id',
+      localStorageUserID
+    );
 
     addTicketsToDOM(tickets, true);
 
-    newTicketSubmitBtn.addEventListener('click', () => submitNewTicket(tickets));
+    newTicketSubmitBtn.addEventListener('click', () =>
+      submitNewTicket(tickets)
+    );
   } catch (error) {
     console.error('Failed to fetch tickets', error);
   }
@@ -493,7 +617,9 @@ const submitTicketAnswer = (btn, ticket, tickets, isUserPanel) => {
       created_at: new Date(),
       content,
       writer_role: isUserPanel ? 'user' : 'admin',
-      writer_name: isUserPanel ? localStorageUsername : localStorage.getItem('admin-name'),
+      writer_name: isUserPanel
+        ? localStorageUsername
+        : localStorage.getItem('admin-name'),
     };
 
     const updatedTicketInfo = {
@@ -558,9 +684,18 @@ const submitAccountDetailChanges = async (event) => {
   const usernameInputValue = usernameInput.value.trim();
   const emailInputValue = emailInput.value.trim();
 
-  const allUsers = (usernameInputValue || emailInputValue) && (await getAllFromDatabase('users'));
+  const allUsers =
+    (usernameInputValue || emailInputValue) &&
+    (await getAllFromDatabase('users'));
 
-  if (allUsers && accountChangeDetailFormValidation(usernameInputValue, emailInputValue, allUsers)) {
+  if (
+    allUsers &&
+    accountChangeDetailFormValidation(
+      usernameInputValue,
+      emailInputValue,
+      allUsers
+    )
+  ) {
     let username = usernameInputValue || usernameInput.placeholder;
     let email = emailInputValue || emailInput.placeholder;
     updateInDatabase('users', { username, email }, localStorageUserID);
@@ -577,10 +712,23 @@ const submitAccountPasswordChanges = async (event) => {
   const currentPasswordInputValue = currentPasswordInputElem.value.trim();
   const newPasswordInputValue = newPasswordInputElem.value.trim();
 
-  const user = (currentPasswordInputValue || newPasswordInputValue) && (await getOneFromDatabase('users', 'id', localStorageUserID));
+  const user =
+    (currentPasswordInputValue || newPasswordInputValue) &&
+    (await getOneFromDatabase('users', 'id', localStorageUserID));
 
-  if (user && accountChangePasswordFormValidation(currentPasswordInputValue, newPasswordInputValue, user)) {
-    updateInDatabase('users', { password: newPasswordInputValue }, localStorageUserID);
+  if (
+    user &&
+    accountChangePasswordFormValidation(
+      currentPasswordInputValue,
+      newPasswordInputValue,
+      user
+    )
+  ) {
+    updateInDatabase(
+      'users',
+      { password: newPasswordInputValue },
+      localStorageUserID
+    );
     currentPasswordInputElem.value = '';
     newPasswordInputElem.value = '';
   }
@@ -599,7 +747,10 @@ const fetchAndDisplayAdminQuestions = async () => {
 const closeQuestion = (btn, pageID, questions, adminName, data, page) => {
   try {
     btn.addEventListener('click', async () => {
-      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بستن پرسش');
+      const isConfirmed = await confirmSweetAlert(
+        'آیا مطمئن هستید؟',
+        'بستن پرسش'
+      );
       if (!isConfirmed) return;
 
       const questionID = btn.dataset.question_id;
@@ -628,7 +779,10 @@ const fetchAndDisplayAllTickets = async () => {
 const closeTicket = (btn, ticket, tickets) => {
   try {
     btn.addEventListener('click', async () => {
-      const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'بستن تیکت');
+      const isConfirmed = await confirmSweetAlert(
+        'آیا مطمئن هستید؟',
+        'بستن تیکت'
+      );
       if (!isConfirmed) return;
       ticket.is_closed = true;
       await updateInDatabase('tickets', { is_closed: true }, ticket.id);
@@ -662,7 +816,14 @@ const fetchAndDisplaySellAndExpenseData = async () => {
   }
 };
 
-const submitQuestionAnswer = (btn, pageID, questions, adminName, data, page) => {
+const submitQuestionAnswer = (
+  btn,
+  pageID,
+  questions,
+  adminName,
+  data,
+  page
+) => {
   const questionID = btn.parentElement.dataset.question_id;
   const textarea = document.querySelector(`#textarea-${questionID}`);
 
@@ -693,19 +854,28 @@ const submitQuestionAnswer = (btn, pageID, questions, adminName, data, page) => 
     await updateInDatabase('question_answer', { questions }, pageID);
     sweetAlert('پاسخ شما با موفقیت ارسال شد.', 'success');
 
-    adminName ? addAdminPanelViewedQuestionToDOM(data, page, question, adminName) : addSessionQuestionsToDOM(pageID, questions);
+    adminName
+      ? addAdminPanelViewedQuestionToDOM(data, page, question, adminName)
+      : addSessionQuestionsToDOM(pageID, questions);
   });
 };
 
 const changeUserRole = async (user, users) => {
   try {
-    if ((user.role === 'admin' || user.role === 'manager') && user.id === localStorageUserID) {
+    if (
+      (user.role === 'admin' || user.role === 'manager') &&
+      user.id === localStorageUserID
+    ) {
       sweetAlert('شما نمی توانید نقش خود را تغییر دهید.', 'info');
       return;
     }
 
     const role = user.role === 'admin' ? 'کاربر' : 'پشتیبان';
-    const isConfirmed = await confirmSweetAlert(`آیا می‌ خواهید نقش ${user.username} به ${role} تغییر پیدا کند؟`, 'تغییر نقش', '#059669');
+    const isConfirmed = await confirmSweetAlert(
+      `آیا می‌ خواهید نقش ${user.username} به ${role} تغییر پیدا کند؟`,
+      'تغییر نقش',
+      '#059669'
+    );
     if (!isConfirmed) return;
 
     user.role = user.role === 'admin' ? 'user' : 'admin';
@@ -722,16 +892,24 @@ const changeUserRole = async (user, users) => {
 
 const deleteUser = async (user, users) => {
   try {
-    if ((user.role === 'admin' || user.role === 'manager') && user.id === localStorageUserID) {
+    if (
+      (user.role === 'admin' || user.role === 'manager') &&
+      user.id === localStorageUserID
+    ) {
       sweetAlert('شما نمی توانید حساب کاربری خود را حذف کنید.', 'info');
       return;
     }
 
-    const isConfirmed = await confirmSweetAlert(`آیا مطمئن هستید؟`, `حذف ${user.username}`);
+    const isConfirmed = await confirmSweetAlert(
+      `آیا مطمئن هستید؟`,
+      `حذف ${user.username}`
+    );
     if (!isConfirmed) return;
 
     await deleteFromDatabase('users', user.id);
-    const filteredUsers = users.filter((filteredUser) => filteredUser.id !== user.id);
+    const filteredUsers = users.filter(
+      (filteredUser) => filteredUser.id !== user.id
+    );
     addAllUsersToDOM(filteredUsers);
     sweetAlert('کاربر با موفقیت حذف شد.', 'success');
     returnFromViewedUser(true);
@@ -747,21 +925,49 @@ const deleteUserCourse = async (deleteUserCourseBtn, user, users) => {
     if (!isConfirmed) return;
 
     const deletedCourseID = deleteUserCourseBtn.dataset.course_id;
-    const deletedCourse = await getOneFromDatabase('courses', 'id', deletedCourseID);
+    const deletedCourse = await getOneFromDatabase(
+      'courses',
+      'id',
+      deletedCourseID
+    );
 
-    const filteredCourses = user.courses.filter((course) => course.id !== deletedCourseID);
-    const filteredStudentsID = deletedCourse.students_id.filter((id) => id !== user.id);
+    const filteredCourses = user.courses.filter(
+      (course) => course.id !== deletedCourseID
+    );
+    const filteredStudentsID = deletedCourse.students_id.filter(
+      (id) => id !== user.id
+    );
 
     if (deletedCourse.discount === 100) {
       user.free_courses_count -= 1;
-      await updateInDatabase('users', { courses: filteredCourses, free_courses_count: user.free_courses_count }, user.id);
+      await updateInDatabase(
+        'users',
+        {
+          courses: filteredCourses,
+          free_courses_count: user.free_courses_count,
+        },
+        user.id
+      );
     } else {
       user.cash_courses_count -= 1;
-      await updateInDatabase('users', { courses: filteredCourses, cash_courses_count: user.cash_courses_count }, user.id);
+      await updateInDatabase(
+        'users',
+        {
+          courses: filteredCourses,
+          cash_courses_count: user.cash_courses_count,
+        },
+        user.id
+      );
     }
-    await updateInDatabase('courses', { students_id: filteredStudentsID }, deletedCourseID);
+    await updateInDatabase(
+      'courses',
+      { students_id: filteredStudentsID },
+      deletedCourseID
+    );
 
-    user.courses = user.courses.filter((course) => course.id !== deletedCourseID);
+    user.courses = user.courses.filter(
+      (course) => course.id !== deletedCourseID
+    );
 
     addAllUsersToDOM(users);
     addAdminViewedUserCoursesToDOM(user, users);

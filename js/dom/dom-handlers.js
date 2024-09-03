@@ -1,7 +1,30 @@
-import { confirmSweetAlert, sweetAlert } from '../initializers/sweet-alert-initialize.js';
-import { submitCommentReply, submitSessionNewQuestion, submitQuestionAnswer, closeQuestion, submitTicketAnswer, closeTicket, changeUserRole, deleteUser, deleteUserCourse } from '../database/database-handlers.js';
-import { closeMobileAccountMenu, toggleTextarea, openAnswerTextArea, cancelAnswerTextArea, toggleNewTicketOptionsWrapper, textareaAutoResize } from '../ui/ui-handlers.js';
-import { sellAndExpenseStaticsChart, ProfitAndLossStaticsChart } from '../initializers/chart-js-initialize.js';
+import {
+  confirmSweetAlert,
+  sweetAlert,
+} from '../initializers/sweet-alert-initialize.js';
+import {
+  submitCommentReply,
+  submitSessionNewQuestion,
+  submitQuestionAnswer,
+  closeQuestion,
+  submitTicketAnswer,
+  closeTicket,
+  changeUserRole,
+  deleteUser,
+  deleteUserCourse,
+} from '../database/database-handlers.js';
+import {
+  closeMobileAccountMenu,
+  toggleTextarea,
+  openAnswerTextArea,
+  cancelAnswerTextArea,
+  toggleNewTicketOptionsWrapper,
+  textareaAutoResize,
+} from '../ui/ui-handlers.js';
+import {
+  sellAndExpenseStaticsChart,
+  ProfitAndLossStaticsChart,
+} from '../initializers/chart-js-initialize.js';
 import {
   courseCardTemplate,
   blogCardTemplate,
@@ -128,12 +151,19 @@ const addLoginBtnToDOM = (loginButtons, userID) => {
 
 // index.html - course-category.html
 const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper) => {
-  let courseWrapperClass = isSwiper ? 'swiper-slide course-card' : 'course-card';
+  let courseWrapperClass = isSwiper
+    ? 'swiper-slide course-card'
+    : 'course-card';
   let newCourse = null;
   let finalPrice = null;
   let coursesTemplate = '';
   courses.forEach((course) => {
-    finalPrice = course.discount !== 100 ? applyDiscountToPrice(course.price, course.discount).toLocaleString('fa-IR') : 'رایگان!';
+    finalPrice =
+      course.discount !== 100
+        ? applyDiscountToPrice(course.price, course.discount).toLocaleString(
+            'fa-IR'
+          )
+        : 'رایگان!';
     newCourse = {
       id: course.id,
       name: course.name,
@@ -146,7 +176,8 @@ const addCourseCardsToDOM = (courses, coursesWrapper, isSwiper) => {
       price: course.price.toLocaleString('fa-IR'),
       finalPrice: finalPrice,
       slug: course.slug,
-      isPurchased: course.students_id && course.students_id.includes(localStorageUserID),
+      isPurchased:
+        course.students_id && course.students_id.includes(localStorageUserID),
       courseWrapperClass,
     };
     coursesTemplate += courseCardTemplate(newCourse);
@@ -206,14 +237,21 @@ const addCommentsOfPageToDom = (comments, commentsWrapper, pageID) => {
     });
 
     insertToDOM(commentsWrapper, commentTemplate);
-    const textareaElement = document.querySelectorAll('.reply-comment-textarea');
-    textareaElement.forEach((textarea) => textarea.addEventListener('input', textareaAutoResize));
+    const textareaElement = document.querySelectorAll(
+      '.reply-comment-textarea'
+    );
+    textareaElement.forEach((textarea) =>
+      textarea.addEventListener('input', textareaAutoResize)
+    );
 
     const commentElementID = getQueryParameters('comment');
     const commentElement = document.getElementById(commentElementID);
     commentElement && scrollToAboveOfElement(commentElement, 110);
   } else {
-    insertToDOM(commentsWrapper, `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`);
+    insertToDOM(
+      commentsWrapper,
+      `<p class="p-4 font-VazirMedium sm:text-lg xl:text-xl">هنوز نظری برای این بخش ثبت نشده است.</p>`
+    );
   }
 };
 
@@ -234,7 +272,15 @@ const handleCommentReply = (event, pageType, pageName, pageSlug, user) => {
   }
   // submit reply
   if (element.closest('.reply-comment-submit-btn')) {
-    submitCommentReply(textarea, wrapper, commentID, pageType, pageName, pageSlug, user);
+    submitCommentReply(
+      textarea,
+      wrapper,
+      commentID,
+      pageType,
+      pageName,
+      pageSlug,
+      user
+    );
   }
 };
 
@@ -276,7 +322,9 @@ const cartCourseDiscountRemainingTimeDisplayHandler = (element) => {
 
 const addToLocalCourseIfNotExist = (localCourses, course) => {
   if (localCourses) {
-    let courseInLocalCourse = localCourses.find((localCourse) => localCourse.id === course.id);
+    let courseInLocalCourse = localCourses.find(
+      (localCourse) => localCourse.id === course.id
+    );
     if (!courseInLocalCourse) {
       localCourses.push(course);
       sweetAlert(`دوره به سبد خرید اضافه شد.`, 'success');
@@ -296,13 +344,19 @@ const addCourseToCartHandler = (event, courses) => {
   if (!event.target.closest('.course__add-to-cart-btn')) return;
 
   if (!localStorageUserID) {
-    sweetAlert('برای ثبت نام در دوره، ابتدا باید در سایت ثبت نام کنید.', 'info');
+    sweetAlert(
+      'برای ثبت نام در دوره، ابتدا باید در سایت ثبت نام کنید.',
+      'info'
+    );
     localStorage.removeItem('courses');
     return;
   }
 
-  const courseID = event.target.closest('.course__add-to-cart-btn').dataset.course_id;
-  const dbCourse = courses.length ? courses.find((course) => course.id === courseID) : courses;
+  const courseID = event.target.closest('.course__add-to-cart-btn').dataset
+    .course_id;
+  const dbCourse = courses.length
+    ? courses.find((course) => course.id === courseID)
+    : courses;
 
   const course = createCartCourseObject(dbCourse);
   const localCourses = getLocalCourses();
@@ -315,10 +369,13 @@ const addCourseToCartHandler = (event, courses) => {
 // header.js
 const removeCourseFromCartHandler = (event) => {
   if (!event.target.closest('.cart__course-remove-btn')) return;
-  const courseID = event.target.closest('.cart__course-remove-btn').dataset.course_id;
+  const courseID = event.target.closest('.cart__course-remove-btn').dataset
+    .course_id;
 
   const localCourses = getLocalCourses();
-  const filterDeletedCourse = localCourses.filter((localCourse) => localCourse.id !== courseID);
+  const filterDeletedCourse = localCourses.filter(
+    (localCourse) => localCourse.id !== courseID
+  );
   localStorage.setItem('courses', JSON.stringify(filterDeletedCourse));
   sweetAlert('دوره‌ از سبد خرید حذف شد.', 'success');
   updateHederCartDetail();
@@ -341,19 +398,25 @@ const updateHederCartDetail = () => {
       elem.classList.remove('hidden');
       elem.classList.add('flex');
     });
-    headerCartCoursesNumberElements.forEach((elem) => (elem.textContent = `${localCourses.length} دوره`));
+    headerCartCoursesNumberElements.forEach(
+      (elem) => (elem.textContent = `${localCourses.length} دوره`)
+    );
 
     localCourses.forEach((course) => {
       coursesTemplate += headerCartCourseTemplate(course);
       courseTotalPrice += course.finalPriceInt;
     });
 
-    headerCartCoursesWrappers.forEach((courseWrappers) => insertToDOM(courseWrappers, coursesTemplate));
+    headerCartCoursesWrappers.forEach((courseWrappers) =>
+      insertToDOM(courseWrappers, coursesTemplate)
+    );
 
     headerCartTotalPriceElements.forEach((elem) => {
       elem.classList.add('flex');
       elem.classList.remove('hidden');
-      elem.querySelector('span').innerText = courseTotalPrice ? courseTotalPrice.toLocaleString('fa-IR') : 'صـــفر';
+      elem.querySelector('span').innerText = courseTotalPrice
+        ? courseTotalPrice.toLocaleString('fa-IR')
+        : 'صـــفر';
     });
 
     headerCartPayButtons.forEach((btn) => {
@@ -366,8 +429,15 @@ const updateHederCartDetail = () => {
       elem.classList.add('hidden');
       elem.classList.remove('flex');
     });
-    headerCartCoursesNumberElements.forEach((elem) => (elem.innerText = `0 دوره`));
-    headerCartCoursesWrappers.forEach((elem) => insertToDOM(elem, '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'));
+    headerCartCoursesNumberElements.forEach(
+      (elem) => (elem.innerText = `0 دوره`)
+    );
+    headerCartCoursesWrappers.forEach((elem) =>
+      insertToDOM(
+        elem,
+        '<p class="font-VazirMedium overflow-hidden text-center">هنوز هیچ دوره‌ای انتخاب نشده است.</p>'
+      )
+    );
 
     headerCartTotalPriceElements.forEach((elem) => {
       elem.classList.remove('flex');
@@ -402,9 +472,13 @@ const updateCartPageDetail = () => {
     });
     insertToDOM(cartCoursesWrapper, coursesTemplate);
     const timerElements = document.querySelectorAll('.cart__discount-timer');
-    timerElements.forEach((element) => cartCourseDiscountRemainingTimeDisplayHandler(element));
+    timerElements.forEach((element) =>
+      cartCourseDiscountRemainingTimeDisplayHandler(element)
+    );
 
-    cartTotalPrice.textContent = courseTotalPrice ? courseTotalPrice.toLocaleString('fa-IR') : 'صـــفر';
+    cartTotalPrice.textContent = courseTotalPrice
+      ? courseTotalPrice.toLocaleString('fa-IR')
+      : 'صـــفر';
   } else {
     cartCourseNumberElement.textContent = `0 دوره`;
     cartNoCourseWrapper.classList.remove('hidden');
@@ -438,11 +512,22 @@ const addSessionToDOM = (course, sessionID) => {
   document.title = `${session.name} | ${course.name} | ایزی‌لرن`;
 
   // Add breadcrumb to DOM
-  breadCrumbLinksHandler(breadcrumbCourseCategory, breadcrumbCourseName, course.name, course.slug, course.category, course.categoryName, 'course');
+  breadCrumbLinksHandler(
+    breadcrumbCourseCategory,
+    breadcrumbCourseName,
+    course.name,
+    course.slug,
+    course.category,
+    course.categoryName,
+    'course'
+  );
 
   // Add session detail to DOM
 
-  insertToDOM(sessionVideoElement, `<source src="${session.videoSrc}" type="video/mp4" />`);
+  insertToDOM(
+    sessionVideoElement,
+    `<source src="${session.videoSrc}" type="video/mp4" />`
+  );
   sessionVideoElement.poster = course.image_src;
 
   sessionCourseNameElements.forEach((elem) => {
@@ -464,7 +549,13 @@ const addSessionToDOM = (course, sessionID) => {
   let headlinesTemplate = '';
 
   course.headlines.forEach((headline) => {
-    headlinesTemplate += CourseHeadlineSectionHandler(headline, course.isPurchased, course.slug, headlineID, session.id);
+    headlinesTemplate += CourseHeadlineSectionHandler(
+      headline,
+      course.isPurchased,
+      course.slug,
+      headlineID,
+      session.id
+    );
   });
 
   insertToDOM(headlinesWrapper, headlinesTemplate);
@@ -482,7 +573,14 @@ const addSessionToDOM = (course, sessionID) => {
       </div>`
     );
   } else {
-    newQuestionSubmitBtn.addEventListener('click', () => submitSessionNewQuestion(course.name, course.slug, sessionID, session.name));
+    newQuestionSubmitBtn.addEventListener('click', () =>
+      submitSessionNewQuestion(
+        course.name,
+        course.slug,
+        sessionID,
+        session.name
+      )
+    );
   }
 
   removeLoader();
@@ -490,12 +588,18 @@ const addSessionToDOM = (course, sessionID) => {
 
 const handleSessionAnswer = (pageID, questions) => {
   const openAnswerButtons = document.querySelectorAll('.answer__open-btn');
-  const newAnswerCancelButtons = document.querySelectorAll('.new-answer__cancel-btn');
-  const newAnswerSubmitButtons = document.querySelectorAll('.new-answer__submit-btn');
+  const newAnswerCancelButtons = document.querySelectorAll(
+    '.new-answer__cancel-btn'
+  );
+  const newAnswerSubmitButtons = document.querySelectorAll(
+    '.new-answer__submit-btn'
+  );
 
   openAnswerButtons.forEach((btn) => openAnswerTextArea(btn));
   newAnswerCancelButtons.forEach((btn) => cancelAnswerTextArea(btn));
-  newAnswerSubmitButtons.forEach((btn) => submitQuestionAnswer(btn, pageID, questions));
+  newAnswerSubmitButtons.forEach((btn) =>
+    submitQuestionAnswer(btn, pageID, questions)
+  );
 };
 
 const addSessionQuestionsToDOM = (pageID, questions, questionID) => {
@@ -531,7 +635,15 @@ const addSessionQuestionsToDOM = (pageID, questions, questionID) => {
 
 // header.js
 const changeTopBannerBackgroundColor = () => {
-  const colors = ['bg-fuchsia-600', 'bg-rose-600', 'bg-violet-600', 'bg-emerald-600', 'bg-lime-600', 'bg-amber-600', 'bg-sky-600'];
+  const colors = [
+    'bg-fuchsia-600',
+    'bg-rose-600',
+    'bg-violet-600',
+    'bg-emerald-600',
+    'bg-lime-600',
+    'bg-amber-600',
+    'bg-sky-600',
+  ];
   const randomIndex = Math.floor(Math.random() * colors.length);
   topBannerElement.classList.add(colors[randomIndex]);
 };
@@ -541,7 +653,9 @@ const addAccountCourseToDOM = (courses) => {
   let coursesTemplate = '';
 
   if (courses.length) {
-    courses.forEach((course) => (coursesTemplate += accountCourseTemplate(course)));
+    courses.forEach(
+      (course) => (coursesTemplate += accountCourseTemplate(course))
+    );
   } else {
     coursesTemplate = `
     <p class="text-center text-xl font-VazirMedium">شما در هیچ دوره‌ای شرکت نکرده‌اید.</p>
@@ -553,14 +667,19 @@ const addAccountCourseToDOM = (courses) => {
 // database-handler.js
 const displayChosenAccountSection = async (element) => {
   if (element.dataset.section === 'logout') {
-    const isConfirmed = await confirmSweetAlert('آیا مطمئن هستید؟', 'خروج از حساب کاربری');
+    const isConfirmed = await confirmSweetAlert(
+      'آیا مطمئن هستید؟',
+      'خروج از حساب کاربری'
+    );
     if (!isConfirmed) return;
     localStorage.removeItem('userID');
     location.replace('./index.html');
     return;
   }
 
-  accountMenuItemElements.forEach((element) => element.classList.remove('account__menu-item--active'));
+  accountMenuItemElements.forEach((element) =>
+    element.classList.remove('account__menu-item--active')
+  );
   element.classList.add('account__menu-item--active');
   closeMobileAccountMenu();
   accountSectionNameElement.textContent = element.children[1].textContent;
@@ -578,24 +697,36 @@ const displayChosenAccountSection = async (element) => {
 
 // database-handler.js
 const addUserAccountDetailToDOM = (user) => {
-  insertToDOM(accountUsernameElement, `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`);
+  insertToDOM(
+    accountUsernameElement,
+    `<span class="theme-text-color">${user.username}</span> عزیز خوش آمدی :)`
+  );
 
   usernameInput.placeholder = user.username;
   emailInput.placeholder = user.email;
 
-  user.image_src && insertToDOM(userAccountProfilePictureWrapper, userAccountProfilePictureTemplate(user.image_src));
+  user.image_src &&
+    insertToDOM(
+      userAccountProfilePictureWrapper,
+      userAccountProfilePictureTemplate(user.image_src)
+    );
 };
 
 const addUserAccountQuestionToDOM = (data) => {
   const questions = filterPanelsQuestions(data);
 
   if (!questions.length) {
-    insertToDOM(accountQuestionsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ پرسشی مطرح نکرده‌اید.</p>`);
+    insertToDOM(
+      accountQuestionsWrapper,
+      `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ پرسشی مطرح نکرده‌اید.</p>`
+    );
     return;
   }
 
   let questionsTemplate = '';
-  questions.forEach((question) => (questionsTemplate += panelQuestionTemplate(question)));
+  questions.forEach(
+    (question) => (questionsTemplate += panelQuestionTemplate(question))
+  );
 
   insertToDOM(accountQuestionsWrapper, questionsTemplate);
 };
@@ -687,14 +818,18 @@ const addViewedTicketToDOM = (ticketID, tickets, isUserPanel) => {
 
   answerOpenBtn && openAnswerTextArea(answerOpenBtn);
   answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
-  answerSubmitBtn && submitTicketAnswer(answerSubmitBtn, ticket, tickets, isUserPanel);
+  answerSubmitBtn &&
+    submitTicketAnswer(answerSubmitBtn, ticket, tickets, isUserPanel);
 
   closeQuestionBtn && closeTicket(closeQuestionBtn, ticket, tickets);
 };
 
 const addTicketsToDOM = (tickets, isUserPanel) => {
   if (!tickets.length && isUserPanel) {
-    insertToDOM(ticketsWrapper, `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ تیکتی ثبت نکرده‌اید.</p>`);
+    insertToDOM(
+      ticketsWrapper,
+      `<p class="text-center xl:text-right text-xl font-VazirMedium">شما هنوز هیچ تیکتی ثبت نکرده‌اید.</p>`
+    );
     return;
   }
 
@@ -709,7 +844,11 @@ const addTicketsToDOM = (tickets, isUserPanel) => {
   insertToDOM(ticketsWrapper, ticketsTemplate);
 
   const ticketElements = document.querySelectorAll('.ticket-wrapper');
-  ticketElements.forEach((element) => element.addEventListener('click', () => addViewedTicketToDOM(element.id, tickets, isUserPanel)));
+  ticketElements.forEach((element) =>
+    element.addEventListener('click', () =>
+      addViewedTicketToDOM(element.id, tickets, isUserPanel)
+    )
+  );
 };
 
 const returnFromViewedTicket = () => {
@@ -730,7 +869,10 @@ const addAdminNotConfirmedCommentsToDOM = (comments) => {
 const addAdminPanelCommentsToDOM = (comments, filterType) => {
   let commentsTemplate = '';
 
-  const allCommentsWithReplies = comments.flatMap((comment) => [comment, ...(comment.replies || [])]);
+  const allCommentsWithReplies = comments.flatMap((comment) => [
+    comment,
+    ...(comment.replies || []),
+  ]);
 
   const filteredComments = filterComments(allCommentsWithReplies, filterType);
 
@@ -758,23 +900,34 @@ const addAdminPanelQuestionToDOM = (data) => {
   scrollToTop();
 
   const questionWrapper = document.querySelectorAll('.question__wrapper');
-  questionWrapper.forEach((element) => element.addEventListener('click', () => handleAdminPanelQuestionView(element, data, adminName)));
+  questionWrapper.forEach((element) =>
+    element.addEventListener('click', () =>
+      handleAdminPanelQuestionView(element, data, adminName)
+    )
+  );
 };
 
 const handleAdminPanelQuestionView = (element, data, adminName) => {
   const pageID = element.dataset.page_id;
   const questionID = element.dataset.question_id;
   const page = data.find((page) => page.id === pageID);
-  const question = page.questions.find((question) => question.id === questionID);
+  const question = page.questions.find(
+    (question) => question.id === questionID
+  );
 
   addAdminPanelViewedQuestionToDOM(data, page, question, adminName);
 };
 
 const addAdminPanelViewedQuestionToDOM = (data, page, question, adminName) => {
-  insertToDOM(adminPanelQuestionsWrapper, adminPanelViewedQuestionTemplate(page, question));
+  insertToDOM(
+    adminPanelQuestionsWrapper,
+    adminPanelViewedQuestionTemplate(page, question)
+  );
   scrollToTop();
 
-  document.querySelector('.back-btn').addEventListener('click', () => addAdminPanelQuestionToDOM(data));
+  document
+    .querySelector('.back-btn')
+    .addEventListener('click', () => addAdminPanelQuestionToDOM(data));
 
   const answerOpenBtn = document.querySelector('.answer__open-btn');
   const answerCancelBtn = document.querySelector('.new-answer__cancel-btn');
@@ -783,9 +936,25 @@ const addAdminPanelViewedQuestionToDOM = (data, page, question, adminName) => {
 
   answerOpenBtn && openAnswerTextArea(answerOpenBtn);
   answerCancelBtn && cancelAnswerTextArea(answerCancelBtn);
-  answerSubmitBtn && submitQuestionAnswer(answerSubmitBtn, page.id, page.questions, adminName, data, page);
+  answerSubmitBtn &&
+    submitQuestionAnswer(
+      answerSubmitBtn,
+      page.id,
+      page.questions,
+      adminName,
+      data,
+      page
+    );
 
-  closeQuestionBtn && closeQuestion(closeQuestionBtn, page.id, page.questions, adminName, data, page);
+  closeQuestionBtn &&
+    closeQuestion(
+      closeQuestionBtn,
+      page.id,
+      page.questions,
+      adminName,
+      data,
+      page
+    );
 };
 
 const returnFromViewedUser = (back) => {
@@ -804,11 +973,16 @@ const returnFromViewedUser = (back) => {
 };
 
 const addAdminViewedUserInfoToDOM = (user, userNumber, users) => {
-  insertToDOM(adminPanelUserInfoWrapper, adminPanelUserInfoTemplate(user, userNumber));
+  insertToDOM(
+    adminPanelUserInfoWrapper,
+    adminPanelUserInfoTemplate(user, userNumber)
+  );
 
   const changeUserRoleBtn = document.querySelector('.user__change-role-btn');
 
-  changeUserRoleBtn.addEventListener('click', () => changeUserRole(user, userNumber, users));
+  changeUserRoleBtn.addEventListener('click', () =>
+    changeUserRole(user, users)
+  );
 };
 
 const addAdminViewedUserStatsToDOM = (user, users) => {
@@ -818,8 +992,13 @@ const addAdminViewedUserStatsToDOM = (user, users) => {
 };
 
 const addAdminViewedUserCoursesToDOM = (user, users) => {
-  insertToDOM(adminPanelUserCoursesWrapper, adminPanelUserCoursesTemplate(user));
-  const deleteUserCourseButtons = document.querySelectorAll('.user__course-delete-btn');
+  insertToDOM(
+    adminPanelUserCoursesWrapper,
+    adminPanelUserCoursesTemplate(user)
+  );
+  const deleteUserCourseButtons = document.querySelectorAll(
+    '.user__course-delete-btn'
+  );
 
   deleteUserCourseButtons.forEach((btn) => {
     btn.addEventListener('click', () => deleteUserCourse(btn, user, users));
@@ -848,17 +1027,32 @@ const addAllUsersToDOM = (allUsers) => {
   const managers = allUsers.filter((user) => user.role === 'manager');
   const admins = allUsers.filter((user) => user.role === 'admin');
   const users = allUsers.filter((user) => user.role === 'user');
-  admins.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-  users.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  admins.sort(
+    (a, b) =>
+      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  );
+  users.sort(
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 
-  managers.forEach((user, index) => (usersTemplate += adminPanelUserTemplate(user, index + 1)));
-  admins.forEach((user, index) => (usersTemplate += adminPanelUserTemplate(user, index + 1)));
-  users.forEach((user, index) => (usersTemplate += adminPanelUserTemplate(user, users.length - index)));
+  managers.forEach(
+    (user, index) => (usersTemplate += adminPanelUserTemplate(user, index + 1))
+  );
+  admins.forEach(
+    (user, index) => (usersTemplate += adminPanelUserTemplate(user, index + 1))
+  );
+  users.forEach(
+    (user, index) =>
+      (usersTemplate += adminPanelUserTemplate(user, users.length - index))
+  );
 
   insertToDOM(allUsersWrapper, usersTemplate);
 
   const userViewButtons = document.querySelectorAll('.user__view-btn');
-  userViewButtons.forEach((btn) => btn.addEventListener('click', () => addViewedUserToDOM(btn, allUsers)));
+  userViewButtons.forEach((btn) =>
+    btn.addEventListener('click', () => addViewedUserToDOM(btn, allUsers))
+  );
 };
 
 // database-handlers.js
